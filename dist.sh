@@ -11,7 +11,7 @@ find target/bolts -name '.svn' | xargs rm -rf
 cp build.xml LICENSE target/bolts/
 (
     cd target
-    cp *.jar bolts/target/
+    cp jars/*.jar bolts/target/
     cp -r javadoc bolts/target/
 )
 
@@ -25,7 +25,7 @@ r=$(svn info | sed -n -e 's/Last Changed Rev: //p')
 mkdir -p target/site
 cat doc/index.html | sed "s,@rev@,$r," > target/site/index.html
 cp target/bolts.zip target/site/
-cp target/yandex-bolts.jar target/site/bolts.jar
+cp target/jars/yandex-bolts.jar target/site/bolts.jar
 cp target/yandex-bolts-sources.jar target/site/bolts-sources.jar
 cp -r target/javadoc target/site/
 

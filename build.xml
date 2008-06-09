@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="bolts" basedir="." default="jar">
+<project name="bolts" basedir="." default="dist">
     <property name="jar.suffix" value=""/>
     
     <target name="clean" description="cleanup compiled and generated classes">
         <delete dir="target" quiet="true"/>
     </target>
 
-    <target name="prepare">
+    <target name="compile">
         <mkdir dir="target/classes"/>
-        <mkdir dir="target/jars"/>
-    </target>
-    
-    <target name="compile" depends="prepare">
         <javac source="1.5" target="1.5" srcdir="src/main/java" destdir="target/classes" debug="true">
             <classpath>
                 <fileset dir="lib" includes="*.jar"/>
@@ -20,7 +16,8 @@
         </javac>
     </target>
     
-    <target name="jar" depends="clean,compile">
+    <target name="jar" depends="compile">
+        <mkdir dir="target/jars"/>
         <delete>
             <fileset dir="target" includes="yandex-bolts*.jar"/>
         </delete>
@@ -33,6 +30,8 @@
     </target>
 
     <target name="build" depends="jar" />
+    
+    <target name="dist" depends="clean,jar"/>
 
     <target name="test" depends="clean,compile">
         <junit printsummary="yes" fork="yes" failureproperty="test.failure">
