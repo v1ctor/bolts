@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="bolts" basedir="." default="jar">
+    <property name="jar.suffix" value=""/>
+    
+    <target name="clean" description="cleanup compiled and generated classes">
+        <delete dir="target" quiet="true"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="target/classes"/>
+        <mkdir dir="target/jars"/>
+    </target>
+    
+    <target name="compile" depends="prepare">
+        <javac source="1.5" target="1.5" srcdir="src/main/java" destdir="target/classes" debug="true">
+            <classpath>
+                <fileset dir="lib" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+    
+    <target name="jar" depends="clean,compile">
+        <delete>
+            <fileset dir="target" includes="yandex-bolts*.jar"/>
+        </delete>
+        <jar destfile="target/jars/yandex-bolts${jar.suffix}.jar">
+            <fileset dir="target/classes"/>
+        </jar>
+    	<jar destfile="target/jars/yandex-bolts${jar.suffix}-sources.jar">
+            <fileset dir="src/main/java"/>
+        </jar>
+    </target>
+
+    <target name="build" depends="jar" />
+
+    <target name="test" depends="clean,compile">
+        <junit printsummary="yes" fork="yes" failureproperty="test.failure">
+            <jvmarg value="-Dfile.encoding=UTF-8"/>
+            <classpath>
+                <fileset dir="lib" includes="**/*.jar"/>
+                <pathelement location="target/classes"/>
+                <pathelement location="src/test/log4j"/>
+            </classpath>
+
+            <batchtest todir="${basedir}" >
+                <fileset dir="target/classes">
+                    <include name="**/*Test.class"/>
+                    <exclude name="**/Abstract*.class"/>
+                </fileset>
+                <formatter type="plain" usefile="no"/>
+            </batchtest>
+        </junit>
+
+        <fail message="Tests failed" if="test.failure"/>
+    </target>
+
+</project>
+<!-- vim: set ts=4 sw=4 et: -->

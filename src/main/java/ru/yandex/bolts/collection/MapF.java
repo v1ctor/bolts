@@ -1,0 +1,89 @@
+package ru.yandex.bolts.collection;
+
+import java.util.Map;
+import java.util.NoSuchElementException;
+
+import ru.yandex.bolts.function.Function0;
+import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.forhuman.Mapper;
+
+/**
+ * Mutable map with Scala-like Map methods.
+ *
+ * @see IterableF
+ * @author Stepan Koltsov
+ */
+public interface MapF<K, V> extends Map<K, V>, Function1<K, V> {
+    /** Get value by key */
+    Option<V> getO(K key);
+
+    /** Get value or default */
+    V getOrElse(K key, V elseValue);
+
+    /** Get value or throw */
+    V getOrThrow(K key, String message);
+
+    /** Get value or throw */
+    V getOrThrow(K key, String message, Object param);
+
+    /** Get value or else update */
+    V getOrElseUpdate(K key, V elseValue);
+
+    /** Get value or else update */
+    V getOrElseUpdate(K key, Function0<V> value);
+
+    /** Get value or else update. Function maps key to default value */
+    V getOrElseUpdate(K key, Function1<K, V> m);
+
+    boolean containsEntry(K key, V value);
+
+    boolean containsEntry(Entry<K, V> entry);
+
+    /** Throws if there is no entry for key */
+    V apply(K key) throws NoSuchElementException;
+
+    MapF<K, V> filterKeys(Function1B<? super K> p);
+
+    <W> MapF<K, W> mapValues(Function1<? super V, W> f);
+
+    //<W> ListF<W> map(Function1<Entry<K, V>, W> f);
+
+    <W> ListF<W> mapEntries(Function2<K, V, W> f);
+
+    Mapper<K, V> asMapper();
+
+    /** Put */
+    void put(Tuple2<K, V> entry);
+
+    /** Put all */
+    void putAll(Iterable<Tuple2<K, V>> entries);
+
+    void putAllEntries(Iterable<Entry<K, V>> entries);
+
+    /** Remove element. Return old */
+    Option<V> removeO(K key);
+
+    /** Key set */
+    SetF<K> keySet();
+
+    SetF<Entry<K, V>> entrySet();
+
+    CollectionF<Tuple2<K, V>> entries();
+
+    /** Values */
+    CollectionF<V> values();
+
+    void put(Entry<K, V> entry);
+
+    MapF<K, V> plus(MapF<K, V> map);
+
+    MapF<K, V> plus1(K key, V value);
+
+    MapF<K, V> filterEntries(Function1B<Entry<K, V>> p);
+
+    MapF<K, V> unmodifiable();
+    
+    <L, W> MapF<L, W> uncheckedCast();
+} //~
