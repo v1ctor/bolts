@@ -1,5 +1,6 @@
 package ru.yandex.bolts.function.forhuman;
 
+import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.function.Function2;
 
 /**
@@ -35,6 +36,14 @@ public abstract class BinaryFunction<A, B, R> implements Function2<A, B, R>, Hum
 
             public String toString() {
                 return BinaryFunction.this + "(_, " + b + ")";
+            }
+        };
+    }
+    
+    public Mapper<Tuple2<A, B>, R> asMapperFromTuple() {
+        return new Mapper<Tuple2<A,B>, R>() {
+            public R map(Tuple2<A, B> t) {
+                return call(t.get1(), t.get2());
             }
         };
     }
