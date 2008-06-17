@@ -45,7 +45,6 @@
             <batchtest todir="${basedir}" >
                 <fileset dir="target/classes">
                     <include name="**/*Test.class"/>
-                    <exclude name="**/Abstract*.class"/>
                 </fileset>
                 <formatter type="plain" usefile="no"/>
             </batchtest>
