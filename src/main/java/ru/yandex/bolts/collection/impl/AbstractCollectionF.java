@@ -1,5 +1,6 @@
 package ru.yandex.bolts.collection.impl;
 
+import java.lang.reflect.Array;
 import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Collections;
@@ -63,6 +64,52 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     public SetF<E> unique() {
         return CollectionsF.set(this);
+    }
+    
+    @SuppressWarnings({"unchecked"})
+    public E[] toArray(Class<E> cl) {
+        return toArray((E[]) Array.newInstance(cl, size()));
+    }
+    
+    private Object toPrimitiveArray(Class<?> componentClass) {
+        Object array = Array.newInstance(componentClass, size());
+        int i = 0;
+        for (E e : this) {
+            Array.set(array, i++, e);
+        }
+        return array;
+    }
+    
+    public boolean[] toBooleanArray() {
+        return (boolean[]) toPrimitiveArray(boolean.class);
+    }
+    
+    public byte[] toByteArray() {
+        return (byte[]) toPrimitiveArray(byte.class);
+    }
+
+    public char[] toCharArray() {
+        return (char[]) toPrimitiveArray(char.class);
+    }
+
+    public double[] toDoubleArray() {
+        return (double[]) toPrimitiveArray(double.class);
+    }
+
+    public float[] toFloatArray() {
+        return (float[]) toPrimitiveArray(float.class);
+    }
+
+    public int[] toIntArray() {
+        return (int[]) toPrimitiveArray(int.class);
+    }
+
+    public long[] toLongArray() {
+        return (long[]) toPrimitiveArray(long.class);
+    }
+
+    public short[] toShortArray() {
+        return (short[]) toPrimitiveArray(short.class);
     }
 
     public CollectionF<E> filter(Function1B<? super E> p) {

@@ -80,6 +80,18 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     CollectionF<E> plus(E... additions);
 
     void addAll(E... additions);
+    
+    /** Copy elements to the new array */
+    E[] toArray(Class<E> cl);
+    
+    byte[] toByteArray();
+    short[] toShortArray();
+    int[] toIntArray();
+    long[] toLongArray();
+    boolean[] toBooleanArray();
+    char[] toCharArray();
+    float[] toFloatArray();
+    double[] toDoubleArray();
 
     /**
      * Return unmodifiable view or unmodifiable copy of this.

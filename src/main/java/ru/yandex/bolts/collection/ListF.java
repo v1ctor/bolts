@@ -27,9 +27,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
      */
     Tuple2<ListF<E>, ListF<E>> filter2(Function1B<? super E> p);
 
-    /** Copy elements to the new array */
-    E[] toArray(Class<E> cl);
-
     /** Sub list from index to index */
     ListF<E> subList(int fromIndex, int toIndex);
 

@@ -55,11 +55,6 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @SuppressWarnings({"unchecked"})
-    public E[] toArray(Class<E> cl) {
-        return toArray((E[]) Array.newInstance(cl, size()));
-    }
-
-    @SuppressWarnings({"unchecked"})
     public ListF<E> plus(List<? extends E> addition) {
         if (addition.isEmpty()) return this;
         else if (isEmpty()) return (ListF<E>) DefaultListF.wrap(addition); // thanks to erasure, cast works fine

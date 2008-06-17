@@ -1,18 +1,20 @@
 package ru.yandex.bolts.collection.impl;
 
-import junit.framework.TestCase;
-
 import static ru.yandex.bolts.collection.CollectionsF.list;
 import static ru.yandex.bolts.collection.CollectionsF.set;
+
+import java.util.Arrays;
+
+import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.forhuman.BinaryFunctionTest;
+import ru.yandex.bolts.function.forhuman.Comparator;
 import ru.yandex.bolts.function.forhuman.Mapper;
 import ru.yandex.bolts.function.forhuman.Operation;
-import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
  * @author Stepan Koltsov
@@ -75,6 +77,12 @@ public class AbstractCollectionFTest extends TestCase {
         assertEquals(Cf.list(1, 2, 3), Cf.list(1, 3, 2).sort());
         assertEquals(Cf.list(3, 2, 1), Cf.list(1, 3, 2).sort(Comparator.naturalComparator().invert()));
         assertEquals(Cf.list("1", "30", "200"), Cf.list("1", "200", "30").sortBy(stringLengthM()));
+    }
+    
+    public void testToPrimitiveArray() {
+        assertTrue(Arrays.equals(new int[] { 1, 2, 3 }, Cf.list(1, 2, 3).toIntArray()));
+        assertTrue(Arrays.equals(new long[] { 1, 2, 3 }, Cf.<Integer>list(1, 2, 3).toLongArray()));
+        assertTrue(Arrays.equals(new char[] { 'a', 'b', 'c' }, Cf.list('a', 'b', 'c').toCharArray()));
     }
 
     private static Mapper<String, Object> stringLengthM() {
