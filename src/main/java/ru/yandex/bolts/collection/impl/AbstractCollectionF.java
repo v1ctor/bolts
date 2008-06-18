@@ -220,6 +220,10 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public ListF<E> sortBy(Function1<? super E, ?> f) {
         return sort(Mapper.wrap(f).andThenNaturalComparator());
     }
+    
+    public ListF<E> sortByDesc(Function1<? super E, ?> f) {
+        return sort(Mapper.wrap(f).andThenNaturalComparator().invert());
+    }
 
     public CollectionF<E> unmodifiable() {
         //if (this instanceof Unmodifiable) return this;

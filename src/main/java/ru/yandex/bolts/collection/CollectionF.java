@@ -66,6 +66,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     ListF<E> sortBy(Function1<? super E, ?> f);
     
+    ListF<E> sortByDesc(Function1<? super E, ?> f);
+    
     <V> MapF<V, ListF<E>> groupBy(Function1<? super E, ? extends V> m);
 
     /** Add element to this collection */
