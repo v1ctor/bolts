@@ -218,11 +218,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     public ListF<E> sortBy(Function1<? super E, ?> f) {
-        return sort(Mapper.wrap(f).andThenNaturalComparator());
+        return sort(Mapper.wrap(f).andThenNaturalComparator().nullLowC());
     }
     
     public ListF<E> sortByDesc(Function1<? super E, ?> f) {
-        return sort(Mapper.wrap(f).andThenNaturalComparator().invert());
+        return sort(Mapper.wrap(f).andThenNaturalComparator().nullLowC().invert());
     }
 
     public CollectionF<E> unmodifiable() {
