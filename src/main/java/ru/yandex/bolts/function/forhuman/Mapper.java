@@ -91,10 +91,11 @@ public abstract class Mapper<A, B> implements Function1<A, B>, HumanFunction {
             }
         };
     }
-
+    
+    /** And then null low natural comparator */
     @SuppressWarnings({"unchecked"})
     public Comparator<A> andThenNaturalComparator() {
-        return andThen((Comparator) Comparator.naturalComparator());
+        return andThen((Comparator) Comparator.naturalComparator().nullLowC());
     }
 
     /** Bind argument */
