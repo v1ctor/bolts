@@ -39,6 +39,11 @@ public class Tuple2<T1, T2> implements Serializable {
     public Tuple2<T2, T1> swap() {
         return tuple(t2, t1);
     }
+    
+    @SuppressWarnings("unchecked")
+    public <T3, T4> Tuple2<T3, T4> uncheckedCast() {
+        return (Tuple2<T3, T4>) this;
+    }
 
     @SuppressWarnings({"RedundantIfStatement"})
     public boolean equals(Object o) {
