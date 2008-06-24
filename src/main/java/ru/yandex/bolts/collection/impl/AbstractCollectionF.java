@@ -39,7 +39,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     protected <B> CollectionF<B> emptyCollection() {
-        return CollectionsF.list();
+        return Cf.list();
+    }
+    
+    protected <B> ListF<B> emptyList() {
+        return Cf.list();
     }
 
     protected <B> CollectionF<B> singletonCollection(B b) {
@@ -132,9 +136,9 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         }
         return Tuple2.tuple(matched, unmatched);
     }
-
+    
     public <B> ListF<B> map(Function1<? super E, B> f) {
-        if (isEmpty()) return CollectionsF.list();
+        if (isEmpty()) return emptyList();
         else return iterator().map(f).toList();
     }
 
