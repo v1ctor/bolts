@@ -59,4 +59,19 @@ public abstract class BinaryFunction<A, B, R> implements Function2<A, B, R>, Hum
             }
         };
     }
+    
+    public static <A, B, R> BinaryFunction<A, B, R> wrap(final Function2<A, B, R> bf) {
+        if (bf instanceof BinaryFunction<?, ?, ?>) return (BinaryFunction<A, B, R>) bf;
+        else return new BinaryFunction<A, B, R>() {
+            public R call(A a, B b) {
+                return bf.apply(a, b);
+            }
+
+            @Override
+            public String toString() {
+                return bf.toString();
+            }
+            
+        };
+    }
 } //~
