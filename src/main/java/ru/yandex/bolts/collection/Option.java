@@ -6,6 +6,7 @@ import ru.yandex.bolts.function.Function1;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.forhuman.Factory;
 import ru.yandex.bolts.function.forhuman.Predicate;
+import ru.yandex.bolts.function.forhuman.Mapper;
 
 import java.util.NoSuchElementException;
 import java.util.Collection;
@@ -228,5 +229,13 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     public static Predicate<Option> isEmptyP() {
         return isDefinedP().notP();
+    }
+
+    public static <T> Mapper<T, Option<T>> optionM() {
+        return new Mapper<T, Option<T>>() {
+            public Option<T> map(T t) {
+                return Option.notNull(t);
+            }
+        };
     }
 } //~
