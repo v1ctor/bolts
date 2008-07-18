@@ -231,7 +231,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         return isDefinedP().notP();
     }
 
-    public static <T> Mapper<T, Option<T>> optionM() {
+    public static <T> Mapper<T, Option<T>> notNullM() {
         return new Mapper<T, Option<T>>() {
             public Option<T> map(T t) {
                 return Option.notNull(t);
