@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import ru.yandex.bolts.collection.impl.AbstractListF;
 import ru.yandex.bolts.collection.impl.AbstractSetF;
+import ru.yandex.bolts.collection.impl.ArrayListF;
 import ru.yandex.bolts.collection.impl.DefaultCollectionF;
 import ru.yandex.bolts.collection.impl.DefaultIteratorF;
 import ru.yandex.bolts.collection.impl.DefaultListF;
@@ -232,16 +233,14 @@ public class CollectionsF {
      * Create extended mutable array list.
      */
     public static <E> ListF<E> arrayList() {
-        return x(new ArrayList<E>());
+        return new ArrayListF<E>();
     }
 
     /**
      * Create extended mutable array list containing given elements.
      */
     public static <A> ListF<A> arrayList(Collection<A> collection) {
-        ListF<A> list = arrayList();
-        list.addAll(collection);
-        return list;
+        return new ArrayListF<A>(collection);
     }
 
     /**
@@ -257,7 +256,7 @@ public class CollectionsF {
      * @see ArrayList#ArrayList(int)
      */
     public static <A> ListF<A> arrayList(int initialCapacity) {
-        return x(new ArrayList<A>(initialCapacity));
+        return new ArrayListF<A>(initialCapacity);
     }
 
     /**
