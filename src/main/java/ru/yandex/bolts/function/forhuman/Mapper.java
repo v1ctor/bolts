@@ -116,7 +116,7 @@ public abstract class Mapper<A, B> implements Function1<A, B>, HumanFunction {
         };
     }
 
-    /** Ingore result of mapping */
+    /** Ignore result of mapping */
     public Operation<A> ignoreResult() {
         return new Operation<A>() {
             public void execute(A a) {
