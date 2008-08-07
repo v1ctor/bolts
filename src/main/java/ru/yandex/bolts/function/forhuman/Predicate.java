@@ -121,12 +121,10 @@ public abstract class Predicate<A> implements Function1B<A>, HumanFunction {
     }
     */
     
-    /*
     @SuppressWarnings("unchecked")
     public <B> Predicate<B> uncheckedCast() {
         return (Predicate<B>) this;
     }
-    */
 
     /** Equal to the given value predicate */
     public static <B> Predicate<B> equalsP(final B b) {

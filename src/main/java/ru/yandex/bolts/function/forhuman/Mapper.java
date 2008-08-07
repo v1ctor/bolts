@@ -136,6 +136,11 @@ public abstract class Mapper<A, B> implements Function1<A, B>, HumanFunction {
             }
         };
     }
+    
+    @SuppressWarnings("unchecked")
+    public <U, V> Mapper<U, V> uncheckedCast() {
+        return (Mapper<U, V>) this;
+    }
 
     /** Wrap */
     @SuppressWarnings("unchecked")
@@ -184,4 +189,5 @@ public abstract class Mapper<A, B> implements Function1<A, B>, HumanFunction {
             }
         };
     }
+
 }
