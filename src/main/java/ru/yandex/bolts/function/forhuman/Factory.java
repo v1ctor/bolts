@@ -70,6 +70,24 @@ public abstract class Factory<R> implements Function0<R>, java.util.concurrent.C
             }
         };
     }
+    
+    public static <T> Factory<T> newInstanceF(final Class<T> clazz) {
+        if (clazz == null) throw new IllegalArgumentException();
+        return new Factory<T>() {
+            public T create() {
+                try {
+                    return clazz.newInstance();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            public String toString() {
+                return clazz + ".newInstance";
+            }
+            
+        };
+    }
 
     /** Wrap */
     public static <T> Factory<T> wrap(final Function0<T> factory) {
