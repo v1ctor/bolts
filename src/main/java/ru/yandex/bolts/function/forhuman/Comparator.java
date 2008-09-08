@@ -131,6 +131,12 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
             public String toString() {
                 return "invert(" + Comparator.this + ")";
             }
+
+            @Override
+            public Comparator<A> invert() {
+                return Comparator.this;
+            }
+            
         };
 
     }

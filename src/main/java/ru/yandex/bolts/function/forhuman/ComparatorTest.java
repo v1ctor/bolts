@@ -103,7 +103,11 @@ public class ComparatorTest extends TestCase {
             }
         }));
     }
-    
+
+    public void testInvertInvert() {
+        Comparator<?> c = Comparator.naturalComparator();
+        assertSame(c, c.invert().invert());
+    }
     
     
     public void testChainTo() {
