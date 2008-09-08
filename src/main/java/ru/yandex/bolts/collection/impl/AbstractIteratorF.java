@@ -120,7 +120,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
 
     public Option<E> singleO() {
         Option<E> r = nextO();
-        if (hasNext()) throw new NoSuchElementException();
+        if (hasNext()) throw new NoSuchElementException("more then one element");
         return r;
     }
 
