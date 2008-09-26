@@ -190,4 +190,12 @@ public abstract class Mapper<A, B> implements Function1<A, B>, HumanFunction {
         };
     }
 
+    /** Mapper that always returns the same value */
+    public static <A, B> Mapper<A, B> constM(final B b) {
+        return new Mapper<A, B>() {
+            public B map(A a) {
+                return b;
+            }
+        };
+    }
 }
