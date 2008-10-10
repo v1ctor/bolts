@@ -92,6 +92,10 @@ public abstract class Mapper<A, B> implements Function1<A, B>, HumanFunction {
         };
     }
     
+    public Predicate<A> andThenEquals(B value) {
+        return andThen(Predicate.equalsP(value));
+    }
+    
     /** And then null low natural comparator */
     @SuppressWarnings({"unchecked"})
     public Comparator<A> andThenNaturalComparator() {
