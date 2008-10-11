@@ -272,6 +272,10 @@ public class CollectionsF {
     public static <K, V> MapF<K, V> map(K key1, V value1, K key2, V value2) {
         return map(key1, value1).plus1(key2, value2);
     }
+    
+    public static <K, V> MapF<K, V> map(Collection<Tuple2<K, V>> pairs) {
+        return ListMap.listMap(Cf.x(pairs).toList()).toMap();
+    }
 
     /**
      * Immutable empty map. 
