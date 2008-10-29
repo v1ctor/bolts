@@ -2,6 +2,7 @@ package ru.yandex.bolts.collection;
 
 import java.io.Serializable;
 
+import ru.yandex.bolts.function.Function1;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.forhuman.BinaryFunction;
 import ru.yandex.bolts.function.forhuman.Mapper;
@@ -102,7 +103,6 @@ public class Tuple2<T1, T2> implements Serializable {
         };
     }
 
-    /*
     public static <A, B, C> Mapper<Tuple2<A, B>, Tuple2<C, B>> map1M(final Function1<A, C> m) {
         return new Mapper<Tuple2<A, B>, Tuple2<C, B>>() {
             public Tuple2<C, B> map(Tuple2<A, B> tuple) {
@@ -118,8 +118,7 @@ public class Tuple2<T1, T2> implements Serializable {
             }
         };
     }
-    */
-
+    
     /** Construct */
     public static <A, B> Tuple2<A, B> tuple(A a, B b) {
         return new Tuple2<A,B>(a, b);
