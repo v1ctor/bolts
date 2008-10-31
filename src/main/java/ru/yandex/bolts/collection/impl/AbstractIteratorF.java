@@ -47,15 +47,15 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     public <B> IteratorF<B> map(final Function1<? super E, B> f) {
         class MappedIterator extends AbstractIteratorF<B> {
             public boolean hasNext() {
-                return AbstractIteratorF.this.hasNext();
+                return self().hasNext();
             }
 
             public B next() {
-                return f.apply(AbstractIteratorF.this.next());
+                return f.apply(self().next());
             }
 
             public void remove() {
-                AbstractIteratorF.this.remove();
+                self().remove();
             }
         }
         return new MappedIterator();
@@ -110,15 +110,15 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
             private int i = 0;
 
             public boolean hasNext() {
-                return AbstractIteratorF.this.hasNext();
+                return self().hasNext();
             }
 
             public Tuple2<E, Integer> next() {
-                return Tuple2.tuple(AbstractIteratorF.this.next(), i++);
+                return Tuple2.tuple(self().next(), i++);
             }
 
             public void remove() {
-                AbstractIteratorF.this.remove();
+                self().remove();
             }
         }
 
@@ -127,7 +127,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
 
     public IteratorF<E> plus(final Iterator<E> b) {
         return new AbstractIteratorF<E>() {
-            final IteratorF<E> a = AbstractIteratorF.this;
+            final IteratorF<E> a = self();
 
             public boolean hasNext() {
                 return a.hasNext() || b.hasNext();
@@ -222,12 +222,12 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
             int left = count;
             
             public boolean hasNext() {
-                return left > 0 && AbstractIteratorF.this.hasNext();
+                return left > 0 && self().hasNext();
             }
 
             public E next() {
                 if (left == 0) throw new NoSuchElementException();
-                E next = AbstractIteratorF.this.next();
+                E next = self().next();
                 --left;
                 return next;
             }
