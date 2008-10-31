@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ivy-module version="2.0">
+    <info organisation="ru.yandex" module="bolts"/>
+    
+    <dependencies>
+        <dependency org="junit" name="junit" rev="4.5"/>
+        <dependency org="log4j" name="log4j" rev="1.2.15" conf="*->master"/>
+        <!--
+        <dependency org="org.apache.ant" name="ant-junit" rev="1.7.1" conf="*->master"/>
+        -->
+    </dependencies>
+</ivy-module>
+
+<!-- vim: set ts=4 sw=4 et: -->
