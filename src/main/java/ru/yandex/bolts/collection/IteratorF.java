@@ -24,6 +24,8 @@ public interface IteratorF<E> extends Iterator<E> {
     /** Map */
     <B> IteratorF<B> map(Function1<? super E, B> op);
     
+    <B> IteratorF<B> flatMap(Function1<? super E, ? extends Iterator<B>> f);
+    
     //Iterator<E> filter(Function1B<? super E> f);
 
     /** Call function for each element */

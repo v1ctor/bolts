@@ -21,6 +21,8 @@ import ru.yandex.bolts.function.Function2;
  * @author Stepan Koltsov
  */
 public abstract class AbstractIteratorF<E> implements IteratorF<E> {
+    private IteratorF<E> self() { return this; } 
+    
     public void remove() {
         throw new UnsupportedOperationException();
     }
@@ -41,6 +43,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         return result.unmodifiable();
     }
 
+    @Override
     public <B> IteratorF<B> map(final Function1<? super E, B> f) {
         class MappedIterator extends AbstractIteratorF<B> {
             public boolean hasNext() {
@@ -58,6 +61,34 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         return new MappedIterator();
     }
     
+    @Override
+    public <B> IteratorF<B> flatMap(final Function1<? super E, ? extends Iterator<B>> f) {
+        // copy-paste of scala.Iterator.flatMap
+        class FlatMappedIterator extends AbstractIteratorF<B> {
+            private IteratorF<B> cur = Cf.emptyIterator();
+
+            @Override
+            public boolean hasNext() {
+                if (cur.hasNext()) return true;
+                else if (self().hasNext()) {
+                    cur = Cf.x(f.apply(self().next()));
+                    return hasNext();
+                } else return false;
+            }
+
+            @Override
+            public B next() {
+                if (cur.hasNext()) return cur.next();
+                else if (self().hasNext()) {
+                    cur = Cf.x(f.apply(self().next()));
+                    return next();
+                } else throw new NoSuchElementException("next on empty iterator");
+            }
+            
+        }
+        return new FlatMappedIterator();
+    }
+
     /*
     public Iterator<E> filter(Function1B<? super E> f) {
         class FilteredIterator extends AbstractIteratorF<E> {
