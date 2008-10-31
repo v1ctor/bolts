@@ -171,6 +171,10 @@ public abstract class Mapper<A, B> implements Function1<A, B>, HumanFunction {
             public <C> Mapper<T, C> andThen(Function1<? super T, ? extends C> g) {
                 return Mapper.wrap(g);
             }
+            
+            public Predicate<T> andThen(Function1B<? super T> predicate) {
+                return Predicate.wrap(predicate);
+            }
 
             public <C> Mapper<C, T> compose(Function1<C, T> g) {
                 return Mapper.wrap(g);
