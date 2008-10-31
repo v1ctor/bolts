@@ -6,6 +6,11 @@
     <dependencies>
         <dependency org="junit" name="junit" rev="4.5"/>
         <dependency org="log4j" name="log4j" rev="1.2.15" conf="*->master"/>
+        
+        <!-- https://quickcheck.dev.java.net/ -->
+        <dependency org="quickcheck" name="quickcheck" rev="0.3">
+            <artifact name="quickcheck" type="jar" url="http://people.yandex-team.ru/~stepancheg/quickcheck-0.3.jar"/>
+        </dependency>
         <!--
         <dependency org="org.apache.ant" name="ant-junit" rev="1.7.1" conf="*->master"/>
         -->

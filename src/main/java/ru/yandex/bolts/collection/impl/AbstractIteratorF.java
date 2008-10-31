@@ -89,21 +89,34 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         return new FlatMappedIterator();
     }
 
-    /*
-    public Iterator<E> filter(Function1B<? super E> f) {
-        class FilteredIterator extends AbstractIteratorF<E> {
+    @Override
+    public IteratorF<E> filter(final Function1B<? super E> f) {
+        class FilterIterator extends AbstractIteratorF<E> {
+            private Option<E> buffer = Option.none();
+            
+            private void fill() {
+                while (buffer.isEmpty() && self().hasNext()) {
+                    E e = self().next();
+                    if (f.apply(e))
+                        buffer = Option.some(e);
+                }
+            }
+            
             public boolean hasNext() {
-                return false;
+                fill();
+                return buffer.isDefined();
             }
 
             public E next() {
-                
-                return null;
+                fill();
+                if (buffer.isEmpty()) throw new NoSuchElementException("next on empty iterator");
+                E r = buffer.get();
+                buffer = Option.none();
+                return r;
             }
-        }
-        return new FilteredIterator();
+        };
+        return new FilterIterator();
     }
-    */
 
     public IteratorF<Tuple2<E, Integer>> zipWithIndex() {
         class ZippedIterator extends AbstractIteratorF<Tuple2<E, Integer>> {
