@@ -3,7 +3,7 @@ package ru.yandex.bolts.collection.impl;
 /**
  * @author Stepan Koltsov
  */
-public class EmptyListTest extends AbstractEmptyCollectionTest {
+public class EmptyListTest extends EmptyCollectionTestSupport {
 
     @Override
     protected Object emptyInstance() {

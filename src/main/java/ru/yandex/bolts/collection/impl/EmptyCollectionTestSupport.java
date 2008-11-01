@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 /**
  * @author Stepan Koltsov
  */
-public abstract class AbstractEmptyCollectionTest extends TestCase {
+public abstract class EmptyCollectionTestSupport extends TestCase {
     
     protected abstract Object emptyInstance();
     
