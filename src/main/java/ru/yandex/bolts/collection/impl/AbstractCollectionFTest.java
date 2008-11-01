@@ -19,9 +19,7 @@ import ru.yandex.bolts.function.forhuman.Operation;
 /**
  * @author Stepan Koltsov
  */
-@SuppressWarnings({"UnusedDeclaration", "unused"})
 public class AbstractCollectionFTest extends TestCase {
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AbstractCollectionFTest.class);
 
     public void testForEach() {
         ListF<Object> l = CollectionsF.arrayList();

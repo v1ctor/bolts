@@ -15,7 +15,7 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.impl.test.GeneratorF;
 import ru.yandex.bolts.function.forhuman.Mapper;
 import ru.yandex.bolts.function.forhuman.Operation;
-import ru.yandex.bolts.function.forhuman.Predicate;
+import ru.yandex.bolts.function.forhuman.PredicateTest;
 
 /**
  * @author Stepan Koltsov
@@ -80,25 +80,13 @@ public class AbstractIteratorFTest extends TestCase {
     }
     
     public void testFilterSimple() {
-        ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filter(evenP()).toList();
+        ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filter(PredicateTest.evenP()).toList();
         
         // XXX to simple
         ListF<Integer> expected = Cf.list(2, 4, 6);
         assertEquals(expected, got);
     }
 
-    private static Predicate<Integer> evenP() {
-        return new Predicate<Integer>() {
-            public boolean evaluate(Integer a) {
-                return a % 2 == 0;
-            }
-        };
-    }
-    
-    private static Predicate<Integer> oddP() {
-        return evenP().notP();
-    }
-    
     private Generator<Integer> integers() {
         return PrimitiveGenerators.integers();
     }
@@ -126,7 +114,7 @@ public class AbstractIteratorFTest extends TestCase {
     }
     
     private void testFilterOn(ListF<Integer> l) {
-        checkIteratorAgainst(l.iterator().filter(evenP()), l.filter(evenP()));
+        checkIteratorAgainst(l.iterator().filter(PredicateTest.evenP()), l.filter(PredicateTest.evenP()));
     }
     
     private <E> void checkIteratorAgainst(IteratorF<E> it, ListF<E> elements) {
