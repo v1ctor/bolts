@@ -6,17 +6,15 @@ import java.util.Collections;
 import java.util.Set;
 
 import junit.framework.TestCase;
-import net.java.quickcheck.Generator;
 import net.java.quickcheck.QuickCheck;
 import net.java.quickcheck.characteristic.AbstractCharacteristic;
 import net.java.quickcheck.collection.Pair;
 import net.java.quickcheck.generator.CombinedGenerators;
-import net.java.quickcheck.generator.PrimitiveGenerators;
 
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
-import ru.yandex.bolts.collection.impl.test.QuickCheckAdditions;
+import ru.yandex.bolts.collection.impl.test.GeneratorF;
 import ru.yandex.bolts.function.forhuman.PredicateTest;
 
 /**
@@ -47,8 +45,8 @@ public class AbstractSetFTest extends TestCase {
     /////
     // union/intersect/minus
     
-    private Generator<SetF<Integer>> smallSets() {
-        return QuickCheckAdditions.sets(PrimitiveGenerators.integers(1, 10));
+    private GeneratorF<SetF<Integer>> smallSets() {
+        return GeneratorF.integers(1, 10).sets();
     }
 
     public void testUnionSimple() {

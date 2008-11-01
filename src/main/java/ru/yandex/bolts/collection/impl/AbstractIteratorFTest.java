@@ -1,23 +1,21 @@
 package ru.yandex.bolts.collection.impl;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+import junit.framework.TestCase;
 import net.java.quickcheck.Generator;
-import net.java.quickcheck.QuickCheck;
 import net.java.quickcheck.characteristic.AbstractCharacteristic;
-import net.java.quickcheck.generator.CombinedGenerators;
 import net.java.quickcheck.generator.PrimitiveGenerators;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
+import ru.yandex.bolts.collection.impl.test.GeneratorF;
 import ru.yandex.bolts.function.forhuman.Mapper;
+import ru.yandex.bolts.function.forhuman.Operation;
 import ru.yandex.bolts.function.forhuman.Predicate;
-
-import junit.framework.TestCase;
 
 /**
  * @author Stepan Koltsov
@@ -31,7 +29,7 @@ public class AbstractIteratorFTest extends TestCase {
         assertEquals(Cf.list(1, 2, 3, 4, 5), got);
     }
     
-    public void testFlatMap() {
+    public void testFlatMapSimple() {
         IteratorF<Integer> i = Cf.list(1, 2, 3).iterator().flatMap(new Mapper<Integer, IteratorF<Integer>>() {
             public IteratorF<Integer> map(Integer a) {
                 return Cf.repeat(a, a).iterator();
@@ -62,7 +60,26 @@ public class AbstractIteratorFTest extends TestCase {
         }
     }
     
-    public void testFilter() {
+    
+    public void testFlatMap() {
+        GeneratorF.integers(1, 10).lists().lists().checkForAllVerbose(new Operation<ListF<ListF<Integer>>>() {
+            public void execute(ListF<ListF<Integer>> a) {
+                checkFlatMapOn(a);
+            }
+        });
+    }
+    
+    private void checkFlatMapOn(ListF<ListF<Integer>> i) {
+        IteratorF<Integer> it = i.iterator().flatMap(new Mapper<ListF<Integer>, Iterator<Integer>>() {
+            public Iterator<Integer> map(ListF<Integer> a) {
+                return a.iterator();
+            }
+        });
+        ListF<Integer> expected = i.flatMap(Mapper.<ListF<Integer>>identityM());
+        checkIteratorAgainst(it, expected);
+    }
+    
+    public void testFilterSimple() {
         ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filter(evenP()).toList();
         
         // XXX to simple
@@ -86,8 +103,8 @@ public class AbstractIteratorFTest extends TestCase {
         return PrimitiveGenerators.integers();
     }
     
-    private Generator<List<Integer>> listsOfIntegers() {
-        return CombinedGenerators.lists(integers());
+    private GeneratorF<ListF<Integer>> listsOfIntegers() {
+        return GeneratorF.integers().lists();
     }
     
     private static final Random r = new Random();
@@ -99,26 +116,28 @@ public class AbstractIteratorFTest extends TestCase {
         }
         return r;
     }
-
+    
     public void testFilter3() {
-        QuickCheck.forAllVerbose(listsOfIntegers(), new AbstractCharacteristic<List<Integer>>() {
-            protected void doSpecify(List<Integer> arg0) throws Throwable {
+        listsOfIntegers().checkForAllVerbose(new AbstractCharacteristic<ListF<Integer>>() {
+            protected void doSpecify(ListF<Integer> arg0) throws Throwable {
                 testFilterOn(Cf.x(arg0));
             }
         });
     }
     
     private void testFilterOn(ListF<Integer> l) {
-        int evenSize = l.filter(evenP()).size();
-        IteratorF<Integer> it = l.iterator().filter(evenP());
-        for (int i = 0; i < evenSize; ++i) {
+        checkIteratorAgainst(l.iterator().filter(evenP()), l.filter(evenP()));
+    }
+    
+    private <E> void checkIteratorAgainst(IteratorF<E> it, ListF<E> elements) {
+        for (int i = 0; i < elements.size(); ++i) {
             if (r.nextBoolean())
                 assertTrue(it.hasNext());
             
             if (r.nextBoolean())
                 assertTrue(it.hasNext());
             
-            assertEquals(even(l).get(i), it.next());
+            assertEquals(it.next(), elements.get(i));
         }
         
         assertFalse(it.hasNext());

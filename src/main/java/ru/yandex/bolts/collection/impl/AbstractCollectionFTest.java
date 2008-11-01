@@ -45,6 +45,7 @@ public class AbstractCollectionFTest extends TestCase {
         assertEquals("", list().mkString(", "));
         assertEquals("[1]", list(1).mkString("[", ", ", "]"));
         assertEquals("[1, 2]", list(1, 2).mkString("[", ", ", "]"));
+        assertEquals("[1, 2, 3]", list(1, 2, 3).mkString("[", ", ", "]"));
     }
 
     public void testToList() {
@@ -72,7 +73,7 @@ public class AbstractCollectionFTest extends TestCase {
         });
         assertEquals(expected, m);
     }
-
+    
     public void testSort() {
         assertEquals(Cf.list(1, 2, 3), Cf.list(1, 3, 2).sort());
         assertEquals(Cf.list(3, 2, 1), Cf.list(1, 3, 2).sort(Comparator.naturalComparator().invert()));
