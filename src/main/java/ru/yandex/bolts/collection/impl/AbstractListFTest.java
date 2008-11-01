@@ -224,7 +224,17 @@ public class AbstractListFTest extends TestCase {
         ListF<Integer> l1 = Cf.list(1);
         assertSame(l0, l0.reverse());
         assertSame(l1, l1.reverse());
+        
+        // simple
         assertEquals(list(4, 3, 2, 1), list(1, 2, 3, 4).reverse());
+        
+        GeneratorF.integers().lists().checkForAllVerbose(new Operation<ListF<Integer>>() {
+            public void execute(ListF<Integer> a) {
+                ListF<Integer> r = a.reverse();
+                for (int i = 0; i < a.length(); ++i)
+                    assertSame(a.get(i), r.get(r.length() - i - 1));
+            }
+        });
     }
 
     public void testFirstLastO() {
