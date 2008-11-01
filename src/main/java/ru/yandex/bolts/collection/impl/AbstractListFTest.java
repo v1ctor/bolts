@@ -61,13 +61,13 @@ public class AbstractListFTest extends TestCase {
         ListF<Integer> list = list(1, 2, 3, 4, 5);
         assertEquals(list(), list.take(0));
         assertEquals(list(1, 2), list.take(2));
-        assertEquals(list, list.take(5));
-        assertEquals(list, list.take(6));
+        assertSame(list, list.take(5));
+        assertSame(list, list.take(6));
     }
 
     public void testDrop() {
         ListF<Integer> list = list(1, 2, 3, 4, 5);
-        assertEquals(list, list.drop(0));
+        assertSame(list, list.drop(0));
         assertEquals(list(3, 4, 5), list.drop(2));
         assertEquals(list(), list.drop(5));
         assertEquals(list(), list.drop(6));
