@@ -246,6 +246,7 @@ public class AbstractListFTest extends TestCase {
     }
     
     public void testZipWithIndex() {
+        // simple
         ListF<String> l = list("a", "bb");
         List<Tuple2<String, Integer>> ll = l.zipWithIndex();
 
@@ -254,6 +255,21 @@ public class AbstractListFTest extends TestCase {
 
         assertEquals("bb", ll.get(1).get1());
         assertEquals(Integer.valueOf(1), ll.get(1).get2());
+        
+        // better
+        
+        GeneratorF.strings().lists().checkForAllVerbose(new Operation<ListF<String>>() {
+            public void execute(ListF<String> a) {
+                ListF<Tuple2<String, Integer>> z = a.zipWithIndex();
+
+                assertEquals(a.length(), z.length());
+                
+                for (int i = 0; i < z.length(); ++i) {
+                    assertSame(a.get(i), z.get(i).get1());
+                    assertEquals(i, z.get(i).get2().intValue());
+                }
+            }
+        });
     }
 
 } //~
