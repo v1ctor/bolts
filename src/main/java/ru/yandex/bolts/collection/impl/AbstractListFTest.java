@@ -11,10 +11,14 @@ import junit.framework.TestCase;
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
+import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
+import ru.yandex.bolts.collection.impl.test.GeneratorF;
 import ru.yandex.bolts.function.forhuman.Closure;
 import ru.yandex.bolts.function.forhuman.Mapper;
 import ru.yandex.bolts.function.forhuman.MapperTest;
+import ru.yandex.bolts.function.forhuman.Operation;
+import ru.yandex.bolts.function.forhuman.Predicate;
 import ru.yandex.bolts.function.forhuman.PredicateTest;
 import ru.yandex.bolts.function.forhuman.BinaryFunctionTest;
 
@@ -136,6 +140,15 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testUnique() {
+        GeneratorF.integers(1, 10).lists().checkForAllVerbose(new Operation<ListF<Integer>>() {
+            public void execute(ListF<Integer> l) {
+                SetF<Integer> u = l.unique();
+                assertTrue(u.forAll(l.containsP()));
+                assertTrue(l.forAll(u.containsP()));
+            }
+        });
+        
+        // simple
         ListF<Integer> l = list(1, 2, 3, 4, 1, 2, 1);
         assertEquals(set(1, 2, 3, 4), l.unique());
     }
@@ -156,14 +169,50 @@ public class AbstractListFTest extends TestCase {
         assertEquals(2, (int) list(1, 2, 3).find(PredicateTest.evenP()).get());
         assertFalse(list(1, 5, 3).find(PredicateTest.evenP()).isDefined());
     }
+    
+    private static <T> Predicate<Collection<T>> notEmptyP() {
+        return new Predicate<Collection<T>>() {
+            public boolean evaluate(Collection<T> a) {
+                return a.size() > 0;
+            }
+        };
+    }
 
     public void testReduce() {
+        
+        GeneratorF.strings().lists().filter(AbstractListFTest.<String>notEmptyP()).checkForAllVerbose(new Operation<ListF<String>>() {
+            public void execute(ListF<String> a) {
+                String expected = "";
+                for (String s : a) expected += s;
+                
+                assertEquals(expected, a.reduceLeft(BinaryFunctionTest.stringPlusF()));
+                assertEquals(expected, a.reduceRight(BinaryFunctionTest.stringPlusF()));
+            }
+        });
+        
+        // simple
         ListF<String> l = list("a", "b", "c");
         assertEquals("abc", l.reduceLeft(BinaryFunctionTest.stringPlusF()));
         assertEquals("abc", l.reduceRight(BinaryFunctionTest.stringPlusF()));
     }
 
     public void testFold() {
+        
+        GeneratorF.strings().lists().checkForAllVerbose(new Operation<ListF<String>>() {
+            public void execute(ListF<String> a) {
+                String expectedLeft = "x";
+                for (String s : a) expectedLeft += s;
+                
+                String expectedRight = "";
+                for (String s : a) expectedRight += s;
+                expectedRight += "y";
+                
+                assertEquals(expectedLeft, a.foldLeft("x", BinaryFunctionTest.stringPlusF()));
+                assertEquals(expectedRight, a.foldRight("y", BinaryFunctionTest.stringPlusF()));
+            }
+        });
+        
+        // simple
         ListF<String> l = list("a", "b", "c");
         assertEquals("xabc", l.foldLeft("x", BinaryFunctionTest.stringPlusF()));
         assertEquals("abcx", l.foldRight("x", BinaryFunctionTest.stringPlusF()));
