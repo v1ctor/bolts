@@ -8,6 +8,7 @@ import static ru.yandex.bolts.collection.CollectionsF.set;
 
 import junit.framework.TestCase;
 
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
@@ -219,6 +220,10 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testReverse() {
+        ListF<Integer> l0 = Cf.arrayList();
+        ListF<Integer> l1 = Cf.list(1);
+        assertSame(l0, l0.reverse());
+        assertSame(l1, l1.reverse());
         assertEquals(list(4, 3, 2, 1), list(1, 2, 3, 4).reverse());
     }
 
