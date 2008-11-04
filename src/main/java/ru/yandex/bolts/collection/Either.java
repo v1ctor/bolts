@@ -127,4 +127,12 @@ public class Either<A, B> {
     public static <A, B> Either<A, B> left(A a) { return new Left<A, B>(a); }
     public static <A, B> Either<A, B> right(B b) { return new Right<A, B>(b); }
     
+    public static <A> Either<A, Throwable> tryCatch(Function0<A> f) {
+        try {
+            return Either.<A, Throwable>left(f.apply());
+        } catch (Throwable t) {
+            return Either.<A, Throwable>right(t);
+        }
+    }
+    
 } //~
