@@ -69,15 +69,32 @@ public class AbstractIteratorFTest extends TestCase {
         });
     }
     
-    private void checkFlatMapOn(ListF<ListF<Integer>> i) {
-        IteratorF<Integer> it = i.iterator().flatMap(new Mapper<ListF<Integer>, Iterator<Integer>>() {
+    private void checkFlatMapOn(ListF<ListF<Integer>> l) {
+        IteratorF<Integer> it = l.iterator().flatMap(new Mapper<ListF<Integer>, Iterator<Integer>>() {
             public Iterator<Integer> map(ListF<Integer> a) {
                 return a.iterator();
             }
         });
-        ListF<Integer> expected = i.flatMap(Mapper.<ListF<Integer>>identityM());
+        ListF<Integer> expected = l.flatMap(Mapper.<ListF<Integer>>identityM());
         checkIteratorAgainst(it, expected);
     }
+    
+    
+    public void testFlatMapL() {
+        GeneratorF.integers(1, 10).lists().lists().checkForAllVerbose(new Operation<ListF<ListF<Integer>>>() {
+            public void execute(ListF<ListF<Integer>> a) {
+                checkFlatMapLOn(a);
+            }
+        });
+    }
+    
+    private void checkFlatMapLOn(ListF<ListF<Integer>> l) {
+        IteratorF<Integer> it = l.iterator().flatMapL(Mapper.<ListF<Integer>>identityM());
+        ListF<Integer> expected = l.flatMap(Mapper.<ListF<Integer>>identityM());
+        checkIteratorAgainst(it, expected);
+    }
+
+    
     
     public void testFilterSimple() {
         ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filter(PredicateTest.evenP()).toList();

@@ -14,6 +14,7 @@ import ru.yandex.bolts.function.Function1;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.forhuman.Mapper;
 
 /**
  * Implementation of {@link IteratorF} algorithms.
@@ -87,6 +88,18 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
             
         }
         return new FlatMappedIterator();
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public <B> IteratorF<B> flatMapL(Function1<? extends E, ? extends Iterable<B>> f0) {
+        Mapper<E, Iterable<B>> f = Mapper.wrap((Function1<E, Iterable<B>>) f0);
+        Mapper<E, Iterator<B>> g = f.andThen(new Mapper<Iterable<B>, Iterator<B>>() {
+            public Iterator<B> map(Iterable<B> a) {
+                return a.iterator();
+            }
+        });
+        return flatMap(g);
     }
 
     @Override
