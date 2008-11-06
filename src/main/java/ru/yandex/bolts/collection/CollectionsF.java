@@ -33,6 +33,7 @@ import ru.yandex.bolts.collection.impl.SingletonList;
 import ru.yandex.bolts.collection.impl.SingletonMap;
 import ru.yandex.bolts.collection.impl.SingletonSet;
 import ru.yandex.bolts.function.forhuman.BinaryFunction;
+import ru.yandex.bolts.function.forhuman.Mapper;
 
 /**
  * Utilities to create extended collections.
@@ -472,6 +473,39 @@ public class CollectionsF {
         return new BinaryFunction<SetF<A>, SetF<A>, SetF<A>>() {
             public SetF<A> call(SetF<A> l1, SetF<A> l2) {
                 return l1.plus(l2);
+            }
+        };
+    }
+
+    public static <E> Mapper<List<E>, ListF<E>> listM() {
+        return new Mapper<List<E>, ListF<E>>() {
+            public ListF<E> map(List<E> list) {
+                return x(list);
+            }
+        };
+    }
+
+
+    public static <E> Mapper<Set<E>, SetF<E>> setM() {
+        return new Mapper<Set<E>, SetF<E>>() {
+            public SetF<E> map(Set<E> set) {
+                return x(set);
+            }
+        };
+    }
+
+    public static <K, V> Mapper<Map<K, V>, MapF<K, V>> mapM() {
+        return new Mapper<Map<K, V>, MapF<K, V>>() {
+            public MapF<K, V> map(Map<K, V> map) {
+                return x(map);
+            }
+        };
+    }
+
+    public static <E> Mapper<Iterator<E>, IteratorF<E>> iteratorM() {
+        return new Mapper<Iterator<E>, IteratorF<E>>() {
+            public IteratorF<E> map(Iterator<E> iterator) {
+                return x(iterator);
             }
         };
     }
