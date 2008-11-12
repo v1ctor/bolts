@@ -228,7 +228,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     public static <U> Predicate<Option<U>> isEmptyP() {
-        return <U>isDefinedP().notP();
+        return Option.<U>isDefinedP().notP();
     }
 
     public static <T> Mapper<T, Option<T>> notNullM() {

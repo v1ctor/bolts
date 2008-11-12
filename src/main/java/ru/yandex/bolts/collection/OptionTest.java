@@ -179,10 +179,10 @@ public class OptionTest extends TestCase {
     }
 
     public void testPredicates() {
-        assertTrue(Option.isDefinedP().evaluate(Option.some(1)));
+        assertTrue(Option.<Integer>isDefinedP().evaluate(Option.some(1)));
         assertFalse(Option.isDefinedP().evaluate(Option.none()));
         assertTrue(Option.isEmptyP().evaluate(Option.none()));
-        assertFalse(Option.isEmptyP().evaluate(Option.some(1)));
+        assertFalse(Option.<Integer>isEmptyP().evaluate(Option.some(1)));
         Option.isDefinedP().toString();
         Option.isEmptyP().toString();
     }
