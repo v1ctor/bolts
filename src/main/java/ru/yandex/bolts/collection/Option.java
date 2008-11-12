@@ -238,4 +238,12 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
             }
         };
     }
+
+    public static <U> Mapper<Option<U>, U> getM() {
+        return new Mapper<Option<U>, U>() {
+            public U map(Option<U> o) {
+                return o.get();
+            }
+        };
+    }
 } //~
