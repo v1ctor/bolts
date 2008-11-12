@@ -215,9 +215,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         }
     }
 
-    public static Predicate<Option> isDefinedP() {
-        return new Predicate<Option>() {
-            public boolean evaluate(Option option) {
+    public static <U> Predicate<Option<U>> isDefinedP() {
+        return new Predicate<Option<U>>() {
+            public boolean evaluate(Option<U> option) {
                 return option.isDefined();
             }
 
@@ -227,8 +227,8 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         };
     }
 
-    public static Predicate<Option> isEmptyP() {
-        return isDefinedP().notP();
+    public static <U> Predicate<Option<U>> isEmptyP() {
+        return <U>isDefinedP().notP();
     }
 
     public static <T> Mapper<T, Option<T>> notNullM() {
