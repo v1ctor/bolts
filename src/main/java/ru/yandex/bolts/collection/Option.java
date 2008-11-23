@@ -140,6 +140,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         else return none();
     }
 
+    /**
+     * @deprecated
+     */
     public static Option<String> notEmpty(String s) {
         if (s != null && s.length() > 0) return some(s);
         else return none();
