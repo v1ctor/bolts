@@ -210,6 +210,11 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
             }
         };
     }
+    
+    @SuppressWarnings("unchecked")
+    public <B> Comparator<B> uncheckedCast() {
+        return (Comparator<B>) this;
+    }
 
     public static <A> Comparator<A> wrap(final java.util.Comparator<A> comparator) {
         if (comparator instanceof Comparator) return (Comparator<A>) comparator;
