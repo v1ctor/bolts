@@ -8,7 +8,9 @@ import ru.yandex.bolts.collection.impl.DefaultListF;
 import ru.yandex.bolts.function.Function1;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.BinaryFunction;
+import ru.yandex.bolts.function.forhuman.Comparator;
 import ru.yandex.bolts.function.forhuman.F2V;
 import ru.yandex.bolts.function.forhuman.Mapper;
 
@@ -95,6 +97,24 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return map(Tuple2.<K, V>get2M());
     }
     
+    /**
+     * @see CollectionF#sort()
+     */
+    public ListMap<K, V> sortByKey() {
+        return sortByKey(Comparator.naturalComparator().<K>uncheckedCast());
+    }
+    
+    /**
+     * @see CollectionF#sort(Function1)
+     */
+    @SuppressWarnings("unchecked")
+    public ListMap<K, V> sortByKey(Function2I<? super K, ? super K> comparator) {
+        if (size() <= 1) return this;
+        return new ListMap<K, V>(sort(Tuple2.<K, V>get1M().andThen((Function2I<K, K>) comparator)));
+    }
+    
+    // XXX: sortByKeyBy, sortByKeyByDesc
+    
     public MapF<K, V> toMap() {
         if (isEmpty()) return Cf.map();
         else return Cf.hashMap(this);
@@ -124,24 +144,37 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         }).mkString(elemSep);
     }
     
-    public ListMap<K, V> plus(ListMap<K, V> addition) {
-        return new ListMap<K, V>(super.plus(addition.target));
+    public ListMap<K, V> plus(ListMap<K, V> that) {
+        if (that.isEmpty()) return this;
+        else if (this.isEmpty()) return that;
+        else return new ListMap<K, V>(super.plus(that.target));
     }
 
+    /**
+     * Unchecked.
+     */
     @SuppressWarnings("unchecked")
-    public static <A, B> ListMap<A, B> listMapFromPairs(Object... pairElements) {
-        if (pairElements == null || pairElements.length == 0) return listMap();
-        if (pairElements.length % 2 != 0) throw new IllegalArgumentException("elements count must be even");
-        ListMap<A, B> r = new ListMap<A, B>();
-        for (int i = 0; i < pairElements.length; i += 2) {
-            r.put((A) pairElements[i], (B) pairElements[i + 1]);
+    public static <A, B> ListMap<A, B> listMapFromPairs(Object... elements) {
+        if (elements.length % 2 != 0)
+            throw new IllegalArgumentException();
+        if (elements.length == 0)
+            return listMap();
+        Tuple2<A, B>[] es = new Tuple2[elements.length / 2];
+        for (int i = 0; i < es.length; ++i) {
+            es[i] = Tuple2.tuple((A) elements[i * 2], (B) elements[i * 2 + 1]);
         }
-        return r;
+        return listMap(es);
     }
     
+    /**
+     * Empty immutable.
+     */
     public static <A, B> ListMap<A, B> listMap() {
-        ListF<Tuple2<A, B>> list = Cf.list();
-        return new ListMap<A, B>(list);
+        return listMap(Cf.<Tuple2<A, B>>list());
+    }
+    
+    public static <A, B> ListMap<A, B> arrayList() {
+        return listMap(Cf.<Tuple2<A, B>>arrayList());
     }
     
     public static <A, B> ListMap<A, B> listMap(Tuple2<A, B>... pairs) {
@@ -151,5 +184,5 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     public static <A, B> ListMap<A, B> listMap(ListF<Tuple2<A, B>> pairs) {
         return new ListMap<A, B>(pairs);
     }
-
+    
 } //~
