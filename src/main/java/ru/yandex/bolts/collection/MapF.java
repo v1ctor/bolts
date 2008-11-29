@@ -45,12 +45,16 @@ public interface MapF<K, V> extends Map<K, V>, Function1<K, V> {
     V apply(K key) throws NoSuchElementException;
 
     MapF<K, V> filterKeys(Function1B<? super K> p);
-
+    
     <W> MapF<K, W> mapValues(Function1<? super V, W> f);
 
     //<W> ListF<W> map(Function1<Entry<K, V>, W> f);
 
     <W> ListF<W> mapEntries(Function2<K, V, W> f);
+    
+    MapF<K, V> filterEntries(Function1B<Entry<K, V>> p);
+    
+    MapF<K, V> filterValues(Function1B<? super V> p);
 
     Mapper<K, V> asMapper();
 
@@ -80,8 +84,6 @@ public interface MapF<K, V> extends Map<K, V>, Function1<K, V> {
     MapF<K, V> plus(MapF<K, V> map);
 
     MapF<K, V> plus1(K key, V value);
-
-    MapF<K, V> filterEntries(Function1B<Entry<K, V>> p);
 
     MapF<K, V> unmodifiable();
     

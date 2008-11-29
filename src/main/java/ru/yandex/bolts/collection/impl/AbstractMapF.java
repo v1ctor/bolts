@@ -126,6 +126,19 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
 
         return newMap(entrySet().filter(p));
     }
+    
+    @Override
+    public MapF<K, V> filterValues(Function1B<? super V> p) {
+        return filterEntries(AbstractMapF.<K, V>entryValueM().andThen(p));
+    }
+    
+    private static <K, V> Mapper<Entry<K, V>, V> entryValueM() {
+        return new Mapper<Entry<K,V>, V>() {
+            public V map(java.util.Map.Entry<K, V> a) {
+                return a.getValue();
+            }
+        };
+    }
 
     public MapF<K, V> unmodifiable() {
         return UnmodifiableDefaultMapF.wrap(this);
