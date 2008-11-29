@@ -509,4 +509,13 @@ public class CollectionsF {
             }
         };
     }
+    
+    public static <T> Mapper<Collection<T>, Integer> sizeM() {
+        return new Mapper<Collection<T>, Integer>() {
+            public Integer map(Collection<T> a) {
+                return a.size();
+            }
+        };
+    }
+    
 } //~
