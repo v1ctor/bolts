@@ -21,17 +21,17 @@ public class Tuple3<T1, T2, T3> implements Serializable {
     }
 
     /** First */
-    public T1 getT1() {
+    public T1 get1() {
         return t1;
     }
 
     /** Second */
-    public T2 getT2() {
+    public T2 get2() {
         return t2;
     }
 
     /** Third */
-    public T3 getT3() {
+    public T3 get3() {
         return t3;
     }
 
