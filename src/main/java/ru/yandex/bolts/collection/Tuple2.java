@@ -123,6 +123,6 @@ public class Tuple2<T1, T2> implements Serializable {
     
     /** Construct */
     public static <A, B> Tuple2<A, B> tuple(A a, B b) {
-        return new Tuple2<A,B>(a, b);
+        return new Tuple2<A, B>(a, b);
     }
 } //~

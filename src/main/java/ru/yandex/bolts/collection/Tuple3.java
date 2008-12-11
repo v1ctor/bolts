@@ -76,4 +76,9 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         return "(" + t1 + ", " + t2 + ", " + t3 + ")";
     }
     
+    /** Construct */
+    public static <A, B, C> Tuple3<A, B, C> tuple(A a, B b, C c) {
+        return new Tuple3<A, B, C>(a, b, c);
+    }
+    
 } //~
