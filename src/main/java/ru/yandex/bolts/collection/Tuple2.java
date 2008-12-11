@@ -11,6 +11,8 @@ import ru.yandex.bolts.function.forhuman.Mapper;
  * Pair
  *
  * @author Stepan Koltsov
+ * 
+ * @see Tuple3
  */
 public class Tuple2<T1, T2> implements Serializable {
     private static final long serialVersionUID = 3326001902955370713L;
