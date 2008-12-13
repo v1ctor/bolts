@@ -37,6 +37,18 @@ public class Tuple3<T1, T2, T3> implements Serializable {
     public T3 get3() {
         return _3;
     }
+    
+    public Tuple2<T1, T2> get12() {
+        return Tuple2.tuple(_1, _2);
+    }
+    
+    public Tuple2<T2, T3> get23() {
+        return Tuple2.tuple(_2, _3);
+    }
+    
+    public Tuple2<T1, T3> get13() {
+        return Tuple2.tuple(_1, _3);
+    }
 
     @SuppressWarnings("unchecked")
     public <U1, U2, U3> Tuple3<U1, U2, U3> uncheckedCast() {
@@ -127,6 +139,31 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         };
     }
     
+    // ?
+    
+    public static <A, B, C> Mapper<Tuple3<A, B, C>, Tuple2<A, B>> get12M() {
+        return new Mapper<Tuple3<A, B, C>, Tuple2<A, B>>() {
+            public Tuple2<A, B> map(Tuple3<A, B, C> a) {
+                return a.get12();
+            }
+        };
+    }
+
+    public static <A, B, C> Mapper<Tuple3<A, B, C>, Tuple2<A, C>> get13M() {
+        return new Mapper<Tuple3<A, B, C>, Tuple2<A, C>>() {
+            public Tuple2<A, C> map(Tuple3<A, B, C> a) {
+                return a.get13();
+            }
+        };
+    }
+
+    public static <A, B, C> Mapper<Tuple3<A, B, C>, Tuple2<B, C>> get23M() {
+        return new Mapper<Tuple3<A, B, C>, Tuple2<B, C>>() {
+            public Tuple2<B, C> map(Tuple3<A, B, C> a) {
+                return a.get23();
+            }
+        };
+    }
     
     /** Construct */
     public static <A, B, C> Tuple3<A, B, C> tuple(A a, B b, C c) {
