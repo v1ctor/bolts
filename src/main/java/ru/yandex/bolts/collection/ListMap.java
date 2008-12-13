@@ -166,6 +166,18 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return listMap(es);
     }
     
+    public static <A, B> ListMap<A, B> listMapFromKeysValues(ListF<A> keys, ListF<B> values) {
+        if (keys.length() != values.length())
+            throw new IllegalArgumentException();
+        ListMap<A, B> r = ListMap.arrayList();
+        IteratorF<A> ai = keys.iterator();
+        IteratorF<B> bi = values.iterator();
+        while (ai.hasNext()) {
+            r.put(ai.next(), bi.next());
+        }
+        return r;
+    }
+    
     /**
      * Empty immutable.
      */
