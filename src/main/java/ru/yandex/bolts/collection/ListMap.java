@@ -57,11 +57,15 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     }
     
     public ListMap<K, V> filterValues(Function1B<V> p) {
-        return new ListMap<K, V>(filter(Tuple2.<K, V>get2M().andThen(p)));
+        return new ListMap<K, V>(filter(valueM().andThen(p)));
     }
     
     public ListMap<K, V> filterKeys(Function1B<K> p) {
-        return new ListMap<K, V>(filter(Tuple2.<K, V>get1M().andThen(p)));
+        return new ListMap<K, V>(filter(keyM().andThen(p)));
+    }
+    
+    public Option<Tuple2<K, V>> findByKey(Function1B<? super K> p) {
+        return find(keyM().andThen(p));
     }
     
     public void put(K k, V v) {
@@ -89,12 +93,20 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return plus1(Tuple2.tuple(key, value));
     }
     
+    private Mapper<Tuple2<K, V>, K> keyM() {
+        return Tuple2.<K, V>get1M();
+    }
+    
+    private Mapper<Tuple2<K, V>, V> valueM() {
+        return Tuple2.<K, V>get2M();
+    }
+    
     public ListF<K> keys() {
-        return map(Tuple2.<K, V>get1M());
+        return map(keyM());
     }
     
     public ListF<V> values() {
-        return map(Tuple2.<K, V>get2M());
+        return map(valueM());
     }
     
     /**
@@ -110,7 +122,7 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     @SuppressWarnings("unchecked")
     public ListMap<K, V> sortByKey(Function2I<? super K, ? super K> comparator) {
         if (size() <= 1) return this;
-        return new ListMap<K, V>(sort(Tuple2.<K, V>get1M().andThen((Function2I<K, K>) comparator)));
+        return new ListMap<K, V>(sort(keyM().andThen((Function2I<K, K>) comparator)));
     }
     
     // XXX: sortByKeyBy, sortByKeyByDesc
