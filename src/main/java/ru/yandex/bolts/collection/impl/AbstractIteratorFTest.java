@@ -19,6 +19,8 @@ import ru.yandex.bolts.function.forhuman.PredicateTest;
 
 /**
  * @author Stepan Koltsov
+ * 
+ * @see AbstractIteratorF
  */
 @SuppressWarnings("unused")
 public class AbstractIteratorFTest extends TestCase {

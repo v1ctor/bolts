@@ -1,6 +1,5 @@
 package ru.yandex.bolts.collection.impl;
 
-import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;

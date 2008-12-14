@@ -246,7 +246,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return iterator().exists(p);
     }
 
-    public Option<E> find(Function1B<E> p) {
+    public Option<E> find(Function1B<? super E> p) {
         return iterator().find(p);
     }
 

@@ -199,7 +199,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         return false;
     }
 
-    public Option<E> find(Function1B<E> p) {
+    public Option<E> find(Function1B<? super E> p) {
         while (hasNext()) {
             E e = next();
             if (p.apply(e)) return Option.some(e);

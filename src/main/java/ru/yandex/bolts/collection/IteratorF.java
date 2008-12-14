@@ -40,7 +40,7 @@ public interface IteratorF<E> extends Iterator<E> {
     boolean exists(Function1B<? super E> p);
 
     /** Find element that matches predicate */
-    Option<E> find(Function1B<E> p);
+    Option<E> find(Function1B<? super E> p);
 
     /** Fold left */
     <B> B foldLeft(B z, Function2<B, E, B> f);

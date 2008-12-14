@@ -23,7 +23,7 @@ public interface IterableF<E> extends Iterable<E> {
     boolean exists(Function1B<? super E> p);
 
     /** Find element matching predicate */
-    Option<E> find(Function1B<E> p);
+    Option<E> find(Function1B<? super E> p);
 
     /**
      * Fold left. Compute f(f(...f(f(z, e_1), e_2) ..., e_n-1), e_n)
