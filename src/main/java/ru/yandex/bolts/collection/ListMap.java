@@ -132,6 +132,12 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         else return Cf.hashMap(this);
     }
     
+    @SuppressWarnings("unchecked")
+    @Override
+    public Tuple2<K, V>[] toArray() {
+        return toArray(new Tuple2[0]);
+    }
+    
     public ListMap<K, V> unmodifiable() {
         return new ListMap<K, V>(Cf.x(target).unmodifiable());
     }
