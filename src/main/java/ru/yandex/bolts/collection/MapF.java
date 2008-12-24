@@ -74,7 +74,7 @@ public interface MapF<K, V> extends Map<K, V>, Function1<K, V> {
 
     SetF<Entry<K, V>> entrySet();
 
-    CollectionF<Tuple2<K, V>> entries();
+    ListMap<K, V> entries();
 
     /** Values */
     CollectionF<V> values();

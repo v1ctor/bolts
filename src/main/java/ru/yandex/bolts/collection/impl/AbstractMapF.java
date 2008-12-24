@@ -7,6 +7,7 @@ import java.util.Map;
 import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
+import ru.yandex.bolts.collection.ListMap;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
@@ -32,8 +33,8 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
 
     public abstract SetF<Entry<K, V>> entrySet();
 
-    public CollectionF<Tuple2<K, V>> entries() {
-        return entrySet().map(AbstractMapF.<K, V>tupleM()).toList();
+    public ListMap<K, V> entries() {
+        return ListMap.listMap(entrySet().map(AbstractMapF.<K, V>tupleM()));
     }
 
     protected boolean eq(Object a, Object b) {
