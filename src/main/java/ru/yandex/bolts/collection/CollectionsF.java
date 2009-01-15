@@ -477,7 +477,7 @@ public class CollectionsF {
         };
     }
 
-    public static <E> Mapper<List<E>, ListF<E>> listM() {
+    public static <E> Mapper<List<E>, ListF<E>> wrapListM() {
         return new Mapper<List<E>, ListF<E>>() {
             public ListF<E> map(List<E> list) {
                 return x(list);
@@ -486,7 +486,7 @@ public class CollectionsF {
     }
 
 
-    public static <E> Mapper<Set<E>, SetF<E>> setM() {
+    public static <E> Mapper<Set<E>, SetF<E>> wrapSetM() {
         return new Mapper<Set<E>, SetF<E>>() {
             public SetF<E> map(Set<E> set) {
                 return x(set);
@@ -494,7 +494,7 @@ public class CollectionsF {
         };
     }
 
-    public static <K, V> Mapper<Map<K, V>, MapF<K, V>> mapM() {
+    public static <K, V> Mapper<Map<K, V>, MapF<K, V>> wrapMapM() {
         return new Mapper<Map<K, V>, MapF<K, V>>() {
             public MapF<K, V> map(Map<K, V> map) {
                 return x(map);
@@ -502,7 +502,7 @@ public class CollectionsF {
         };
     }
 
-    public static <E> Mapper<Iterator<E>, IteratorF<E>> iteratorM() {
+    public static <E> Mapper<Iterator<E>, IteratorF<E>> wrapIteratorM() {
         return new Mapper<Iterator<E>, IteratorF<E>>() {
             public IteratorF<E> map(Iterator<E> iterator) {
                 return x(iterator);
