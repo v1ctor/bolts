@@ -109,6 +109,10 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return map(valueM());
     }
     
+    public ListMap<V, K> invert() {
+        return listMap(map(Tuple2.<K, V>swapM()));
+    }
+    
     /**
      * @see CollectionF#sort()
      */
