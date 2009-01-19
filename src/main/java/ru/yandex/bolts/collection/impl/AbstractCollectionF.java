@@ -353,15 +353,18 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return min(Comparator.naturalComparator().<E>uncheckedCast());
     }
 
-    public E min(Comparator<E> eComparator) {
-        return reduceLeft(eComparator.minF());
+    @SuppressWarnings("unchecked")
+    public E min(Function2I<? super E, ? super E> comparator) {
+        return reduceLeft(Comparator.wrap((Function2I<E, E>) comparator).minF());
     }
 
     public E max() {
         return max(Comparator.naturalComparator().<E>uncheckedCast());
     }
 
-    public E max(Comparator<E> eComparator) {
-        return reduceLeft(eComparator.maxF());
+    @SuppressWarnings("unchecked")
+    public E max(Function2I<? super E, ? super E> comparator) {
+        return reduceLeft(Comparator.wrap((Function2I<E, E>) comparator).maxF());
     }
+    
 } //~
