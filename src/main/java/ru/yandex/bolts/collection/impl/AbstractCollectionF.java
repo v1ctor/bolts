@@ -348,4 +348,20 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         if (b == null || a == null) return b == a;
         else return b.equals(a);
     }
+
+    public E min() {
+        return min(Comparator.naturalComparator().<E>uncheckedCast());
+    }
+
+    public E min(Comparator<E> eComparator) {
+        return reduceLeft(eComparator.minF());
+    }
+
+    public E max() {
+        return max(Comparator.naturalComparator().<E>uncheckedCast());
+    }
+
+    public E max(Comparator<E> eComparator) {
+        return reduceLeft(eComparator.maxF());
+    }
 } //~

@@ -121,4 +121,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     Projection<E> projection();
 
+    E min();
+    E min(Comparator<E> comparator);
+    E max();
+    E max(Comparator<E> comparator);
 } //~
