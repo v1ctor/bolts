@@ -9,7 +9,7 @@ import ru.yandex.bolts.function.Function2I;
 /**
  * A => B
  * @author Iliya Roubin
- *         Date: Sep 3, 2007
+ * @date Sep 3, 2007
  */
 public abstract class Mapper<A, B> implements Function1<A, B>, HumanFunction {
 

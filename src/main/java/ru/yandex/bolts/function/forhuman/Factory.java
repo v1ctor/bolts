@@ -7,7 +7,7 @@ import ru.yandex.bolts.function.Function1;
  * () => R
  *
  * @author Iliya Roubin
- *         Date: Sep 3, 2007
+ * @date Sep 3, 2007
  */
 public abstract class Factory<R> implements Function0<R>, java.util.concurrent.Callable<R>, HumanFunction {
 

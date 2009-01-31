@@ -10,7 +10,7 @@ import ru.yandex.bolts.function.Function1B;
  * (A, B) => boolean
  *
  * @author Iliya Roubin
- *         Date: Sep 3, 2007
+ * @date Sep 3, 2007
  */
 public abstract class Predicate<A> implements Function1B<A>, HumanFunction {
 
