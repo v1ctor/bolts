@@ -12,6 +12,7 @@ import ru.yandex.bolts.function.Function1B;
  * @see CollectionF
  *
  * @author Stepan Koltsov
+ * @author Iliya Roubin
  */
 public interface ListF<E> extends CollectionF<E>, List<E> {
     /** Iterate list */
@@ -88,4 +89,7 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     }
     
     Projection<E> projection();
+
+    /** List of pairs of elements with the same index in two lists */
+    <B> ListMap<E, B> zip(ListF<B> that);
 } //~

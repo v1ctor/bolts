@@ -189,14 +189,13 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     }
     
     public static <A, B> ListMap<A, B> listMapFromKeysValues(ListF<A> keys, ListF<B> values) {
-        if (keys.length() != values.length())
-            throw new IllegalArgumentException();
         ListMap<A, B> r = ListMap.arrayList();
-        IteratorF<A> ai = keys.iterator();
-        IteratorF<B> bi = values.iterator();
-        while (ai.hasNext()) {
-            r.put(ai.next(), bi.next());
+
+        int min = Math.min(keys.length(), values.length());
+        for (int i = 0; i < min; ++i) {
+            r.put(keys.get(i), values.get(i));
         }
+
         return r;
     }
     

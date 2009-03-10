@@ -8,14 +8,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
-import ru.yandex.bolts.collection.Cf;
-import ru.yandex.bolts.collection.CollectionF;
-import ru.yandex.bolts.collection.CollectionsF;
-import ru.yandex.bolts.collection.IteratorF;
-import ru.yandex.bolts.collection.ListF;
-import ru.yandex.bolts.collection.ListIteratorF;
-import ru.yandex.bolts.collection.Option;
-import ru.yandex.bolts.collection.Tuple2;
+import ru.yandex.bolts.collection.*;
 import ru.yandex.bolts.function.Function1B;
 
 /**
@@ -153,6 +146,10 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
                 return listIterator.previous();
             }
         };
+    }
+
+    public <B> ListMap<E, B> zip(ListF<B> that) {
+        return ListMap.listMapFromKeysValues(this, that);
     }
 
     private class ReadOnlyItr extends SimpleListIterator {
