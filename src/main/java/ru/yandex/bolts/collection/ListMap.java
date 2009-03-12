@@ -190,10 +190,11 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     
     public static <A, B> ListMap<A, B> listMapFromKeysValues(ListF<A> keys, ListF<B> values) {
         ListMap<A, B> r = ListMap.arrayList();
-
-        int min = Math.min(keys.length(), values.length());
-        for (int i = 0; i < min; ++i) {
-            r.put(keys.get(i), values.get(i));
+        
+        IteratorF<A> ki = keys.iterator();
+        IteratorF<B> vi = values.iterator();
+        while (ki.hasNext() && vi.hasNext()) {
+            r.put(ki.next(), vi.next());
         }
 
         return r;
