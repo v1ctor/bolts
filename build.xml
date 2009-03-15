@@ -14,7 +14,7 @@
     </target>
     
     <target name="publish" if="revision.specified" depends="ivy-jar" description="Uses ivy to publish compiled module into repository">
-        <property name="ivy.deliver.revision" value="-${jar.suffix}"/>
+        <property name="ivy.deliver.revision" value="${jar.suffix}"/>
         <ant antfile="ivy-ant/ivy-targets.xml" target="publish"/>
     </target>
 
@@ -51,10 +51,10 @@
         <delete>
             <fileset dir="target" includes="bolts*.jar"/>
         </delete>
-        <jar destfile="target/jars/bolts${jar.suffix}.jar">
+        <jar destfile="target/jars/bolts-${jar.suffix}-jar.jar">
             <fileset dir="target/classes"/>
         </jar>
-    	<jar destfile="target/jars/bolts${jar.suffix}-source.jar">
+    	<jar destfile="target/jars/bolts-${jar.suffix}-source.jar">
             <fileset dir="src/main/java"/>
         </jar>
     </target>
