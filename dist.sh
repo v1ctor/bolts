@@ -26,7 +26,7 @@ mkdir -p target/site
 cat doc/index.html | sed "s,@rev@,$r," > target/site/index.html
 cp target/bolts.zip target/site/
 cp target/jars/yandex-bolts.jar target/site/bolts.jar
-cp target/yandex-bolts-sources.jar target/site/bolts-sources.jar
+cp target/jars/yandex-bolts-sources.jar target/site/bolts-sources.jar
 cp -r target/javadoc target/site/
 
 # vim: set ts=4 sw=4 et:

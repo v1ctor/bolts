@@ -1,41 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="bolts" basedir="." default="dist" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="bolts" basedir="." default="dist">
     <property name="jar.suffix" value=""/>
+
+    <condition property="revision.specified">
+        <length string="${jar.suffix}" when="greater" length="0" trim="true"/>
+    </condition>
+
+    <target name="retrieve" description="Uses ivy to retrieve dependencies and sources">
+        <property name="ivy.retrieve.conf" value="compile,sources"/>
+        <property name="ivy.retrieve.pattern" value="lib/dep/[type]s/[organisation]-[artifact]-[revision].[ext]"/>
+        <ant antfile="ivy-ant/ivy-targets.xml" target="retrieve"/>
+    </target>
     
-    <available property="ivy.available" file="lib/ivy/ivy-2.0.0-beta2.jar"/>
-    <target name="download-ivy" unless="ivy.available">
-        <mkdir dir="lib/ivy"/>
-
-        <echo>Downloading ivy</echo>
-
-        <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.0.0-beta2/ivy-2.0.0-beta2.jar"
-                dest="lib/ivy/ivy-2.0.0-beta2.jar"/>
+    <target name="publish" if="revision.specified" depends="ivy-jar" description="Uses ivy to publish compiled module into repository">
+        <property name="ivy.deliver.revision" value="-${jar.suffix}"/>
+        <ant antfile="ivy-ant/ivy-targets.xml" target="publish"/>
     </target>
 
-    <target name="resolve" depends="download-ivy">
-        <mkdir dir="lib/dep"/>
-        <taskdef resource="org/apache/ivy/ant/antlib.xml"
-                uri="antlib:org.apache.ivy.ant">
-            <classpath>
-                <fileset dir="lib/ivy" includes="*.jar"/>
-            </classpath>
-        </taskdef>
-
-        <ivy:retrieve pattern="lib/dep/[organisation]-[artifact]-[revision].[ext]" sync="true"/>
-    </target>
-   
-    
     <target name="clean" description="cleanup compiled and generated classes">
         <delete dir="target" quiet="true"/>
+        <delete dir="lib/dep" quiet="true"/>
     </target>
 
-    <target name="compile" depends="resolve">
+    <target name="compile" depends="retrieve">
         <mkdir dir="target/classes"/>
         <javac source="1.5" target="1.5" srcdir="src/main/java" destdir="target/classes" debug="true">
             <classpath>
                 <fileset dir="lib" includes="*.jar"/>
-                <fileset dir="lib/dep" includes="*.jar"/>
+                <fileset dir="lib/dep/jars" includes="*.jar"/>
             </classpath>
         </javac>
     </target>
@@ -53,9 +46,23 @@
         </jar>
     </target>
 
-    <target name="build" depends="jar" />
+    <target name="ivy-jar" depends="compile">
+        <mkdir dir="target/jars"/>
+        <delete>
+            <fileset dir="target" includes="bolts*.jar"/>
+        </delete>
+        <jar destfile="target/jars/bolts${jar.suffix}.jar">
+            <fileset dir="target/classes"/>
+        </jar>
+    	<jar destfile="target/jars/bolts${jar.suffix}-source.jar">
+            <fileset dir="src/main/java"/>
+        </jar>
+    </target>
+
+
+    <target name="build" depends="jar,ivy-jar" />
     
-    <target name="dist" depends="clean,jar"/>
+    <target name="dist" depends="clean,jar,ivy-jar"/>
 
     <target name="test" depends="clean,compile">
         <junit printsummary="yes" fork="yes" failureproperty="test.failure">
