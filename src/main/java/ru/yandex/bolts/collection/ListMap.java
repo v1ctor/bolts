@@ -9,9 +9,9 @@ import ru.yandex.bolts.function.Function1;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
+import ru.yandex.bolts.function.Function2V;
 import ru.yandex.bolts.function.forhuman.BinaryFunction;
 import ru.yandex.bolts.function.forhuman.Comparator;
-import ru.yandex.bolts.function.forhuman.F2V;
 import ru.yandex.bolts.function.forhuman.Mapper;
 
 /**
@@ -72,8 +72,8 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         add(Tuple2.tuple(k, v));
     }
     
-    public F2V<K, V> putOp() {
-        return new F2V<K, V>() {
+    public Function2V<K, V> putOp() {
+        return new Function2V<K, V>() {
             public void apply(K a, V b) {
                 put(a, b);
             }

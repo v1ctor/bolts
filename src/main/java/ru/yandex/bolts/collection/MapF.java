@@ -7,6 +7,8 @@ import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.Function2B;
+import ru.yandex.bolts.function.Function2V;
 import ru.yandex.bolts.function.forhuman.Mapper;
 
 /**
@@ -55,6 +57,10 @@ public interface MapF<K, V> extends Map<K, V>, Function1<K, V> {
     MapF<K, V> filterEntries(Function1B<Entry<K, V>> p);
     
     MapF<K, V> filterValues(Function1B<? super V> p);
+    
+    void forEachEntry(Function2V<? super K, ? super V> op);
+    
+    boolean forAllEntries(Function2B<? super K, ? super V> op);
 
     Mapper<K, V> asMapper();
 

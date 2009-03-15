@@ -16,6 +16,9 @@ import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.Function2B;
+import ru.yandex.bolts.function.Function2V;
+import ru.yandex.bolts.function.FunctionB;
 import ru.yandex.bolts.function.forhuman.Factory;
 import ru.yandex.bolts.function.forhuman.Mapper;
 import ru.yandex.bolts.function.forhuman.Predicate;
@@ -133,6 +136,16 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return filterEntries(AbstractMapF.<K, V>entryValueM().andThen(p));
     }
     
+    @Override
+    public boolean forAllEntries(Function2B<? super K, ? super V> op) {
+        return entries().forAll(op.asTupleFunction().uncheckedCast());
+    }
+
+    @Override
+    public void forEachEntry(Function2V<? super K, ? super V> op) {
+        entries().forEach(op.asTupleFunction().uncheckedCast());
+    }
+
     private static <K, V> Mapper<Entry<K, V>, V> entryValueM() {
         return new Mapper<Entry<K,V>, V>() {
             public V map(java.util.Map.Entry<K, V> a) {

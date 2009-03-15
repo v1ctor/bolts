@@ -3,7 +3,8 @@ package ru.yandex.bolts.function;
 /**
  * @author Stepan Koltsov
  *
- * @see ru.yandex.bolts.function.forhuman.Operation
+ * @deprecated
+ * @see FunctionV
  */
 public interface Function1V<A> {
     void apply(A a);
