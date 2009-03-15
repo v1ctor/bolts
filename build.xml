@@ -46,7 +46,7 @@
         </jar>
     </target>
 
-    <target name="ivy-jar" depends="compile">
+    <target name="ivy-jar" depends="compile" if="revision.specified">
         <mkdir dir="target/jars"/>
         <delete>
             <fileset dir="target" includes="bolts*.jar"/>
