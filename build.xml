@@ -3,8 +3,8 @@
 <project name="bolts" basedir="." default="dist">
     <property name="jar.suffix" value=""/>
 
-    <condition property="revision.specified">
-        <length string="${jar.suffix}" when="greater" length="0" trim="true"/>
+    <condition property="ivy.jar.suffix" value="-${revision.to.publish}" else="">
+        <isset property="revision.to.publish"/>
     </condition>
 
     <target name="retrieve" description="Uses ivy to retrieve dependencies and sources">
@@ -13,8 +13,8 @@
         <ant antfile="ivy-ant/ivy-targets.xml" target="retrieve"/>
     </target>
     
-    <target name="publish" if="revision.specified" depends="ivy-jar" description="Uses ivy to publish compiled module into repository">
-        <property name="ivy.deliver.revision" value="${jar.suffix}"/>
+    <target name="publish" if="revision.to.publish" depends="ivy-jar" description="Uses ivy to publish compiled module into repository">
+        <property name="ivy.deliver.revision" value="${revision.to.pulish}"/>
         <ant antfile="ivy-ant/ivy-targets.xml" target="publish"/>
     </target>
 
@@ -46,15 +46,15 @@
         </jar>
     </target>
 
-    <target name="ivy-jar" depends="compile" if="revision.specified">
+    <target name="ivy-jar" depends="compile">
         <mkdir dir="target/jars"/>
         <delete>
             <fileset dir="target" includes="bolts*.jar"/>
         </delete>
-        <jar destfile="target/jars/bolts-${jar.suffix}-jar.jar">
+        <jar destfile="target/jars/bolts${ivy.jar.suffix}-jar.jar">
             <fileset dir="target/classes"/>
         </jar>
-    	<jar destfile="target/jars/bolts-${jar.suffix}-source.jar">
+    	<jar destfile="target/jars/bolts${ivy.jar.suffix}-source.jar">
             <fileset dir="src/main/java"/>
         </jar>
     </target>
