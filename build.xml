@@ -14,7 +14,7 @@
     </target>
     
     <target name="publish" if="revision.to.publish" depends="ivy-jar" description="Uses ivy to publish compiled module into repository">
-        <property name="ivy.deliver.revision" value="${revision.to.pulish}"/>
+        <property name="ivy.deliver.revision" value="${revision.to.publish}"/>
         <ant antfile="ivy-ant/ivy-targets.xml" target="publish"/>
     </target>
 
