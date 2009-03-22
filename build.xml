@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <project name="bolts" basedir="." default="dist">
-    <property name="jar.suffix" value=""/>
+    <import file="./ivy-ant/ivy-targets.xml"/>
 
-    <condition property="ivy.jar.suffix" value="-${revision.to.publish}" else="">
-        <isset property="revision.to.publish"/>
+    <property name="ivy.retrieve.pattern" value="lib/dep/[type]s/[organisation]-[artifact]-[revision].[ext]"/>
+
+    <condition property="ivy.deliver.revision" value="${build.number}">
+        <isset property="build.number"/>
     </condition>
 
-    <target name="retrieve" description="Uses ivy to retrieve dependencies and sources">
-        <property name="ivy.retrieve.conf" value="compile,sources"/>
-        <property name="ivy.retrieve.pattern" value="lib/dep/[type]s/[organisation]-[artifact]-[revision].[ext]"/>
-        <ant antfile="ivy-ant/ivy-targets.xml" target="retrieve"/>
-    </target>
-    
-    <target name="publish" if="revision.to.publish" depends="ivy-jar" description="Uses ivy to publish compiled module into repository">
-        <property name="ivy.deliver.revision" value="${revision.to.publish}"/>
-        <ant antfile="ivy-ant/ivy-targets.xml" target="publish"/>
-    </target>
+    <condition property="jar.suffix" value="-${ivy.deliver.revision}">
+        <isset property="ivy.deliver.revision"/>
+    </condition>
+
+    <property name="jar.suffix" value=""/>
 
     <target name="clean" description="cleanup compiled and generated classes">
         <delete dir="target" quiet="true"/>
         <delete dir="lib/dep" quiet="true"/>
     </target>
 
-    <target name="compile" depends="retrieve">
+    <target name="compile" depends="ivy-retrieve">
         <mkdir dir="target/classes"/>
         <javac source="1.5" target="1.5" srcdir="src/main/java" destdir="target/classes" debug="true">
             <classpath>
@@ -46,23 +43,24 @@
         </jar>
     </target>
 
-    <target name="ivy-jar" depends="compile">
+    <target name="publish" depends="compile" if="ivy.deliver.revision">
         <mkdir dir="target/jars"/>
         <delete>
             <fileset dir="target" includes="bolts*.jar"/>
         </delete>
-        <jar destfile="target/jars/bolts${ivy.jar.suffix}-jar.jar">
+        <jar destfile="target/jars/bolts${jar.suffix}-jar.jar">
             <fileset dir="target/classes"/>
         </jar>
-    	<jar destfile="target/jars/bolts${ivy.jar.suffix}-source.jar">
+    	<jar destfile="target/jars/bolts${jar.suffix}-source.jar">
             <fileset dir="src/main/java"/>
         </jar>
+        <antcall target="ivy-publish"/>
     </target>
 
 
-    <target name="build" depends="jar,ivy-jar" />
+    <target name="build" depends="jar" />
     
-    <target name="dist" depends="clean,jar,ivy-jar"/>
+    <target name="dist" depends="clean,jar"/>
 
     <target name="test" depends="clean,compile">
         <junit printsummary="yes" fork="yes" failureproperty="test.failure">
