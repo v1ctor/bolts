@@ -23,6 +23,7 @@ public abstract class Function1V<A> {
     }
     
     public <R> Function<A, R> asFunctionReturn(final Function0<R> rv) {
+        if (rv == null) throw new IllegalArgumentException("rv constructor must not be null");
         return new Function<A, R>() {
             public R apply(A a) {
                 Function1V.this.apply(a);
@@ -31,12 +32,12 @@ public abstract class Function1V<A> {
         };
     }
     
-    public <R> Function<A, R> asFunctionReturn(R rv) {
+    public <R> Function<A, R> asFunctionReturnValue(R rv) {
         return asFunctionReturn(Function0.constF(rv));
     }
     
     public <B> Function<A, B> asFunctionReturnNull() {
-        return asFunctionReturn(null);
+        return asFunctionReturnValue(null);
     }
 
     @SuppressWarnings("unchecked")
