@@ -5,7 +5,7 @@
 
     <property name="ivy.retrieve.pattern" value="lib/dep/[type]s/[organisation]-[artifact]-[revision].[ext]"/>
 
-    <condition property="ivy.deliver.revision" value="${build.vcs.number}">
+    <condition property="ivy.deliver.revision" value="r${build.vcs.number}">
         <isset property="build.vcs.number"/>
     </condition>
 
