@@ -3,6 +3,6 @@ package ru.yandex.bolts.function;
 /**
  * @author Stepan Koltsov
  */
-public interface Function3<A, B, C, R> {
-    R apply(A a, B b, C c);
+public abstract class Function3<A, B, C, R> {
+    public abstract R apply(A a, B b, C c);
 } //~

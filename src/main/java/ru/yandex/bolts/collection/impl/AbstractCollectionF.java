@@ -18,15 +18,12 @@ import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
-import ru.yandex.bolts.function.forhuman.Mapper;
-import ru.yandex.bolts.function.forhuman.Operation;
-import ru.yandex.bolts.function.forhuman.Predicate;
 
 /**
  * Implementation of {@link CollectionF} algorithms.
@@ -54,9 +51,9 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return iterator.toList();
     }
 
-    public Predicate<E> containsP() {
-        return new Predicate<E>() {
-            public boolean evaluate(E e) {
+    public Function1B<E> containsP() {
+        return new Function1B<E>() {
+            public boolean apply(E e) {
                 return contains(e);
             }
         };
@@ -137,12 +134,12 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return Tuple2.tuple(matched, unmatched);
     }
     
-    public <B> ListF<B> map(Function1<? super E, B> f) {
+    public <B> ListF<B> map(Function<? super E, B> f) {
         if (isEmpty()) return emptyList();
         else return iterator().map(f).toList();
     }
 
-    public <B> ListF<B> flatMap(Function1<? super E, ? extends Collection<B>> f) {
+    public <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f) {
         if (isEmpty()) return CollectionsF.list();
 
         ListF<B> result = CollectionsF.arrayList();
@@ -152,19 +149,19 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return result;
     }
 
-    public <B> ListF<B> flatMapO(final Function1<? super E, Option<B>> f) {
+    public <B> ListF<B> flatMapO(final Function<? super E, Option<B>> f) {
         if (isEmpty()) return CollectionsF.list();
 
-        return flatMap(new Function1<E, Collection<B>>() {
+        return flatMap(new Function<E, Collection<B>>() {
             public Collection<B> apply(E e) {
                 return f.apply(e).toList();
             }
         });
     }
 
-    public Operation<E> addOp() {
-        return new Operation<E>() {
-            public void execute(E e) {
+    public Function1V<E> addOp() {
+        return new Function1V<E>() {
+            public void apply(E e) {
                 add(e);
             }
 
@@ -221,12 +218,12 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return r;
     }
 
-    public ListF<E> sortBy(Function1<? super E, ?> f) {
-        return sort(Mapper.wrap(f).andThenNaturalComparator().nullLowC());
+    public ListF<E> sortBy(Function<? super E, ?> f) {
+        return sort(f.andThenNaturalComparator().nullLowC());
     }
     
-    public ListF<E> sortByDesc(Function1<? super E, ?> f) {
-        return sort(Mapper.wrap(f).andThenNaturalComparator().nullLowC().invert());
+    public ListF<E> sortByDesc(Function<? super E, ?> f) {
+        return sort(f.andThenNaturalComparator().nullLowC().invert());
     }
 
     public CollectionF<E> unmodifiable() {
@@ -286,28 +283,28 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return sb.toString();
     }
 
-    public <K, V> MapF<K, V> toMap(Function1<? super E, Tuple2<K, V>> mapper) {
+    public <K, V> MapF<K, V> toMap(Function<? super E, Tuple2<K, V>> mapper) {
         if (isEmpty()) return CollectionsF.map();
         else return CollectionsF.hashMap(map(mapper));
     }
 
-    public <K> MapF<K, E> toMapMappingToKey(final Function1<? super E, K> mapper) {
-        return toMap(new Mapper<E, Tuple2<K, E>>() {
-            public Tuple2<K, E> map(E e) {
+    public <K> MapF<K, E> toMapMappingToKey(final Function<? super E, K> mapper) {
+        return toMap(new Function<E, Tuple2<K, E>>() {
+            public Tuple2<K, E> apply(E e) {
                 return Tuple2.tuple(mapper.apply(e), e);
             }
         });
     }
 
-    public <V> MapF<E, V> toMapMappingToValue(final Function1<? super E, V> mapper) {
-        return toMap(new Mapper<E, Tuple2<E, V>>() {
-            public Tuple2<E, V> map(E e) {
+    public <V> MapF<E, V> toMapMappingToValue(final Function<? super E, V> mapper) {
+        return toMap(new Function<E, Tuple2<E, V>>() {
+            public Tuple2<E, V> apply(E e) {
                 return Tuple2.tuple(e, mapper.apply(e));
             }
         });
     }
 
-    public <V> MapF<V, ListF<E>> groupBy(Function1<? super E, ? extends V> m) {
+    public <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m) {
         if (isEmpty()) return CollectionsF.map();
 
         MapF<V, ListF<E>> map = CollectionsF.hashMap();

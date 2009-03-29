@@ -32,8 +32,8 @@ import ru.yandex.bolts.collection.impl.SetFromMap;
 import ru.yandex.bolts.collection.impl.SingletonList;
 import ru.yandex.bolts.collection.impl.SingletonMap;
 import ru.yandex.bolts.collection.impl.SingletonSet;
-import ru.yandex.bolts.function.forhuman.BinaryFunction;
-import ru.yandex.bolts.function.forhuman.Mapper;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function2;
 
 /**
  * Utilities to create extended collections.
@@ -453,66 +453,66 @@ public class CollectionsF {
         }
     }
 
-    public static <A, B> BinaryFunction<MapF<A, B>, MapF<A, B>, MapF<A, B>> mapPlusF() {
-        return new BinaryFunction<MapF<A, B>, MapF<A, B>, MapF<A, B>>() {
-            public MapF<A, B> call(MapF<A, B> m1, MapF<A, B> m2) {
+    public static <A, B> Function2<MapF<A, B>, MapF<A, B>, MapF<A, B>> mapPlusF() {
+        return new Function2<MapF<A, B>, MapF<A, B>, MapF<A, B>>() {
+            public MapF<A, B> apply(MapF<A, B> m1, MapF<A, B> m2) {
                 return m1.plus(m2);
             }
         };
     }
 
-    public static <A> BinaryFunction<ListF<A>, ListF<A>, ListF<A>> listPlusF() {
-        return new BinaryFunction<ListF<A>, ListF<A>, ListF<A>>() {
-            public ListF<A> call(ListF<A> l1, ListF<A> l2) {
+    public static <A> Function2<ListF<A>, ListF<A>, ListF<A>> listPlusF() {
+        return new Function2<ListF<A>, ListF<A>, ListF<A>>() {
+            public ListF<A> apply(ListF<A> l1, ListF<A> l2) {
                 return l1.plus(l2);
             }
         };
     }
 
-    public static <A> BinaryFunction<SetF<A>, SetF<A>, SetF<A>> setPlusF() {
-        return new BinaryFunction<SetF<A>, SetF<A>, SetF<A>>() {
-            public SetF<A> call(SetF<A> l1, SetF<A> l2) {
+    public static <A> Function2<SetF<A>, SetF<A>, SetF<A>> setPlusF() {
+        return new Function2<SetF<A>, SetF<A>, SetF<A>>() {
+            public SetF<A> apply(SetF<A> l1, SetF<A> l2) {
                 return l1.plus(l2);
             }
         };
     }
 
-    public static <E> Mapper<List<E>, ListF<E>> wrapListM() {
-        return new Mapper<List<E>, ListF<E>>() {
-            public ListF<E> map(List<E> list) {
+    public static <E> Function<List<E>, ListF<E>> wrapListM() {
+        return new Function<List<E>, ListF<E>>() {
+            public ListF<E> apply(List<E> list) {
                 return x(list);
             }
         };
     }
 
 
-    public static <E> Mapper<Set<E>, SetF<E>> wrapSetM() {
-        return new Mapper<Set<E>, SetF<E>>() {
-            public SetF<E> map(Set<E> set) {
+    public static <E> Function<Set<E>, SetF<E>> wrapSetM() {
+        return new Function<Set<E>, SetF<E>>() {
+            public SetF<E> apply(Set<E> set) {
                 return x(set);
             }
         };
     }
 
-    public static <K, V> Mapper<Map<K, V>, MapF<K, V>> wrapMapM() {
-        return new Mapper<Map<K, V>, MapF<K, V>>() {
-            public MapF<K, V> map(Map<K, V> map) {
+    public static <K, V> Function<Map<K, V>, MapF<K, V>> wrapMapM() {
+        return new Function<Map<K, V>, MapF<K, V>>() {
+            public MapF<K, V> apply(Map<K, V> map) {
                 return x(map);
             }
         };
     }
 
-    public static <E> Mapper<Iterator<E>, IteratorF<E>> wrapIteratorM() {
-        return new Mapper<Iterator<E>, IteratorF<E>>() {
-            public IteratorF<E> map(Iterator<E> iterator) {
+    public static <E> Function<Iterator<E>, IteratorF<E>> wrapIteratorM() {
+        return new Function<Iterator<E>, IteratorF<E>>() {
+            public IteratorF<E> apply(Iterator<E> iterator) {
                 return x(iterator);
             }
         };
     }
     
-    public static <T> Mapper<Collection<T>, Integer> sizeM() {
-        return new Mapper<Collection<T>, Integer>() {
-            public Integer map(Collection<T> a) {
+    public static <T> Function<Collection<T>, Integer> sizeM() {
+        return new Function<Collection<T>, Integer>() {
+            public Integer apply(Collection<T> a) {
                 return a.size();
             }
         };

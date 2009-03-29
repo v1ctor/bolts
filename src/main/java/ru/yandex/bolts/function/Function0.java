@@ -1,10 +1,110 @@
 package ru.yandex.bolts.function;
 
+
 /**
  * @author Stepan Koltsov
  *
- * @see ru.yandex.bolts.function.forhuman.Factory
+ * @see ru.yandex.bolts.function.forhuman.Function0
  */
-public interface Function0<R> {
-    R apply();
+public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
+    public abstract R apply();
+
+    @Override
+    public final R call() throws Exception {
+        return apply();
+    }
+    
+    public <B> Function0<B> andThen(final Function<R, B> mapper) {
+        return new Function0<B>() {
+            public B apply() {
+                return mapper.apply(Function0.this.apply());
+            }
+
+            public String toString() {
+                return mapper + "(" + Function0.this + ")";
+            }
+        };
+    }
+
+    public static <T> Function0<T> newInstanceF(final Class<T> clazz) {
+        if (clazz == null) throw new IllegalArgumentException();
+        return new Function0<T>() {
+            public T apply() {
+                try {
+                    return clazz.newInstance();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            public String toString() {
+                return clazz + ".newInstance";
+            }
+            
+        };
+    }
+
+    public Function<Object, R> asFunction() {
+        return new Function<Object, R>() {
+            public R apply(Object a) {
+                return Function0.this.apply();
+            }
+
+            public String toString() {
+                return Function0.this.toString();
+            }
+        };
+    }
+    
+    /** Function0 that always return same value */
+    public static <T> Function0<T> constF(final T t) {
+        return new Function0<T>() {
+            public T apply() {
+                return t;
+            }
+
+            public String toString() {
+                return "const(" + t + ")";
+            }
+        };
+    }
+
+    /** Wrap */
+    public static <T> Function0<T> wrap(final java.util.concurrent.Callable<T> callable) {
+        if (callable instanceof Function0) return (Function0<T>) callable;
+        else return new Function0<T>() {
+            public T apply() {
+                try {
+                    return callable.call();
+                } catch (Exception e) {
+                    // XXX: throw unchecked
+                    throw new RuntimeException(e);
+                }
+            }
+
+            public String toString() {
+                return callable.toString();
+            }
+        };
+    }
+
+    /** Wrap */
+    @SuppressWarnings("unchecked")
+    public static <T> Function0<T> wrap(final java.util.concurrent.Future<T> future) {
+        if (future instanceof Function0) return (ru.yandex.bolts.function.Function0<T>) future;
+        else return new Function0<T>() {
+            public T apply() {
+                try {
+                    return future.get();
+                } catch (Exception e) {
+                    // XXX: throw unchecked
+                    throw new RuntimeException(e);
+                }
+            }
+
+            public String toString() {
+                return future.toString();
+            }
+        };
+    }
 } //~

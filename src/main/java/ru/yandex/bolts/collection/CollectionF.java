@@ -4,12 +4,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
-import ru.yandex.bolts.function.forhuman.Operation;
-import ru.yandex.bolts.function.forhuman.Predicate;
 
 /**
  * Extended collection.
@@ -32,25 +31,25 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     Tuple2<? extends IterableF<E>, ? extends IterableF<E>> filter2(Function1B<? super E> p);
 
     /** Map */
-    <B> ListF<B> map(Function1<? super E, B> mapper);
+    <B> ListF<B> map(Function<? super E, B> mapper);
 
     /** Flat map */
-    <B> ListF<B> flatMap(Function1<? super E, ? extends Collection<B>> f);
+    <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f);
 
     /** Flat map variant that accept mapper that returns Option instead of Collection */
-    <B> ListF<B> flatMapO(Function1<? super E, Option<B>> f);
+    <B> ListF<B> flatMapO(Function<? super E, Option<B>> f);
     
     /** Map to list of map entries and construct map */
-    <K, V> MapF<K, V> toMap(Function1<? super E, Tuple2<K, V>> t);
+    <K, V> MapF<K, V> toMap(Function<? super E, Tuple2<K, V>> t);
 
     /** Map to list of map keys and construct map. Elements of this collection are used as values */
-    <K> MapF<K, E> toMapMappingToKey(Function1<? super E, K> m);
+    <K> MapF<K, E> toMapMappingToKey(Function<? super E, K> m);
 
     /** Map to list of map values and construct map. Elements of this collection are used as keys */
-    <V> MapF<E, V> toMapMappingToValue(Function1<? super E, V> m);
+    <V> MapF<E, V> toMapMappingToValue(Function<? super E, V> m);
 
-    /** Predicate whether object contained in this */
-    Predicate<E> containsP();
+    /** Function1B whether object contained in this */
+    Function1B<E> containsP();
 
     /** Convert this to list */
     ListF<E> toList();
@@ -64,14 +63,14 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     /** Elements sorted by given comparator */
     ListF<E> sort(Function2I<? super E, ? super E> comparator);
 
-    ListF<E> sortBy(Function1<? super E, ?> f);
+    ListF<E> sortBy(Function<? super E, ?> f);
     
-    ListF<E> sortByDesc(Function1<? super E, ?> f);
+    ListF<E> sortByDesc(Function<? super E, ?> f);
     
-    <V> MapF<V, ListF<E>> groupBy(Function1<? super E, ? extends V> m);
+    <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m);
 
     /** Add element to this collection */
-    Operation<E> addOp();
+    Function1V<E> addOp();
 
     CollectionF<E> plus1(E e);
 

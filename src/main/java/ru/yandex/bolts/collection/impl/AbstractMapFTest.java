@@ -1,5 +1,8 @@
 package ru.yandex.bolts.collection.impl;
 
+import static ru.yandex.bolts.collection.CollectionsF.list;
+import static ru.yandex.bolts.collection.CollectionsF.set;
+
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
@@ -8,10 +11,8 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
-import ru.yandex.bolts.function.forhuman.Mapper;
-import ru.yandex.bolts.function.forhuman.PredicateTest;
-import static ru.yandex.bolts.collection.CollectionsF.list;
-import static ru.yandex.bolts.collection.CollectionsF.set;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function1BTest;
 
 /**
  * @author Stepan Koltsov
@@ -21,24 +22,24 @@ public class AbstractMapFTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AbstractMapFTest.class);
 
     private static MapF<Integer, String> map123() {
-        return list(1, 2, 3).toMapMappingToValue(Mapper.toStringM());
+        return list(1, 2, 3).toMapMappingToValue(Function.toStringF());
     }
 
     public void testFilterKeys() {
         MapF<Integer, String> m = map123();
-        MapF<Integer, String> n = m.filterKeys(PredicateTest.evenP());
+        MapF<Integer, String> n = m.filterKeys(Function1BTest.evenP());
         assertEquals(CollectionsF.map(2, "2"), n);
     }
 
     public void testMapValues() {
         MapF<Integer, String> m = map123();
-        MapF<Integer, String> n = map123().mapValues(new Mapper<String, String>() {
-            public String map(String s) {
+        MapF<Integer, String> n = map123().mapValues(new Function<String, String>() {
+            public String apply(String s) {
                 return "a" + s;
             }
         });
-        assertEquals(list(1, 2, 3).toMapMappingToValue(new Mapper<Integer, String>() {
-            public String map(Integer integer) {
+        assertEquals(list(1, 2, 3).toMapMappingToValue(new Function<Integer, String>() {
+            public String apply(Integer integer) {
                 return "a" + integer;
             }
         }), n);
@@ -116,6 +117,6 @@ public class AbstractMapFTest extends TestCase {
 
     public void testPlus1() {
         MapF<Integer, String> m = map123().plus1(11, "11");
-        assertEquals(m, Cf.list(1, 2, 3, 11).toMapMappingToValue(Mapper.toStringM()));
+        assertEquals(m, Cf.list(1, 2, 3, 11).toMapMappingToValue(Function.toStringF()));
     }
 } //~

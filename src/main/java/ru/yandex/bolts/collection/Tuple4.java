@@ -2,8 +2,7 @@ package ru.yandex.bolts.collection;
 
 import java.io.Serializable;
 
-import ru.yandex.bolts.function.Function1;
-import ru.yandex.bolts.function.forhuman.Mapper;
+import ru.yandex.bolts.function.Function;
 
 /**
  * @author Stepan Koltsov
@@ -81,66 +80,66 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
         return "(" + _1 + ", " + _2 + ", " + _3 + ", " + _4 + ")";
     }
     
-    public static <A, B, C, D> Mapper<Tuple4<A, B, C, D>, A> get1M() {
-        return new Mapper<Tuple4<A, B, C, D>, A>() {
-            public A map(Tuple4<A, B, C, D> tuple) {
+    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, A> get1M() {
+        return new Function<Tuple4<A, B, C, D>, A>() {
+            public A apply(Tuple4<A, B, C, D> tuple) {
                 return tuple._1;
             }
         };
     }
 
-    public static <A, B, C, D> Mapper<Tuple4<A, B, C, D>, B> get2M() {
-        return new Mapper<Tuple4<A, B, C, D>, B>() {
-            public B map(Tuple4<A, B, C, D> tuple) {
+    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, B> get2M() {
+        return new Function<Tuple4<A, B, C, D>, B>() {
+            public B apply(Tuple4<A, B, C, D> tuple) {
                 return tuple._2;
             }
         };
     }
 
-    public static <A, B, C, D> Mapper<Tuple4<A, B, C, D>, C> get3M() {
-        return new Mapper<Tuple4<A, B, C, D>, C>() {
-            public C map(Tuple4<A, B, C, D> tuple) {
+    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, C> get3M() {
+        return new Function<Tuple4<A, B, C, D>, C>() {
+            public C apply(Tuple4<A, B, C, D> tuple) {
                 return tuple._3;
             }
         };
     }
     
-    public static <A, B, C, D> Mapper<Tuple4<A, B, C, D>, D> get4M() {
-        return new Mapper<Tuple4<A, B, C, D>, D>() {
-            public D map(Tuple4<A, B, C, D> tuple) {
+    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, D> get4M() {
+        return new Function<Tuple4<A, B, C, D>, D>() {
+            public D apply(Tuple4<A, B, C, D> tuple) {
                 return tuple._4;
             }
         };
     }
 
     
-    public static <A, B, C, D, X> Mapper<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>> map1M(final Function1<A, X> m) {
-        return new Mapper<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>>() {
-            public Tuple4<X, B, C, D> map(Tuple4<A, B, C, D> t) {
+    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>> map1M(final Function<A, X> m) {
+        return new Function<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>>() {
+            public Tuple4<X, B, C, D> apply(Tuple4<A, B, C, D> t) {
                 return tuple(m.apply(t._1), t._2, t._3, t._4);
             }
         };
     }
 
-    public static <A, B, C, D, X> Mapper<Tuple4<A, B, C, D>, Tuple4<A, X, C, D>> map2M(final Function1<B, X> m) {
-        return new Mapper<Tuple4<A, B, C, D>, Tuple4<A, X, C, D>>() {
-            public Tuple4<A, X, C, D> map(Tuple4<A, B, C, D> t) {
+    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, X, C, D>> map2M(final Function<B, X> m) {
+        return new Function<Tuple4<A, B, C, D>, Tuple4<A, X, C, D>>() {
+            public Tuple4<A, X, C, D> apply(Tuple4<A, B, C, D> t) {
                 return tuple(t._1, m.apply(t._2), t._3, t._4);
             }
         };
     }
 
-    public static <A, B, C, D, X> Mapper<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>> map3M(final Function1<C, X> m) {
-        return new Mapper<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>>() {
-            public Tuple4<A, B, X, D> map(Tuple4<A, B, C, D> t) {
+    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>> map3M(final Function<C, X> m) {
+        return new Function<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>>() {
+            public Tuple4<A, B, X, D> apply(Tuple4<A, B, C, D> t) {
                 return tuple(t._1, t._2, m.apply(t._3), t._4);
             }
         };
     }
 
-    public static <A, B, C, D, X> Mapper<Tuple4<A, B, C, D>, Tuple4<A, B, C, X>> map4M(final Function1<D, X> m) {
-        return new Mapper<Tuple4<A, B, C, D>, Tuple4<A, B, C, X>>() {
-            public Tuple4<A, B, C, X> map(Tuple4<A, B, C, D> t) {
+    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, C, X>> map4M(final Function<D, X> m) {
+        return new Function<Tuple4<A, B, C, D>, Tuple4<A, B, C, X>>() {
+            public Tuple4<A, B, C, X> apply(Tuple4<A, B, C, D> t) {
                 return tuple(t._1, t._2, t._3, m.apply(t._4));
             }
         };

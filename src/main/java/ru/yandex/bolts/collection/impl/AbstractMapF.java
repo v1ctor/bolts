@@ -12,16 +12,12 @@ import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
-import ru.yandex.bolts.function.Function1;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2B;
 import ru.yandex.bolts.function.Function2V;
-import ru.yandex.bolts.function.FunctionB;
-import ru.yandex.bolts.function.forhuman.Factory;
-import ru.yandex.bolts.function.forhuman.Mapper;
-import ru.yandex.bolts.function.forhuman.Predicate;
 
 /**
  * Implementation of {@link MapF} algorithms.
@@ -66,7 +62,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     public V getOrElseUpdate(K key, V value) {
-        return getOrElseUpdate(key, Factory.constF(value));
+        return getOrElseUpdate(key, Function0.constF(value));
     }
 
     public V getOrElseUpdate(K key, Function0<V> valueF) {
@@ -79,8 +75,8 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         }
     }
 
-    public V getOrElseUpdate(final K key, final Function1<K, V> value) {
-        return getOrElseUpdate(key, Mapper.wrap(value).bind(key));
+    public V getOrElseUpdate(final K key, final Function<K, V> value) {
+        return getOrElseUpdate(key, value.bind(key));
     }
 
     public boolean containsEntry(K key, V value) {
@@ -112,16 +108,17 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return CollectionsF.hashMap();
     }
 
-    private Mapper<Entry<K, V>, K> entryKeyM() {
-        return new Mapper<Entry<K, V>, K>() {
-            public K map(Entry<K, V> entry) {
+    private Function<Entry<K, V>, K> entryKeyM() {
+        return new Function<Entry<K, V>, K>() {
+            public K apply(Entry<K, V> entry) {
                 return entry.getKey();
             }
         };
     }
 
+    @SuppressWarnings("unchecked")
     public MapF<K, V> filterKeys(final Function1B<? super K> p) {
-        Predicate<K> p1 = Predicate.wrap(p);
+        Function1B<K> p1 = (Function1B<K>) p;
         return filterEntries(p1.compose(entryKeyM()));
     }
 
@@ -143,12 +140,12 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
 
     @Override
     public void forEachEntry(Function2V<? super K, ? super V> op) {
-        entries().forEach(op.asTupleFunction().uncheckedCast());
+        entries().forEach(op.asFunction().uncheckedCast());
     }
 
-    private static <K, V> Mapper<Entry<K, V>, V> entryValueM() {
-        return new Mapper<Entry<K,V>, V>() {
-            public V map(java.util.Map.Entry<K, V> a) {
+    private static <K, V> Function<Entry<K, V>, V> entryValueM() {
+        return new Function<Entry<K,V>, V>() {
+            public V apply(java.util.Map.Entry<K, V> a) {
                 return a.getValue();
             }
         };
@@ -158,11 +155,11 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return UnmodifiableDefaultMapF.wrap(this);
     }
 
-    public <W> MapF<K, W> mapValues(final Function1<? super V, W> f) {
+    public <W> MapF<K, W> mapValues(final Function<? super V, W> f) {
         if (isEmpty()) return emptyMap();
 
-        ListF<Tuple2<K, W>> xx = entrySet().map(new Mapper<Entry<K, V>, Tuple2<K, W>>() {
-            public Tuple2<K, W> map(Entry<K, V> entry) {
+        ListF<Tuple2<K, W>> xx = entrySet().map(new Function<Entry<K, V>, Tuple2<K, W>>() {
+            public Tuple2<K, W> apply(Entry<K, V> entry) {
                 return new Tuple2<K, W>(entry.getKey(), f.apply(entry.getValue()));
             }
         });
@@ -170,8 +167,8 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     public <W> ListF<W> mapEntries(final Function2<K, V, W> f) {
-        return entrySet().map(new Mapper<Entry<K, V>, W>() {
-            public W map(Entry<K, V> entry) {
+        return entrySet().map(new Function<Entry<K, V>, W>() {
+            public W apply(Entry<K, V> entry) {
                 return f.apply(entry.getKey(), entry.getValue());
             }
         });
@@ -181,8 +178,12 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return CollectionsF.map();
     }
 
-    public Mapper<K, V> asMapper() {
-        return Mapper.wrap(this);
+    public Function<K, V> asFunction() {
+        return new Function<K, V>() {
+            public V apply(K a) {
+                return AbstractMapF.this.apply(a);
+            }
+        };
     }
 
     /** Must check for non-null arguments */
@@ -234,9 +235,9 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return (MapF<L, W>) this;
     }
 
-    public static <K, V> Mapper<Map.Entry<K, V>, Tuple2<K, V>> tupleM() {
-        return new Mapper<Map.Entry<K, V>, Tuple2<K, V>>() {
-            public Tuple2<K, V> map(Map.Entry<K, V> e) {
+    public static <K, V> Function<Map.Entry<K, V>, Tuple2<K, V>> tupleM() {
+        return new Function<Map.Entry<K, V>, Tuple2<K, V>>() {
+            public Tuple2<K, V> apply(Map.Entry<K, V> e) {
                 return new Tuple2<K, V>(e.getKey(), e.getValue());
             }
         };

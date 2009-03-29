@@ -1,17 +1,16 @@
 package ru.yandex.bolts.collection.impl;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
-import java.io.Serializable;
 
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Unmodifiable;
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.forhuman.Predicate;
 
 /**
  * @author Stepan Koltsov
@@ -46,13 +45,13 @@ public class SingletonSet<E> extends AbstractSetF<E> implements Unmodifiable, Se
     }
 
     @Override
-    public Predicate<E> containsP() {
+    public Function1B<E> containsP() {
         // optimization
-        return Predicate.equalsP(e);
+        return Function1B.equalsP(e);
     }
 
     @Override
-    public <B> ListF<B> map(Function1<? super E, B> f) {
+    public <B> ListF<B> map(Function<? super E, B> f) {
         return CollectionsF.list(f.apply(e));
     }
 

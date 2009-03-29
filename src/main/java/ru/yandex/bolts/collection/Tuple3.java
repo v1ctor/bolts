@@ -2,8 +2,7 @@ package ru.yandex.bolts.collection;
 
 import java.io.Serializable;
 
-import ru.yandex.bolts.function.Function1;
-import ru.yandex.bolts.function.forhuman.Mapper;
+import ru.yandex.bolts.function.Function;
 
 /**
  * @author Stepan Koltsov
@@ -91,49 +90,49 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         return "(" + _1 + ", " + _2 + ", " + _3 + ")";
     }
     
-    public static <A, B, C> Mapper<Tuple3<A, B, C>, A> get1M() {
-        return new Mapper<Tuple3<A, B, C>, A>() {
-            public A map(Tuple3<A, B, C> tuple) {
+    public static <A, B, C> Function<Tuple3<A, B, C>, A> get1M() {
+        return new Function<Tuple3<A, B, C>, A>() {
+            public A apply(Tuple3<A, B, C> tuple) {
                 return tuple._1;
             }
         };
     }
 
-    public static <A, B, C> Mapper<Tuple3<A, B, C>, B> get2M() {
-        return new Mapper<Tuple3<A, B, C>, B>() {
-            public B map(Tuple3<A, B, C> tuple) {
+    public static <A, B, C> Function<Tuple3<A, B, C>, B> get2M() {
+        return new Function<Tuple3<A, B, C>, B>() {
+            public B apply(Tuple3<A, B, C> tuple) {
                 return tuple._2;
             }
         };
     }
 
-    public static <A, B, C> Mapper<Tuple3<A, B, C>, C> get3M() {
-        return new Mapper<Tuple3<A, B, C>, C>() {
-            public C map(Tuple3<A, B, C> tuple) {
+    public static <A, B, C> Function<Tuple3<A, B, C>, C> get3M() {
+        return new Function<Tuple3<A, B, C>, C>() {
+            public C apply(Tuple3<A, B, C> tuple) {
                 return tuple._3;
             }
         };
     }
     
-    public static <A, B, C, X> Mapper<Tuple3<A, B, C>, Tuple3<X, B, C>> map1M(final Function1<A, X> m) {
-        return new Mapper<Tuple3<A, B, C>, Tuple3<X, B, C>>() {
-            public Tuple3<X, B, C> map(Tuple3<A, B, C> t) {
+    public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<X, B, C>> map1M(final Function<A, X> m) {
+        return new Function<Tuple3<A, B, C>, Tuple3<X, B, C>>() {
+            public Tuple3<X, B, C> apply(Tuple3<A, B, C> t) {
                 return tuple(m.apply(t._1), t._2, t._3);
             }
         };
     }
 
-    public static <A, B, C, X> Mapper<Tuple3<A, B, C>, Tuple3<A, X, C>> map2M(final Function1<B, X> m) {
-        return new Mapper<Tuple3<A, B, C>, Tuple3<A, X, C>>() {
-            public Tuple3<A, X, C> map(Tuple3<A, B, C> t) {
+    public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<A, X, C>> map2M(final Function<B, X> m) {
+        return new Function<Tuple3<A, B, C>, Tuple3<A, X, C>>() {
+            public Tuple3<A, X, C> apply(Tuple3<A, B, C> t) {
                 return tuple(t._1, m.apply(t._2), t._3);
             }
         };
     }
 
-    public static <A, B, C, X> Mapper<Tuple3<A, B, C>, Tuple3<A, B, X>> map3M(final Function1<C, X> m) {
-        return new Mapper<Tuple3<A, B, C>, Tuple3<A, B, X>>() {
-            public Tuple3<A, B, X> map(Tuple3<A, B, C> t) {
+    public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<A, B, X>> map3M(final Function<C, X> m) {
+        return new Function<Tuple3<A, B, C>, Tuple3<A, B, X>>() {
+            public Tuple3<A, B, X> apply(Tuple3<A, B, C> t) {
                 return tuple(t._1, t._2, m.apply(t._3));
             }
         };
@@ -141,25 +140,25 @@ public class Tuple3<T1, T2, T3> implements Serializable {
     
     // ?
     
-    public static <A, B, C> Mapper<Tuple3<A, B, C>, Tuple2<A, B>> get12M() {
-        return new Mapper<Tuple3<A, B, C>, Tuple2<A, B>>() {
-            public Tuple2<A, B> map(Tuple3<A, B, C> a) {
+    public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<A, B>> get12M() {
+        return new Function<Tuple3<A, B, C>, Tuple2<A, B>>() {
+            public Tuple2<A, B> apply(Tuple3<A, B, C> a) {
                 return a.get12();
             }
         };
     }
 
-    public static <A, B, C> Mapper<Tuple3<A, B, C>, Tuple2<A, C>> get13M() {
-        return new Mapper<Tuple3<A, B, C>, Tuple2<A, C>>() {
-            public Tuple2<A, C> map(Tuple3<A, B, C> a) {
+    public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<A, C>> get13M() {
+        return new Function<Tuple3<A, B, C>, Tuple2<A, C>>() {
+            public Tuple2<A, C> apply(Tuple3<A, B, C> a) {
                 return a.get13();
             }
         };
     }
 
-    public static <A, B, C> Mapper<Tuple3<A, B, C>, Tuple2<B, C>> get23M() {
-        return new Mapper<Tuple3<A, B, C>, Tuple2<B, C>>() {
-            public Tuple2<B, C> map(Tuple3<A, B, C> a) {
+    public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<B, C>> get23M() {
+        return new Function<Tuple3<A, B, C>, Tuple2<B, C>>() {
+            public Tuple2<B, C> apply(Tuple3<A, B, C> a) {
                 return a.get23();
             }
         };

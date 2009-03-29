@@ -1,6 +1,9 @@
 package ru.yandex.bolts.function.forhuman;
 
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function1I;
+import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 
 /**
@@ -8,8 +11,9 @@ import ru.yandex.bolts.function.Function2I;
  *
  * @author Stepan Koltsov
  */
-public abstract class Comparator<A> implements Function2I<A, A>, java.util.Comparator<A>, HumanFunction {
-    public enum Operator {
+public abstract class Comparator<A> extends Function2I<A, A> implements java.util.Comparator<A> {
+    
+    public static enum Operator {
         GT(">"),
         GE(">="),
         NE("!="),
@@ -31,8 +35,9 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
             return getName();
         }
     }
-
-    public int apply(A a, A b) {
+    
+    @Override
+    public final int apply(A a, A b) {
         return compare(a, b);
     }
 
@@ -72,27 +77,27 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
         throw new IllegalArgumentException("unknown operator: " + op);
     }
 
-    public Predicate<A> gtP(A b) {
+    public Function1B<A> gtP(A b) {
         return bind2(b).gtP();
     }
 
-    public Predicate<A> geP(A b) {
+    public Function1B<A> geP(A b) {
         return bind2(b).geP();
     }
 
-    public Predicate<A> eqP(A b) {
+    public Function1B<A> eqP(A b) {
         return bind2(b).eqP();
     }
 
-    public Predicate<A> neP(A b) {
+    public Function1B<A> neP(A b) {
         return bind2(b).neP();
     }
 
-    public Predicate<A> ltP(A b) {
+    public Function1B<A> ltP(A b) {
         return bind2(b).ltP();
     }
 
-    public Predicate<A> leP(A b) {
+    public Function1B<A> leP(A b) {
         return bind2(b).leP();
     }
 
@@ -107,8 +112,8 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
     }
 
     /** (f compose g)(x) = f(g(x)) */
-    public <B> Comparator<B> compose(final Function1<B, A> mapper) {
-        return Mapper.<B, A>wrap(mapper).andThen(this);
+    public <B> Comparator<B> compose(Function<B, A> mapper) {
+        return mapper.andThen(this);
     }
     
     public Comparator<A> chainTo(final Comparator<A> comparator) {
@@ -142,9 +147,9 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
     }
 
     /** Bind first argument */
-    public ru.yandex.bolts.function.forhuman.Comparable<A> bind1(final A a) {
-        return new ru.yandex.bolts.function.forhuman.Comparable<A>() {
-            public int compareTo(A b) {
+    public Function1I<A> bind1(final A a) {
+        return new Function1I<A>() {
+            public int apply(A b) {
                 return Comparator.this.compare(a, b);
             }
 
@@ -154,9 +159,9 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
         };
     }
 
-    public ru.yandex.bolts.function.forhuman.Comparable<A> bind2(final A b) {
-        return new ru.yandex.bolts.function.forhuman.Comparable<A>() {
-            public int compareTo(A a) {
+    public Function1I<A> bind2(final A b) {
+        return new Function1I<A>() {
+            public int apply(A a) {
                 return Comparator.this.compare(a, b);
             }
 
@@ -183,17 +188,17 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
         };
     }
 
-    public BinaryFunction<A, A, A> maxF() {
-        return new BinaryFunction<A, A, A>() {
-            public A call(A a, A b) {
+    public Function2<A, A, A> maxF() {
+        return new Function2<A, A, A>() {
+            public A apply(A a, A b) {
                 return max(a, b);
             }
         };
     }
 
-    public BinaryFunction<A, A, A> minF() {
-        return new BinaryFunction<A, A, A>() {
-            public A call(A a, A b) {
+    public Function2<A, A, A> minF() {
+        return new Function2<A, A, A>() {
+            public A apply(A a, A b) {
                 return min(a, b);
             }
         };

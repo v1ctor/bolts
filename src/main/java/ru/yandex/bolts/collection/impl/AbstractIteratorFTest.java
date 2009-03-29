@@ -13,9 +13,9 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.impl.test.GeneratorF;
-import ru.yandex.bolts.function.forhuman.Mapper;
-import ru.yandex.bolts.function.forhuman.Operation;
-import ru.yandex.bolts.function.forhuman.PredicateTest;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function1BTest;
+import ru.yandex.bolts.function.Function1V;
 
 /**
  * @author Stepan Koltsov
@@ -32,8 +32,8 @@ public class AbstractIteratorFTest extends TestCase {
     }
     
     public void testFlatMapSimple() {
-        IteratorF<Integer> i = Cf.list(1, 2, 3).iterator().flatMap(new Mapper<Integer, IteratorF<Integer>>() {
-            public IteratorF<Integer> map(Integer a) {
+        IteratorF<Integer> i = Cf.list(1, 2, 3).iterator().flatMap(new Function<Integer, IteratorF<Integer>>() {
+            public IteratorF<Integer> apply(Integer a) {
                 return Cf.repeat(a, a).iterator();
             }
         });
@@ -64,42 +64,42 @@ public class AbstractIteratorFTest extends TestCase {
     
     
     public void testFlatMap() {
-        GeneratorF.integers(1, 10).lists().lists().checkForAllVerbose(new Operation<ListF<ListF<Integer>>>() {
-            public void execute(ListF<ListF<Integer>> a) {
+        GeneratorF.integers(1, 10).lists().lists().checkForAllVerbose(new Function1V<ListF<ListF<Integer>>>() {
+            public void apply(ListF<ListF<Integer>> a) {
                 checkFlatMapOn(a);
             }
         });
     }
     
     private void checkFlatMapOn(ListF<ListF<Integer>> l) {
-        IteratorF<Integer> it = l.iterator().flatMap(new Mapper<ListF<Integer>, Iterator<Integer>>() {
-            public Iterator<Integer> map(ListF<Integer> a) {
+        IteratorF<Integer> it = l.iterator().flatMap(new Function<ListF<Integer>, Iterator<Integer>>() {
+            public Iterator<Integer> apply(ListF<Integer> a) {
                 return a.iterator();
             }
         });
-        ListF<Integer> expected = l.flatMap(Mapper.<ListF<Integer>>identityM());
+        ListF<Integer> expected = l.flatMap(Function.<ListF<Integer>>identityF());
         checkIteratorAgainst(it, expected);
     }
     
     
     public void testFlatMapL() {
-        GeneratorF.integers(1, 10).lists().lists().checkForAllVerbose(new Operation<ListF<ListF<Integer>>>() {
-            public void execute(ListF<ListF<Integer>> a) {
+        GeneratorF.integers(1, 10).lists().lists().checkForAllVerbose(new Function1V<ListF<ListF<Integer>>>() {
+            public void apply(ListF<ListF<Integer>> a) {
                 checkFlatMapLOn(a);
             }
         });
     }
     
     private void checkFlatMapLOn(ListF<ListF<Integer>> l) {
-        IteratorF<Integer> it = l.iterator().flatMapL(Mapper.<ListF<Integer>>identityM());
-        ListF<Integer> expected = l.flatMap(Mapper.<ListF<Integer>>identityM());
+        IteratorF<Integer> it = l.iterator().flatMapL(Function.<ListF<Integer>>identityF());
+        ListF<Integer> expected = l.flatMap(Function.<ListF<Integer>>identityF());
         checkIteratorAgainst(it, expected);
     }
 
     
     
     public void testFilterSimple() {
-        ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filter(PredicateTest.evenP()).toList();
+        ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filter(Function1BTest.evenP()).toList();
         
         // XXX to simple
         ListF<Integer> expected = Cf.list(2, 4, 6);
@@ -133,7 +133,7 @@ public class AbstractIteratorFTest extends TestCase {
     }
     
     private void testFilterOn(ListF<Integer> l) {
-        checkIteratorAgainst(l.iterator().filter(PredicateTest.evenP()), l.filter(PredicateTest.evenP()));
+        checkIteratorAgainst(l.iterator().filter(Function1BTest.evenP()), l.filter(Function1BTest.evenP()));
     }
     
     private <E> void checkIteratorAgainst(IteratorF<E> it, ListF<E> elements) {

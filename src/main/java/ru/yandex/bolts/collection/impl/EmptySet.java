@@ -6,7 +6,7 @@ import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Unmodifiable;
-import ru.yandex.bolts.function.forhuman.Predicate;
+import ru.yandex.bolts.function.Function1B;
 
 /**
  * @author Stepan Koltsov
@@ -29,9 +29,9 @@ public class EmptySet<A> extends AbstractSetF<A> implements Unmodifiable, Serial
     }
 
     @Override
-    public Predicate<A> containsP() {
+    public Function1B<A> containsP() {
         // optimization
-        return Predicate.falseP();
+        return Function1B.falseP();
     }
 
     public int size() {

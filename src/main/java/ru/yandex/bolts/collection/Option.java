@@ -1,16 +1,13 @@
 package ru.yandex.bolts.collection;
 
-import ru.yandex.bolts.collection.impl.AbstractListF;
-import ru.yandex.bolts.function.Function0;
-import ru.yandex.bolts.function.Function1;
-import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.forhuman.Factory;
-import ru.yandex.bolts.function.forhuman.Predicate;
-import ru.yandex.bolts.function.forhuman.Mapper;
-
-import java.util.NoSuchElementException;
-import java.util.Collection;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.NoSuchElementException;
+
+import ru.yandex.bolts.collection.impl.AbstractListF;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function0;
+import ru.yandex.bolts.function.Function1B;
 
 /**
  * Port of scala <a href="http://www.scala-lang.org/docu/files/api/scala/Option.html">Option</a>.
@@ -43,7 +40,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     public final Option<T> orElse(Option<T> elseOption) {
-        return orElse(Factory.constF(elseOption));
+        return orElse(Function0.constF(elseOption));
     }
 
     public final Option<T> orElse(Function0<Option<T>> elseOption) {
@@ -53,7 +50,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /** Throw specified exception if {@link #isEmpty()}. */
     public final <E extends Throwable> T getOrThrow(E e) throws E {
-        return getOrThrow(Factory.constF(e));
+        return getOrThrow(Function0.constF(e));
     }
 
     /** Throw specified exception if {@link #isEmpty()}. */
@@ -63,16 +60,16 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     public final T getOrThrow(final String message) throws RuntimeException {
-        return getOrThrow(new Factory<NoSuchElementException>() {
-            public NoSuchElementException create() {
+        return getOrThrow(new Function0<NoSuchElementException>() {
+            public NoSuchElementException apply() {
                 return new NoSuchElementException(message);
             }
         });
     }
 
     public final T getOrThrow(final String message, final Object param) throws RuntimeException {
-        return getOrThrow(new Factory<NoSuchElementException>() {
-            public NoSuchElementException create() {
+        return getOrThrow(new Function0<NoSuchElementException>() {
+            public NoSuchElementException apply() {
                 return new NoSuchElementException(message + param);
             }
         });
@@ -89,19 +86,19 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     @Override
-    public final <U> Option<U> map(Function1<? super T, U> f) {
+    public final <U> Option<U> map(Function<? super T, U> f) {
         if (isDefined()) return some(f.apply(get()));
         else return none();
     }
 
     @Override
-    public final <U> Option<U> flatMapO(Function1<? super T, Option<U>> f) {
+    public final <U> Option<U> flatMapO(Function<? super T, Option<U>> f) {
         if (isDefined()) return f.apply(get());
         else return none();
     }
 
     @Override
-    public <B> ListF<B> flatMap(Function1<? super T, ? extends Collection<B>> f) {
+    public <B> ListF<B> flatMap(Function<? super T, ? extends Collection<B>> f) {
         if (isDefined()) return CollectionsF.x(f.apply(get())).toList();
         else return CollectionsF.list();
     }
@@ -218,9 +215,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         }
     }
 
-    public static <U> Predicate<Option<U>> isDefinedP() {
-        return new Predicate<Option<U>>() {
-            public boolean evaluate(Option<U> option) {
+    public static <U> Function1B<Option<U>> isDefinedP() {
+        return new Function1B<Option<U>>() {
+            public boolean apply(Option<U> option) {
                 return option.isDefined();
             }
 
@@ -230,21 +227,21 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         };
     }
 
-    public static <U> Predicate<Option<U>> isEmptyP() {
+    public static <U> Function1B<Option<U>> isEmptyP() {
         return Option.<U>isDefinedP().notP();
     }
 
-    public static <T> Mapper<T, Option<T>> notNullM() {
-        return new Mapper<T, Option<T>>() {
-            public Option<T> map(T t) {
+    public static <T> Function<T, Option<T>> notNullM() {
+        return new Function<T, Option<T>>() {
+            public Option<T> apply(T t) {
                 return Option.notNull(t);
             }
         };
     }
 
-    public static <U> Mapper<Option<U>, U> getM() {
-        return new Mapper<Option<U>, U>() {
-            public U map(Option<U> o) {
+    public static <U> Function<Option<U>, U> getM() {
+        return new Function<Option<U>, U>() {
+            public U apply(Option<U> o) {
                 return o.get();
             }
         };

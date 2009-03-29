@@ -7,7 +7,7 @@ import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 
 /**
  * @author Stepan Koltsov
@@ -22,7 +22,7 @@ public class EmptyIterator<A> extends AbstractIteratorF<A> {
     }
 
     @Override
-    public <B> IteratorF<B> map(Function1<? super A, B> f) {
+    public <B> IteratorF<B> map(Function<? super A, B> f) {
         return CollectionsF.emptyIterator();
     }
 

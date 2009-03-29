@@ -1,7 +1,6 @@
 package ru.yandex.bolts.collection.impl.test;
 
 import java.util.Iterator;
-import java.util.List;
 
 import net.java.quickcheck.Characteristic;
 import net.java.quickcheck.Generator;
@@ -15,10 +14,9 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.impl.AbstractIteratorF;
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.forhuman.Mapper;
-import ru.yandex.bolts.function.forhuman.Operation;
+import ru.yandex.bolts.function.Function1V;
 
 /**
  * @author Stepan Koltsov
@@ -33,7 +31,7 @@ public abstract class GeneratorF<T> extends AbstractIteratorF<T> implements Gene
     private GeneratorF<T> self() { return this; }
     
     @Override
-    public <B> GeneratorF<B> map(Function1<? super T, B> f) {
+    public <B> GeneratorF<B> map(Function<? super T, B> f) {
         return x(super.map(f));
     }
     
@@ -43,24 +41,16 @@ public abstract class GeneratorF<T> extends AbstractIteratorF<T> implements Gene
     }
 
     public GeneratorF<ListF<T>> lists() {
-        return x(CombinedGenerators.lists(this)).map(listWrapM());
+        return x(CombinedGenerators.lists(this)).map(Cf.<T>wrapListM());
     }
 
-    private Mapper<List<T>, ListF<T>> listWrapM() {
-        return new Mapper<List<T>, ListF<T>>() {
-            public ListF<T> map(List<T> a) {
-                return Cf.x(a);
-            }
-        };
-    }
-    
     public GeneratorF<ListF<T>> lists(GeneratorF<Integer> lengths) {
-        return x(CombinedGenerators.lists(this, lengths)).map(listWrapM());
+        return x(CombinedGenerators.lists(this, lengths)).map(Cf.<T>wrapListM());
     }
     
     public GeneratorF<SetF<T>> sets() {
-        return lists().map(new Mapper<ListF<T>, SetF<T>>() {
-            public SetF<T> map(ListF<T> a) {
+        return lists().map(new Function<ListF<T>, SetF<T>>() {
+            public SetF<T> apply(ListF<T> a) {
                 return a.unique();
             }
         });
@@ -83,7 +73,7 @@ public abstract class GeneratorF<T> extends AbstractIteratorF<T> implements Gene
         QuickCheck.forAllVerbose(this, ch);
     }
     
-    public void checkForAllVerbose(final Operation<T> ch) {
+    public void checkForAllVerbose(final Function1V<T> ch) {
         checkForAllVerbose(new AbstractCharacteristic<T>() {
             protected void doSpecify(T t) throws Throwable {
                 ch.apply(t);

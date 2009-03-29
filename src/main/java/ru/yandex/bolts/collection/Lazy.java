@@ -1,11 +1,11 @@
 package ru.yandex.bolts.collection;
 
-import ru.yandex.bolts.function.forhuman.Factory;
+import ru.yandex.bolts.function.Function0;
 
 /**
  * @author Stepan Koltsov
  */
-public abstract class Lazy<T> extends Factory<T> {
+public abstract class Lazy<T> extends Function0<T> {
     private T value;
     private boolean defined = false;
 
@@ -15,6 +15,11 @@ public abstract class Lazy<T> extends Factory<T> {
             defined = true;
         }
         return value;
+    }
+    
+    @Override
+    public final T apply() {
+        return get();
     }
 
     public abstract T create();

@@ -8,24 +8,24 @@ import ru.yandex.bolts.collection.Tuple2;
 public abstract class Function2B<A, B> {
     public abstract boolean apply(A a, B b);
     
-    public FunctionB<B> bind1(final A a) {
-        return new FunctionB<B>() {
+    public Function1B<B> bind1(final A a) {
+        return new Function1B<B>() {
             public boolean apply(B b) {
                 return Function2B.this.apply(a, b);
             }
         };
     }
     
-    public FunctionB<A> bind2(final B b) {
-        return new FunctionB<A>() {
+    public Function1B<A> bind2(final B b) {
+        return new Function1B<A>() {
             public boolean apply(A a) {
                 return Function2B.this.apply(a, b);
             }
         };
     }
     
-    public FunctionB<Tuple2<A, B>> asTupleFunction() {
-        return new FunctionB<Tuple2<A, B>>() {
+    public Function1B<Tuple2<A, B>> asTupleFunction() {
+        return new Function1B<Tuple2<A, B>>() {
             public boolean apply(Tuple2<A, B> a) {
                 return Function2B.this.apply(a.get1(), a.get2());
             }

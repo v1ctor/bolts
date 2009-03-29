@@ -2,7 +2,7 @@ package ru.yandex.bolts.collection;
 
 import junit.framework.TestCase;
 
-import ru.yandex.bolts.function.forhuman.BinaryFunction;
+import ru.yandex.bolts.function.Function2;
 
 /**
  * @author Stepan Koltsov
@@ -22,8 +22,8 @@ public class Tuple2Test extends TestCase {
     }
 
     public void testReduce() {
-        assertEquals("1a", Tuple2.tuple(1, "a").reduce(new BinaryFunction<Integer, String, String>() {
-            public String call(Integer i, String s) {
+        assertEquals("1a", Tuple2.tuple(1, "a").reduce(new Function2<Integer, String, String>() {
+            public String apply(Integer i, String s) {
                 return i + s;
             }
         }));

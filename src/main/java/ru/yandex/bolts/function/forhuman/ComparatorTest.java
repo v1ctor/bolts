@@ -2,6 +2,7 @@ package ru.yandex.bolts.function.forhuman;
 
 import junit.framework.TestCase;
 
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2I;
 
 /**
@@ -58,7 +59,7 @@ public class ComparatorTest extends TestCase {
     }
 
     public void testCompose() {
-        Comparator<Integer> c = Comparator.<String>naturalComparator().compose(Mapper.<Integer>toStringM());
+        Comparator<Integer> c = Comparator.<String>naturalComparator().compose(Function.<Integer>toStringF());
         assertTrue(c.gt(2, 11));
         c.toString();
     }

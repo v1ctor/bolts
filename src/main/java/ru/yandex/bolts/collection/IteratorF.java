@@ -2,7 +2,7 @@ package ru.yandex.bolts.collection;
 
 import java.util.Iterator;
 
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function2;
@@ -22,11 +22,11 @@ public interface IteratorF<E> extends Iterator<E> {
     SetF<E> toSet();
 
     /** Map */
-    <B> IteratorF<B> map(Function1<? super E, B> op);
+    <B> IteratorF<B> map(Function<? super E, B> op);
     
-    <B> IteratorF<B> flatMap(Function1<? super E, ? extends Iterator<B>> f);
+    <B> IteratorF<B> flatMap(Function<? super E, ? extends Iterator<B>> f);
     
-    <B> IteratorF<B> flatMapL(Function1<? extends E, ? extends Iterable<B>> f);
+    <B> IteratorF<B> flatMapL(Function<? extends E, ? extends Iterable<B>> f);
     
     IteratorF<E> filter(Function1B<? super E> f);
 

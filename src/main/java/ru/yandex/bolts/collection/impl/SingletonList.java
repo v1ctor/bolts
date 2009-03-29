@@ -8,7 +8,7 @@ import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Unmodifiable;
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 
 /**
@@ -43,7 +43,7 @@ public class SingletonList<E> extends AbstractListF<E> implements RandomAccess, 
     }
 
     @Override
-    public <B> ListF<B> map(Function1<? super E, B> f) {
+    public <B> ListF<B> map(Function<? super E, B> f) {
         return new SingletonList<B>(f.apply(e));
     }
 

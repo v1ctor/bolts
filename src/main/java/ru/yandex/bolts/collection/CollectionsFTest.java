@@ -1,12 +1,9 @@
 package ru.yandex.bolts.collection;
 
-import java.util.List;
-
+import static ru.yandex.bolts.collection.CollectionsF.list;
 import junit.framework.TestCase;
 
-import static ru.yandex.bolts.collection.CollectionsF.list;
-import static ru.yandex.bolts.collection.CollectionsF.set;
-import ru.yandex.bolts.function.forhuman.Mapper;
+import ru.yandex.bolts.function.Function;
 
 /**
  * @author Stepan Koltsov
@@ -20,7 +17,7 @@ public class CollectionsFTest extends TestCase {
     }
 
     public void testRangeMapPossibleBug() {
-        assertEquals(list("0", "1", "2", "3"), CollectionsF.range(0, 4).map(Mapper.toStringM()));
+        assertEquals(list("0", "1", "2", "3"), CollectionsF.range(0, 4).map(Function.toStringF()));
     }
 
     public void testRangeEmpty() {

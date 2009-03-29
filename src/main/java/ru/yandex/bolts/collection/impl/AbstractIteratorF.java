@@ -1,7 +1,7 @@
 package ru.yandex.bolts.collection.impl;
 
-import java.util.NoSuchElementException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionsF;
@@ -10,11 +10,10 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2;
-import ru.yandex.bolts.function.forhuman.Mapper;
 
 /**
  * Implementation of {@link IteratorF} algorithms.
@@ -45,7 +44,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     }
 
     @Override
-    public <B> IteratorF<B> map(final Function1<? super E, B> f) {
+    public <B> IteratorF<B> map(final Function<? super E, B> f) {
         class MappedIterator extends AbstractIteratorF<B> {
             public boolean hasNext() {
                 return self().hasNext();
@@ -63,7 +62,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     }
     
     @Override
-    public <B> IteratorF<B> flatMap(final Function1<? super E, ? extends Iterator<B>> f) {
+    public <B> IteratorF<B> flatMap(final Function<? super E, ? extends Iterator<B>> f) {
         // copy-paste of scala.Iterator.flatMap
         class FlatMappedIterator extends AbstractIteratorF<B> {
             private IteratorF<B> cur = Cf.emptyIterator();
@@ -92,10 +91,10 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     
     @SuppressWarnings("unchecked")
     @Override
-    public <B> IteratorF<B> flatMapL(Function1<? extends E, ? extends Iterable<B>> f0) {
-        Mapper<E, Iterable<B>> f = Mapper.wrap((Function1<E, Iterable<B>>) f0);
-        Mapper<E, Iterator<B>> g = f.andThen(new Mapper<Iterable<B>, Iterator<B>>() {
-            public Iterator<B> map(Iterable<B> a) {
+    public <B> IteratorF<B> flatMapL(Function<? extends E, ? extends Iterable<B>> f0) {
+        Function<E, Iterable<B>> f = (Function<E, Iterable<B>>) f0;
+        Function<E, Iterator<B>> g = f.andThen(new Function<Iterable<B>, Iterator<B>>() {
+            public Iterator<B> apply(Iterable<B> a) {
                 return a.iterator();
             }
         });

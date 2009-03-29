@@ -15,7 +15,7 @@ import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.impl.test.GeneratorF;
-import ru.yandex.bolts.function.forhuman.PredicateTest;
+import ru.yandex.bolts.function.Function1BTest;
 
 /**
  * @author Stepan Koltsov
@@ -24,7 +24,7 @@ public class AbstractSetFTest extends TestCase {
 
     public void testFilter2() {
         SetF<Integer> s = set(1, 2, 3, 4);
-        assertEquals(Tuple2.tuple(set(2, 4), set(1, 3)), s.filter2(PredicateTest.evenP()));
+        assertEquals(Tuple2.tuple(set(2, 4), set(1, 3)), s.filter2(Function1BTest.evenP()));
     }
 
     public void testMinusEmpty() {

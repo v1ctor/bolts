@@ -1,10 +1,10 @@
 package ru.yandex.bolts.collection.impl;
 
-import java.util.Collection;
-import java.util.List;
-
 import static ru.yandex.bolts.collection.CollectionsF.list;
 import static ru.yandex.bolts.collection.CollectionsF.set;
+
+import java.util.Collection;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -15,13 +15,13 @@ import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.impl.test.GeneratorF;
-import ru.yandex.bolts.function.forhuman.Closure;
-import ru.yandex.bolts.function.forhuman.Mapper;
-import ru.yandex.bolts.function.forhuman.MapperTest;
-import ru.yandex.bolts.function.forhuman.Operation;
-import ru.yandex.bolts.function.forhuman.Predicate;
-import ru.yandex.bolts.function.forhuman.PredicateTest;
-import ru.yandex.bolts.function.forhuman.BinaryFunctionTest;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function0V;
+import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function1BTest;
+import ru.yandex.bolts.function.Function1V;
+import ru.yandex.bolts.function.Function2Test;
+import ru.yandex.bolts.function.FunctionTest;
 
 /**
  * @author Stepan Koltsov
@@ -30,9 +30,9 @@ import ru.yandex.bolts.function.forhuman.BinaryFunctionTest;
 public class AbstractListFTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AbstractListFTest.class);
 
-    private void assertException(Closure closure) {
+    private void assertException(Function0V closure) {
         try {
-            closure.execute();
+            closure.apply();
             fail("expecting exception");
         } catch (Exception e) {
             // ok
@@ -44,14 +44,14 @@ public class AbstractListFTest extends TestCase {
         assertEquals((Object) 1, list.first());
         assertEquals((Object) 5, list.last());
 
-        assertException(new Closure() {
-            public void execute() {
+        assertException(new Function0V() {
+            public void apply() {
                 list().first();
             }
         });
 
-        assertException(new Closure() {
-            public void execute() {
+        assertException(new Function0V() {
+            public void apply() {
                 list().last();
             }
         });
@@ -109,20 +109,20 @@ public class AbstractListFTest extends TestCase {
 
     public void testFilter() {
         ListF<Integer> l = list(1, 2, 3, 4, 5, 6);
-        assertEquals(list(2, 4, 6), l.filter(PredicateTest.evenP()));
-        assertEquals(Tuple2.tuple(list(2, 4, 6), list(1, 3, 5)), l.filter2(PredicateTest.evenP()));
+        assertEquals(list(2, 4, 6), l.filter(Function1BTest.evenP()));
+        assertEquals(Tuple2.tuple(list(2, 4, 6), list(1, 3, 5)), l.filter2(Function1BTest.evenP()));
     }
 
     public void testMap() {
         ListF<Integer> l = list(1, 2, 3);
-        ListF<Integer> m = l.map(MapperTest.plus1());
+        ListF<Integer> m = l.map(FunctionTest.plus1());
         assertEquals(list(2, 3, 4), m);
     }
 
     public void testFlatMap() {
         ListF<Integer> l = list(0, 1, 2);
-        ListF<Integer> m = l.flatMap(new Mapper<Integer, Collection<Integer>>() {
-            public Collection<Integer> map(Integer integer) {
+        ListF<Integer> m = l.flatMap(new Function<Integer, Collection<Integer>>() {
+            public Collection<Integer> apply(Integer integer) {
                 return CollectionsF.repeat(integer, integer);
             }
         });
@@ -131,8 +131,8 @@ public class AbstractListFTest extends TestCase {
 
     public void testFlatMapO() {
         ListF<Integer> l = list(1, 2, 3, 4);
-        ListF<String> m = l.flatMapO(new Mapper<Integer, Option<String>>() {
-            public Option<String> map(Integer integer) {
+        ListF<String> m = l.flatMapO(new Function<Integer, Option<String>>() {
+            public Option<String> apply(Integer integer) {
                 if (integer % 2 == 1) return Option.some(integer.toString());
                 else return Option.none();
             }
@@ -141,8 +141,8 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testUnique() {
-        GeneratorF.integers(1, 10).lists().checkForAllVerbose(new Operation<ListF<Integer>>() {
-            public void execute(ListF<Integer> l) {
+        GeneratorF.integers(1, 10).lists().checkForAllVerbose(new Function1V<ListF<Integer>>() {
+            public void apply(ListF<Integer> l) {
                 SetF<Integer> u = l.unique();
                 assertTrue(u.forAll(l.containsP()));
                 assertTrue(l.forAll(u.containsP()));
@@ -155,25 +155,25 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testForAll() {
-        assertFalse(list(2, 3).forAll(PredicateTest.evenP()));
-        assertTrue(list(2, 4).forAll(PredicateTest.evenP()));
-        assertTrue(CollectionsF.<Integer>list().forAll(PredicateTest.evenP()));
+        assertFalse(list(2, 3).forAll(Function1BTest.evenP()));
+        assertTrue(list(2, 4).forAll(Function1BTest.evenP()));
+        assertTrue(CollectionsF.<Integer>list().forAll(Function1BTest.evenP()));
     }
 
     public void testExists() {
-        assertFalse(list(1, 3).exists(PredicateTest.evenP()));
-        assertTrue(list(2, 3).exists(PredicateTest.evenP()));
-        assertTrue(list(3, 2).exists(PredicateTest.evenP()));
+        assertFalse(list(1, 3).exists(Function1BTest.evenP()));
+        assertTrue(list(2, 3).exists(Function1BTest.evenP()));
+        assertTrue(list(3, 2).exists(Function1BTest.evenP()));
     }
 
     public void testFind() {
-        assertEquals(2, (int) list(1, 2, 3).find(PredicateTest.evenP()).get());
-        assertFalse(list(1, 5, 3).find(PredicateTest.evenP()).isDefined());
+        assertEquals(2, (int) list(1, 2, 3).find(Function1BTest.evenP()).get());
+        assertFalse(list(1, 5, 3).find(Function1BTest.evenP()).isDefined());
     }
     
-    private static <T> Predicate<Collection<T>> notEmptyP() {
-        return new Predicate<Collection<T>>() {
-            public boolean evaluate(Collection<T> a) {
+    private static <T> Function1B<Collection<T>> notEmptyP() {
+        return new Function1B<Collection<T>>() {
+            public boolean apply(Collection<T> a) {
                 return a.size() > 0;
             }
         };
@@ -181,26 +181,26 @@ public class AbstractListFTest extends TestCase {
 
     public void testReduce() {
         
-        GeneratorF.strings().lists().filter(AbstractListFTest.<String>notEmptyP()).checkForAllVerbose(new Operation<ListF<String>>() {
-            public void execute(ListF<String> a) {
+        GeneratorF.strings().lists().filter(AbstractListFTest.<String>notEmptyP()).checkForAllVerbose(new Function1V<ListF<String>>() {
+            public void apply(ListF<String> a) {
                 String expected = "";
                 for (String s : a) expected += s;
                 
-                assertEquals(expected, a.reduceLeft(BinaryFunctionTest.stringPlusF()));
-                assertEquals(expected, a.reduceRight(BinaryFunctionTest.stringPlusF()));
+                assertEquals(expected, a.reduceLeft(Function2Test.stringPlusF()));
+                assertEquals(expected, a.reduceRight(Function2Test.stringPlusF()));
             }
         });
         
         // simple
         ListF<String> l = list("a", "b", "c");
-        assertEquals("abc", l.reduceLeft(BinaryFunctionTest.stringPlusF()));
-        assertEquals("abc", l.reduceRight(BinaryFunctionTest.stringPlusF()));
+        assertEquals("abc", l.reduceLeft(Function2Test.stringPlusF()));
+        assertEquals("abc", l.reduceRight(Function2Test.stringPlusF()));
     }
 
     public void testFold() {
         
-        GeneratorF.strings().lists().checkForAllVerbose(new Operation<ListF<String>>() {
-            public void execute(ListF<String> a) {
+        GeneratorF.strings().lists().checkForAllVerbose(new Function1V<ListF<String>>() {
+            public void apply(ListF<String> a) {
                 String expectedLeft = "x";
                 for (String s : a) expectedLeft += s;
                 
@@ -208,15 +208,15 @@ public class AbstractListFTest extends TestCase {
                 for (String s : a) expectedRight += s;
                 expectedRight += "y";
                 
-                assertEquals(expectedLeft, a.foldLeft("x", BinaryFunctionTest.stringPlusF()));
-                assertEquals(expectedRight, a.foldRight("y", BinaryFunctionTest.stringPlusF()));
+                assertEquals(expectedLeft, a.foldLeft("x", Function2Test.stringPlusF()));
+                assertEquals(expectedRight, a.foldRight("y", Function2Test.stringPlusF()));
             }
         });
         
         // simple
         ListF<String> l = list("a", "b", "c");
-        assertEquals("xabc", l.foldLeft("x", BinaryFunctionTest.stringPlusF()));
-        assertEquals("abcx", l.foldRight("x", BinaryFunctionTest.stringPlusF()));
+        assertEquals("xabc", l.foldLeft("x", Function2Test.stringPlusF()));
+        assertEquals("abcx", l.foldRight("x", Function2Test.stringPlusF()));
     }
 
     public void testReverse() {
@@ -228,8 +228,8 @@ public class AbstractListFTest extends TestCase {
         // simple
         assertEquals(list(4, 3, 2, 1), list(1, 2, 3, 4).reverse());
         
-        GeneratorF.integers().lists().checkForAllVerbose(new Operation<ListF<Integer>>() {
-            public void execute(ListF<Integer> a) {
+        GeneratorF.integers().lists().checkForAllVerbose(new Function1V<ListF<Integer>>() {
+            public void apply(ListF<Integer> a) {
                 ListF<Integer> r = a.reverse();
                 for (int i = 0; i < a.length(); ++i)
                     assertSame(a.get(i), r.get(r.length() - i - 1));
@@ -258,8 +258,8 @@ public class AbstractListFTest extends TestCase {
         
         // better
         
-        GeneratorF.strings().lists().checkForAllVerbose(new Operation<ListF<String>>() {
-            public void execute(ListF<String> a) {
+        GeneratorF.strings().lists().checkForAllVerbose(new Function1V<ListF<String>>() {
+            public void apply(ListF<String> a) {
                 ListF<Tuple2<String, Integer>> z = a.zipWithIndex();
 
                 assertEquals(a.length(), z.length());

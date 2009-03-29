@@ -2,10 +2,8 @@ package ru.yandex.bolts.collection;
 
 import java.io.Serializable;
 
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2;
-import ru.yandex.bolts.function.forhuman.BinaryFunction;
-import ru.yandex.bolts.function.forhuman.Mapper;
 
 /**
  * Pair
@@ -74,49 +72,49 @@ public class Tuple2<T1, T2> implements Serializable {
         return "(" + _1 + ", " + _2 + ")";
     }
 
-    public static <A, B> BinaryFunction<A, B, Tuple2<A, B>> consM() {
-        return new BinaryFunction<A, B, Tuple2<A, B>>() {
-            public Tuple2<A, B> call(A a, B b) {
+    public static <A, B> Function2<A, B, Tuple2<A, B>> consM() {
+        return new Function2<A, B, Tuple2<A, B>>() {
+            public Tuple2<A, B> apply(A a, B b) {
                 return tuple(a, b);
             }
         };
     }
 
-    public static <A, B> Mapper<Tuple2<A, B>, A> get1M() {
-        return new Mapper<Tuple2<A, B>, A>() {
-            public A map(Tuple2<A, B> tuple) {
+    public static <A, B> Function<Tuple2<A, B>, A> get1M() {
+        return new Function<Tuple2<A, B>, A>() {
+            public A apply(Tuple2<A, B> tuple) {
                 return tuple._1;
             }
         };
     }
 
-    public static <A, B> Mapper<Tuple2<A, B>, B> get2M() {
-        return new Mapper<Tuple2<A, B>, B>() {
-            public B map(Tuple2<A, B> tuple) {
+    public static <A, B> Function<Tuple2<A, B>, B> get2M() {
+        return new Function<Tuple2<A, B>, B>() {
+            public B apply(Tuple2<A, B> tuple) {
                 return tuple._2;
             }
         };
     }
 
-    public static <A, B> Mapper<Tuple2<A, B>, Tuple2<B, A>> swapM() {
-        return new Mapper<Tuple2<A, B>, Tuple2<B, A>>() {
-            public Tuple2<B, A> map(Tuple2<A, B> tuple) {
+    public static <A, B> Function<Tuple2<A, B>, Tuple2<B, A>> swapM() {
+        return new Function<Tuple2<A, B>, Tuple2<B, A>>() {
+            public Tuple2<B, A> apply(Tuple2<A, B> tuple) {
                 return tuple.swap();
             }
         };
     }
 
-    public static <A, B, C> Mapper<Tuple2<A, B>, Tuple2<C, B>> map1M(final Function1<A, C> m) {
-        return new Mapper<Tuple2<A, B>, Tuple2<C, B>>() {
-            public Tuple2<C, B> map(Tuple2<A, B> tuple) {
+    public static <A, B, C> Function<Tuple2<A, B>, Tuple2<C, B>> map1M(final Function<A, C> m) {
+        return new Function<Tuple2<A, B>, Tuple2<C, B>>() {
+            public Tuple2<C, B> apply(Tuple2<A, B> tuple) {
                 return tuple(m.apply(tuple._1), tuple._2);
             }
         };
     }
 
-    public static <A, B, C> Mapper<Tuple2<A, B>, Tuple2<A, C>> map2M(final Function1<B, C> m) {
-        return new Mapper<Tuple2<A, B>, Tuple2<A, C>>() {
-            public Tuple2<A, C> map(Tuple2<A, B> tuple) {
+    public static <A, B, C> Function<Tuple2<A, B>, Tuple2<A, C>> map2M(final Function<B, C> m) {
+        return new Function<Tuple2<A, B>, Tuple2<A, C>>() {
+            public Tuple2<A, C> apply(Tuple2<A, B> tuple) {
                 return tuple(tuple._1, m.apply(tuple._2));
             }
         };

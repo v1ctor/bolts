@@ -5,14 +5,12 @@ import java.util.Collection;
 import java.util.List;
 
 import ru.yandex.bolts.collection.impl.DefaultListF;
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.Function2V;
-import ru.yandex.bolts.function.forhuman.BinaryFunction;
 import ru.yandex.bolts.function.forhuman.Comparator;
-import ru.yandex.bolts.function.forhuman.Mapper;
 
 /**
  * Looks like map, but actually it is a list of {@link Tuple2} with handy interface.
@@ -32,9 +30,9 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         super(new ArrayList<Tuple2<K, V>>(elements));
     }
 
-    public <U> ListMap<U, V> mapKeys(final Function1<K, U> mapper) {
-        Mapper<Tuple2<K, V>, Tuple2<U, V>> m2 = new Mapper<Tuple2<K, V>, Tuple2<U, V>>() {
-            public Tuple2<U, V> map(Tuple2<K, V> a) {
+    public <U> ListMap<U, V> mapKeys(final Function<K, U> mapper) {
+        Function<Tuple2<K, V>, Tuple2<U, V>> m2 = new Function<Tuple2<K, V>, Tuple2<U, V>>() {
+            public Tuple2<U, V> apply(Tuple2<K, V> a) {
                 return Tuple2.tuple(mapper.apply(a.get1()), a.get2());
             }
         };
@@ -44,9 +42,9 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return r;
     }
     
-    public <U> ListMap<K, U> mapValues(final Function1<V, U> mapper) {
-        Mapper<Tuple2<K, V>, Tuple2<K, U>> m2 = new Mapper<Tuple2<K, V>, Tuple2<K, U>>() {
-            public Tuple2<K, U> map(Tuple2<K, V> a) {
+    public <U> ListMap<K, U> mapValues(final Function<V, U> mapper) {
+        Function<Tuple2<K, V>, Tuple2<K, U>> m2 = new Function<Tuple2<K, V>, Tuple2<K, U>>() {
+            public Tuple2<K, U> apply(Tuple2<K, V> a) {
                 return Tuple2.tuple(a.get1(), mapper.apply(a.get2()));
             }
         };
@@ -93,11 +91,11 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return plus1(Tuple2.tuple(key, value));
     }
     
-    private Mapper<Tuple2<K, V>, K> keyM() {
+    private Function<Tuple2<K, V>, K> keyM() {
         return Tuple2.<K, V>get1M();
     }
     
-    private Mapper<Tuple2<K, V>, V> valueM() {
+    private Function<Tuple2<K, V>, V> valueM() {
         return Tuple2.<K, V>get2M();
     }
     
@@ -121,7 +119,7 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     }
     
     /**
-     * @see CollectionF#sort(Function1)
+     * @see CollectionF#sort(Function)
      */
     @SuppressWarnings("unchecked")
     public ListMap<K, V> sortByKey(Function2I<? super K, ? super K> comparator) {
@@ -155,12 +153,12 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     }
     
     public <W> ListF<W> mapEntries(Function2<K, V, W> mapper) {
-        return map(BinaryFunction.wrap(mapper).asMapperFromTuple());
+        return map(mapper.asFunction());
     }
 
     public String mkString(String elemSep, final String tupleSep) {
-        return mapEntries(new BinaryFunction<K, V, String>() {
-            public String call(K a, V b) {
+        return mapEntries(new Function2<K, V, String>() {
+            public String apply(K a, V b) {
                 return a + tupleSep + b;
             }
         }).mkString(elemSep);

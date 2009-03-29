@@ -3,7 +3,7 @@ package ru.yandex.bolts.collection;
 import java.util.NoSuchElementException;
 
 import ru.yandex.bolts.function.Function0;
-import ru.yandex.bolts.function.Function1;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 
@@ -88,7 +88,7 @@ public class Either<A, B> {
         public R getOrElse(R elseValue) { return getO().getOrElse(elseValue); }
         public R getOrElse(Function0<R> elseValue) { return getO().getOrElse(elseValue); }
 
-        protected abstract <C> Object /** Either<?, ?> */ map(Function1<R, C> f);
+        protected abstract <C> Object /** Either<?, ?> */ map(Function<R, C> f);
         // flatMap
         public Option<Either<A, B>> filter(Function1B<R> p) {
             if (isDefined() && p.apply(get())) return Option.some(either);
@@ -106,7 +106,7 @@ public class Either<A, B> {
         public A get() { return either.getLeft(); }
         public Option<A> getO() { return either.leftO(); }
         
-        public <C> Either<C, B> map(Function1<A, C> f) {
+        public <C> Either<C, B> map(Function<A, C> f) {
             if (isLeft()) return Either.left(f.apply(get()));
             else return either.uncheckedCast();
         }
@@ -118,7 +118,7 @@ public class Either<A, B> {
         public B get() { return either.getRight(); }
         public Option<B> getO() { return either.rightO(); }
         
-        public <C> Either<A, C> map(Function1<B, C> f) {
+        public <C> Either<A, C> map(Function<B, C> f) {
             if (isRight()) return Either.right(f.apply(get()));
             else return either.uncheckedCast();
         }

@@ -1,17 +1,17 @@
 package ru.yandex.bolts.collection;
 
-import java.io.ObjectOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
-import java.io.ByteArrayInputStream;
+import java.io.ObjectOutputStream;
 
 import junit.framework.TestCase;
 
-import ru.yandex.bolts.function.forhuman.Closure;
-import ru.yandex.bolts.function.forhuman.Factory;
-import ru.yandex.bolts.function.forhuman.Operation;
-import ru.yandex.bolts.function.forhuman.Predicate;
-import ru.yandex.bolts.function.forhuman.Mapper;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function0;
+import ru.yandex.bolts.function.Function0V;
+import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function1V;
 
 /**
  * @author Stepan Koltsov
@@ -20,17 +20,17 @@ import ru.yandex.bolts.function.forhuman.Mapper;
 public class OptionTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(OptionTest.class);
 
-    protected static <T> Operation<T> expect(final T t) {
-        return new Operation<T>() {
-            public void execute(T got) {
+    protected static <T> Function1V<T> expect(final T t) {
+        return new Function1V<T>() {
+            public void apply(T got) {
                 assertEquals(got, t);
             }
         };
     }
 
-    protected void assertThrows(Closure closure) {
+    protected void assertThrows(Function0V closure) {
         try {
-            closure.execute();
+            closure.apply();
             fail("expecting exception from " + closure);
         } catch (Exception e) {
             // ok
@@ -49,7 +49,7 @@ public class OptionTest extends TestCase {
         assertEquals("a", s.getOrElse("b"));
         assertEquals("a", s.getOrElse(throwFactory()));
         assertEquals("b", n.getOrElse("b"));
-        assertEquals("b", n.getOrElse(Factory.constF("b")));
+        assertEquals("b", n.getOrElse(Function0.constF("b")));
         assertEquals("a", s.getOrNull());
         assertEquals(null, n.getOrNull());
     }
@@ -64,12 +64,16 @@ public class OptionTest extends TestCase {
         assertSame(n, n.orElse(n));
     }
 
-    protected Factory throwFactory() {
-        return Closure.throwC(new AssertionError()).asFactory(null);
+    protected Function0 throwFactory() {
+        return new Function0<Object>() {
+            public Object apply() {
+                throw new AssertionError();
+            }
+        };
     }
 
-    protected Mapper throwMapper() {
-        return throwFactory().asMapper();
+    protected Function throwMapper() {
+        return throwFactory().asFunction();
     }
 
     public void testSize() {
@@ -79,28 +83,28 @@ public class OptionTest extends TestCase {
 
     public void testGet() {
         assertSame("a", Option.some("a").get(0));
-        assertThrows(new Closure() {
-            public void execute() {
+        assertThrows(new Function0V() {
+            public void apply() {
                 Option.none().get(0);
             }
         });
-        assertThrows(new Closure() {
-            public void execute() {
+        assertThrows(new Function0V() {
+            public void apply() {
                 Option.none().get(1);
             }
         });
-        assertThrows(new Closure() {
-            public void execute() {
+        assertThrows(new Function0V() {
+            public void apply() {
                 Option.none().get(2);
             }
         });
-        assertThrows(new Closure() {
-            public void execute() {
+        assertThrows(new Function0V() {
+            public void apply() {
                 Option.some(1).get(1);
             }
         });
-        assertThrows(new Closure() {
-            public void execute() {
+        assertThrows(new Function0V() {
+            public void apply() {
                 Option.some(1).get(2);
             }
         });
@@ -108,12 +112,12 @@ public class OptionTest extends TestCase {
 
     public void testMap() {
         assertEquals(Option.none(), Option.none().map(throwMapper()));
-        assertEquals(Option.some("1"), Option.some(1).map(Mapper.toStringM()));
+        assertEquals(Option.some("1"), Option.some(1).map(Function.toStringF()));
     }
 
-    public Option<Throwable> tryCatch(Closure closure) {
+    public Option<Throwable> tryCatch(Function0V closure) {
         try {
-            closure.execute();
+            closure.apply();
             return Option.none();
         } catch (Throwable e) {
             return Option.some(e);
@@ -121,14 +125,14 @@ public class OptionTest extends TestCase {
     }
 
     public void testGetOrThrowMessage() {
-        assertEquals("hello", tryCatch(new Closure() {
-            public void execute() {
+        assertEquals("hello", tryCatch(new Function0V() {
+            public void apply() {
                 Option.none().getOrThrow("hello");
             }
         }).get().getMessage());
 
-        assertEquals("hello: 17", tryCatch(new Closure() {
-            public void execute() {
+        assertEquals("hello: 17", tryCatch(new Function0V() {
+            public void apply() {
                 Option.none().getOrThrow("hello: ", 17);
             }
         }).get().getMessage());
@@ -140,31 +144,11 @@ public class OptionTest extends TestCase {
     public void testGetOrThrow() throws Exception {
         assertEquals("hello", Option.some("hello").getOrThrow(new Exception()));
         final RuntimeException e = new RuntimeException();
-        assertSame(e, tryCatch(new Closure() {
-            public void execute() {
+        assertSame(e, tryCatch(new Function0V() {
+            public void apply() {
                 Option.none().getOrThrow(e);
             }
         }).get());
-    }
-
-    public void testFlatMap() {
-        ListF<Integer> c = CollectionsF.list(1);
-        assertTrue(Option.none().flatMap(Factory.constF(c).asMapper()).isEmpty());
-        assertSame(c, Option.some(1).flatMap(expect(1).andThen(Factory.constF(c))));
-    }
-
-    public void testFlatMapO() {
-        Option<Integer> s = Option.some(1);
-        assertSame(Option.none(), Option.none().flatMapO(Factory.constF(s).asMapper()));
-        assertSame(s, Option.some(1).flatMapO(expect(1).andThen(Factory.constF(s))));
-    }
-
-    public void testFilter() {
-        assertSame(Option.none(), Option.none().filter(Predicate.trueP()));
-        assertSame(Option.none(), Option.none().filter(Predicate.falseP()));
-        assertSame(Option.none(), Option.some(1).filter(expect(1).chainTo(Predicate.<Integer>falseP())));
-        Option<Integer> s = Option.some(1);
-        assertSame(s, s.filter(expect(1).chainTo(Predicate.<Integer>trueP())));
     }
 
     public void testToString() {
@@ -179,10 +163,10 @@ public class OptionTest extends TestCase {
     }
 
     public void testPredicates() {
-        assertTrue(Option.<Integer>isDefinedP().evaluate(Option.some(1)));
-        assertFalse(Option.isDefinedP().evaluate(Option.none()));
-        assertTrue(Option.isEmptyP().evaluate(Option.none()));
-        assertFalse(Option.<Integer>isEmptyP().evaluate(Option.some(1)));
+        assertTrue(Option.<Integer>isDefinedP().apply(Option.some(1)));
+        assertFalse(Option.isDefinedP().apply(Option.none()));
+        assertTrue(Option.isEmptyP().apply(Option.none()));
+        assertFalse(Option.<Integer>isEmptyP().apply(Option.some(1)));
         Option.isDefinedP().toString();
         Option.isEmptyP().toString();
     }
@@ -209,9 +193,9 @@ public class OptionTest extends TestCase {
         Option.none().hashCode();
     }
 
-    private Predicate<Option<String>> throwPredicate() {
-        return new Predicate<Option<String>>() {
-            public boolean evaluate(Option<String> option) {
+    private Function1B<Option<String>> throwPredicate() {
+        return new Function1B<Option<String>>() {
+            public boolean apply(Option<String> option) {
                 throw new AssertionError();
             }
         };

@@ -8,14 +8,14 @@ import java.util.Arrays;
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.MapF;
-import ru.yandex.bolts.collection.CollectionF;
-import ru.yandex.bolts.function.forhuman.BinaryFunctionTest;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function1V;
+import ru.yandex.bolts.function.Function2Test;
 import ru.yandex.bolts.function.forhuman.Comparator;
-import ru.yandex.bolts.function.forhuman.Mapper;
-import ru.yandex.bolts.function.forhuman.Operation;
 
 /**
  * @author Stepan Koltsov
@@ -30,11 +30,11 @@ public class AbstractCollectionFTest extends TestCase {
 
     public void testAddOp() {
         ListF<String> l = Cf.arrayList();
-        Operation<String> op = l.addOp();
-        op.execute("a");
-        op.execute("b");
+        Function1V<String> op = l.addOp();
+        op.apply("a");
+        op.apply("b");
         op = l.addOp();
-        op.execute("c");
+        op.apply("c");
         assertEquals(Cf.list("a", "b", "c"), l);
 
         l.addOp().toString(); // for coverage
@@ -54,8 +54,8 @@ public class AbstractCollectionFTest extends TestCase {
 
     public void testReduce() {
         ListF<Integer> l = list(1, 2, 3);
-        assertEquals(6, (int) l.reduceLeft(BinaryFunctionTest.plusF()));
-        assertEquals(6, (int) l.reduceRight(BinaryFunctionTest.plusF()));
+        assertEquals(6, (int) l.reduceLeft(Function2Test.plusF()));
+        assertEquals(6, (int) l.reduceRight(Function2Test.plusF()));
     }
 
     public void testPlus1() {
@@ -64,9 +64,9 @@ public class AbstractCollectionFTest extends TestCase {
     }
 
     public void testToMap() {
-        MapF<String, Integer> m = list(1, 2, 3).toMapMappingToKey(Mapper.toStringM());
-        MapF<String, Integer> expected = list("1", "2", "3").toMapMappingToValue(new Mapper<String, Integer>() {
-            public Integer map(String s) {
+        MapF<String, Integer> m = list(1, 2, 3).toMapMappingToKey(Function.toStringF());
+        MapF<String, Integer> expected = list("1", "2", "3").toMapMappingToValue(new Function<String, Integer>() {
+            public Integer apply(String s) {
                 return Integer.parseInt(s);
             }
         });
@@ -91,9 +91,9 @@ public class AbstractCollectionFTest extends TestCase {
         assertTrue(Arrays.equals(new char[] { 'a', 'b', 'c' }, Cf.list('a', 'b', 'c').toCharArray()));
     }
 
-    private static Mapper<String, Object> stringLengthM() {
-        return new Mapper<String, Object>() {
-            public Object map(String s) {
+    private static Function<String, Object> stringLengthM() {
+        return new Function<String, Object>() {
+            public Object apply(String s) {
                 return s.length();
             }
         };

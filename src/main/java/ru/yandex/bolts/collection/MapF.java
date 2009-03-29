@@ -3,13 +3,12 @@ package ru.yandex.bolts.collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
-import ru.yandex.bolts.function.Function1;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2B;
 import ru.yandex.bolts.function.Function2V;
-import ru.yandex.bolts.function.forhuman.Mapper;
 
 /**
  * Mutable map with Scala-like Map methods.
@@ -17,7 +16,7 @@ import ru.yandex.bolts.function.forhuman.Mapper;
  * @see IterableF
  * @author Stepan Koltsov
  */
-public interface MapF<K, V> extends Map<K, V>, Function1<K, V> {
+public interface MapF<K, V> extends Map<K, V> {
     /** Get value by key */
     Option<V> getO(K key);
 
@@ -37,7 +36,7 @@ public interface MapF<K, V> extends Map<K, V>, Function1<K, V> {
     V getOrElseUpdate(K key, Function0<V> value);
 
     /** Get value or else update. Function maps key to default value */
-    V getOrElseUpdate(K key, Function1<K, V> m);
+    V getOrElseUpdate(K key, Function<K, V> m);
 
     boolean containsEntry(K key, V value);
 
@@ -48,9 +47,9 @@ public interface MapF<K, V> extends Map<K, V>, Function1<K, V> {
 
     MapF<K, V> filterKeys(Function1B<? super K> p);
     
-    <W> MapF<K, W> mapValues(Function1<? super V, W> f);
+    <W> MapF<K, W> mapValues(Function<? super V, W> f);
 
-    //<W> ListF<W> map(Function1<Entry<K, V>, W> f);
+    //<W> ListF<W> map(Function<Entry<K, V>, W> f);
 
     <W> ListF<W> mapEntries(Function2<K, V, W> f);
     
@@ -62,7 +61,7 @@ public interface MapF<K, V> extends Map<K, V>, Function1<K, V> {
     
     boolean forAllEntries(Function2B<? super K, ? super V> op);
 
-    Mapper<K, V> asMapper();
+    Function<K, V> asFunction();
 
     /** Put */
     void put(Tuple2<K, V> entry);
