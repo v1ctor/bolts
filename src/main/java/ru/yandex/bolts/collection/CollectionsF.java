@@ -33,6 +33,7 @@ import ru.yandex.bolts.collection.impl.SingletonList;
 import ru.yandex.bolts.collection.impl.SingletonMap;
 import ru.yandex.bolts.collection.impl.SingletonSet;
 import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 
 /**
@@ -514,6 +515,22 @@ public class CollectionsF {
         return new Function<Collection<T>, Integer>() {
             public Integer apply(Collection<T> a) {
                 return a.size();
+            }
+        };
+    }
+    
+    public static <T> Function1B<Iterator<T>> hasNextF() {
+        return new Function1B<Iterator<T>>() {
+            public boolean apply(Iterator<T> a) {
+                return a.hasNext();
+            }
+        };
+    }
+    
+    public static <T> Function<Iterable<T>, IteratorF<T>> iteratorF() {
+        return new Function<Iterable<T>, IteratorF<T>>() {
+            public IteratorF<T> apply(Iterable<T> a) {
+                return x(a.iterator());
             }
         };
     }
