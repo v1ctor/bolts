@@ -31,5 +31,24 @@ public abstract class Function2B<A, B> {
             }
         };
     }
+    
+    public Function2B<A, B> notF() {
+        return new Function2B<A, B>() {
+            public boolean apply(A a, B b) {
+                return !Function2B.this.apply(a, b);
+            }
 
+            @Override
+            public Function2B<A, B> notF() {
+                return Function2B.this;
+            }
+
+            @Override
+            public String toString() {
+                return "not(" + Function2B.this + ")";
+            }
+            
+        };
+    }
+    
 } //~
