@@ -5,10 +5,6 @@
 
     <property name="ivy.retrieve.pattern" value="lib/dep/[type]s/[organisation]-[artifact]-[revision].[ext]"/>
 
-    <condition property="ivy.deliver.revision" value="r${build.vcs.number}">
-        <isset property="build.vcs.number"/>
-    </condition>
-
     <condition property="jar.suffix" value="-${ivy.deliver.revision}">
         <isset property="ivy.deliver.revision"/>
     </condition>
