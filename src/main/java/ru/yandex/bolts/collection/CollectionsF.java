@@ -13,6 +13,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.io.Serializable;
 
 import ru.yandex.bolts.collection.impl.AbstractListF;
 import ru.yandex.bolts.collection.impl.AbstractSetF;
@@ -390,7 +391,7 @@ public class CollectionsF {
         return new RangeAsSet(startInclusive, endExclusive);
     }
 
-    private static class Range extends AbstractListF<Integer> {
+    private static class Range extends AbstractListF<Integer> implements Serializable {
         private final int startInclusive;
         private final int endExclusive;
 
