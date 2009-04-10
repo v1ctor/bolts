@@ -5,14 +5,11 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 import junit.framework.TestCase;
-import net.java.quickcheck.Generator;
-import net.java.quickcheck.characteristic.AbstractCharacteristic;
-import net.java.quickcheck.generator.PrimitiveGenerators;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
-import ru.yandex.bolts.collection.impl.test.GeneratorF;
+import ru.yandex.bolts.collection.impl.test.Generator;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1BTest;
 import ru.yandex.bolts.function.Function1V;
@@ -64,7 +61,7 @@ public class AbstractIteratorFTest extends TestCase {
     
     
     public void testFlatMap() {
-        GeneratorF.integers(1, 10).lists().lists().checkForAllVerbose(new Function1V<ListF<ListF<Integer>>>() {
+        Generator.ints(1, 10).lists().lists().checkForAll(new Function1V<ListF<ListF<Integer>>>() {
             public void apply(ListF<ListF<Integer>> a) {
                 checkFlatMapOn(a);
             }
@@ -83,7 +80,7 @@ public class AbstractIteratorFTest extends TestCase {
     
     
     public void testFlatMapL() {
-        GeneratorF.integers(1, 10).lists().lists().checkForAllVerbose(new Function1V<ListF<ListF<Integer>>>() {
+        Generator.ints(1, 10).lists().lists().checkForAll(new Function1V<ListF<ListF<Integer>>>() {
             public void apply(ListF<ListF<Integer>> a) {
                 checkFlatMapLOn(a);
             }
@@ -107,11 +104,11 @@ public class AbstractIteratorFTest extends TestCase {
     }
 
     private Generator<Integer> integers() {
-        return PrimitiveGenerators.integers();
+        return Generator.ints();
     }
     
-    private GeneratorF<ListF<Integer>> listsOfIntegers() {
-        return GeneratorF.integers().lists();
+    private Generator<ListF<Integer>> listsOfIntegers() {
+        return Generator.ints().lists();
     }
     
     private static final Random r = new Random();
@@ -125,9 +122,10 @@ public class AbstractIteratorFTest extends TestCase {
     }
     
     public void testFilter3() {
-        listsOfIntegers().checkForAllVerbose(new AbstractCharacteristic<ListF<Integer>>() {
-            protected void doSpecify(ListF<Integer> arg0) throws Throwable {
-                testFilterOn(Cf.x(arg0));
+        listsOfIntegers().checkForAll(new Function1V<ListF<Integer>>() {
+            @Override
+            public void apply(ListF<Integer> a) {
+                testFilterOn(a);
             }
         });
     }

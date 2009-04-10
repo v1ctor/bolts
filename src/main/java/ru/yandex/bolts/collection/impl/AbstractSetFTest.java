@@ -6,16 +6,13 @@ import java.util.Collections;
 import java.util.Set;
 
 import junit.framework.TestCase;
-import net.java.quickcheck.QuickCheck;
-import net.java.quickcheck.characteristic.AbstractCharacteristic;
-import net.java.quickcheck.collection.Pair;
-import net.java.quickcheck.generator.CombinedGenerators;
 
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
-import ru.yandex.bolts.collection.impl.test.GeneratorF;
+import ru.yandex.bolts.collection.impl.test.Generator;
 import ru.yandex.bolts.function.Function1BTest;
+import ru.yandex.bolts.function.Function1V;
 
 /**
  * @author Stepan Koltsov
@@ -45,8 +42,8 @@ public class AbstractSetFTest extends TestCase {
     /////
     // union/intersect/minus
     
-    private GeneratorF<SetF<Integer>> smallSets() {
-        return GeneratorF.integers(1, 10).sets();
+    private Generator<SetF<Integer>> smallSets() {
+        return Generator.ints(1, 10).sets();
     }
 
     public void testUnionSimple() {
@@ -65,11 +62,12 @@ public class AbstractSetFTest extends TestCase {
     
 
     public void testBinaryOps() {
-        QuickCheck.forAllVerbose(CombinedGenerators.pairs(smallSets(), smallSets()), new AbstractCharacteristic<Pair<SetF<Integer>, SetF<Integer>>>() {
-            protected void doSpecify(Pair<SetF<Integer>, SetF<Integer>> pair) throws Throwable {
-                testIntersectFor(pair.getFirst(), pair.getSecond());
-                testUnionFor(pair.getFirst(), pair.getSecond());
-                testMinusFor(pair.getFirst(), pair.getSecond());
+        smallSets().tuples().checkForAll(new Function1V<Tuple2<SetF<Integer>, SetF<Integer>>>() {
+            @Override
+            public void apply(Tuple2<SetF<Integer>, SetF<Integer>> pair) {
+                testIntersectFor(pair.get1(), pair.get2());
+                testUnionFor(pair.get1(), pair.get2());
+                testMinusFor(pair.get1(), pair.get2());
             }
         });
     }

@@ -14,7 +14,7 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
-import ru.yandex.bolts.collection.impl.test.GeneratorF;
+import ru.yandex.bolts.collection.impl.test.Generator;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0V;
 import ru.yandex.bolts.function.Function1B;
@@ -141,7 +141,7 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testUnique() {
-        GeneratorF.integers(1, 10).lists().checkForAllVerbose(new Function1V<ListF<Integer>>() {
+        Generator.ints(1, 10).lists().checkForAll(new Function1V<ListF<Integer>>() {
             public void apply(ListF<Integer> l) {
                 SetF<Integer> u = l.unique();
                 assertTrue(u.forAll(l.containsF()));
@@ -181,7 +181,7 @@ public class AbstractListFTest extends TestCase {
 
     public void testReduce() {
         
-        GeneratorF.strings().lists().filter(AbstractListFTest.<String>notEmptyF()).checkForAllVerbose(new Function1V<ListF<String>>() {
+        Generator.strings().lists().filter(AbstractListFTest.<String>notEmptyF()).checkForAll(new Function1V<ListF<String>>() {
             public void apply(ListF<String> a) {
                 String expected = "";
                 for (String s : a) expected += s;
@@ -199,7 +199,7 @@ public class AbstractListFTest extends TestCase {
 
     public void testFold() {
         
-        GeneratorF.strings().lists().checkForAllVerbose(new Function1V<ListF<String>>() {
+        Generator.strings().lists().checkForAll(new Function1V<ListF<String>>() {
             public void apply(ListF<String> a) {
                 String expectedLeft = "x";
                 for (String s : a) expectedLeft += s;
@@ -228,7 +228,7 @@ public class AbstractListFTest extends TestCase {
         // simple
         assertEquals(list(4, 3, 2, 1), list(1, 2, 3, 4).reverse());
         
-        GeneratorF.integers().lists().checkForAllVerbose(new Function1V<ListF<Integer>>() {
+        Generator.ints().lists().checkForAll(new Function1V<ListF<Integer>>() {
             public void apply(ListF<Integer> a) {
                 ListF<Integer> r = a.reverse();
                 for (int i = 0; i < a.length(); ++i)
@@ -258,7 +258,7 @@ public class AbstractListFTest extends TestCase {
         
         // better
         
-        GeneratorF.strings().lists().checkForAllVerbose(new Function1V<ListF<String>>() {
+        Generator.strings().lists().checkForAll(new Function1V<ListF<String>>() {
             public void apply(ListF<String> a) {
                 ListF<Tuple2<String, Integer>> z = a.zipWithIndex();
 
