@@ -122,7 +122,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
 
             @Override
             public Comparator<A> invert() {
-                return wrap(comparator);
+                return wrap(comparator.invert());
             }
             
         };
