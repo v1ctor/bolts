@@ -119,6 +119,12 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
             public String toString() {
                 return comparator.toString();
             }
+
+            @Override
+            public Comparator<A> invert() {
+                return wrap(comparator);
+            }
+            
         };
     }
 
