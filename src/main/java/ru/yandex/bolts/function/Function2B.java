@@ -51,4 +51,40 @@ public abstract class Function2B<A, B> {
         };
     }
     
+    public static <A> Function2B<A, A> sameF() {
+        return new Function2B<A, A>() {
+            public boolean apply(A a, A b) {
+                return a == b;
+            }
+
+            public String toString() {
+                return "eq";
+            }
+        };
+    }
+    
+    /**
+     * Delegate to {@link #equals(Object, Object)}.
+     */
+    public static <A> Function2B<A, A> equalsF() {
+        return new Function2B<A, A>() {
+            public boolean apply(A a, A b) {
+                return equals(a, b);
+            }
+
+            @Override
+            public String toString() {
+                return "equals";
+            }
+
+        };
+    }
+
+    /**
+     * Check whether two values are equal.
+     */
+    public static <A> boolean equals(A a, A b) {
+        return a == null || b == null ? a == b : a.equals(b);
+    }
+
 } //~

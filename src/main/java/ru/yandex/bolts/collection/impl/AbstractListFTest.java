@@ -109,8 +109,8 @@ public class AbstractListFTest extends TestCase {
 
     public void testFilter() {
         ListF<Integer> l = list(1, 2, 3, 4, 5, 6);
-        assertEquals(list(2, 4, 6), l.filter(Function1BTest.evenP()));
-        assertEquals(Tuple2.tuple(list(2, 4, 6), list(1, 3, 5)), l.filter2(Function1BTest.evenP()));
+        assertEquals(list(2, 4, 6), l.filter(Function1BTest.evenF()));
+        assertEquals(Tuple2.tuple(list(2, 4, 6), list(1, 3, 5)), l.filter2(Function1BTest.evenF()));
     }
 
     public void testMap() {
@@ -144,8 +144,8 @@ public class AbstractListFTest extends TestCase {
         GeneratorF.integers(1, 10).lists().checkForAllVerbose(new Function1V<ListF<Integer>>() {
             public void apply(ListF<Integer> l) {
                 SetF<Integer> u = l.unique();
-                assertTrue(u.forAll(l.containsP()));
-                assertTrue(l.forAll(u.containsP()));
+                assertTrue(u.forAll(l.containsF()));
+                assertTrue(l.forAll(u.containsF()));
             }
         });
         
@@ -155,23 +155,23 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testForAll() {
-        assertFalse(list(2, 3).forAll(Function1BTest.evenP()));
-        assertTrue(list(2, 4).forAll(Function1BTest.evenP()));
-        assertTrue(CollectionsF.<Integer>list().forAll(Function1BTest.evenP()));
+        assertFalse(list(2, 3).forAll(Function1BTest.evenF()));
+        assertTrue(list(2, 4).forAll(Function1BTest.evenF()));
+        assertTrue(CollectionsF.<Integer>list().forAll(Function1BTest.evenF()));
     }
 
     public void testExists() {
-        assertFalse(list(1, 3).exists(Function1BTest.evenP()));
-        assertTrue(list(2, 3).exists(Function1BTest.evenP()));
-        assertTrue(list(3, 2).exists(Function1BTest.evenP()));
+        assertFalse(list(1, 3).exists(Function1BTest.evenF()));
+        assertTrue(list(2, 3).exists(Function1BTest.evenF()));
+        assertTrue(list(3, 2).exists(Function1BTest.evenF()));
     }
 
     public void testFind() {
-        assertEquals(2, (int) list(1, 2, 3).find(Function1BTest.evenP()).get());
-        assertFalse(list(1, 5, 3).find(Function1BTest.evenP()).isDefined());
+        assertEquals(2, (int) list(1, 2, 3).find(Function1BTest.evenF()).get());
+        assertFalse(list(1, 5, 3).find(Function1BTest.evenF()).isDefined());
     }
     
-    private static <T> Function1B<Collection<T>> notEmptyP() {
+    private static <T> Function1B<Collection<T>> notEmptyF() {
         return new Function1B<Collection<T>>() {
             public boolean apply(Collection<T> a) {
                 return a.size() > 0;
@@ -181,7 +181,7 @@ public class AbstractListFTest extends TestCase {
 
     public void testReduce() {
         
-        GeneratorF.strings().lists().filter(AbstractListFTest.<String>notEmptyP()).checkForAllVerbose(new Function1V<ListF<String>>() {
+        GeneratorF.strings().lists().filter(AbstractListFTest.<String>notEmptyF()).checkForAllVerbose(new Function1V<ListF<String>>() {
             public void apply(ListF<String> a) {
                 String expected = "";
                 for (String s : a) expected += s;

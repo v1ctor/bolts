@@ -156,19 +156,13 @@ public class OptionTest extends TestCase {
         assertEquals("None", Option.none().toString());
     }
 
-    public void testNotEmpty() {
-        assertSame(Option.none(), Option.notEmpty(null));
-        assertSame(Option.none(), Option.notEmpty(""));
-        assertEquals(Option.some("a"), Option.notEmpty("a"));
-    }
-
     public void testPredicates() {
-        assertTrue(Option.<Integer>isDefinedP().apply(Option.some(1)));
-        assertFalse(Option.isDefinedP().apply(Option.none()));
-        assertTrue(Option.isEmptyP().apply(Option.none()));
-        assertFalse(Option.<Integer>isEmptyP().apply(Option.some(1)));
-        Option.isDefinedP().toString();
-        Option.isEmptyP().toString();
+        assertTrue(Option.<Integer>isDefinedF().apply(Option.some(1)));
+        assertFalse(Option.isDefinedF().apply(Option.none()));
+        assertTrue(Option.isEmptyF().apply(Option.none()));
+        assertFalse(Option.<Integer>isEmptyF().apply(Option.some(1)));
+        Option.isDefinedF().toString();
+        Option.isEmptyF().toString();
     }
 
     public void testToSet() {

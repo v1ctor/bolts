@@ -29,9 +29,9 @@ public class EmptySet<A> extends AbstractSetF<A> implements Unmodifiable, Serial
     }
 
     @Override
-    public Function1B<A> containsP() {
+    public Function1B<A> containsF() {
         // optimization
-        return Function1B.falseP();
+        return Function1B.falseF();
     }
 
     public int size() {

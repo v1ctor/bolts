@@ -137,14 +137,6 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         else return none();
     }
 
-    /**
-     * @deprecated
-     */
-    public static Option<String> notEmpty(String s) {
-        if (s != null && s.length() > 0) return some(s);
-        else return none();
-    }
-
     public static final class Some<T> extends Option<T> {
         private static final long serialVersionUID = -8660767248065584199L;
 
@@ -215,7 +207,17 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         }
     }
 
+    /**
+     * @deprecated
+     */
     public static <U> Function1B<Option<U>> isDefinedP() {
+        return isDefinedF();
+    }
+
+    /**
+     * Delegate to {@link #isDefined()}.
+     */
+    public static <U> Function1B<Option<U>> isDefinedF() {
         return new Function1B<Option<U>>() {
             public boolean apply(Option<U> option) {
                 return option.isDefined();
@@ -227,11 +229,31 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         };
     }
 
+    /**
+     * @deprecated
+     */
     public static <U> Function1B<Option<U>> isEmptyP() {
-        return Option.<U>isDefinedP().notP();
+        return isEmptyF();
+    }
+    
+    /**
+     * Delegate to {@link #isEmpty()}.
+     */
+    public static <U> Function1B<Option<U>> isEmptyF() {
+        return Option.<U>isDefinedF().notF();
     }
 
+    /**
+     * @deprecated
+     */
     public static <T> Function<T, Option<T>> notNullM() {
+        return notNullF();
+    }
+
+    /**
+     * Delegate to {@link #notNull(Object)}.
+     */
+    public static <T> Function<T, Option<T>> notNullF() {
         return new Function<T, Option<T>>() {
             public Option<T> apply(T t) {
                 return Option.notNull(t);
@@ -239,11 +261,22 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         };
     }
 
+    /**
+     * @deprecated
+     */
     public static <U> Function<Option<U>, U> getM() {
+        return getF();
+    }
+
+    /**
+     * Delegate to {@link #get()}.
+     */
+    public static <U> Function<Option<U>, U> getF() {
         return new Function<Option<U>, U>() {
             public U apply(Option<U> o) {
                 return o.get();
             }
         };
     }
+    
 } //~

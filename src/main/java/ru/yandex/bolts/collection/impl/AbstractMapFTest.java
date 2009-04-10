@@ -27,7 +27,7 @@ public class AbstractMapFTest extends TestCase {
 
     public void testFilterKeys() {
         MapF<Integer, String> m = map123();
-        MapF<Integer, String> n = m.filterKeys(Function1BTest.evenP());
+        MapF<Integer, String> n = m.filterKeys(Function1BTest.evenF());
         assertEquals(CollectionsF.map(2, "2"), n);
     }
 

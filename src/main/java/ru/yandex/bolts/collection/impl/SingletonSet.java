@@ -45,9 +45,9 @@ public class SingletonSet<E> extends AbstractSetF<E> implements Unmodifiable, Se
     }
 
     @Override
-    public Function1B<E> containsP() {
+    public Function1B<E> containsF() {
         // optimization
-        return Function1B.equalsP(e);
+        return Function1B.equalsF(e);
     }
 
     @Override

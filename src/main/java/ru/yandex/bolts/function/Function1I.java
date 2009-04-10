@@ -43,7 +43,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
     
     public boolean useOperator(ru.yandex.bolts.function.forhuman.Comparator.Operator operator, A o) {
-        return opP(operator).apply(o);
+        return opF(operator).apply(o);
     }
 
     private abstract class OperatorFunction1B extends Function1B<A> {
@@ -55,7 +55,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Greater Function1B */
-    public Function1B<A> gtP() {
+    public Function1B<A> gtF() {
         return new OperatorFunction1B() {
             public boolean apply(A a) {
                 return Function1I.this.gt(a);
@@ -68,7 +68,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Greater or equal Function1B */
-    public Function1B<A> geP() {
+    public Function1B<A> geF() {
         return new OperatorFunction1B() {
             public boolean apply(A a) {
                 return Function1I.this.ge(a);
@@ -81,7 +81,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Equal Function1B */
-    public Function1B<A> eqP() {
+    public Function1B<A> eqF() {
         return new OperatorFunction1B() {
             public boolean apply(A a) {
                 return Function1I.this.eq(a);
@@ -94,7 +94,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Not equal Function1B */
-    public Function1B<A> neP() {
+    public Function1B<A> neF() {
         return new OperatorFunction1B() {
             public boolean apply(A a) {
                 return Function1I.this.ne(a);
@@ -107,7 +107,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Less then Function1B */
-    public Function1B<A> ltP() {
+    public Function1B<A> ltF() {
         return new OperatorFunction1B() {
             public boolean apply(A a) {
                 return Function1I.this.lt(a);
@@ -120,7 +120,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Less or equal Function1B */
-    public Function1B<A> leP() {
+    public Function1B<A> leF() {
         return new OperatorFunction1B() {
             public boolean apply(A a) {
                 return Function1I.this.le(a);
@@ -132,14 +132,14 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
         };
     }
 
-    public Function1B<A> opP(ru.yandex.bolts.function.forhuman.Comparator.Operator op) {
+    public Function1B<A> opF(Function2I.Operator op) {
         switch (op) {
-            case EQ: return eqP();
-            case GE: return geP();
-            case GT: return gtP();
-            case LE: return leP();
-            case LT: return ltP();
-            case NE: return neP();
+            case EQ: return eqF();
+            case GE: return geF();
+            case GT: return gtF();
+            case LE: return leF();
+            case LT: return ltF();
+            case NE: return neF();
         }
         throw new IllegalArgumentException("unknown operator: " + op);
     }

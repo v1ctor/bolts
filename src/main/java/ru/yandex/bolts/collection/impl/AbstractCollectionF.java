@@ -51,7 +51,12 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return iterator.toList();
     }
 
-    public Function1B<E> containsP() {
+    public final Function1B<E> containsP() {
+        return containsF();
+    }
+    
+    @Override
+    public Function1B<E> containsF() {
         return new Function1B<E>() {
             public boolean apply(E e) {
                 return contains(e);

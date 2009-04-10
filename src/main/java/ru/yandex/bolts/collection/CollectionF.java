@@ -48,8 +48,13 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     /** Map to list of map values and construct map. Elements of this collection are used as keys */
     <V> MapF<E, V> toMapMappingToValue(Function<? super E, V> m);
 
-    /** Function1B whether object contained in this */
+    /**
+     * @deprecated 
+     */
     Function1B<E> containsP();
+    
+    /** Delegate of {@link #contains(Object)} */
+    Function1B<E> containsF();
 
     /** Convert this to list */
     ListF<E> toList();

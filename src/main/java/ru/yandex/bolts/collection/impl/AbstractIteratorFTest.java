@@ -99,7 +99,7 @@ public class AbstractIteratorFTest extends TestCase {
     
     
     public void testFilterSimple() {
-        ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filter(Function1BTest.evenP()).toList();
+        ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filter(Function1BTest.evenF()).toList();
         
         // XXX to simple
         ListF<Integer> expected = Cf.list(2, 4, 6);
@@ -133,7 +133,7 @@ public class AbstractIteratorFTest extends TestCase {
     }
     
     private void testFilterOn(ListF<Integer> l) {
-        checkIteratorAgainst(l.iterator().filter(Function1BTest.evenP()), l.filter(Function1BTest.evenP()));
+        checkIteratorAgainst(l.iterator().filter(Function1BTest.evenF()), l.filter(Function1BTest.evenF()));
     }
     
     private <E> void checkIteratorAgainst(IteratorF<E> it, ListF<E> elements) {

@@ -57,27 +57,27 @@ public abstract class Function2I<A, B> {
     }
     
     public Function1B<A> gtF(B b) {
-        return bind2(b).gtP();
+        return bind2(b).gtF();
     }
 
     public Function1B<A> geF(B b) {
-        return bind2(b).geP();
+        return bind2(b).geF();
     }
 
     public Function1B<A> eqF(B b) {
-        return bind2(b).eqP();
+        return bind2(b).eqF();
     }
 
     public Function1B<A> neF(B b) {
-        return bind2(b).neP();
+        return bind2(b).neF();
     }
 
     public Function1B<A> ltF(B b) {
-        return bind2(b).ltP();
+        return bind2(b).ltF();
     }
 
     public Function1B<A> leF(B b) {
-        return bind2(b).leP();
+        return bind2(b).leF();
     }
 
     public boolean op(Operator op, A a, B b) {

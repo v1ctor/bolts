@@ -78,7 +78,7 @@ public abstract class Function<A, R> {
     }
     
     public Function1B<A> andThenEquals(R value) {
-        return andThen(Function1B.equalsP(value));
+        return andThen(Function1B.equalsF(value));
     }
     
     /** And then null low natural comparator */

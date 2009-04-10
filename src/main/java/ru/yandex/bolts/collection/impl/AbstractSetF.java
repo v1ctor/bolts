@@ -50,7 +50,7 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
     public SetF<E> minus(Set<E> es) {
         if (this.isEmpty() || es.isEmpty()) return this;
 
-        return filter(CollectionsF.x(es).containsP().notP());
+        return filter(CollectionsF.x(es).containsF().notF());
     }
 
     public SetF<E> minus(Collection<E> es) {
@@ -62,7 +62,7 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
     public SetF<E> intersect(final Set<E> b) {
         if (isEmpty()) return this;
         else if (b.isEmpty()) return CollectionsF.x(b);
-        return this.filter(CollectionsF.x(b).containsP());
+        return this.filter(CollectionsF.x(b).containsF());
     }
 
     public abstract IteratorF<E> iterator();

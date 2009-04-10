@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 public class Function1BTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Function1BTest.class);
 
-    private static Function1B<Object> anotherTrueP() {
+    private static Function1B<Object> anotherTrueF() {
         return new Function1B<Object>() {
             public boolean apply(Object o) {
                 return true;
@@ -20,7 +20,7 @@ public class Function1BTest extends TestCase {
         };
     }
 
-    private static Function1B<Object> anotherFalseP() {
+    private static Function1B<Object> anotherFalseF() {
         return new Function1B<Object>() {
             public boolean apply(Object o) {
                 return false;
@@ -29,116 +29,116 @@ public class Function1BTest extends TestCase {
     }
 
     public void testAnd() {
-        assertTrue(anotherTrueP().andP(anotherTrueP()).apply(null));
-        assertFalse(anotherTrueP().andP(anotherFalseP()).apply(null));
-        assertFalse(anotherFalseP().andP(anotherTrueP()).apply(null));
-        assertFalse(anotherFalseP().andP(anotherFalseP()).apply(null));
-        anotherFalseP().andP(anotherTrueP()).toString();
+        assertTrue(anotherTrueF().andF(anotherTrueF()).apply(null));
+        assertFalse(anotherTrueF().andF(anotherFalseF()).apply(null));
+        assertFalse(anotherFalseF().andF(anotherTrueF()).apply(null));
+        assertFalse(anotherFalseF().andF(anotherFalseF()).apply(null));
+        anotherFalseF().andF(anotherTrueF()).toString();
     }
 
     public void testOr() {
-        assertTrue(anotherTrueP().orP(anotherTrueP()).apply(null));
-        assertTrue(anotherTrueP().orP(anotherFalseP()).apply(null));
-        assertTrue(anotherFalseP().orP(anotherTrueP()).apply(null));
-        assertFalse(anotherFalseP().orP(anotherFalseP()).apply(null));
-        anotherFalseP().orP(anotherTrueP()).toString();
+        assertTrue(anotherTrueF().orF(anotherTrueF()).apply(null));
+        assertTrue(anotherTrueF().orF(anotherFalseF()).apply(null));
+        assertTrue(anotherFalseF().orF(anotherTrueF()).apply(null));
+        assertFalse(anotherFalseF().orF(anotherFalseF()).apply(null));
+        anotherFalseF().orF(anotherTrueF()).toString();
     }
 
     public void testNot() {
-        assertFalse(anotherTrueP().notP().apply(null));
-        assertTrue(anotherFalseP().notP().apply(null));
-        anotherTrueP().notP().toString();
-        Function1B atp = anotherTrueP();
-        assertSame(atp.notP().notP(), atp);
+        assertFalse(anotherTrueF().notF().apply(null));
+        assertTrue(anotherFalseF().notF().apply(null));
+        anotherTrueF().notF().toString();
+        Function1B atp = anotherTrueF();
+        assertSame(atp.notF().notF(), atp);
     }
 
     public void testTrue() {
-        Function1B atp = anotherFalseP();
-        Function1B tp = Function1B.trueP();
-        assertSame(atp, tp.andP(atp));
-        assertSame(tp, tp.orP(atp));
+        Function1B atp = anotherFalseF();
+        Function1B tp = Function1B.trueF();
+        assertSame(atp, tp.andF(atp));
+        assertSame(tp, tp.orF(atp));
         tp.toString();
 
-        assertFalse(tp.notP().apply(null));
+        assertFalse(tp.notF().apply(null));
     }
 
     public void testFalse() {
-        Function1B afp = anotherFalseP();
-        Function1B fp = Function1B.falseP();
-        assertSame(fp, fp.andP(afp));
-        assertSame(afp, fp.orP(afp));
+        Function1B afp = anotherFalseF();
+        Function1B fp = Function1B.falseF();
+        assertSame(fp, fp.andF(afp));
+        assertSame(afp, fp.orF(afp));
         fp.toString();
 
-        assertTrue(fp.notP().apply(null));
+        assertTrue(fp.notF().apply(null));
     }
 
     public void testasFunction() {
-        assertTrue(anotherTrueP().asFunction().apply(null));
-        assertFalse(anotherFalseP().asFunction().apply(null));
-        anotherTrueP().asFunction().toString();
+        assertTrue(anotherTrueF().asFunction().apply(null));
+        assertFalse(anotherFalseF().asFunction().apply(null));
+        anotherTrueF().asFunction().toString();
     }
 
     public void testEquals() {
-        assertTrue(Function1B.equalsP(new ArrayList()).apply(new ArrayList()));
-        assertFalse(Function1B.equalsP("aa").apply("bb"));
-        Function1B.equalsP("aa").toString();
+        assertTrue(Function1B.equalsF(new ArrayList()).apply(new ArrayList()));
+        assertFalse(Function1B.equalsF("aa").apply("bb"));
+        Function1B.equalsF("aa").toString();
     }
 
     public void testSame() {
-        assertTrue(Function1B.sameP("a").apply("a"));
-        assertFalse(Function1B.sameP(new ArrayList()).apply(new ArrayList()));
-        Function1B.sameP("aa").toString();
+        assertTrue(Function1B.sameF("a").apply("a"));
+        assertFalse(Function1B.sameF(new ArrayList()).apply(new ArrayList()));
+        Function1B.sameF("aa").toString();
     }
 
     public void testNotNull() {
-        assertTrue(Function1B.notNullP().apply(""));
-        assertFalse(Function1B.notNullP().apply(null));
-        Function1B.notNullP().toString();
+        assertTrue(Function1B.notNullF().apply(""));
+        assertFalse(Function1B.notNullF().apply(null));
+        Function1B.notNullF().toString();
     }
 
-    public void testAllOfP() {
-        assertTrue(Function1B.allOfP().apply(null));
-        assertTrue(Function1B.allOfP(anotherTrueP()).apply(null));
-        assertTrue(Function1B.allOfP(anotherTrueP(), anotherTrueP()).apply(null));
-        assertTrue(Function1B.allOfP(anotherTrueP(), anotherTrueP(), anotherTrueP()).apply(null));
+    public void testAllOfF() {
+        assertTrue(Function1B.allOfF().apply(null));
+        assertTrue(Function1B.allOfF(anotherTrueF()).apply(null));
+        assertTrue(Function1B.allOfF(anotherTrueF(), anotherTrueF()).apply(null));
+        assertTrue(Function1B.allOfF(anotherTrueF(), anotherTrueF(), anotherTrueF()).apply(null));
 
-        assertFalse(Function1B.allOfP(anotherFalseP()).apply(null));
-        assertFalse(Function1B.allOfP(anotherFalseP(), anotherFalseP()).apply(null));
-        assertFalse(Function1B.allOfP(anotherTrueP(), anotherFalseP()).apply(null));
-        assertFalse(Function1B.allOfP(anotherFalseP(), anotherFalseP(), anotherTrueP()).apply(null));
+        assertFalse(Function1B.allOfF(anotherFalseF()).apply(null));
+        assertFalse(Function1B.allOfF(anotherFalseF(), anotherFalseF()).apply(null));
+        assertFalse(Function1B.allOfF(anotherTrueF(), anotherFalseF()).apply(null));
+        assertFalse(Function1B.allOfF(anotherFalseF(), anotherFalseF(), anotherTrueF()).apply(null));
 
-        Function1B.allOfP(anotherTrueP(), anotherFalseP(), anotherTrueP()).toString();
+        Function1B.allOfF(anotherTrueF(), anotherFalseF(), anotherTrueF()).toString();
     }
 
-    public void testAnyOfP() {
-        assertFalse(Function1B.anyOfP().apply(null));
-        assertFalse(Function1B.anyOfP(anotherFalseP()).apply(null));
-        assertFalse(Function1B.anyOfP(anotherFalseP(), anotherFalseP()).apply(null));
-        assertFalse(Function1B.anyOfP(anotherFalseP(), anotherFalseP(), anotherFalseP()).apply(null));
+    public void testAnyOfF() {
+        assertFalse(Function1B.anyOfF().apply(null));
+        assertFalse(Function1B.anyOfF(anotherFalseF()).apply(null));
+        assertFalse(Function1B.anyOfF(anotherFalseF(), anotherFalseF()).apply(null));
+        assertFalse(Function1B.anyOfF(anotherFalseF(), anotherFalseF(), anotherFalseF()).apply(null));
 
-        assertTrue(Function1B.anyOfP(anotherTrueP()).apply(null));
-        assertTrue(Function1B.anyOfP(anotherTrueP(), anotherTrueP()).apply(null));
-        assertTrue(Function1B.anyOfP(anotherTrueP(), anotherFalseP()).apply(null));
-        assertTrue(Function1B.anyOfP(anotherFalseP(), anotherFalseP(), anotherTrueP()).apply(null));
+        assertTrue(Function1B.anyOfF(anotherTrueF()).apply(null));
+        assertTrue(Function1B.anyOfF(anotherTrueF(), anotherTrueF()).apply(null));
+        assertTrue(Function1B.anyOfF(anotherTrueF(), anotherFalseF()).apply(null));
+        assertTrue(Function1B.anyOfF(anotherFalseF(), anotherFalseF(), anotherTrueF()).apply(null));
 
-        Function1B.anyOfP(anotherTrueP(), anotherFalseP(), anotherTrueP()).toString();
+        Function1B.anyOfF(anotherTrueF(), anotherFalseF(), anotherTrueF()).toString();
     }
 
     public void testWrapMapper() {
-        assertTrue(Function1B.wrap(anotherTrueP().asFunction()).apply(null));
-        assertFalse(Function1B.wrap(anotherFalseP().asFunction()).apply(null));
-        Function1B.wrap(anotherTrueP().asFunction()).toString();
+        assertTrue(Function1B.wrap(anotherTrueF().asFunction()).apply(null));
+        assertFalse(Function1B.wrap(anotherFalseF().asFunction()).apply(null));
+        Function1B.wrap(anotherTrueF().asFunction()).toString();
     }
 
     public void testCompose() {
-        Function1B<Integer> p = Function1B.equalsP("1").compose(Function.<Integer>toStringF());
+        Function1B<Integer> p = Function1B.equalsF("1").compose(Function.<Integer>toStringF());
         assertTrue(p.apply(1));
         assertFalse(p.apply(2));
         p.toString();
     }
 
     /** Integer is even */
-    public static Function1B<Integer> evenP() {
+    public static Function1B<Integer> evenF() {
         return new Function1B<Integer>() {
             public boolean apply(Integer integer) {
                 return integer % 2 == 0;
