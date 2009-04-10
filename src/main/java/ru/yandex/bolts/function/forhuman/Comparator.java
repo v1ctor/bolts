@@ -1,8 +1,6 @@
 package ru.yandex.bolts.function.forhuman;
 
 import ru.yandex.bolts.function.Function;
-import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.Function1I;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 
@@ -13,92 +11,9 @@ import ru.yandex.bolts.function.Function2I;
  */
 public abstract class Comparator<A> extends Function2I<A, A> implements java.util.Comparator<A> {
     
-    public static enum Operator {
-        GT(">"),
-        GE(">="),
-        NE("!="),
-        EQ("="),
-        LT("<"),
-        LE("<="),
-        ;
-        private final String name;
-
-        Operator(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String toString() {
-            return getName();
-        }
-    }
-    
     @Override
     public final int apply(A a, A b) {
         return compare(a, b);
-    }
-
-    public boolean gt(A a, A b) {
-        return compare(a, b) > 0;
-    }
-
-    public boolean ge(A a, A b) {
-        return compare(a, b) > 0;
-    }
-
-    public boolean eq(A a, A b) {
-        return compare(a, b) == 0;
-    }
-
-    public boolean ne(A a, A b) {
-        return compare(a, b) != 0;
-    }
-
-    public boolean lt(A a, A b) {
-        return compare(a, b) < 0;
-    }
-
-    public boolean le(A a, A b) {
-        return compare(a, b) <= 0;
-    }
-
-    public boolean op(Operator op, A a, A b) {
-        if (op != null) switch (op) {
-            case EQ: return eq(a, b);
-            case GE: return ge(a, b);
-            case GT: return gt(a, b);
-            case LE: return le(a, b);
-            case LT: return lt(a, b);
-            case NE: return ne(a, b);
-        }
-        throw new IllegalArgumentException("unknown operator: " + op);
-    }
-
-    public Function1B<A> gtP(A b) {
-        return bind2(b).gtP();
-    }
-
-    public Function1B<A> geP(A b) {
-        return bind2(b).geP();
-    }
-
-    public Function1B<A> eqP(A b) {
-        return bind2(b).eqP();
-    }
-
-    public Function1B<A> neP(A b) {
-        return bind2(b).neP();
-    }
-
-    public Function1B<A> ltP(A b) {
-        return bind2(b).ltP();
-    }
-
-    public Function1B<A> leP(A b) {
-        return bind2(b).leP();
     }
 
     public A max(A a, A b) {
@@ -122,51 +37,6 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
                 int r = Comparator.this.compare(o1, o2);
                 if (r != 0) return r;
                 return comparator.compare(o1, o2);
-            }
-        };
-    }
-
-    /** Invert current comparator */
-    public Comparator<A> invert() {
-        return new Comparator<A>() {
-            public int compare(A o1, A o2) {
-                return Comparator.this.compare(o2, o1);
-            }
-
-            public String toString() {
-                return "invert(" + Comparator.this + ")";
-            }
-
-            @Override
-            public Comparator<A> invert() {
-                return Comparator.this;
-            }
-            
-        };
-
-    }
-
-    /** Bind first argument */
-    public Function1I<A> bind1(final A a) {
-        return new Function1I<A>() {
-            public int apply(A b) {
-                return Comparator.this.compare(a, b);
-            }
-
-            public String toString() {
-                return Comparator.this + "(" + a + ", _)";
-            }
-        };
-    }
-
-    public Function1I<A> bind2(final A b) {
-        return new Function1I<A>() {
-            public int apply(A a) {
-                return Comparator.this.compare(a, b);
-            }
-
-            public String toString() {
-                return Comparator.this + "(_, " + b + ")";
             }
         };
     }
@@ -217,8 +87,13 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
     }
     
     @SuppressWarnings("unchecked")
-    public <B> Comparator<B> uncheckedCast() {
+    public <B> Comparator<B> uncheckedCastC() {
         return (Comparator<B>) this;
+    }
+    
+    @Override
+    public Comparator<A> invert() {
+        return wrap(super.invert());
     }
 
     public static <A> Comparator<A> wrap(final java.util.Comparator<A> comparator) {

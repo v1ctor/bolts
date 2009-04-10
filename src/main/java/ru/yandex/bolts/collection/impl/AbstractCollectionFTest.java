@@ -102,12 +102,12 @@ public class AbstractCollectionFTest extends TestCase {
     public void testMin() {
         CollectionF<String> coll = Cf.list("b", "a", "d", "c");
         assertEquals("a", coll.min());
-        assertEquals("d", coll.min(Comparator.naturalComparator().<String>uncheckedCast().invert()));
+        assertEquals("d", coll.min(Comparator.naturalComparator().<String, String>uncheckedCast().invert()));
     }
 
     public void testMax() {
         CollectionF<String> coll = Cf.list("b", "a", "d", "c");
         assertEquals("d", coll.max());
-        assertEquals("a", coll.max(Comparator.naturalComparator().<String>uncheckedCast().invert()));
+        assertEquals("a", coll.max(Comparator.naturalComparator().<String, String>uncheckedCast().invert()));
     }
 } //~

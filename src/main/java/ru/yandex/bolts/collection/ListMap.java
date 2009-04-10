@@ -115,7 +115,7 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
      * @see CollectionF#sort()
      */
     public ListMap<K, V> sortByKey() {
-        return sortByKey(Comparator.naturalComparator().<K>uncheckedCast());
+        return sortByKey(Comparator.naturalComparator().<K, K>uncheckedCast());
     }
     
     /**

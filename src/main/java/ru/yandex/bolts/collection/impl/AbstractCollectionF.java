@@ -347,7 +347,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     public E min() {
-        return min(Comparator.naturalComparator().<E>uncheckedCast());
+        return min(Comparator.naturalComparator().<E, E>uncheckedCast());
     }
 
     @SuppressWarnings("unchecked")
@@ -356,7 +356,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     public E max() {
-        return max(Comparator.naturalComparator().<E>uncheckedCast());
+        return max(Comparator.naturalComparator().<E, E>uncheckedCast());
     }
 
     @SuppressWarnings("unchecked")
