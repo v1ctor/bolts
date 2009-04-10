@@ -45,10 +45,10 @@
         <delete>
             <fileset dir="target" includes="yandex-bolts*.jar"/>
         </delete>
-        <jar destfile="target/jars/yandex-bolts${jar.suffix}.jar">
+        <jar destfile="target/jars/bolts${jar.suffix}-jar.jar">
             <fileset dir="target/classes"/>
         </jar>
-    	<jar destfile="target/jars/yandex-bolts${jar.suffix}-sources.jar">
+    	<jar destfile="target/jars/bolts${jar.suffix}-source.jar">
             <fileset dir="src/main/java"/>
         </jar>
     </target>

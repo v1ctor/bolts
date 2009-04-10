@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="bolts" basedir=".." default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
+    
+    <available property="ivy.svn.resolver.available" file="yandex/ivysvnresolver-2.0.0-rc2.jar"/>
+    <target name="download-svn-resolver" unless="ivy.svn.resolver.available">
+        <get src="https://svn.yandex.ru/ivy/ivy-ant/trunk/ivysvnresolver-2.0.0-rc2.jar"
+                dest="yandex/ivysvnresolver-2.0.0-rc2.jar"
+                username="ivy-robot"
+                password="LAme12ljm"/>
+    </target>
+    
+    <available property="svnkit.available" file="yandex/svnkit.jar"/>
+    <target name="download-svnkit" unless="svnkit.available">
+        <get src="https://svn.yandex.ru/ivy/ivy-ant/trunk/svnkit.jar"
+                dest="yandex/svnkit.jar"
+                username="ivy-robot"
+                password="LAme12ljm"/>
+    </target>
+        
+    <target name="resolve" depends="download-svn-resolver,download-svnkit">
+        <taskdef resource="org/apache/ivy/ant/antlib.xml"
+                uri="antlib:org.apache.ivy.ant">
+            <classpath>
+                <fileset dir="lib/ivy" includes="*.jar"/>
+                <fileset dir="yandex" includes="*.jar"/>
+            </classpath>
+        </taskdef>
+
+        <ivy:configure file="yandex/ivysettings.xml"/>
+        <ivy:resolve/>
+    </target>
+    
+    <target name="publish" depends="resolve">
+        <ivy:publish resolver="yandex-ivy-svn">
+            <artifacts pattern="target/jars/[artifact]-[revision]-[type].[ext]"/>
+        </ivy:publish>
+    </target>
+</project>
+
+<!-- vim: set ts=4 sw=4 et: -->
