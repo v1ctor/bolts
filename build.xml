@@ -43,7 +43,7 @@
     <target name="jar" depends="compile">
         <mkdir dir="target/jars"/>
         <delete>
-            <fileset dir="target" includes="yandex-bolts*.jar"/>
+            <fileset dir="target" includes="bolts*.jar"/>
         </delete>
         <jar destfile="target/jars/bolts${jar.suffix}-jar.jar">
             <fileset dir="target/classes"/>
