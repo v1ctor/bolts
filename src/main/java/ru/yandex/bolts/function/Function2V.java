@@ -4,8 +4,6 @@ import ru.yandex.bolts.collection.Tuple2;
 
 /**
  * @author Stepan Koltsov
- * 
- * @see F2V
  */
 public abstract class Function2V<A, B> {
     public abstract void apply(A a, B b);

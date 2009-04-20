@@ -119,7 +119,7 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     }
     
     /**
-     * @see CollectionF#sort(Function)
+     * @see CollectionF#sort(Function2I)
      */
     @SuppressWarnings("unchecked")
     public ListMap<K, V> sortByKey(Function2I<? super K, ? super K> comparator) {

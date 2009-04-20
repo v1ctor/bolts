@@ -3,8 +3,6 @@ package ru.yandex.bolts.function;
 
 /**
  * @author Stepan Koltsov
- *
- * @see ru.yandex.bolts.function.forhuman.Function0
  */
 public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
     public abstract R apply();
