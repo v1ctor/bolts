@@ -40,6 +40,18 @@
         </javac>
     </target>
     
+    <target name="javadoc">
+        <delete dir="target/javadoc"/>
+        <javadoc destdir="target/javadoc">
+            <fileset dir="src/main/java">
+                <include name="**/*.java"/>
+                <exclude name="**/*Test.java"/>
+                <exclude name="**/*TestSupport.java"/>
+                <exclude name="**/test/**"/>
+            </fileset>
+        </javadoc>
+    </target>
+    
     <target name="jar" depends="compile">
         <mkdir dir="target/jars"/>
         <delete>
