@@ -32,7 +32,7 @@
 
     <target name="compile" depends="resolve">
         <mkdir dir="target/classes"/>
-        <javac source="1.5" target="1.5" srcdir="src/main/java" destdir="target/classes" debug="true">
+        <javac source="1.6" target="1.6" srcdir="src/main/java" destdir="target/classes" debug="true">
             <classpath>
                 <fileset dir="lib" includes="*.jar"/>
                 <fileset dir="lib/dep" includes="*.jar"/>
