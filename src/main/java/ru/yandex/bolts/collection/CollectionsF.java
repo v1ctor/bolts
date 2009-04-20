@@ -75,6 +75,7 @@ public class CollectionsF {
         return DefaultMapF.wrap(map);
     }
 
+    /** Wrap properties as set of String, String pairs */
     @SuppressWarnings("unchecked")
     public static MapF<String, String> x(Properties properties) {
         return x((Map) properties);
@@ -276,6 +277,7 @@ public class CollectionsF {
         return map(key1, value1).plus1(key2, value2);
     }
     
+    /** Create map from sequence of entries */
     public static <K, V> MapF<K, V> map(Collection<Tuple2<K, V>> pairs) {
         return ListMap.listMap(Cf.x(pairs).toList()).toMap();
     }
@@ -329,6 +331,9 @@ public class CollectionsF {
         return map;
     }
 
+    /**
+     * Wrapper around {@link ConcurrentHashMap}.
+     */
     @SuppressWarnings("serial")
     public static <K, V> MapF<K, V> concurrentHashMap() {
         return new DefaultMapF<K, V>(new ConcurrentHashMap<K, V>()) {
@@ -380,12 +385,19 @@ public class CollectionsF {
 
     /**
      * Immutable list of integer in given range.
+     * 
+     * @return empty list if <code>end &lt; start</code>
      */
     public static ListF<Integer> range(final int startInclusive, final int endExclusive) {
         if (startInclusive >= endExclusive) return list();
         return new Range(startInclusive, endExclusive);
     }
 
+    /**
+     * Immutable set of integer in given range.
+     * 
+     * @return empty set if <code>end &lt; start</code>
+     */
     private static SetF<Integer> rangeAsSet(final int startInclusive, final int endExclusive) {
         if (startInclusive >= endExclusive) return set();
         return new RangeAsSet(startInclusive, endExclusive);
@@ -455,6 +467,9 @@ public class CollectionsF {
         }
     }
 
+    /**
+     * {@link MapF#plus(MapF)} as function.
+     */
     public static <A, B> Function2<MapF<A, B>, MapF<A, B>, MapF<A, B>> mapPlusF() {
         return new Function2<MapF<A, B>, MapF<A, B>, MapF<A, B>>() {
             public MapF<A, B> apply(MapF<A, B> m1, MapF<A, B> m2) {
@@ -463,6 +478,7 @@ public class CollectionsF {
         };
     }
 
+    /** Concatenate two lists function */
     public static <A> Function2<ListF<A>, ListF<A>, ListF<A>> listPlusF() {
         return new Function2<ListF<A>, ListF<A>, ListF<A>>() {
             public ListF<A> apply(ListF<A> l1, ListF<A> l2) {
@@ -471,6 +487,7 @@ public class CollectionsF {
         };
     }
 
+    /** Union of two sets function */
     public static <A> Function2<SetF<A>, SetF<A>, SetF<A>> setPlusF() {
         return new Function2<SetF<A>, SetF<A>, SetF<A>>() {
             public SetF<A> apply(SetF<A> l1, SetF<A> l2) {
@@ -479,7 +496,13 @@ public class CollectionsF {
         };
     }
 
+    /** @deprecated */
     public static <E> Function<List<E>, ListF<E>> wrapListM() {
+        return wrapListF();
+    }
+
+    /** {@link #x(List)} as function */
+    public static <E> Function<List<E>, ListF<E>> wrapListF() {
         return new Function<List<E>, ListF<E>>() {
             public ListF<E> apply(List<E> list) {
                 return x(list);
@@ -487,8 +510,13 @@ public class CollectionsF {
         };
     }
 
-
+    /** @deprecated */
     public static <E> Function<Set<E>, SetF<E>> wrapSetM() {
+        return wrapSetF();
+    }
+
+    /** {@link #x(Set)} as function */
+    public static <E> Function<Set<E>, SetF<E>> wrapSetF() {
         return new Function<Set<E>, SetF<E>>() {
             public SetF<E> apply(Set<E> set) {
                 return x(set);
@@ -496,7 +524,13 @@ public class CollectionsF {
         };
     }
 
+    /** @deprecated */
     public static <K, V> Function<Map<K, V>, MapF<K, V>> wrapMapM() {
+        return wrapMapF();
+    }
+
+    /** {@link #x(Map)} as function */
+    public static <K, V> Function<Map<K, V>, MapF<K, V>> wrapMapF() {
         return new Function<Map<K, V>, MapF<K, V>>() {
             public MapF<K, V> apply(Map<K, V> map) {
                 return x(map);
@@ -504,7 +538,13 @@ public class CollectionsF {
         };
     }
 
+    /** @deprecated */
     public static <E> Function<Iterator<E>, IteratorF<E>> wrapIteratorM() {
+        return wrapIteratorF();
+    }
+
+    /** {@link #x(Iterator)} as function */
+    public static <E> Function<Iterator<E>, IteratorF<E>> wrapIteratorF() {
         return new Function<Iterator<E>, IteratorF<E>>() {
             public IteratorF<E> apply(Iterator<E> iterator) {
                 return x(iterator);
@@ -512,7 +552,13 @@ public class CollectionsF {
         };
     }
     
+    /** @deprecated */
     public static <T> Function<Collection<T>, Integer> sizeM() {
+        return sizeF();
+    }
+
+    /** {@link Collection#size()} as function */
+    public static <T> Function<Collection<T>, Integer> sizeF() {
         return new Function<Collection<T>, Integer>() {
             public Integer apply(Collection<T> a) {
                 return a.size();
@@ -520,6 +566,7 @@ public class CollectionsF {
         };
     }
     
+    /** {@link Iterator#hasNext()} as function */
     public static <T> Function1B<Iterator<T>> hasNextF() {
         return new Function1B<Iterator<T>>() {
             public boolean apply(Iterator<T> a) {
@@ -528,6 +575,7 @@ public class CollectionsF {
         };
     }
     
+    /** {@link Iterable#iterator()} as function */
     public static <T> Function<Iterable<T>, IteratorF<T>> iteratorF() {
         return new Function<Iterable<T>, IteratorF<T>>() {
             public IteratorF<T> apply(Iterable<T> a) {

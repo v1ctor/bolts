@@ -1,6 +1,7 @@
 package ru.yandex.bolts.collection;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -53,7 +54,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     Function1B<E> containsP();
     
-    /** Delegate of {@link #contains(Object)} */
+    /** Delegate to {@link #contains(Object)} */
     Function1B<E> containsF();
 
     /** Convert this to list */
@@ -72,35 +73,85 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     
     ListF<E> sortByDesc(Function<? super E, ?> f);
     
+    /**
+     * Group elements by applying given function to each element.
+     */
     <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m);
 
-    /** Add element to this collection */
+    /** @deprecated */
     Function1V<E> addOp();
+    
+    /** Delegate to {@link #add(Object)} */
+    Function1V<E> addF();
 
+    /**
+     * This collection plus one element.
+     */
     CollectionF<E> plus1(E e);
 
+    /**
+     * Collection with all elements of this collection and that collection.
+     */
     CollectionF<E> plus(Collection<? extends E> elements);
 
+    /**
+     * Collection with all elements of this collection and that collection.
+     */
     CollectionF<E> plus(Iterator<? extends E> iterator);
 
+    /**
+     * Varargs variant of {@link #plus(Collection)}.
+     */
     CollectionF<E> plus(E... additions);
 
+    /**
+     * Varargs version of <code>addAll</code>
+     * 
+     * @see #addAll(Collection)
+     */
     void addAll(E... additions);
     
     /** Copy elements to the new array */
     E[] toArray(Class<E> cl);
     
+    /**
+     * Copy all elements of this collection to newly allocated byte array.
+     * Fail if any element of this collection is null or not {@link Byte}. 
+     */
     byte[] toByteArray();
+    /**
+     * @see #toByteArray()
+     */
     short[] toShortArray();
+    /**
+     * @see #toByteArray()
+     */
     int[] toIntArray();
+    /**
+     * @see #toByteArray()
+     */
     long[] toLongArray();
+    /**
+     * @see #toByteArray()
+     */
     boolean[] toBooleanArray();
+    /**
+     * @see #toByteArray()
+     */
     char[] toCharArray();
+    /**
+     * @see #toByteArray()
+     */
     float[] toFloatArray();
+    /**
+     * @see #toByteArray()
+     */
     double[] toDoubleArray();
 
     /**
      * Return unmodifiable view or unmodifiable copy of this.
+     * 
+     * @see Collections#unmodifiableCollection(Collection)
      */
     CollectionF<E> unmodifiable();
 
@@ -116,6 +167,9 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     Option<E> singleO() throws NoSuchElementException;
     
+    /**
+     * Return <code>this</code> with another type parameter and no type checks.
+     */
     <F> CollectionF<F> uncheckedCast();
 
     /** Not implemented yet */
@@ -125,8 +179,21 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     Projection<E> projection();
 
+    /**
+     * Min element using {@link Comparator#naturalComparator()}.
+     */
     E min();
+    /**
+     * Min element using given comparator.
+     */
     E min(Function2I<? super E, ? super E> comparator);
+    /**
+     * Max element using {@link Comparator#naturalComparator()}.
+     */
     E max();
+    /**
+     * Max element using given comparator.
+     */
     E max(Function2I<? super E, ? super E> comparator);
+    
 } //~

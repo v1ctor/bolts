@@ -164,7 +164,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         });
     }
 
-    public Function1V<E> addOp() {
+    public final Function1V<E> addOp() {
+        return addF();
+    }
+
+    public Function1V<E> addF() {
         return new Function1V<E>() {
             public void apply(E e) {
                 add(e);
