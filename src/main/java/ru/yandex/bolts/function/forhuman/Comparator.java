@@ -82,18 +82,6 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
         };
     }
 
-    public Comparator<A> describe(final String string) {
-        return new Comparator<A>() {
-            public int compare(A o1, A o2) {
-                return Comparator.this.compare(o1, o2);
-            }
-
-            public String toString() {
-                return string;
-            }
-        };
-    }
-    
     /** This but with different type parameter and no type check */
     @SuppressWarnings("unchecked")
     public <B> Comparator<B> uncheckedCastC() {
