@@ -16,11 +16,13 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
         return compare(a, b);
     }
 
+    /** Find max among a and b */
     public A max(A a, A b) {
         if (gt(a, b)) return a;
         else return b;
     }
 
+    /** Find min among a and b */
     public A min(A a, A b) {
         if (lt(a, b)) return a;
         else return b;
@@ -58,6 +60,9 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
         };
     }
 
+    /**
+     * {@link #max(Object, Object)} as function.
+     */
     public Function2<A, A, A> maxF() {
         return new Function2<A, A, A>() {
             public A apply(A a, A b) {
@@ -66,6 +71,9 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
         };
     }
 
+    /**
+     * {@link #min(Object, Object)} as function.
+     */
     public Function2<A, A, A> minF() {
         return new Function2<A, A, A>() {
             public A apply(A a, A b) {
@@ -86,16 +94,19 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
         };
     }
     
+    /** This but with different type parameter and no type check */
     @SuppressWarnings("unchecked")
     public <B> Comparator<B> uncheckedCastC() {
         return (Comparator<B>) this;
     }
     
+    /** Inverted comparator */
     @Override
     public Comparator<A> invert() {
         return wrap(super.invert());
     }
 
+    /** Wrap {@link java.util.Comparator} */
     public static <A> Comparator<A> wrap(final java.util.Comparator<A> comparator) {
         if (comparator instanceof Comparator) return (Comparator<A>) comparator;
         else return new Comparator<A>() {
@@ -109,6 +120,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
         };
     }
 
+    /** Wrap {@link Function2I} */
     public static <A> Comparator<A> wrap(final Function2I<A, A> comparator) {
         if (comparator instanceof Comparator) return (Comparator<A>) comparator;
         else return new Comparator<A>() {
