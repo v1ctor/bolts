@@ -37,6 +37,7 @@ Package contains utilities that are
     <dependencies> 
         <dependency org="junit" name="junit" rev="4.5" conf="test->runtime(*),master(*)"/>
         <dependency org="log4j" name="log4j" rev="1.2.15" conf="compile->master(*)"/>
+        <dependency org="org.functionaljava" name="fj" rev="2.19" conf="compile->master"/>
         <!--
         <dependency org="org.apache.ant" name="ant-junit" rev="1.7.1" conf="*->master"/>
         -->

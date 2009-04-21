@@ -6,6 +6,7 @@
     <resolvers>
         <chain name="default">
             <ibiblio name="ibiblio" m2compatible="true"/>
+            <ibiblio name="fj" m2compatible="true" root="http://functionaljava.googlecode.com/svn/maven/"/>
         </chain>
     </resolvers>
 </ivysettings>
