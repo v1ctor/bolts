@@ -5,12 +5,13 @@ import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 
 /**
- * Extended comparator.
+ * Extended {@link java.util.Comparator}.
  *
  * @author Stepan Koltsov
  */
 public abstract class Comparator<A> extends Function2I<A, A> implements java.util.Comparator<A> {
     
+    /** Call {@link #compare(Object, Object)} */
     @Override
     public final int apply(A a, A b) {
         return compare(a, b);
