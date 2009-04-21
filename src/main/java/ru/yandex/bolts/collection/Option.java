@@ -11,6 +11,9 @@ import ru.yandex.bolts.function.Function1B;
 
 /**
  * Port of scala <a href="http://www.scala-lang.org/docu/files/api/scala/Option.html">Option</a>.
+ * 
+ * @see fj.data.Option
+ * 
  * @author Stepan Koltsov
  */
 @SuppressWarnings({"unchecked"})

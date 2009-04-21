@@ -1,9 +1,15 @@
 package ru.yandex.bolts.function;
 
+import fj.F2;
+
 import ru.yandex.bolts.collection.Tuple2;
 
 
 /**
+ * Function with two arguments.
+ * 
+ * @see F2
+ * 
  * @author Stepan Koltsov
  */
 public abstract class Function2<A, B, R> {

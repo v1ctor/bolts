@@ -1,5 +1,7 @@
 package ru.yandex.bolts.function;
 
+import fj.F;
+
 import ru.yandex.bolts.function.forhuman.Comparator;
 
 
@@ -7,13 +9,21 @@ import ru.yandex.bolts.function.forhuman.Comparator;
 
 
 /**
+ * Function
+ * 
+ * @see F
+ * 
  * @author Stepan Koltsov
  */
 public abstract class Function<A, R> {
     
     public abstract R apply(A a);
     
-    /** (f andThen g)(x) = g(f(x)) */
+    /**
+     * (f andThen g)(x) = g(f(x))
+     * 
+     * @see fj.Function#andThen(F, F)
+     */
     public <C> Function<A, C> andThen(final Function<? super R, ? extends C> g) {
         return new Function<A, C>() {
             public C apply(A a) {
@@ -87,7 +97,11 @@ public abstract class Function<A, R> {
         return andThen((Comparator) Comparator.naturalComparator().nullLowC());
     }
 
-    /** (f compose g)(x) = f(g(x)) */
+    /**
+     * (f compose g)(x) = f(g(x))
+     * 
+     * @see fj.Function#compose(F, F)
+     */
     public <C> Function<C, R> compose(Function<C, A> g) {
         return g.andThen(this);
     }
