@@ -42,13 +42,21 @@
     
     <target name="javadoc">
         <delete dir="target/javadoc"/>
-        <javadoc destdir="target/javadoc">
+        <javadoc destdir="target/javadoc"
+            doctitle="Bolts API"
+            >
             <fileset dir="src/main/java">
                 <include name="**/*.java"/>
                 <exclude name="**/*Test.java"/>
                 <exclude name="**/*TestSupport.java"/>
                 <exclude name="**/test/**"/>
             </fileset>
+            <classpath>
+                <fileset dir="lib" includes="*.jar"/>
+                <fileset dir="lib/dep" includes="*.jar"/>
+            </classpath>
+            <link href="http://functionaljava.googlecode.com/svn/artifacts/2.19/javadoc/"/>
+            <link href="http://download.java.net/jdk7/docs/api/"/>
         </javadoc>
     </target>
     
