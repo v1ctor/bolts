@@ -5,6 +5,8 @@ import java.io.Serializable;
 import ru.yandex.bolts.function.Function;
 
 /**
+ * Three elements.
+ * 
  * @author Stepan Koltsov
  * 
  * @see Tuple2
@@ -90,7 +92,8 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         return "(" + _1 + ", " + _2 + ", " + _3 + ")";
     }
     
-    public static <A, B, C> Function<Tuple3<A, B, C>, A> get1M() {
+    /** <code>_1</code> as function */
+    public static <A, B, C> Function<Tuple3<A, B, C>, A> get1F() {
         return new Function<Tuple3<A, B, C>, A>() {
             public A apply(Tuple3<A, B, C> tuple) {
                 return tuple._1;
@@ -98,7 +101,8 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         };
     }
 
-    public static <A, B, C> Function<Tuple3<A, B, C>, B> get2M() {
+    /** <code>_2</code> as function */
+    public static <A, B, C> Function<Tuple3<A, B, C>, B> get2F() {
         return new Function<Tuple3<A, B, C>, B>() {
             public B apply(Tuple3<A, B, C> tuple) {
                 return tuple._2;
@@ -106,7 +110,8 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         };
     }
 
-    public static <A, B, C> Function<Tuple3<A, B, C>, C> get3M() {
+    /** <code>_3</code> as function */
+    public static <A, B, C> Function<Tuple3<A, B, C>, C> get3F() {
         return new Function<Tuple3<A, B, C>, C>() {
             public C apply(Tuple3<A, B, C> tuple) {
                 return tuple._3;
@@ -114,7 +119,7 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         };
     }
     
-    public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<X, B, C>> map1M(final Function<A, X> m) {
+    public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<X, B, C>> map1F(final Function<A, X> m) {
         return new Function<Tuple3<A, B, C>, Tuple3<X, B, C>>() {
             public Tuple3<X, B, C> apply(Tuple3<A, B, C> t) {
                 return tuple(m.apply(t._1), t._2, t._3);
@@ -122,7 +127,7 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         };
     }
 
-    public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<A, X, C>> map2M(final Function<B, X> m) {
+    public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<A, X, C>> map2F(final Function<B, X> m) {
         return new Function<Tuple3<A, B, C>, Tuple3<A, X, C>>() {
             public Tuple3<A, X, C> apply(Tuple3<A, B, C> t) {
                 return tuple(t._1, m.apply(t._2), t._3);
@@ -130,7 +135,7 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         };
     }
 
-    public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<A, B, X>> map3M(final Function<C, X> m) {
+    public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<A, B, X>> map3F(final Function<C, X> m) {
         return new Function<Tuple3<A, B, C>, Tuple3<A, B, X>>() {
             public Tuple3<A, B, X> apply(Tuple3<A, B, C> t) {
                 return tuple(t._1, t._2, m.apply(t._3));
@@ -140,7 +145,7 @@ public class Tuple3<T1, T2, T3> implements Serializable {
     
     // ?
     
-    public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<A, B>> get12M() {
+    public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<A, B>> get12F() {
         return new Function<Tuple3<A, B, C>, Tuple2<A, B>>() {
             public Tuple2<A, B> apply(Tuple3<A, B, C> a) {
                 return a.get12();
@@ -148,7 +153,7 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         };
     }
 
-    public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<A, C>> get13M() {
+    public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<A, C>> get13F() {
         return new Function<Tuple3<A, B, C>, Tuple2<A, C>>() {
             public Tuple2<A, C> apply(Tuple3<A, B, C> a) {
                 return a.get13();
@@ -156,7 +161,7 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         };
     }
 
-    public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<B, C>> get23M() {
+    public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<B, C>> get23F() {
         return new Function<Tuple3<A, B, C>, Tuple2<B, C>>() {
             public Tuple2<B, C> apply(Tuple3<A, B, C> a) {
                 return a.get23();

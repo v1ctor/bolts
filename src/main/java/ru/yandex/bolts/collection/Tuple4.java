@@ -2,12 +2,15 @@ package ru.yandex.bolts.collection;
 
 import java.io.Serializable;
 
+import fj.P4;
+
 import ru.yandex.bolts.function.Function;
 
 /**
  * @author Stepan Koltsov
  * 
  * @see Tuple2
+ * @see P4
  */
 public class Tuple4<T1, T2, T3, T4> implements Serializable {
     private static final long serialVersionUID = 5566029783258786962L;
@@ -80,7 +83,12 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
         return "(" + _1 + ", " + _2 + ", " + _3 + ", " + _4 + ")";
     }
     
+    /** @deprecated */
     public static <A, B, C, D> Function<Tuple4<A, B, C, D>, A> get1M() {
+        return get1F();
+    }
+    
+    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, A> get1F() {
         return new Function<Tuple4<A, B, C, D>, A>() {
             public A apply(Tuple4<A, B, C, D> tuple) {
                 return tuple._1;
@@ -88,7 +96,7 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
         };
     }
 
-    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, B> get2M() {
+    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, B> get2F() {
         return new Function<Tuple4<A, B, C, D>, B>() {
             public B apply(Tuple4<A, B, C, D> tuple) {
                 return tuple._2;
@@ -96,7 +104,7 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
         };
     }
 
-    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, C> get3M() {
+    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, C> get3F() {
         return new Function<Tuple4<A, B, C, D>, C>() {
             public C apply(Tuple4<A, B, C, D> tuple) {
                 return tuple._3;
@@ -104,7 +112,7 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
         };
     }
     
-    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, D> get4M() {
+    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, D> get4F() {
         return new Function<Tuple4<A, B, C, D>, D>() {
             public D apply(Tuple4<A, B, C, D> tuple) {
                 return tuple._4;
@@ -113,31 +121,51 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
     }
 
     
+    /** @deprecated */
     public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>> map1M(final Function<A, X> m) {
+        return map1F(m);
+    }
+    
+    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>> map1F(final Function<A, X> m) {
         return new Function<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>>() {
             public Tuple4<X, B, C, D> apply(Tuple4<A, B, C, D> t) {
                 return tuple(m.apply(t._1), t._2, t._3, t._4);
             }
         };
     }
-
+    
+    /** @deprecated */
     public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, X, C, D>> map2M(final Function<B, X> m) {
+        return map2F(m);
+    }
+
+    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, X, C, D>> map2F(final Function<B, X> m) {
         return new Function<Tuple4<A, B, C, D>, Tuple4<A, X, C, D>>() {
             public Tuple4<A, X, C, D> apply(Tuple4<A, B, C, D> t) {
                 return tuple(t._1, m.apply(t._2), t._3, t._4);
             }
         };
     }
-
+    
+    /** @deprecated */
     public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>> map3M(final Function<C, X> m) {
+        return map3F(m);
+    }
+
+    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>> map3F(final Function<C, X> m) {
         return new Function<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>>() {
             public Tuple4<A, B, X, D> apply(Tuple4<A, B, C, D> t) {
                 return tuple(t._1, t._2, m.apply(t._3), t._4);
             }
         };
     }
-
+    
+    /** @deprecated */
     public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, C, X>> map4M(final Function<D, X> m) {
+        return map4F(m);
+    }
+    
+    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, C, X>> map4F(final Function<D, X> m) {
         return new Function<Tuple4<A, B, C, D>, Tuple4<A, B, C, X>>() {
             public Tuple4<A, B, C, X> apply(Tuple4<A, B, C, D> t) {
                 return tuple(t._1, t._2, t._3, m.apply(t._4));

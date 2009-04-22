@@ -2,6 +2,8 @@ package ru.yandex.bolts.collection;
 
 import java.io.Serializable;
 
+import fj.P2;
+
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2;
 
@@ -12,6 +14,7 @@ import ru.yandex.bolts.function.Function2;
  * 
  * @see Tuple3
  * @see Tuple4
+ * @see P2
  */
 public class Tuple2<T1, T2> implements Serializable {
     private static final long serialVersionUID = 3326001902955370713L;
@@ -72,7 +75,13 @@ public class Tuple2<T1, T2> implements Serializable {
         return "(" + _1 + ", " + _2 + ")";
     }
 
+    /** @deprecated */
     public static <A, B> Function2<A, B, Tuple2<A, B>> consM() {
+        return consF();
+    }
+
+    /** Constructor function */
+    public static <A, B> Function2<A, B, Tuple2<A, B>> consF() {
         return new Function2<A, B, Tuple2<A, B>>() {
             public Tuple2<A, B> apply(A a, B b) {
                 return tuple(a, b);
@@ -80,7 +89,13 @@ public class Tuple2<T1, T2> implements Serializable {
         };
     }
 
+    /** @deprecated */
     public static <A, B> Function<Tuple2<A, B>, A> get1M() {
+        return get1F();
+    }
+
+    /** _1 as function */
+    public static <A, B> Function<Tuple2<A, B>, A> get1F() {
         return new Function<Tuple2<A, B>, A>() {
             public A apply(Tuple2<A, B> tuple) {
                 return tuple._1;
@@ -88,7 +103,13 @@ public class Tuple2<T1, T2> implements Serializable {
         };
     }
 
+    /** @deprecated */
     public static <A, B> Function<Tuple2<A, B>, B> get2M() {
+        return get2F();
+    }
+
+    /** _2 as function */
+    private static <A, B> Function<Tuple2<A, B>, B> get2F() {
         return new Function<Tuple2<A, B>, B>() {
             public B apply(Tuple2<A, B> tuple) {
                 return tuple._2;
@@ -96,7 +117,13 @@ public class Tuple2<T1, T2> implements Serializable {
         };
     }
 
+    /** @deprecated */
     public static <A, B> Function<Tuple2<A, B>, Tuple2<B, A>> swapM() {
+        return swapF();
+    }
+
+    /** {@link #swap()} as function */
+    public static <A, B> Function<Tuple2<A, B>, Tuple2<B, A>> swapF() {
         return new Function<Tuple2<A, B>, Tuple2<B, A>>() {
             public Tuple2<B, A> apply(Tuple2<A, B> tuple) {
                 return tuple.swap();
@@ -104,7 +131,12 @@ public class Tuple2<T1, T2> implements Serializable {
         };
     }
 
+    /** @deprecated */
     public static <A, B, C> Function<Tuple2<A, B>, Tuple2<C, B>> map1M(final Function<A, C> m) {
+        return map1F(m);
+    }
+
+    public static <A, B, C> Function<Tuple2<A, B>, Tuple2<C, B>> map1F(final Function<A, C> m) {
         return new Function<Tuple2<A, B>, Tuple2<C, B>>() {
             public Tuple2<C, B> apply(Tuple2<A, B> tuple) {
                 return tuple(m.apply(tuple._1), tuple._2);
@@ -112,7 +144,12 @@ public class Tuple2<T1, T2> implements Serializable {
         };
     }
 
+    /** @deprecated */
     public static <A, B, C> Function<Tuple2<A, B>, Tuple2<A, C>> map2M(final Function<B, C> m) {
+        return map2F(m);
+    }
+
+    public static <A, B, C> Function<Tuple2<A, B>, Tuple2<A, C>> map2F(final Function<B, C> m) {
         return new Function<Tuple2<A, B>, Tuple2<A, C>>() {
             public Tuple2<A, C> apply(Tuple2<A, B> tuple) {
                 return tuple(tuple._1, m.apply(tuple._2));
