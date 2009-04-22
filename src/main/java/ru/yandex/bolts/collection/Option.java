@@ -22,30 +22,56 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     private Option() { }
 
+    /**
+     * <code>true</code> iff this is none.
+     */
     public abstract boolean isEmpty();
 
+    /**
+     * <code>true</code> iff this is some.
+     */
     public final boolean isDefined() { return !isEmpty(); }
 
+    /**
+     * Get the value.
+     * 
+     * @throws NoSuchElementException if this is none.
+     */
     public abstract T get() throws NoSuchElementException;
 
+    /**
+     * If this is some return value of this, or return given value otherwise.
+     */
     public final T getOrElse(T u) {
         if (isDefined()) return get();
         else return u;
     }
 
+    /**
+     * If this is some return value of this, or evaluate function and return it value otherwise.
+     */
     public final T getOrElse(Function0<T> u) {
         if (isDefined()) return get();
         else return u.apply();
     }
 
+    /**
+     * <code>getOrElse(null)</code>, but works with types better.
+     */
     public final T getOrNull() {
         return getOrElse((T) null);
     }
 
+    /**
+     * <code>this</code> if this is some, or given option otherwise.
+     */
     public final Option<T> orElse(Option<T> elseOption) {
         return orElse(Function0.constF(elseOption));
     }
 
+    /**
+     * <code>this</code> if this is some, or evaluate function and return option otherwise. 
+     */
     public final Option<T> orElse(Function0<Option<T>> elseOption) {
         if (isDefined()) return this;
         else return elseOption.apply();
@@ -62,6 +88,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         else throw e.apply();
     }
 
+    /** Throw exception with specified message if this is empty */
     public final T getOrThrow(final String message) throws RuntimeException {
         return getOrThrow(new Function0<NoSuchElementException>() {
             public NoSuchElementException apply() {
@@ -70,6 +97,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         });
     }
 
+    /**
+     * Get or throw exception if this is empty. Message is constructed by concatenating given params.
+     */
     public final T getOrThrow(final String message, final Object param) throws RuntimeException {
         return getOrThrow(new Function0<NoSuchElementException>() {
             public NoSuchElementException apply() {
@@ -78,11 +108,13 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         });
     }
 
+    @Override
     public int size() {
         if (isDefined()) return 1;
         else return 0;
     }
 
+    @Override
     public T get(int index) {
         if (index == 0) return get();
         else throw new NoSuchElementException();
@@ -122,14 +154,20 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         return toSet();
     }
     
+    /** This object with different type parameters */
     @Override
     public <F> Option<F> uncheckedCast() {
         return (Option<F>) this;
     }
 
+    /**
+     * Return singleton none object.
+     */
     public static <T> Option<T> none() { return None.NONE; }
 
-    // XXX: prohibit null
+    /**
+     * Construct some containing given value.
+     */
     public static <T> Option<T> some(T x) { return new Some(x); }
 
     /**
@@ -177,6 +215,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         }
     }
 
+    /**
+     * None. Instance could be obtained by {@link Option#none()}.
+     */
     public static final class None<T> extends Option<T> {
         private static final long serialVersionUID = 3461376542565825187L;
 
