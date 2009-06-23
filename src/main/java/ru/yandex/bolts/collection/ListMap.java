@@ -2,20 +2,18 @@ package ru.yandex.bolts.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import ru.yandex.bolts.collection.impl.DefaultListF;
-import ru.yandex.bolts.function.Function;
-import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.Function2;
-import ru.yandex.bolts.function.Function2I;
-import ru.yandex.bolts.function.Function2V;
+import ru.yandex.bolts.function.*;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
  * Looks like map, but actually it is a list of {@link Tuple2} with handy interface.
  * 
  * @author Stepan Koltsov
+ * @author Iliya Roubin
  */
 public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     private ListMap(List<Tuple2<K, V>> list) {
@@ -28,6 +26,93 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     
     public ListMap(Collection<Tuple2<K, V>> elements) {
         super(new ArrayList<Tuple2<K, V>>(elements));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    protected ListMap<K, V> newMutableCollection() {
+        return ListMap.arrayList();
+    }
+
+    @Override
+    public ListMap<K, V> filter(Function1B<? super Tuple2<K, V>> p) {
+        return (ListMap<K, V>) super.filter(p);
+    }
+
+    @SuppressWarnings({"unchecked", "RedundantCast"})
+    public Tuple2<ListMap<K, V>, ListMap<K, V>> filter2ToListMaps(Function1B<? super Tuple2<K, V>> p) {
+        return (Tuple2) super.filter2(p);
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> subList(int fromIndex, int toIndex) {
+        return ListMap.listMap(super.subList(fromIndex, toIndex));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> plus(List<? extends Tuple2<K, V>> addition) {
+        return ListMap.listMap(super.plus(addition));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> plus(Collection<? extends Tuple2<K, V>> elements) {
+        return ListMap.listMap(super.plus(elements));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> plus(Iterator<? extends Tuple2<K, V>> iterator) {
+        return ListMap.listMap(super.plus(iterator));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> plus(Tuple2<K, V>... additions) {
+        return ListMap.listMap(super.plus(additions));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> take(int count) {
+        return ListMap.listMap(super.take(count));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> drop(int count) {
+        return ListMap.listMap(super.drop(count));
+    }
+
+    @Override
+    public ListMap<K, V> emptyList() {
+        return ListMap.listMap();
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> reverse() {
+        return ListMap.listMap(super.reverse());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> sort(Function2I<? super Tuple2<K, V>, ? super Tuple2<K, V>> comparator) {
+        return ListMap.listMap(super.sort(comparator));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> sortBy(Function<? super Tuple2<K, V>, ?> f) {
+        return ListMap.listMap(super.sortBy(f));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public ListMap<K, V> sortByDesc(Function<? super Tuple2<K, V>, ?> f) {
+        return ListMap.listMap(super.sortByDesc(f));
     }
 
     public <U> ListMap<U, V> mapKeys(final Function<K, U> mapper) {
@@ -92,11 +177,11 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     }
     
     private Function<Tuple2<K, V>, K> keyM() {
-        return Tuple2.<K, V>get1M();
+        return Tuple2.get1M();
     }
     
     private Function<Tuple2<K, V>, V> valueM() {
-        return Tuple2.<K, V>get2M();
+        return Tuple2.get2M();
     }
     
     public ListF<K> keys() {
@@ -134,7 +219,7 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         else return Cf.hashMap(this);
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "ToArrayCallWithZeroLengthArrayArgument"})
     @Override
     public Tuple2<K, V>[] toArray() {
         return toArray(new Tuple2[0]);

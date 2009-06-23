@@ -112,6 +112,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return this;
     }
 
+    @SuppressWarnings({"unchecked"})
     protected ListF<E> emptyList() {
         return CollectionsF.list();
     }
