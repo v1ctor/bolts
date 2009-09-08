@@ -172,13 +172,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     <F> CollectionF<F> uncheckedCast();
 
-    /** Not implemented yet */
-    interface Projection<E> extends CollectionF<E>, IterableF.Projection<E> {
-        CollectionF<E> force();
-    }
-
-    Projection<E> projection();
-
     /**
      * Min element using {@link Comparator#naturalComparator()}.
      */

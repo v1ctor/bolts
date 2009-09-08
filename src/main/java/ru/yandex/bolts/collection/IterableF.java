@@ -49,13 +49,5 @@ public interface IterableF<E> extends Iterable<E> {
     /** Make string */
     String mkString(String start, String sep, String end);
 
-    /** Not implemented */
-    interface Projection<E> extends IterableF<E> {
-        IterableF<E> force();
-    }
-
-    /** Not implemented */
-    Projection<E> projection();
-    
     <F> IterableF<F> uncheckedCast();
 } //~

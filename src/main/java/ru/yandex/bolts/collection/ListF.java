@@ -84,12 +84,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     
     <F> ListF<F> uncheckedCast();
 
-    /** Not implemented yet */
-    interface Projection<E> extends ListF<E>, CollectionF.Projection<E> {
-    }
-    
-    Projection<E> projection();
-
     /** List of pairs of elements with the same index in two lists */
     <B> ListMap<E, B> zip(ListF<B> that);
 } //~

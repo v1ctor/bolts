@@ -185,32 +185,6 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return new ReadOnlyListItr(index);
     }
 
-    public ListF.Projection<E> projection() {
-        return new ListProjection<E>(this);
-    }
-
-    // probably useless
-    static class ListProjection<E> extends DefaultListF<E> implements ListF.Projection<E> {
-        private static final long serialVersionUID = -846027458815943517L;
-
-        public ListProjection(List<E> target) {
-            super(target);
-        }
-
-        public CollectionF<E> force() {
-            return iterator().toList();
-        }
-
-        public ListF.Projection<E> projection() {
-            return this;
-        }
-
-        @SuppressWarnings("unchecked")
-        public ListF<E> plus(List<? extends E> addition) {
-            return new ListSum<E>(Cf.x(target), Cf.x((List<E>) addition));
-        }
-    }
-
     // copy-paste from ArrayList from Harmony r561214 below this line
     // please do not add stuff here
 

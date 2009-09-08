@@ -325,10 +325,6 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return map;
     }
 
-    public Projection<E> projection() {
-        throw new UnsupportedOperationException("not yet");
-    }
-
     protected boolean eq(Object a, Object b) {
         return AbstractCollectionF.equals(a, b);
     }
