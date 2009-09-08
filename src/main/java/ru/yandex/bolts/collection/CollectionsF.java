@@ -52,9 +52,9 @@ public class CollectionsF {
 
     /** Wrap collection */
     public static <E> CollectionF<E> x(Collection<E> collection) {
-        if (collection instanceof List)
+        if (collection instanceof List<?>)
             return DefaultListF.wrap((List<E>) collection);
-        else if (collection instanceof Set)
+        else if (collection instanceof Set<?>)
             return DefaultSetF.wrap((Set<E>) collection);
         else
             return DefaultCollectionF.wrap(collection);
