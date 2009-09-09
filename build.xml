@@ -68,7 +68,7 @@
         <jar destfile="target/bolts${jar.suffix}.jar">
             <fileset dir="target/classes"/>
         </jar>
-    	<jar destfile="target/bolts${jar.suffix}-source.jar">
+    	<jar destfile="target/bolts${jar.suffix}-sources.jar">
             <fileset dir="src/main/java"/>
         </jar>
     </target>
