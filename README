@@ -1,8 +1,7 @@
-Primitive utilities used by stepancheg, iroubin (and others) in some Yandex projects
-(pump, video, jira, labs).
+Collections utilities used in various Yandex projects.
 
 Package contains utilities that are
 
 -- unrelated to Yandex
 -- generic enough so that they are useful in the most project
--- have functional approach of working with stuff
+-- functional
