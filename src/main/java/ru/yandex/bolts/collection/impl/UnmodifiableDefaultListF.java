@@ -80,7 +80,7 @@ public class UnmodifiableDefaultListF<E> extends DefaultListF<E> implements Unmo
     }
 
     public static <E> ListF<E> wrap(List<E> list) {
-        if (list instanceof ListF && list instanceof Unmodifiable) return (ListF<E>) list;
+        if (list instanceof ListF<?> && list instanceof Unmodifiable) return (ListF<E>) list;
         else return new UnmodifiableDefaultListF<E>(list);
     }
 } //~

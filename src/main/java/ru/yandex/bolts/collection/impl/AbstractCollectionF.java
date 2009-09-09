@@ -201,7 +201,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
         CollectionF<E> c = newMutableCollection();
         c.addAll(this);
-        Cf.x(iterator).forEach(c.addOp());
+        Cf.x(iterator).forEach(c.addF());
         return c;
     }
 

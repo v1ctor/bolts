@@ -131,7 +131,7 @@ public class DefaultListF<E> extends AbstractListF<E> implements Serializable {
     }
 
     public static <A> ListF<A> wrap(List<A> list) {
-        if (list instanceof ListF) return (ListF<A>) list;
+        if (list instanceof ListF<?>) return (ListF<A>) list;
         else return new DefaultListF<A>(list);
     }
 } //~

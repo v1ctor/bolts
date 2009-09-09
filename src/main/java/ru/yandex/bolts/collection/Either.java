@@ -31,9 +31,9 @@ public class Either<A, B> {
     public RightProjection<A, B> right() { return new RightProjection<A, B>(this); }
     
     /** Is this object left? */
-    public boolean isLeft() { return this instanceof Left; }
+    public boolean isLeft() { return this instanceof Left<?, ?>; }
     /** Is this object right? */
-    public boolean isRight() { return this instanceof Right; }
+    public boolean isRight() { return this instanceof Right<?, ?>; }
     
     /** Some if this is left and none otherwise */
     public Option<A> leftO() {

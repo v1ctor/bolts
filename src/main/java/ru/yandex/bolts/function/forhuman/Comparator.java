@@ -97,7 +97,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
 
     /** Wrap {@link java.util.Comparator} */
     public static <A> Comparator<A> wrap(final java.util.Comparator<A> comparator) {
-        if (comparator instanceof Comparator) return (Comparator<A>) comparator;
+        if (comparator instanceof Comparator<?>) return (Comparator<A>) comparator;
         else return new Comparator<A>() {
             public int compare(A o1, A o2) {
                 return comparator.compare(o1, o2);
@@ -111,7 +111,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
 
     /** Wrap {@link Function2I} */
     public static <A> Comparator<A> wrap(final Function2I<A, A> comparator) {
-        if (comparator instanceof Comparator) return (Comparator<A>) comparator;
+        if (comparator instanceof Comparator<?>) return (Comparator<A>) comparator;
         else return new Comparator<A>() {
             public int compare(A o1, A o2) {
                 return comparator.apply(o1, o2);

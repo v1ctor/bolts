@@ -635,7 +635,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         if (this == object) {
             return true;
         }
-        if (object instanceof List) {
+        if (object instanceof List<?>) {
             List<?> list = (List<?>) object;
             if (list.size() != size()) {
                 return false;

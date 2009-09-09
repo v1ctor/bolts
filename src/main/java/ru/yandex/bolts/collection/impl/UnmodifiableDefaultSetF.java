@@ -53,7 +53,7 @@ public class UnmodifiableDefaultSetF<E> extends DefaultSetF<E> implements Unmodi
     }
 
     public static <E> SetF<E> wrap(Set<E> set) {
-        if (set instanceof SetF && set instanceof Unmodifiable) return (SetF<E>) set;
+        if (set instanceof SetF<?> && set instanceof Unmodifiable) return (SetF<E>) set;
         else return new UnmodifiableDefaultSetF<E>(set);
     }
 } //~

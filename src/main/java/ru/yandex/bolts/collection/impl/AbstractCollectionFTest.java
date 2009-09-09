@@ -24,20 +24,20 @@ public class AbstractCollectionFTest extends TestCase {
 
     public void testForEach() {
         ListF<Object> l = CollectionsF.arrayList();
-        list(1, 2, 3).forEach(l.addOp());
+        list(1, 2, 3).forEach(l.addF());
         assertEquals(list(1, 2, 3), l);
     }
 
-    public void testAddOp() {
+    public void testAddF() {
         ListF<String> l = Cf.arrayList();
-        Function1V<String> op = l.addOp();
+        Function1V<String> op = l.addF();
         op.apply("a");
         op.apply("b");
-        op = l.addOp();
+        op = l.addF();
         op.apply("c");
         assertEquals(Cf.list("a", "b", "c"), l);
 
-        l.addOp().toString(); // for coverage
+        l.addF().toString(); // for coverage
     }
 
     public void testMkString() {

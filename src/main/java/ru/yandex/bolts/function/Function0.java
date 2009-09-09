@@ -69,7 +69,7 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
 
     /** Wrap */
     public static <T> Function0<T> wrap(final java.util.concurrent.Callable<T> callable) {
-        if (callable instanceof Function0) return (Function0<T>) callable;
+        if (callable instanceof Function0<?>) return (Function0<T>) callable;
         else return new Function0<T>() {
             public T apply() {
                 try {

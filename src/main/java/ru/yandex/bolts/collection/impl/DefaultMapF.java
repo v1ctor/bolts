@@ -85,7 +85,7 @@ public class DefaultMapF<K, V> extends AbstractMapF<K,V> implements Serializable
     }
 
     public static <A, B> MapF<A, B> wrap(Map<A, B> map) {
-        if (map instanceof MapF) return (MapF<A, B>) map;
+        if (map instanceof MapF<?, ?>) return (MapF<A, B>) map;
         else return new DefaultMapF<A, B>(map);
     }
 } //~

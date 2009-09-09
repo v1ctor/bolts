@@ -105,7 +105,7 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
         if (this == object) {
             return true;
         }
-        if (object instanceof Set) {
+        if (object instanceof Set<?>) {
             Set<?> s = (Set<?>) object;
 
             try {

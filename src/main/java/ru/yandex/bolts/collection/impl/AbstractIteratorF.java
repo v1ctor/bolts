@@ -31,7 +31,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         if (!hasNext()) return CollectionsF.list();
 
         ListF<E> result = CollectionsF.arrayList();
-        forEach(result.addOp());
+        forEach(result.addF());
         return result.unmodifiable();
     }
 
@@ -39,7 +39,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         if (!hasNext()) return CollectionsF.set();
 
         SetF<E> result = CollectionsF.hashSet();
-        forEach(result.addOp());
+        forEach(result.addF());
         return result.unmodifiable();
     }
 

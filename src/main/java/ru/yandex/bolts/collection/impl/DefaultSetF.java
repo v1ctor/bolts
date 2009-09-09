@@ -30,7 +30,7 @@ public class DefaultSetF<E> extends AbstractSetF<E> implements Serializable {
     }
 
     public ListF<E> sort() {
-        if (target instanceof SortedSet) return toList();
+        if (target instanceof SortedSet<?>) return toList();
         else return super.sort();
     }
 
@@ -95,7 +95,7 @@ public class DefaultSetF<E> extends AbstractSetF<E> implements Serializable {
     }
 
     public static <A> SetF<A> wrap(Set<A> set) {
-        if (set instanceof SetF) return (SetF<A>) set;
+        if (set instanceof SetF<?>) return (SetF<A>) set;
         else return new DefaultSetF<A>(set);
     }
 } //~
