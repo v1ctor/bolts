@@ -61,14 +61,14 @@
     </target>
     
     <target name="jar" depends="compile">
-        <mkdir dir="target/jars"/>
+        <mkdir dir="target"/>
         <delete>
             <fileset dir="target" includes="bolts*.jar"/>
         </delete>
-        <jar destfile="target/jars/bolts${jar.suffix}-jar.jar">
+        <jar destfile="target/bolts${jar.suffix}.jar">
             <fileset dir="target/classes"/>
         </jar>
-    	<jar destfile="target/jars/bolts${jar.suffix}-source.jar">
+    	<jar destfile="target/bolts${jar.suffix}-source.jar">
             <fileset dir="src/main/java"/>
         </jar>
     </target>
