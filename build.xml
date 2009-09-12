@@ -56,8 +56,10 @@
                 <fileset dir="lib" includes="*.jar"/>
                 <fileset dir="lib/dep" includes="*.jar"/>
             </classpath>
-            <link href="http://functionaljava.googlecode.com/svn/artifacts/2.19/javadoc/"/>
             <link href="http://download.java.net/jdk7/docs/api/"/>
+            <link href="http://functionaljava.googlecode.com/svn/artifacts/2.20/javadoc/"/>
+            <link href="http://commons.apache.org/collections/apidocs/"/>
+            <link href="http://jedi.codehaus.org/javadoc/"/>
         </javadoc>
     </target>
     

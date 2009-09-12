@@ -2,9 +2,15 @@ package ru.yandex.bolts.function;
 
 import java.util.Collection;
 
+import org.apache.commons.collections.Predicate;
+
 import ru.yandex.bolts.collection.CollectionsF;
 
 /**
+ * Predicate.
+ * 
+ * @see Predicate
+ * 
  * @author Stepan Koltsov
  */
 public abstract class Function1B<A> {

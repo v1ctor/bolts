@@ -178,6 +178,12 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         else return none();
     }
 
+    /**
+     * Some.
+     * 
+     * @see #some(Object) to create Some instance
+     * @see fj.data.Some
+     */
     public static final class Some<T> extends Option<T> {
         private static final long serialVersionUID = -8660767248065584199L;
 
@@ -217,6 +223,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * None. Instance could be obtained by {@link Option#none()}.
+     * 
+     * @see #none() to optain None singleton
+     * @see fj.data.None
      */
     public static final class None<T> extends Option<T> {
         private static final long serialVersionUID = 3461376542565825187L;

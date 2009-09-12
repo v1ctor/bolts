@@ -1,5 +1,7 @@
 package ru.yandex.bolts.function;
 
+import org.apache.commons.collections.Transformer;
+
 import fj.F;
 
 import ru.yandex.bolts.function.forhuman.Comparator;
@@ -12,6 +14,7 @@ import ru.yandex.bolts.function.forhuman.Comparator;
  * Function
  * 
  * @see F
+ * @see Transformer
  * 
  * @author Stepan Koltsov
  */
