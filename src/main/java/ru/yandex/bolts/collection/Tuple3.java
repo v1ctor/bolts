@@ -5,7 +5,7 @@ import java.io.Serializable;
 import ru.yandex.bolts.function.Function;
 
 /**
- * Three elements.
+ * Triple.
  * 
  * @author Stepan Koltsov
  * 

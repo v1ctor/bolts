@@ -8,7 +8,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2;
 
 /**
- * Pair
+ * Pair.
  *
  * @author Stepan Koltsov
  * 

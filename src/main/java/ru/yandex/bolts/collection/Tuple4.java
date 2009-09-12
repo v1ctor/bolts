@@ -7,6 +7,8 @@ import fj.P4;
 import ru.yandex.bolts.function.Function;
 
 /**
+ * Quadruple.
+ * 
  * @author Stepan Koltsov
  * 
  * @see Tuple2
