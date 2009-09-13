@@ -1,6 +1,8 @@
 package ru.yandex.bolts.collection;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,7 +15,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
-import java.io.Serializable;
 
 import ru.yandex.bolts.collection.impl.AbstractListF;
 import ru.yandex.bolts.collection.impl.AbstractSetF;
@@ -99,6 +100,15 @@ public class CollectionsF {
     public static MapF<String, String> wrap(Properties ps) {
         return x(ps);
     }
+    
+    /**
+     * Wrap array.
+     * 
+     * @see #x(Object[])
+     */
+    public static <E> ListF<E> wrap(E[] array) {
+        return x(array);
+    }
 
     /** Wrap iterator */
     public static <E> IteratorF<E> x(Iterator<E> iterator) {
@@ -134,6 +144,16 @@ public class CollectionsF {
     @SuppressWarnings("unchecked")
     public static MapF<String, String> x(Properties properties) {
         return x((Map) properties);
+    }
+    
+    /**
+     * Wrap array.
+     * 
+     * @see Arrays#asList(Object...)
+     * @see #list(Object...)
+     */
+    public static <E> ListF<E> x(E[] array) {
+        return x(Arrays.asList(array));
     }
     
     
@@ -272,7 +292,11 @@ public class CollectionsF {
     }
 
     /**
-     * Create list of specified elements. Resulting list is immutable, however changing array could lead to changing result list.
+     * Create list of specified elements.
+     * 
+     * The resulting list is immutable, however changing array may cause changing the resulting list.
+     * 
+     * @see #wrap(Object[]) for real array wrapping
      */
     public static <E> ListF<E> list(E... elements) {
         if (elements.length == 0) return list();
