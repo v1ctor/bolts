@@ -35,14 +35,14 @@ public class TupleExample {
 		// get Nth column as function
 		
 		ListF<String> data = Cf.list(
-				"Moscow;Russia;10.38e6",
-				"New York;USA;8.14e6",
-				"Rio de Janeiro;Brazil;6.02e6");
+                "Moscow;Russia;10.38e6",
+                "New York;USA;8.14e6",
+                "Rio de Janeiro;Brazil;6.02e6");
 
-		ListF<String> cities =
-				data
-				.map(StringF.split3F(";")) // split columns 
-				.map(Tuple3.<String, String, String>get1F()); // get the first column
+        ListF<String> cities =
+                data
+                .map(StringF.split3F(";")) // split columns 
+                .map(Tuple3.<String, String, String>get1F()); // get the first column
         
         assertEquals(Cf.list("Moscow", "New York", "Rio de Janeiro"), cities);
     }
