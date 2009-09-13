@@ -44,6 +44,61 @@ import ru.yandex.bolts.function.Function2;
  */
 public class CollectionsF {
     protected CollectionsF() { }
+    
+    /**
+     * Wrap List.
+     * 
+     * @see #x(List)
+     */
+    public static <E> ListF<E> wrap(List<E> list) {
+        return x(list);
+    }
+    
+    /**
+     * Wrap Set.
+     * 
+     * @see #x(Set)
+     */
+    public static <E> SetF<E> wrap(Set<E> set) {
+        return x(set);
+    }
+    
+    /**
+     * Wrap Collection.
+     * 
+     * @see #x(Collection)
+     */
+    public static <E> CollectionF<E> wrap(Collection<E> coll) {
+        return x(coll);
+    }
+    
+    /**
+     * Wrap Iterator.
+     * 
+     * @see #x(Iterator)
+     */
+    public static <E> IteratorF<E> wrap(Iterator<E> iter) {
+        return x(iter);
+    }
+    
+    /**
+     * Wrap Map.
+     * 
+     * @see #x(Map)
+     */
+    public static <K, V> MapF<K, V> wrap(Map<K, V> map) {
+        return x(map);
+    }
+    
+    
+    /**
+     * Wrap Properties.
+     * 
+     * @see #x(Properties)
+     */
+    public static MapF<String, String> wrap(Properties ps) {
+        return x(ps);
+    }
 
     /** Wrap iterator */
     public static <E> IteratorF<E> x(Iterator<E> iterator) {
@@ -80,7 +135,8 @@ public class CollectionsF {
     public static MapF<String, String> x(Properties properties) {
         return x((Map) properties);
     }
-
+    
+    
     /** Empty set */
     @SuppressWarnings({"unchecked"})
     public static <E> SetF<E> set() {
