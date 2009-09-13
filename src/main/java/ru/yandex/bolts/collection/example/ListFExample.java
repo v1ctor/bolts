@@ -79,15 +79,15 @@ public class ListFExample {
     @SuppressWarnings("unused")
     @Test
     public void uncheckedCast() {
-    	ListF<ListF<String>> list = Cf.list(Cf.list("a"), Cf.list("b", "c"));
-    	
-    	// unchecked cast is dangerous operation, but it is
-    	// is sometimes required to avoid typing lots of code like ListF<? extends ListF<? extends CharSequence>>
-    	ListF<? extends ListF<? extends CharSequence>> properList = list;
-    	ListF<ListF<CharSequence>> cs = list.uncheckedCast();
-    	
-    	// regular cast to ListF<ListF<CharSequence>> is prohibited by JLS
-    	//ListF<ListF<CharSequence>> prohibited = (ListF<ListF<CharSequence>>) list.uncheckedCast();
+        ListF<ListF<String>> list = Cf.list(Cf.list("a"), Cf.list("b", "c"));
+        
+        // unchecked cast is dangerous operation, but it is
+        // is sometimes required to avoid typing lots of code like ListF<? extends ListF<? extends CharSequence>>
+        ListF<? extends ListF<? extends CharSequence>> properList = list;
+        ListF<ListF<CharSequence>> cs = list.uncheckedCast();
+        
+        // regular cast to ListF<ListF<CharSequence>> is prohibited by JLS
+        //ListF<ListF<CharSequence>> prohibited = (ListF<ListF<CharSequence>>) list.uncheckedCast();
     }
     
     /// functional operations
