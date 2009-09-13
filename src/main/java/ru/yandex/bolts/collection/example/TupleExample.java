@@ -23,18 +23,18 @@ import ru.yandex.bolts.function.misc.StringF;
  */
 public class TupleExample {
 
-	@Test
-	public void simple() {
-		// simple example
-		
-		assertEquals("zz", Tuple2.tuple("zz", 17).get1());
-		assertEquals(17, Tuple2.tuple("zz", 17).get2().intValue());
-	}
-	
-	public void getNF() {
-		// get Nth column as function
-		
-		ListF<String> data = Cf.list(
+    @Test
+    public void simple() {
+        // simple example
+        
+        assertEquals("zz", Tuple2.tuple("zz", 17).get1());
+        assertEquals(17, Tuple2.tuple("zz", 17).get2().intValue());
+    }
+    
+    public void getNF() {
+        // get Nth column as function
+        
+        ListF<String> data = Cf.list(
                 "Moscow;Russia;10.38e6",
                 "New York;USA;8.14e6",
                 "Rio de Janeiro;Brazil;6.02e6");

@@ -10,26 +10,26 @@ import ru.yandex.bolts.function.forhuman.Comparator;
  * @author Stepan Koltsov
  */
 public class DoubleF {
-	
-	public static Function2<Double, Double, Double> plusF() {
-		return new Function2<Double, Double, Double>() {
+    
+    public static Function2<Double, Double, Double> plusF() {
+        return new Function2<Double, Double, Double>() {
             public Double apply(Double a, Double b) {
-	            return a + b;
+                return a + b;
             }
-		};
-	}
+        };
+    }
 
-	public static Function2<Double, Double, Double> minusF() {
-		return new Function2<Double, Double, Double>() {
+    public static Function2<Double, Double, Double> minusF() {
+        return new Function2<Double, Double, Double>() {
             public Double apply(Double a, Double b) {
-	            return a - b;
+                return a - b;
             }
-		};
-	}
-	
-	public static Comparator<Double> naturalComparator() {
-		return Comparator.naturalComparator();
-	}
+        };
+    }
+    
+    public static Comparator<Double> naturalComparator() {
+        return Comparator.naturalComparator();
+    }
 
     public static Function2<Double, Double, Double> maxF() {
         return naturalComparator().maxF();
@@ -46,5 +46,5 @@ public class DoubleF {
             }
         };
     }
-	
+    
 } //~
