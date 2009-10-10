@@ -5,7 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectStreamField;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -14,19 +13,14 @@ import java.util.RandomAccess;
 import ru.yandex.bolts.collection.ListF;
 
 /**
- * Copy-paste of Harmony ArrayList r679987
+ * Copied-pasted from Harmony ArrayList r679987 and then refactored.
+ * 
  * @author Stepan Koltsov
  */
-public class ArrayListF<E> extends AbstractListF<E>
+public class ArrayListF<E> extends ArrayListBase<E>
         implements ListF<E>, Cloneable, Serializable, RandomAccess
 {
     private static final long serialVersionUID = 8683452581122892189L;
-
-    private transient int firstIndex;
-
-    private transient int lastIndex;
-
-    private transient E[] array;
 
     /**
      * Constructs a new instance of ArrayList with capacity for ten elements.
@@ -71,6 +65,13 @@ public class ArrayListF<E> extends AbstractListF<E>
     @SuppressWarnings("unchecked")
     private E[] newElementArray(int size) {
         return (E[]) new Object[size];
+    }
+    
+    /**
+     * Return readonly array list with data of this. This is cleared.
+     */
+    public ReadOnlyArrayList<E> convertToReadOnly() {
+        return new ReadOnlyArrayList<E>(this);
     }
 
     /**
@@ -258,31 +259,6 @@ public class ArrayListF<E> extends AbstractListF<E>
         }
     }
 
-    /**
-     * Searches this ArrayList for the specified object.
-     * 
-     * @param object
-     *            the object to search for
-     * @return true if <code>object</code> is an element of this ArrayList,
-     *         false otherwise
-     */
-    @Override
-    public boolean contains(Object object) {
-        if (object != null) {
-            for (int i = firstIndex; i < lastIndex; i++) {
-                if (object.equals(array[i])) {
-                    return true;
-                }
-            }
-        } else {
-            for (int i = firstIndex; i < lastIndex; i++) {
-                if (array[i] == null) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     /**
      * Ensures that this ArrayList can hold the specified number of elements
@@ -300,24 +276,6 @@ public class ArrayListF<E> extends AbstractListF<E>
                 growAtEnd(minimumCapacity - array.length);
             }
         }
-    }
-
-    /**
-     * Answers the element at the specified location in this ArrayList.
-     * 
-     * @param location
-     *            the index of the element to return
-     * @return the element at the specified index
-     * 
-     * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
-     */
-    @Override
-    public E get(int location) {
-        if (0 <= location && location < (lastIndex - firstIndex)) {
-            return array[firstIndex + location];
-        }
-        throw new IndexOutOfBoundsException();
     }
 
     private void growAtEnd(int required) {
@@ -403,69 +361,6 @@ public class ArrayListF<E> extends AbstractListF<E>
         array = newArray;
     }
 
-    /**
-     * Searches this ArrayList for the specified object and returns the index of
-     * the first occurrence.
-     * 
-     * @param object
-     *            the object to search for
-     * @return the index of the first occurrence of the object
-     */
-    @Override
-    public int indexOf(Object object) {
-        if (object != null) {
-            for (int i = firstIndex; i < lastIndex; i++) {
-                if (object.equals(array[i])) {
-                    return i - firstIndex;
-                }
-            }
-        } else {
-            for (int i = firstIndex; i < lastIndex; i++) {
-                if (array[i] == null) {
-                    return i - firstIndex;
-                }
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * Answers if this ArrayList has no elements, a size of zero.
-     * 
-     * @return true if this ArrayList has no elements, false otherwise
-     * 
-     * @see #size
-     */
-    @Override
-    public boolean isEmpty() {
-        return lastIndex == firstIndex;
-    }
-
-    /**
-     * Searches this ArrayList for the specified object and returns the index of
-     * the last occurrence.
-     * 
-     * @param object
-     *            the object to search for
-     * @return the index of the last occurrence of the object
-     */
-    @Override
-    public int lastIndexOf(Object object) {
-        if (object != null) {
-            for (int i = lastIndex - 1; i >= firstIndex; i--) {
-                if (object.equals(array[i])) {
-                    return i - firstIndex;
-                }
-            }
-        } else {
-            for (int i = lastIndex - 1; i >= firstIndex; i--) {
-                if (array[i] == null) {
-                    return i - firstIndex;
-                }
-            }
-        }
-        return -1;
-    }
 
     /**
      * Removes the object at the specified location from this ArrayList.
@@ -590,59 +485,6 @@ public class ArrayListF<E> extends AbstractListF<E>
             return result;
         }
         throw new IndexOutOfBoundsException();
-    }
-
-    /**
-     * Answers the number of elements in this ArrayList.
-     * 
-     * @return the number of elements in this ArrayList
-     */
-    @Override
-    public int size() {
-        return lastIndex - firstIndex;
-    }
-
-    /**
-     * Answers a new array containing all elements contained in this ArrayList.
-     * 
-     * @return an array of the elements from this ArrayList
-     */
-    @Override
-    public Object[] toArray() {
-        int size = lastIndex - firstIndex;
-        Object[] result = new Object[size];
-        System.arraycopy(array, firstIndex, result, 0, size);
-        return result;
-    }
-
-    /**
-     * Answers an array containing all elements contained in this ArrayList. If
-     * the specified array is large enough to hold the elements, the specified
-     * array is used, otherwise an array of the same type is created. If the
-     * specified array is used and is larger than this ArrayList, the array
-     * element following the collection elements is set to null.
-     * 
-     * @param contents
-     *            the array
-     * @return an array of the elements from this ArrayList
-     * 
-     * @exception ArrayStoreException
-     *                when the type of an element in this ArrayList cannot be
-     *                stored in the type of the specified array
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T[] toArray(T[] contents) {
-        int size = lastIndex - firstIndex;
-        if (size > contents.length) {
-            Class<?> ct = contents.getClass().getComponentType();
-            contents = (T[]) Array.newInstance(ct, size);
-        }
-        System.arraycopy(array, firstIndex, contents, 0, size);
-        if (size < contents.length) {
-            contents[size] = null;
-        }
-        return contents;
     }
 
     /**

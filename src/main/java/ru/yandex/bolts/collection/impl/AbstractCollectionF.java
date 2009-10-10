@@ -147,11 +147,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f) {
         if (isEmpty()) return CollectionsF.list();
 
-        ListF<B> result = CollectionsF.arrayList();
+        ArrayListF<B> result = new ArrayListF<B>();
         for (E e : this) {
             result.addAll(f.apply(e));
         }
-        return result;
+        return result.convertToReadOnly();
     }
 
     public <B> ListF<B> flatMapO(final Function<? super E, Option<B>> f) {
@@ -213,18 +213,18 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public ListF<E> sort() {
         if (size() <= 1) return toList();
 
-        ListF<E> r = CollectionsF.arrayList(this);
+        ArrayListF<E> r = new ArrayListF<E>(this);
         Collections.sort((List<Comparable>) r);
-        return r;
+        return r.convertToReadOnly();
     }
 
     @SuppressWarnings({"unchecked"})
     public ListF<E> sort(Function2I<? super E, ? super E> comparator) {
         if (size() <= 1) return toList();
 
-        ListF<E> r = CollectionsF.arrayList(this);
+        ArrayListF<E> r = new ArrayListF<E>(this);
         Collections.sort(r, Comparator.wrap((Function2I<E, E>) comparator));
-        return r;
+        return r.convertToReadOnly();
     }
 
     public ListF<E> sortBy(Function<? super E, ?> f) {

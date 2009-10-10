@@ -30,9 +30,9 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     public ListF<E> toList() {
         if (!hasNext()) return CollectionsF.list();
 
-        ListF<E> result = CollectionsF.arrayList();
+        ArrayListF<E> result = new ArrayListF<E>();
         forEach(result.addF());
-        return result.unmodifiable();
+        return result.convertToReadOnly();
     }
 
     public SetF<E> toSet() {
