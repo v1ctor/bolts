@@ -29,7 +29,7 @@ import ru.yandex.bolts.collection.impl.EmptyList;
 import ru.yandex.bolts.collection.impl.EmptyMap;
 import ru.yandex.bolts.collection.impl.EmptySet;
 import ru.yandex.bolts.collection.impl.ListOf2;
-import ru.yandex.bolts.collection.impl.ReadOnlyArrayWrapper;
+import ru.yandex.bolts.collection.impl.ReadOnlyArrayList;
 import ru.yandex.bolts.collection.impl.SetFromMap;
 import ru.yandex.bolts.collection.impl.SingletonList;
 import ru.yandex.bolts.collection.impl.SingletonMap;
@@ -294,7 +294,7 @@ public class CollectionsF {
     /**
      * Create list of specified elements.
      * 
-     * The resulting list is immutable, however changing array may cause changing the resulting list.
+     * The resulting list is immutable.
      * 
      * @see #wrap(Object[]) for real array wrapping
      */
@@ -302,7 +302,7 @@ public class CollectionsF {
         if (elements.length == 0) return list();
         else if (elements.length == 1) return list(elements[0]);
         else if (elements.length == 2) return list(elements[0], elements[1]);
-        return new ReadOnlyArrayWrapper<E>(elements);
+        return ReadOnlyArrayList.valueOf(elements);
     }
 
     /**

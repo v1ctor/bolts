@@ -1,5 +1,7 @@
 package ru.yandex.bolts.collection.impl;
 
+import java.util.Arrays;
+
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Unmodifiable;
@@ -72,6 +74,10 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
     @Override
     public ListF<E> unmodifiable() {
         return this;
+    }
+    
+    public static <E> ReadOnlyArrayList<E> valueOf(E[] array) {
+        return new ReadOnlyArrayList<E>(Arrays.copyOf(array, array.length), 0, array.length);
     }
 
 } //~
