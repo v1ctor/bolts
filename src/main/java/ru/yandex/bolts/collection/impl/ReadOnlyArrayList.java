@@ -35,7 +35,9 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
         
         if (firstIndex < 0 || lastIndex < 0)
             throw new IllegalArgumentException();
-        if (firstIndex + lastIndex > array.length)
+        if (firstIndex > lastIndex)
+            throw new IllegalArgumentException();
+        if (lastIndex > array.length)
             throw new IllegalArgumentException();
     }
 
