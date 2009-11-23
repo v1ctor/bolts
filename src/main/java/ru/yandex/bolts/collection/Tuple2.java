@@ -109,7 +109,7 @@ public class Tuple2<T1, T2> implements Serializable {
     }
 
     /** _2 as function */
-    private static <A, B> Function<Tuple2<A, B>, B> get2F() {
+    public static <A, B> Function<Tuple2<A, B>, B> get2F() {
         return new Function<Tuple2<A, B>, B>() {
             public B apply(Tuple2<A, B> tuple) {
                 return tuple._2;
