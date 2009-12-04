@@ -45,6 +45,30 @@ public class AbstractMapFTest extends TestCase {
         }), n);
     }
 
+    public void testAsFunction() {
+        Function<Integer, String> f = map123().asFunction();
+        
+        assertEquals("3", f.apply(3));
+    }
+
+    public void testAsFunctionLookupFailure() {
+        Function<Integer, String> f = map123().asFunction();
+        
+        try {
+            f.apply(4);
+            fail("expecting NoSuchElementException");
+        } catch (NoSuchElementException e) {
+            // ok
+        }
+    }
+
+    public void testAsFunctionO() {
+        Function<Integer, Option<String>> f = map123().asFunctionO();
+        
+        assertEquals(Option.none(), f.apply(0));
+        assertEquals(Option.some("1"), f.apply(1));
+    }
+
     public void testKeysValues() {
         assertEquals(set(1, 2, 3), map123().keySet());
         assertEquals(set("1", "2", "3"), map123().values().unique());

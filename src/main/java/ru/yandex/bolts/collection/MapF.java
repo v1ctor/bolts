@@ -61,7 +61,11 @@ public interface MapF<K, V> extends Map<K, V> {
     
     boolean forAllEntries(Function2B<? super K, ? super V> op);
 
+    /** Delegate to {@link #apply(Object)} */
     Function<K, V> asFunction();
+
+    /** Delegate to {@link #getO(Object)} */
+    Function<K, Option<V>> asFunctionO();
 
     /** Put */
     void put(Tuple2<K, V> entry);

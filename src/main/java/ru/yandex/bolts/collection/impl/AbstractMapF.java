@@ -186,6 +186,14 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         };
     }
 
+    public Function<K, Option<V>> asFunctionO() {
+        return new Function<K, Option<V>>() {
+            public Option<V> apply(K key) {
+                return getO(key);
+            }
+        };
+    }
+
     /** Must check for non-null arguments */
     public V put(K key, V value) {
         throw new UnsupportedOperationException("readonly map");
