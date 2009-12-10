@@ -87,7 +87,7 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     }
 
     @Override
-    public ListMap<K, V> emptyList() {
+    protected ListMap<K, V> emptyList() {
         return ListMap.listMap();
     }
 

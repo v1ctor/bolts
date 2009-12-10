@@ -66,4 +66,9 @@ public class ListMapTest extends TestCase {
         assertEquals(ListMap.listMapFromPairs("a", 1, "b", 2),
                 ListMap.listMapFromPairs("b", 2, "a", 1).reverse());
     }
+
+    public void testMapPlusToArray() {
+        assertEquals(1, ListMap.listMapFromPairs("a", 1).map(Tuple2.get2F()).plus(Cf.list(2)).toArray()[0]);
+        assertEquals(1, ListMap.listMap().map(Tuple2.get2F()).plus(Cf.list(1)).toArray()[0]);
+    }
 } //~

@@ -140,7 +140,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
     
     public <B> ListF<B> map(Function<? super E, B> f) {
-        if (isEmpty()) return emptyList();
+        if (isEmpty()) return Cf.list();
         else return iterator().map(f).toList();
     }
 
