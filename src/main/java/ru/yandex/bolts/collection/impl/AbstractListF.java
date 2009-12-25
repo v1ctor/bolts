@@ -267,6 +267,16 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         public IteratorF<E> take(int count) {
             return toList().take(count).iterator();
         }
+
+        @Override
+        public IteratorF<E> dropWhile(Function1B<? super E> p) {
+            while (hasNext()) {
+                E e = next();
+                if (!p.apply(e))
+                    return self().drop(lastPosition).iterator();
+            }
+            return Cf.emptyIterator();
+        }
     }
 
     private class FullListIterator extends SimpleListIterator implements ListIterator<E> {
