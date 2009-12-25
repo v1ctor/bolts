@@ -71,4 +71,11 @@ public interface IteratorF<E> extends Iterator<E> {
     IteratorF<E> drop(int count);
     
     IteratorF<E> take(int count);
+    
+    /** Longest prefix of elements that satisfy p */
+    IteratorF<E> takeWhile(Function1B<? super E> p);
+    
+    /** Elements after {@link #takeWhile(Function1B)} */
+    IteratorF<E> dropWhile(Function1B<? super E> p);
+    
 } //~

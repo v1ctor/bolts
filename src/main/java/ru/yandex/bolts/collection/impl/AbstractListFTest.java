@@ -3,6 +3,7 @@ package ru.yandex.bolts.collection.impl;
 import static ru.yandex.bolts.collection.CollectionsF.list;
 import static ru.yandex.bolts.collection.CollectionsF.set;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
@@ -22,6 +24,7 @@ import ru.yandex.bolts.function.Function1BTest;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2Test;
 import ru.yandex.bolts.function.FunctionTest;
+import ru.yandex.bolts.function.misc.IntegerF;
 
 /**
  * @author Stepan Koltsov
@@ -72,7 +75,30 @@ public class AbstractListFTest extends TestCase {
         assertEquals(list(), list.drop(5));
         assertEquals(list(), list.drop(6));
     }
-
+    
+    public void testTakeDropWhile() {
+        Generator.ints().lists().checkForAll(new Function1V<ListF<Integer>>() {
+            public void apply(ListF<Integer> a0) {
+                for (boolean wrapper : CollectionsF.list(true, false)) {
+                    ListF<Integer> a;
+                    if (wrapper) {
+                        a = Cf.x(new ArrayList<Integer>());
+                        a.addAll(0);
+                    } else {
+                        a = a0;
+                    }
+                    
+                    Function1B<Integer> f = IntegerF.naturalComparator().gtF(0);
+                    ListF<Integer> b = a.takeWhile(f);
+                    ListF<Integer> c = a.dropWhile(f);
+                    assertEquals(a, b.plus(c));
+                    assertTrue(b.forAll(f));
+                    assertTrue(b.length() == a.length() || !f.apply(a.get(b.length())));
+                }
+            }
+        });
+    }
+    
     public void testPlus() {
         ListF<Integer> l1 = list(1, 2, 3);
         ListF<Integer> l2 = list(4, 5, 6);

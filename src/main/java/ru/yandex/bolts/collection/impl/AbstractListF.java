@@ -107,6 +107,16 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         else if (count < size()) return subList(count, size());
         else return emptyList();
     }
+    
+    @Override
+    public ListF<E> dropWhile(Function1B<? super E> f) {
+        return iterator().dropWhile(f).toList();
+    }
+
+    @Override
+    public ListF<E> takeWhile(Function1B<? super E> f) {
+        return iterator().takeWhile(f).toList();
+    }
 
     public ListF<E> toList() {
         return this;

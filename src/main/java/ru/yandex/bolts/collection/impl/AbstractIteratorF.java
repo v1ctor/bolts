@@ -100,33 +100,51 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         });
         return flatMap(g);
     }
+    
+    private static abstract class AbstractPrefetchingIterator<E> extends AbstractIteratorF<E> {
+        private Option<E> next = Option.none();
+        private boolean eof = false;
+        
+        private void fill() {
+            while (!eof && next.isEmpty()) {
+                next = fetchNext();
+                eof = next.isEmpty();
+            }
+        }
+        
+        @Override
+        public boolean hasNext() {
+            fill();
+            return !eof && next.isDefined();
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext())
+                throw new NoSuchElementException("next on empty iterator");
+            E r = next.get();
+            next = Option.none();
+            return r;
+        }
+
+        protected abstract Option<E> fetchNext();
+    }
 
     @Override
     public IteratorF<E> filter(final Function1B<? super E> f) {
-        class FilterIterator extends AbstractIteratorF<E> {
-            private Option<E> buffer = Option.none();
-            
-            private void fill() {
-                while (buffer.isEmpty() && self().hasNext()) {
+        class FilterIterator extends AbstractPrefetchingIterator<E> {
+
+            @Override
+            protected Option<E> fetchNext() {
+                while (self().hasNext()) {
                     E e = self().next();
                     if (f.apply(e))
-                        buffer = Option.some(e);
+                        return Option.some(e);
                 }
-            }
-            
-            public boolean hasNext() {
-                fill();
-                return buffer.isDefined();
-            }
-
-            public E next() {
-                fill();
-                if (buffer.isEmpty()) throw new NoSuchElementException("next on empty iterator");
-                E r = buffer.get();
-                buffer = Option.none();
-                return r;
+                return Option.none();
             }
         };
+        
         return new FilterIterator();
     }
 
@@ -260,6 +278,39 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         };
 
         return new TakeIterator();
+    }
+    
+    public IteratorF<E> dropWhile(Function1B<? super E> p) {
+        // XXX: should be lazy
+        while (hasNext()) {
+            E e = next();
+            if (!p.apply(e))
+                return Cf.list(e).iterator().plus(this);
+        }
+        return Cf.emptyIterator();
+    }
+    
+    public IteratorF<E> takeWhile(final Function1B<? super E> f) {
+        class TakeWhileIterator extends AbstractPrefetchingIterator<E> {
+            boolean end = false;
+
+            @Override
+            protected Option<E> fetchNext() {
+                if (!end && self().hasNext()) {
+                    E e = self().next();
+                    if (f.apply(e))
+                        return Option.some(e);
+                    else {
+                        end = true;
+                        return Option.none();
+                    }
+                }
+                return Option.none();
+            }
+
+        }
+        
+        return new TakeWhileIterator();
     }
     
 } //~

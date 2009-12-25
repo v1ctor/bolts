@@ -70,6 +70,15 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
     /** Drop first count elements */
     ListF<E> drop(int count);
+    
+    /** Longest prefix of elements that satisfy p */
+    ListF<E> takeWhile(Function1B<? super E> f);
+    
+    /** Elements after {@link #takeWhile(Function1B)} */
+    ListF<E> dropWhile(Function1B<? super E> f);
+    
+    /** Pair of sublists returned by {@link #takeWhile(Function1B)} and {@link #dropWhile(Function1B)} */
+    //ListF<E> span(Function1B<? super E> p);
 
     /** Unmodifiable view or copy of this collection */
     ListF<E> unmodifiable();
