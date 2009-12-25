@@ -297,5 +297,22 @@ public class AbstractListFTest extends TestCase {
             }
         });
     }
+    
+    public void testIteratorToList() {
+        ListF<Integer> l = Cf.list(1, 2, 3);
+        
+        IteratorF<Integer> i1 = l.iterator();
+        i1.next();
+        assertEquals(Cf.list(2, 3), i1.toList());
+        
+        IteratorF<Integer> i2 = l.iterator();
+        assertEquals(Cf.list(1, 2, 3), i2.toList());
+        
+        IteratorF<Integer> i3 = l.iterator();
+        i2.next();
+        i2.next();
+        i2.next();
+        assertEquals(Cf.list(), i2.toList());
+    }
 
 } //~

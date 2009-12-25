@@ -17,6 +17,7 @@ import ru.yandex.bolts.function.Function1B;
  * @author Stepan Koltsov
  */
 public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements ListF<E> {
+    private AbstractListF<E> self() { return this; }
 
     @Override
     protected <B> ListF<B> newMutableCollection() {
@@ -249,6 +250,22 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
                 pos--;
             }
             lastPosition = -1;
+        }
+
+        @Override
+        public ListF<E> toList() {
+            // does not check concurrent modifications, methods above shouldn't too
+            return self().drop(lastPosition + 1);
+        }
+
+        @Override
+        public IteratorF<E> drop(int count) {
+            return toList().drop(count).iterator();
+        }
+
+        @Override
+        public IteratorF<E> take(int count) {
+            return toList().take(count).iterator();
         }
     }
 
