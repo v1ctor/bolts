@@ -1,5 +1,8 @@
 package ru.yandex.bolts.collection.impl.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -18,6 +21,16 @@ public class SerializationUtils {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public static void assertSerializedDeserializedToSame(Object o) {
+        Object r = serializeDeserialize(o);
+        assertSame(o, r);
+    }
+    
+    public static void assertSerializedDeserializedToEqual(Object o) {
+        Object r = serializeDeserialize(o);
+        assertEquals(o, r);
     }
     
 } //~

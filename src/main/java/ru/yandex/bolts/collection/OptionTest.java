@@ -1,12 +1,7 @@
 package ru.yandex.bolts.collection;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import junit.framework.TestCase;
-
+import ru.yandex.bolts.collection.impl.test.SerializationUtils;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function0V;
@@ -195,14 +190,8 @@ public class OptionTest extends TestCase {
         };
     }
 
-    private static Object serializeDeserialize(Object o) throws Exception {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        new ObjectOutputStream(byteArrayOutputStream).writeObject(o);
-        return new ObjectInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray())).readObject();
-    }
-
     public void testSerializable() throws Exception {
-        assertEquals(Option.some("aa"), serializeDeserialize(Option.some("aa")));
-        assertSame(Option.none(), serializeDeserialize(Option.none()));
+        SerializationUtils.assertSerializedDeserializedToEqual(Option.some("aa"));
+        SerializationUtils.assertSerializedDeserializedToSame(Option.none());
     }
 } //~
