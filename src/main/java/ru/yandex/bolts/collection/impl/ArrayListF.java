@@ -1,13 +1,8 @@
 package ru.yandex.bolts.collection.impl;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamField;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.RandomAccess;
 
 import ru.yandex.bolts.collection.ListF;
@@ -62,11 +57,6 @@ public class ArrayListF<E> extends ArrayListBase<E>
         modCount = 1;
     }
 
-    @SuppressWarnings("unchecked")
-    private E[] newElementArray(int size) {
-        return (E[]) new Object[size];
-    }
-    
     /**
      * Return readonly array list with data of this. This is cleared.
      */
@@ -502,28 +492,4 @@ public class ArrayListF<E> extends ArrayListBase<E>
         modCount = 0;
     }
 
-    private static final ObjectStreamField[] serialPersistentFields = { new ObjectStreamField(
-            "size", Integer.TYPE) }; //$NON-NLS-1$
-
-    private void writeObject(ObjectOutputStream stream) throws IOException {
-        ObjectOutputStream.PutField fields = stream.putFields();
-        fields.put("size", lastIndex - firstIndex); //$NON-NLS-1$
-        stream.writeFields();
-        stream.writeInt(array.length);
-        Iterator<?> it = iterator();
-        while (it.hasNext()) {
-            stream.writeObject(it.next());
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream stream) throws IOException,
-            ClassNotFoundException {
-        ObjectInputStream.GetField fields = stream.readFields();
-        lastIndex = fields.get("size", 0); //$NON-NLS-1$
-        array = newElementArray(stream.readInt());
-        for (int i = 0; i < lastIndex; i++) {
-            array[i] = (E) stream.readObject();
-        }
-    }
 } //~
