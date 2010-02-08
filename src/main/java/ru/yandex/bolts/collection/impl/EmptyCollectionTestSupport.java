@@ -8,11 +8,11 @@ import junit.framework.TestCase;
  * @author Stepan Koltsov
  */
 public abstract class EmptyCollectionTestSupport extends TestCase {
-    
+
     protected abstract Object emptyInstance();
-    
+
     public void testSerialization() {
         assertSame(EmptyMap.INSTANCE, SerializationUtils.serializeDeserialize(EmptyMap.INSTANCE));
     }
-    
+
 } //~

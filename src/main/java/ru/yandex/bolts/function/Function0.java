@@ -11,7 +11,7 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
     public final R call() throws Exception {
         return apply();
     }
-    
+
     public <B> Function0<B> andThen(final Function<R, B> mapper) {
         return new Function0<B>() {
             public B apply() {
@@ -38,7 +38,7 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
             public String toString() {
                 return clazz + ".newInstance";
             }
-            
+
         };
     }
 
@@ -53,7 +53,7 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
             }
         };
     }
-    
+
     /** Function0 that always return same value */
     public static <T> Function0<T> constF(final T t) {
         return new Function0<T>() {

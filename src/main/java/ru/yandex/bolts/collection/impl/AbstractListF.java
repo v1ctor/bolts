@@ -13,7 +13,7 @@ import ru.yandex.bolts.function.Function1B;
 
 /**
  * Implementation of {@link ListF} algorithms.
- * 
+ *
  * @author Stepan Koltsov
  */
 public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements ListF<E> {
@@ -108,7 +108,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         else if (count < size()) return subList(count, size());
         else return emptyList();
     }
-    
+
     @Override
     public ListF<E> dropWhile(Function1B<? super E> f) {
         return iterator().dropWhile(f).toList();
@@ -132,7 +132,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         //if (this instanceof Unmodifiable) return this;
         return UnmodifiableDefaultListF.wrap(this);
     }
-    
+
     @SuppressWarnings("unchecked")
     public <F> ListF<F> uncheckedCast() {
         return (ListF<F>) this;
@@ -244,7 +244,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
             } catch (IndexOutOfBoundsException e) {
                 throw new ConcurrentModificationException();
             }
-            
+
             expectedModCount = modCount;
             if (pos == lastPosition) {
                 pos--;
@@ -567,13 +567,13 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * The object is inserted before any previous element at the specified
      * location. If the location is equal to the size of this List, the object
      * is added at the end.
-     * 
-     * 
+     *
+     *
      * @param location
      *            the index at which to insert
      * @param object
      *            the object to add
-     * 
+     *
      * @exception UnsupportedOperationException
      *                when adding to this List is not supported
      * @exception ClassCastException
@@ -590,12 +590,12 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     /**
      * Adds the specified object at the end of this List.
-     * 
-     * 
+     *
+     *
      * @param object
      *            the object to add
      * @return true
-     * 
+     *
      * @exception UnsupportedOperationException
      *                when adding to this List is not supported
      * @exception ClassCastException
@@ -614,14 +614,14 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * Inserts the objects in the specified Collection at the specified location
      * in this List. The objects are added in the order they are returned from
      * the Collection iterator.
-     * 
-     * 
+     *
+     *
      * @param location
      *            the index at which to insert
      * @param collection
      *            the Collection of objects
      * @return true if this List is modified, false otherwise
-     * 
+     *
      * @exception UnsupportedOperationException
      *                when adding to this List is not supported
      * @exception ClassCastException
@@ -641,11 +641,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     /**
      * Removes all elements from this List, leaving it empty.
-     * 
-     * 
+     *
+     *
      * @exception UnsupportedOperationException
      *                when removing from this List is not supported
-     * 
+     *
      * @see List#isEmpty
      * @see List#size
      */
@@ -658,13 +658,13 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * Compares the specified object to this List and answer if they are equal.
      * The object must be a List which contains the same objects in the same
      * order.
-     * 
-     * 
+     *
+     *
      * @param object
      *            the object to compare with this object
      * @return true if the specified object is equal to this List, false
      *         otherwise
-     * 
+     *
      * @see #hashCode
      */
     @Override
@@ -692,12 +692,12 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     /**
      * Answers the element at the specified location in this List.
-     * 
-     * 
+     *
+     *
      * @param location
      *            the index of the element to return
      * @return the element at the specified index
-     * 
+     *
      * @exception IndexOutOfBoundsException
      *                when <code>location < 0 || >= size()</code>
      */
@@ -706,10 +706,10 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     /**
      * Answers an integer hash code for the receiver. Objects which are equal
      * answer the same value for this method.
-     * 
-     * 
+     *
+     *
      * @return the receiver's hash
-     * 
+     *
      * @see #equals
      */
     @Override
@@ -726,8 +726,8 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     /**
      * Searches this List for the specified object and returns the index of the
      * first occurrence.
-     * 
-     * 
+     *
+     *
      * @param object
      *            the object to search for
      * @return the index of the first occurrence of the object
@@ -753,10 +753,10 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     /**
      * Answers an Iterator on the elements of this List. The elements are
      * iterated in the same order that they occur in the List.
-     * 
-     * 
+     *
+     *
      * @return an Iterator on the elements of this List
-     * 
+     *
      * @see Iterator
      */
     @Override
@@ -767,8 +767,8 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     /**
      * Searches this List for the specified object and returns the index of the
      * last occurrence.
-     * 
-     * 
+     *
+     *
      * @param object
      *            the object to search for
      * @return the index of the last occurrence of the object
@@ -794,10 +794,10 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     /**
      * Answers a ListIterator on the elements of this List. The elements are
      * iterated in the same order that they occur in the List.
-     * 
-     * 
+     *
+     *
      * @return a ListIterator on the elements of this List
-     * 
+     *
      * @see ListIterator
      */
     public ListIterator<E> listIterator() {
@@ -808,15 +808,15 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * Answers a ListIterator on the elements of this List. The elements are
      * iterated in the same order that they occur in the List. The iteration
      * starts at the specified location.
-     * 
-     * 
+     *
+     *
      * @param location
      *            the index at which to start the iteration
      * @return a ListIterator on the elements of this List
-     * 
+     *
      * @exception IndexOutOfBoundsException
      *                when <code>location < 0 || >= size()</code>
-     * 
+     *
      * @see ListIterator
      */
     public ListIterator<E> listIterator(int location) {
@@ -825,12 +825,12 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     /**
      * Removes the object at the specified location from this List.
-     * 
-     * 
+     *
+     *
      * @param location
      *            the index of the object to remove
      * @return the removed object
-     * 
+     *
      * @exception UnsupportedOperationException
      *                when removing from this List is not supported
      * @exception IndexOutOfBoundsException
@@ -843,13 +843,13 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     /**
      * Removes the objects in the specified range from the start to the, but not
      * including, end index.
-     * 
-     * 
+     *
+     *
      * @param start
      *            the index at which to start removing
      * @param end
      *            the index one past the end of the range to remove
-     * 
+     *
      * @exception UnsupportedOperationException
      *                when removing from this List is not supported
      * @exception IndexOutOfBoundsException
@@ -866,14 +866,14 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     /**
      * Replaces the element at the specified location in this List with the
      * specified object.
-     * 
-     * 
+     *
+     *
      * @param location
      *            the index at which to put the specified object
      * @param object
      *            the object to add
      * @return the previous element at the index
-     * 
+     *
      * @exception UnsupportedOperationException
      *                when replacing elements in this List is not supported
      * @exception ClassCastException
@@ -894,32 +894,32 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * reflected to the original list, and vice-versa. All the supported
      * optional operations by the original list will also be supported by this
      * subList.
-     * 
+     *
      * This method can be used as a handy method to do some operations on a sub
      * range of the original list. For example: list.subList(from, to).clear();
-     * 
+     *
      * If the original list is modified other than through the returned subList,
      * the behavior of the returned subList becomes undefined.
-     * 
+     *
      * The returned subList is a subclass of AbstractList. The subclass stores
      * offset, size of itself, and modCount of the original list. If the
      * original list implements RandomAccess interface, the returned subList
      * also implements RandomAccess interface.
-     * 
+     *
      * The subList's set(int, Object), get(int), add(int, Object), remove(int),
      * addAll(int, Collection) and removeRange(int, int) methods first check the
      * bounds, adjust offsets and then call the corresponding methods of the
      * original AbstractList. addAll(Collection c) method of the returned
      * subList calls the original addAll(offset + size, c).
-     * 
+     *
      * The listIterator(int) method of the subList wraps the original list
      * iterator. The iterator() method of the subList invokes the original
      * listIterator() method, and the size() method merely returns the size of
      * the subList.
-     * 
+     *
      * All methods will throw a ConcurrentModificationException if the modCount
      * of the original list is not equal to the expected value.
-     * 
+     *
      * @param start
      *            start index of the subList, include start
      * @param end

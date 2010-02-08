@@ -30,7 +30,7 @@ public class AbstractSetFTest extends TestCase {
         assertSame(s, s.minus(es));
         assertSame(es, es.minus(s));
     }
-    
+
     public void testEqualsToRegular() {
         Set<String> regular = Collections.emptySet();
         SetF<String> our = CollectionsF.set();
@@ -38,10 +38,10 @@ public class AbstractSetFTest extends TestCase {
         assertEquals(our, regular);
         assertEquals(our, our);
     }
-    
+
     /////
     // union/intersect/minus
-    
+
     private Generator<SetF<Integer>> smallSets() {
         return Generator.ints(1, 10).sets();
     }
@@ -55,11 +55,11 @@ public class AbstractSetFTest extends TestCase {
     public void testIntersectSimple() {
         assertEquals(set(3, 4), set(1, 2, 3, 4).intersect(set(3, 4, 5, 6)));
     }
-    
+
     public void testSimple() {
         assertEquals(set(1, 2), CollectionsF.x(set(1, 2, 3, 4)).minus(set(3, 4, 5, 6)));
     }
-    
+
 
     public void testBinaryOps() {
         smallSets().tuples().checkForAll(new Function1V<Tuple2<SetF<Integer>, SetF<Integer>>>() {
@@ -71,48 +71,48 @@ public class AbstractSetFTest extends TestCase {
             }
         });
     }
-    
+
     private void testIntersectFor(SetF<Integer> s1, SetF<Integer> s2) {
         SetF<Integer> is = s1.intersect(s2);
-        
+
         assertEquals(is, s2.intersect(s1));
-        
+
         for (int e : is) {
             assertTrue(s1.contains(e));
             assertTrue(s2.contains(e));
         }
-        
+
         for (int e : s1) {
             assertTrue(is.contains(e) || !s2.contains(e));
         }
     }
-    
+
     private void testUnionFor(SetF<Integer> s1, SetF<Integer> s2) {
         SetF<Integer> u = s1.plus(s2);
-        
+
         assertEquals(u, s2.plus(s1));
-        
+
         for (int e : u) {
             assertTrue(s1.contains(e) || s2.contains(e));
         }
-        
+
         for (int e : s1) {
             assertTrue(u.contains(e));
         }
     }
-    
+
     private void testMinusFor(SetF<Integer> s1, SetF<Integer> s2) {
         SetF<Integer> d = s1.minus(s2);
-        
+
         for (int e : d) {
             assertTrue(s1.contains(e));
             assertFalse(s2.contains(e));
         }
-        
+
         for (int e : s1) {
             assertTrue(d.contains(e) || s2.contains(e));
         }
-        
+
         for (int e : s2) {
             assertFalse(d.contains(e));
         }

@@ -10,12 +10,12 @@ import ru.yandex.bolts.collection.SetF;
 
 /**
  * Implementation of MapF with delegation
- * 
+ *
  * @author Stepan Koltsov
  */
 public class DefaultMapF<K, V> extends AbstractMapF<K,V> implements Serializable {
     private static final long serialVersionUID = 2421450360288762730L;
-    
+
     protected Map<K,V> target;
 
     protected DefaultMapF(Map<K, V> target) {

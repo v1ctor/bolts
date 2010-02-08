@@ -11,7 +11,7 @@ import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
  * Looks like map, but actually it is a list of {@link Tuple2} with handy interface.
- * 
+ *
  * @author Stepan Koltsov
  * @author Iliya Roubin
  */
@@ -19,11 +19,11 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     private ListMap(List<Tuple2<K, V>> list) {
         super(list);
     }
-    
+
     public ListMap() {
         super(new ArrayList<Tuple2<K, V>>());
     }
-    
+
     public ListMap(Collection<Tuple2<K, V>> elements) {
         super(new ArrayList<Tuple2<K, V>>(elements));
     }
@@ -121,40 +121,40 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
                 return Tuple2.tuple(mapper.apply(a.get1()), a.get2());
             }
         };
-        
+
         ListMap<U, V> r = new ListMap<U, V>();
         this.iterator().map(m2).forEach(r.addOp());
         return r;
     }
-    
+
     public <U> ListMap<K, U> mapValues(final Function<V, U> mapper) {
         Function<Tuple2<K, V>, Tuple2<K, U>> m2 = new Function<Tuple2<K, V>, Tuple2<K, U>>() {
             public Tuple2<K, U> apply(Tuple2<K, V> a) {
                 return Tuple2.tuple(a.get1(), mapper.apply(a.get2()));
             }
         };
-        
+
         ListMap<K, U> r = new ListMap<K, U>();
         this.iterator().map(m2).forEach(r.addOp());
         return r;
     }
-    
+
     public ListMap<K, V> filterValues(Function1B<V> p) {
         return new ListMap<K, V>(filter(valueM().andThen(p)));
     }
-    
+
     public ListMap<K, V> filterKeys(Function1B<K> p) {
         return new ListMap<K, V>(filter(keyM().andThen(p)));
     }
-    
+
     public Option<Tuple2<K, V>> findByKey(Function1B<? super K> p) {
         return find(keyM().andThen(p));
     }
-    
+
     public void put(K k, V v) {
         add(Tuple2.tuple(k, v));
     }
-    
+
     public Function2V<K, V> putOp() {
         return new Function2V<K, V>() {
             public void apply(K a, V b) {
@@ -162,11 +162,11 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
             }
         };
     }
-    
+
     public void put(Tuple2<? extends K, ? extends V> tuple) {
         super.add(tuple.<K, V>uncheckedCast());
     }
-    
+
     @Override
     public ListMap<K, V> plus1(Tuple2<K, V> e) {
         return new ListMap<K, V>(Cf.x(target).plus1(e));
@@ -175,34 +175,34 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     public ListMap<K, V> plus1(K key, V value) {
         return plus1(Tuple2.tuple(key, value));
     }
-    
+
     private Function<Tuple2<K, V>, K> keyM() {
         return Tuple2.get1M();
     }
-    
+
     private Function<Tuple2<K, V>, V> valueM() {
         return Tuple2.get2M();
     }
-    
+
     public ListF<K> keys() {
         return map(keyM());
     }
-    
+
     public ListF<V> values() {
         return map(valueM());
     }
-    
+
     public ListMap<V, K> invert() {
         return listMap(map(Tuple2.<K, V>swapM()));
     }
-    
+
     /**
      * @see CollectionF#sort()
      */
     public ListMap<K, V> sortByKey() {
         return sortByKey(Comparator.naturalComparator().<K, K>uncheckedCast());
     }
-    
+
     /**
      * @see CollectionF#sort(Function2I)
      */
@@ -211,20 +211,20 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         if (size() <= 1) return this;
         return new ListMap<K, V>(sort(keyM().andThen((Function2I<K, K>) comparator)));
     }
-    
+
     // XXX: sortByKeyBy, sortByKeyByDesc
-    
+
     public MapF<K, V> toMap() {
         if (isEmpty()) return Cf.map();
         else return Cf.hashMap(this);
     }
-    
+
     @SuppressWarnings({"unchecked", "ToArrayCallWithZeroLengthArrayArgument"})
     @Override
     public Tuple2<K, V>[] toArray() {
         return toArray(new Tuple2[0]);
     }
-    
+
     public ListMap<K, V> unmodifiable() {
         return new ListMap<K, V>(Cf.x(target).unmodifiable());
     }
@@ -236,7 +236,7 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     public <F, G> ListMap<F, G> uncheckedCastLm() {
         return (ListMap<F, G>) this;
     }
-    
+
     public <W> ListF<W> mapEntries(Function2<K, V, W> mapper) {
         return map(mapper.asFunction());
     }
@@ -248,7 +248,7 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
             }
         }).mkString(elemSep);
     }
-    
+
     public ListMap<K, V> plus(ListMap<K, V> that) {
         if (that.isEmpty()) return this;
         else if (this.isEmpty()) return that;
@@ -270,10 +270,10 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         }
         return listMap(es);
     }
-    
+
     public static <A, B> ListMap<A, B> listMapFromKeysValues(ListF<A> keys, ListF<B> values) {
         ListMap<A, B> r = ListMap.arrayList();
-        
+
         IteratorF<A> ki = keys.iterator();
         IteratorF<B> vi = values.iterator();
         while (ki.hasNext() && vi.hasNext()) {
@@ -282,24 +282,24 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
 
         return r;
     }
-    
+
     /**
      * Empty immutable.
      */
     public static <A, B> ListMap<A, B> listMap() {
         return listMap(Cf.<Tuple2<A, B>>list());
     }
-    
+
     public static <A, B> ListMap<A, B> arrayList() {
         return listMap(Cf.<Tuple2<A, B>>arrayList());
     }
-    
+
     public static <A, B> ListMap<A, B> listMap(Tuple2<A, B>... pairs) {
         return listMap(Cf.list(pairs));
     }
-    
+
     public static <A, B> ListMap<A, B> listMap(ListF<Tuple2<A, B>> pairs) {
         return new ListMap<A, B>(pairs);
     }
-    
+
 } //~

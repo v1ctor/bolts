@@ -11,14 +11,14 @@ import ru.yandex.bolts.function.Function2;
  * Pair.
  *
  * @author Stepan Koltsov
- * 
+ *
  * @see Tuple3
  * @see Tuple4
  * @see P2
  */
 public class Tuple2<T1, T2> implements Serializable {
     private static final long serialVersionUID = 3326001902955370713L;
-    
+
     private final T1 _1;
     private final T2 _2;
 
@@ -44,7 +44,7 @@ public class Tuple2<T1, T2> implements Serializable {
     public Tuple2<T2, T1> swap() {
         return tuple(_2, _1);
     }
-    
+
     @SuppressWarnings("unchecked")
     public <T3, T4> Tuple2<T3, T4> uncheckedCast() {
         return (Tuple2<T3, T4>) this;
@@ -156,10 +156,10 @@ public class Tuple2<T1, T2> implements Serializable {
             }
         };
     }
-    
+
     /** Construct */
     public static <A, B> Tuple2<A, B> tuple(A a, B b) {
         return new Tuple2<A, B>(a, b);
     }
-    
+
 } //~

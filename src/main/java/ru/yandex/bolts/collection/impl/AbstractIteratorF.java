@@ -17,12 +17,12 @@ import ru.yandex.bolts.function.Function2;
 
 /**
  * Implementation of {@link IteratorF} algorithms.
- * 
+ *
  * @author Stepan Koltsov
  */
 public abstract class AbstractIteratorF<E> implements IteratorF<E> {
-    private IteratorF<E> self() { return this; } 
-    
+    private IteratorF<E> self() { return this; }
+
     public void remove() {
         throw new UnsupportedOperationException();
     }
@@ -60,7 +60,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         }
         return new MappedIterator();
     }
-    
+
     @Override
     public <B> IteratorF<B> flatMap(final Function<? super E, ? extends Iterator<B>> f) {
         // copy-paste of scala.Iterator.flatMap
@@ -84,11 +84,11 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
                     return next();
                 } else throw new NoSuchElementException("next on empty iterator");
             }
-            
+
         }
         return new FlatMappedIterator();
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public <B> IteratorF<B> flatMapL(Function<? extends E, ? extends Iterable<B>> f0) {
@@ -100,18 +100,18 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         });
         return flatMap(g);
     }
-    
+
     private static abstract class AbstractPrefetchingIterator<E> extends AbstractIteratorF<E> {
         private Option<E> next = Option.none();
         private boolean eof = false;
-        
+
         private void fill() {
             while (!eof && next.isEmpty()) {
                 next = fetchNext();
                 eof = next.isEmpty();
             }
         }
-        
+
         @Override
         public boolean hasNext() {
             fill();
@@ -144,7 +144,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
                 return Option.none();
             }
         };
-        
+
         return new FilterIterator();
     }
 
@@ -260,10 +260,10 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
 
     public IteratorF<E> take(final int count) {
         if (count <= 0) return Cf.emptyIterator();
-        
+
         class TakeIterator extends AbstractIteratorF<E> {
             int left = count;
-            
+
             public boolean hasNext() {
                 return left > 0 && self().hasNext();
             }
@@ -274,12 +274,12 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
                 --left;
                 return next;
             }
-            
+
         };
 
         return new TakeIterator();
     }
-    
+
     public IteratorF<E> dropWhile(Function1B<? super E> p) {
         // XXX: should be lazy
         while (hasNext()) {
@@ -289,7 +289,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         }
         return Cf.emptyIterator();
     }
-    
+
     public IteratorF<E> takeWhile(final Function1B<? super E> f) {
         class TakeWhileIterator extends AbstractPrefetchingIterator<E> {
             boolean end = false;
@@ -309,8 +309,8 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
             }
 
         }
-        
+
         return new TakeWhileIterator();
     }
-    
+
 } //~

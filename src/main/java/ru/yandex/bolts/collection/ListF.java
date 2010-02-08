@@ -8,7 +8,7 @@ import ru.yandex.bolts.function.Function1B;
 
 /**
  * Extended list.
- * 
+ *
  * @see CollectionF
  *
  * @author Stepan Koltsov
@@ -24,7 +24,7 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
     /**
      * Return pair of lists, first list contains elements matching <code>p</code>
-     * and second lists contains elements matching <code>!p</code>. 
+     * and second lists contains elements matching <code>!p</code>.
      */
     Tuple2<ListF<E>, ListF<E>> filter2(Function1B<? super E> p);
 
@@ -70,13 +70,13 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
     /** Drop first count elements */
     ListF<E> drop(int count);
-    
+
     /** Longest prefix of elements that satisfy p */
     ListF<E> takeWhile(Function1B<? super E> f);
-    
+
     /** Elements after {@link #takeWhile(Function1B)} */
     ListF<E> dropWhile(Function1B<? super E> f);
-    
+
     /** Pair of sublists returned by {@link #takeWhile(Function1B)} and {@link #dropWhile(Function1B)} */
     //ListF<E> span(Function1B<? super E> p);
 
@@ -87,10 +87,10 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     int length();
 
     /**
-     * List with elements in reverse order 
+     * List with elements in reverse order
      */
     ListF<E> reverse();
-    
+
     <F> ListF<F> uncheckedCast();
 
     /** List of pairs of elements with the same index in two lists */

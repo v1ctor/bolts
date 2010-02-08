@@ -75,7 +75,7 @@ public class AbstractListFTest extends TestCase {
         assertEquals(list(), list.drop(5));
         assertEquals(list(), list.drop(6));
     }
-    
+
     public void testTakeDropWhile() {
         Generator.ints().lists().checkForAll(new Function1V<ListF<Integer>>() {
             public void apply(ListF<Integer> a0) {
@@ -87,7 +87,7 @@ public class AbstractListFTest extends TestCase {
                     } else {
                         a = a0;
                     }
-                    
+
                     Function1B<Integer> f = IntegerF.naturalComparator().gtF(0);
                     ListF<Integer> b = a.takeWhile(f);
                     ListF<Integer> c = a.dropWhile(f);
@@ -98,7 +98,7 @@ public class AbstractListFTest extends TestCase {
             }
         });
     }
-    
+
     public void testPlus() {
         ListF<Integer> l1 = list(1, 2, 3);
         ListF<Integer> l2 = list(4, 5, 6);
@@ -174,7 +174,7 @@ public class AbstractListFTest extends TestCase {
                 assertTrue(l.forAll(u.containsF()));
             }
         });
-        
+
         // simple
         ListF<Integer> l = list(1, 2, 3, 4, 1, 2, 1);
         assertEquals(set(1, 2, 3, 4), l.unique());
@@ -196,7 +196,7 @@ public class AbstractListFTest extends TestCase {
         assertEquals(2, (int) list(1, 2, 3).find(Function1BTest.evenF()).get());
         assertFalse(list(1, 5, 3).find(Function1BTest.evenF()).isDefined());
     }
-    
+
     private static <T> Function1B<Collection<T>> notEmptyF() {
         return new Function1B<Collection<T>>() {
             public boolean apply(Collection<T> a) {
@@ -206,17 +206,17 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testReduce() {
-        
+
         Generator.strings().lists().filter(AbstractListFTest.<String>notEmptyF()).checkForAll(new Function1V<ListF<String>>() {
             public void apply(ListF<String> a) {
                 String expected = "";
                 for (String s : a) expected += s;
-                
+
                 assertEquals(expected, a.reduceLeft(Function2Test.stringPlusF()));
                 assertEquals(expected, a.reduceRight(Function2Test.stringPlusF()));
             }
         });
-        
+
         // simple
         ListF<String> l = list("a", "b", "c");
         assertEquals("abc", l.reduceLeft(Function2Test.stringPlusF()));
@@ -224,21 +224,21 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testFold() {
-        
+
         Generator.strings().lists().checkForAll(new Function1V<ListF<String>>() {
             public void apply(ListF<String> a) {
                 String expectedLeft = "x";
                 for (String s : a) expectedLeft += s;
-                
+
                 String expectedRight = "";
                 for (String s : a) expectedRight += s;
                 expectedRight += "y";
-                
+
                 assertEquals(expectedLeft, a.foldLeft("x", Function2Test.stringPlusF()));
                 assertEquals(expectedRight, a.foldRight("y", Function2Test.stringPlusF()));
             }
         });
-        
+
         // simple
         ListF<String> l = list("a", "b", "c");
         assertEquals("xabc", l.foldLeft("x", Function2Test.stringPlusF()));
@@ -250,10 +250,10 @@ public class AbstractListFTest extends TestCase {
         ListF<Integer> l1 = Cf.list(1);
         assertSame(l0, l0.reverse());
         assertSame(l1, l1.reverse());
-        
+
         // simple
         assertEquals(list(4, 3, 2, 1), list(1, 2, 3, 4).reverse());
-        
+
         Generator.ints().lists().checkForAll(new Function1V<ListF<Integer>>() {
             public void apply(ListF<Integer> a) {
                 ListF<Integer> r = a.reverse();
@@ -270,7 +270,7 @@ public class AbstractListFTest extends TestCase {
         assertEquals(Option.none(), list().lastO());
         assertEquals(Option.some(1), list(1).firstO());
     }
-    
+
     public void testZipWithIndex() {
         // simple
         ListF<String> l = list("a", "bb");
@@ -281,15 +281,15 @@ public class AbstractListFTest extends TestCase {
 
         assertEquals("bb", ll.get(1).get1());
         assertEquals(Integer.valueOf(1), ll.get(1).get2());
-        
+
         // better
-        
+
         Generator.strings().lists().checkForAll(new Function1V<ListF<String>>() {
             public void apply(ListF<String> a) {
                 ListF<Tuple2<String, Integer>> z = a.zipWithIndex();
 
                 assertEquals(a.length(), z.length());
-                
+
                 for (int i = 0; i < z.length(); ++i) {
                     assertSame(a.get(i), z.get(i).get1());
                     assertEquals(i, z.get(i).get2().intValue());
@@ -297,17 +297,17 @@ public class AbstractListFTest extends TestCase {
             }
         });
     }
-    
+
     public void testIteratorToList() {
         ListF<Integer> l = Cf.list(1, 2, 3);
-        
+
         IteratorF<Integer> i1 = l.iterator();
         i1.next();
         assertEquals(Cf.list(2, 3), i1.toList());
-        
+
         IteratorF<Integer> i2 = l.iterator();
         assertEquals(Cf.list(1, 2, 3), i2.toList());
-        
+
         IteratorF<Integer> i3 = l.iterator();
         i2.next();
         i2.next();

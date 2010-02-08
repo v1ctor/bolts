@@ -25,13 +25,13 @@ public class CollectionsFTest extends TestCase {
         assertEquals(list(), CollectionsF.range(1, 1));
         assertEquals(list(), CollectionsF.range(5, 1));
     }
-    
+
     public void testIdentityHashSet() {
         SetF<Integer> set = Cf.identityHashSet(1, 2, 3, new Integer(1));
         assertEquals(4, set.size());
         assertTrue(set.contains(2));
         assertFalse(set.contains(new Integer(2)));
-        
+
         SetF<Integer> uset = set.unmodifiable();
         assertEquals(4, set.size());
         try {
@@ -41,7 +41,7 @@ public class CollectionsFTest extends TestCase {
             // OK
         }
     }
-    
+
     public void testRepeatEmpty() {
         ListF<String> set = Cf.repeat("a", 0);
         assertFalse(set.contains("a"));

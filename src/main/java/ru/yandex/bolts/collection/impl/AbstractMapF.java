@@ -21,7 +21,7 @@ import ru.yandex.bolts.function.Function2V;
 
 /**
  * Implementation of {@link MapF} algorithms.
- * 
+ *
  * @author Stepan Koltsov
  */
 public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements MapF<K, V> {
@@ -127,12 +127,12 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
 
         return newMap(entrySet().filter(p));
     }
-    
+
     @Override
     public MapF<K, V> filterValues(Function1B<? super V> p) {
         return filterEntries(AbstractMapF.<K, V>entryValueM().andThen(p));
     }
-    
+
     @Override
     public boolean forAllEntries(Function2B<? super K, ? super V> op) {
         return entries().forAll(op.asTupleFunction().uncheckedCast());
@@ -237,7 +237,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     public Option<V> removeO(K key) {
         return Option.notNull(remove(key));
     }
-    
+
     @SuppressWarnings("unchecked")
     public <L, W> MapF<L, W> uncheckedCast() {
         return (MapF<L, W>) this;
@@ -250,7 +250,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
             }
         };
     }
-    
+
     protected abstract static class AbstractEntry<K, V> implements Entry<K, V> {
         public V setValue(V value) {
             throw new UnsupportedOperationException();
@@ -259,7 +259,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
 
     public static class SimpleEntry<K, V> extends AbstractEntry<K, V> implements Serializable {
         private static final long serialVersionUID = -3060573265091739338L;
-        
+
         private final K key;
         private final V value;
 

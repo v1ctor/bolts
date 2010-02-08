@@ -27,7 +27,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      * Return collection with only elements that match predicate.
      */
     CollectionF<E> filter(Function1B<? super E> p);
-    
+
     /** Pair of collection, first contains elements matching p, second contains element matching !p */
     Tuple2<? extends IterableF<E>, ? extends IterableF<E>> filter2(Function1B<? super E> p);
 
@@ -39,7 +39,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     /** Flat map variant that accept mapper that returns Option instead of Collection */
     <B> ListF<B> flatMapO(Function<? super E, Option<B>> f);
-    
+
     /** Map to list of map entries and construct map */
     <K, V> MapF<K, V> toMap(Function<? super E, Tuple2<K, V>> t);
 
@@ -50,10 +50,10 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     <V> MapF<E, V> toMapMappingToValue(Function<? super E, V> m);
 
     /**
-     * @deprecated 
+     * @deprecated
      */
     Function1B<E> containsP();
-    
+
     /** Delegate to {@link #contains(Object)} */
     Function1B<E> containsF();
 
@@ -70,9 +70,9 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     ListF<E> sort(Function2I<? super E, ? super E> comparator);
 
     ListF<E> sortBy(Function<? super E, ?> f);
-    
+
     ListF<E> sortByDesc(Function<? super E, ?> f);
-    
+
     /**
      * Group elements by applying given function to each element.
      */
@@ -80,7 +80,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     /** @deprecated */
     Function1V<E> addOp();
-    
+
     /** Delegate to {@link #add(Object)} */
     Function1V<E> addF();
 
@@ -106,17 +106,17 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     /**
      * Varargs version of <code>addAll</code>
-     * 
+     *
      * @see #addAll(Collection)
      */
     void addAll(E... additions);
-    
+
     /** Copy elements to the new array */
     E[] toArray(Class<E> cl);
-    
+
     /**
      * Copy all elements of this collection to newly allocated byte array.
-     * Fail if any element of this collection is null or not {@link Byte}. 
+     * Fail if any element of this collection is null or not {@link Byte}.
      */
     byte[] toByteArray();
     /**
@@ -150,23 +150,23 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     /**
      * Return unmodifiable view or unmodifiable copy of this.
-     * 
+     *
      * @see Collections#unmodifiableCollection(Collection)
      */
     CollectionF<E> unmodifiable();
 
     /**
      * Single element of collection
-     * 
+     *
      * @throws NoSuchElementException if this collection is empty or has more then one element.
      */
     E single() throws NoSuchElementException;
-    
+
     /**
      * @throws NoSuchElementException is collection has more then one element.
      */
     Option<E> singleO() throws NoSuchElementException;
-    
+
     /**
      * Return <code>this</code> with another type parameter and no type checks.
      */
@@ -188,5 +188,5 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      * Max element using given comparator.
      */
     E max(Function2I<? super E, ? super E> comparator);
-    
+
 } //~

@@ -13,7 +13,7 @@ import ru.yandex.bolts.collection.Unmodifiable;
  */
 public class EmptyList<A> extends AbstractListF<A> implements Unmodifiable, RandomAccess, Serializable {
     private static final long serialVersionUID = 8505000537896934647L;
-    
+
     @SuppressWarnings("unchecked")
     public static final ListF INSTANCE = new EmptyList();
 
@@ -32,7 +32,7 @@ public class EmptyList<A> extends AbstractListF<A> implements Unmodifiable, Rand
     public ListF<A> unmodifiable() {
         return this;
     }
-    
+
     private Object readResolve() {
         return INSTANCE;
     }

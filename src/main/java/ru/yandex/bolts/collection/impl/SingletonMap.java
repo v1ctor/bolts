@@ -11,7 +11,7 @@ import ru.yandex.bolts.collection.Unmodifiable;
  */
 public class SingletonMap<K, V> extends AbstractMapF<K, V> implements Serializable, Unmodifiable {
     private static final long serialVersionUID = 1863420184567712379L;
-    
+
     private final K key;
     private final V value;
 

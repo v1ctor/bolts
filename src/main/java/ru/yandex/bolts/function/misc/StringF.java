@@ -14,12 +14,12 @@ import ru.yandex.bolts.function.Function2B;
 
 /**
  * Misc {@link String} functions.
- * 
+ *
  * @author Stepan Koltsov
  * @see CharSequenceF
  */
 public class StringF {
-    
+
     /**
      * @see CharSequenceF#notEmptyF()
      */
@@ -33,14 +33,14 @@ public class StringF {
     public static Function1B<String> emptyF() {
         return CharSequenceF.emptyF().uncheckedCast();
     }
-    
+
     /**
      * @see CharSequenceF#lengthF()
      */
     public static Function<String, Integer> lengthF() {
         return CharSequenceF.lengthF().uncheckedCast();
     }
-    
+
     /**
      * Concatenate two strings.
      */
@@ -51,7 +51,7 @@ public class StringF {
             }
         };
     }
-    
+
     /**
      * Join string using specified separator.
      */
@@ -62,15 +62,15 @@ public class StringF {
             }
         };
     }
-    
+
     public static Function<String, String> addSuffixF(String suffix) {
         return plusF().bind2(suffix);
     }
-    
+
     public static Function<String, String> addPrefixF(String prefix) {
         return plusF().bind1(prefix);
     }
-    
+
     public static Function2B<String, String> startsWithF() {
         return new Function2B<String, String>() {
             public boolean apply(String a, String b) {
@@ -78,11 +78,11 @@ public class StringF {
             }
         };
     }
-    
+
     public static Function1B<String> startsWithF(String prefix) {
         return startsWithF().bind2(prefix);
     }
-    
+
     public static Function2B<String, String> endsWithF() {
         return new Function2B<String, String>() {
             public boolean apply(String a, String b) {
@@ -90,11 +90,11 @@ public class StringF {
             }
         };
     }
-    
+
     public static Function1B<String> endsWithF(String suffix) {
         return endsWithF().bind2(suffix);
     }
-    
+
     public static Function<String, String> toLowerCaseF() {
         return new Function<String, String>() {
             public String apply(String a) {
@@ -102,7 +102,7 @@ public class StringF {
             }
         };
     }
-    
+
     public static Function<String, String> toUpperCaseF() {
         return new Function<String, String>() {
             public String apply(String a) {
@@ -110,7 +110,7 @@ public class StringF {
             }
         };
     }
-    
+
     public static Function<String, String> trimF() {
         return new Function<String, String>() {
             public String apply(String a) {
@@ -118,10 +118,10 @@ public class StringF {
             }
         };
     }
-    
+
     /**
      * Split string using the specified regex.
-     * 
+     *
      * @see Pattern#split(CharSequence)
      */
     public static Function<String, ListF<String>> splitF(String regex) {
@@ -135,7 +135,7 @@ public class StringF {
 
     /**
      * Split string into two strings using the specified regex.
-     * 
+     *
      * @see Pattern#split(CharSequence, int)
      */
     public static Function<String, Tuple2<String, String>> split2F(String regex) {
@@ -147,10 +147,10 @@ public class StringF {
             }
         };
     }
-    
+
     /**
      * Split string into three strings using the specified regex.
-     * 
+     *
      * @see Pattern#split(CharSequence, int)
      */
     public static Function<String, Tuple3<String, String, String>> split3F(String regex) {
@@ -162,10 +162,10 @@ public class StringF {
             }
         };
     }
-    
+
     /**
      * Split string into four strings using the specified regex.
-     * 
+     *
      * @see Pattern#split(CharSequence, int)
      */
     public static Function<String, Tuple4<String, String, String, String>> split4F(String regex) {
@@ -177,5 +177,5 @@ public class StringF {
             }
         };
     }
-    
+
 } //~

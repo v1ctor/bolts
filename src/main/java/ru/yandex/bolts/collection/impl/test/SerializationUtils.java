@@ -12,7 +12,7 @@ import java.io.ObjectOutputStream;
  * @author Stepan Koltsov
  */
 public class SerializationUtils {
-    
+
     public static Object serializeDeserialize(Object o) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -22,15 +22,15 @@ public class SerializationUtils {
             throw new RuntimeException(e);
         }
     }
-    
+
     public static void assertSerializedDeserializedToSame(Object o) {
         Object r = serializeDeserialize(o);
         assertSame(o, r);
     }
-    
+
     public static void assertSerializedDeserializedToEqual(Object o) {
         Object r = serializeDeserialize(o);
         assertEquals(o, r);
     }
-    
+
 } //~

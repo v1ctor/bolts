@@ -13,15 +13,15 @@ import ru.yandex.bolts.collection.ListF;
 
 /**
  * Base for {@link ArrayListF} and {@link ReadOnlyArrayList} implementations.
- *  
+ *
  * @author Stepan Koltsov
  */
 public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF<E>, Serializable, RandomAccess {
 
     private static final long serialVersionUID = 3227478780818417896L;
-    
+
     protected transient E[] array;
-    
+
     protected transient int firstIndex;
 
     protected transient int lastIndex;
@@ -37,7 +37,7 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
 
     /**
      * Searches this ArrayList for the specified object.
-     * 
+     *
      * @param object
      *            the object to search for
      * @return true if <code>object</code> is an element of this ArrayList,
@@ -60,14 +60,14 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
         }
         return false;
     }
-    
+
     /**
      * Answers the element at the specified location in this ArrayList.
-     * 
+     *
      * @param location
      *            the index of the element to return
      * @return the element at the specified index
-     * 
+     *
      * @exception IndexOutOfBoundsException
      *                when <code>location < 0 || >= size()</code>
      */
@@ -82,7 +82,7 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
     /**
      * Searches this ArrayList for the specified object and returns the index of
      * the first occurrence.
-     * 
+     *
      * @param object
      *            the object to search for
      * @return the index of the first occurrence of the object
@@ -107,9 +107,9 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
 
     /**
      * Answers if this ArrayList has no elements, a size of zero.
-     * 
+     *
      * @return true if this ArrayList has no elements, false otherwise
-     * 
+     *
      * @see #size
      */
     @Override
@@ -120,7 +120,7 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
     /**
      * Searches this ArrayList for the specified object and returns the index of
      * the last occurrence.
-     * 
+     *
      * @param object
      *            the object to search for
      * @return the index of the last occurrence of the object
@@ -145,7 +145,7 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
 
     /**
      * Answers the number of elements in this ArrayList.
-     * 
+     *
      * @return the number of elements in this ArrayList
      */
     @Override
@@ -155,7 +155,7 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
 
     /**
      * Answers a new array containing all elements contained in this ArrayList.
-     * 
+     *
      * @return an array of the elements from this ArrayList
      */
     @Override
@@ -172,11 +172,11 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
      * array is used, otherwise an array of the same type is created. If the
      * specified array is used and is larger than this ArrayList, the array
      * element following the collection elements is set to null.
-     * 
+     *
      * @param contents
      *            the array
      * @return an array of the elements from this ArrayList
-     * 
+     *
      * @exception ArrayStoreException
      *                when the type of an element in this ArrayList cannot be
      *                stored in the type of the specified array
@@ -195,13 +195,13 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
         }
         return contents;
     }
-    
+
     @SuppressWarnings("unchecked")
     protected E[] newElementArray(int size) {
         return (E[]) new Object[size];
     }
 
-    
+
     private static final ObjectStreamField[] serialPersistentFields = { new ObjectStreamField(
             "size", Integer.TYPE) }; //$NON-NLS-1$
 
@@ -215,7 +215,7 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
             stream.writeObject(it.next());
         }
     }
-    
+
 
     @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream stream) throws IOException,

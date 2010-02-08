@@ -14,7 +14,7 @@ import ru.yandex.bolts.collection.IteratorF;
  */
 public class DefaultCollectionF<E> extends AbstractCollectionF<E> implements Serializable {
     private static final long serialVersionUID = 8678268074197952366L;
-    
+
     protected Collection<E> target;
 
     /**

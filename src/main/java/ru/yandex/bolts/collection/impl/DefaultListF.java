@@ -11,17 +11,17 @@ import ru.yandex.bolts.collection.ListF;
 
 /**
  * Implementation of ListF with delegation
- * 
+ *
  * @author Stepan Koltsov
  */
 public class DefaultListF<E> extends AbstractListF<E> implements Serializable {
     private static final long serialVersionUID = -9125154479157748328L;
-    
+
     protected List<E> target;
 
     public DefaultListF(List<E> target) {
         if (target == null) throw new IllegalArgumentException("target is null");
-        
+
         this.target = target;
     }
 

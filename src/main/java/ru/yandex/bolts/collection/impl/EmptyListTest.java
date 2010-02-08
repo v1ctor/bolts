@@ -9,5 +9,5 @@ public class EmptyListTest extends EmptyCollectionTestSupport {
     protected Object emptyInstance() {
         return EmptyList.INSTANCE;
     }
-    
+
 } //~

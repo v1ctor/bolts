@@ -11,13 +11,13 @@ import ru.yandex.bolts.function.Function2I;
 @SuppressWarnings({"UnusedDeclaration", "unused"})
 public class ComparatorTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ComparatorTest.class);
-    
+
     private <A> Comparator<A> throwC() {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
                 throw new AssertionError();
             }
-            
+
         };
     }
 
@@ -109,12 +109,12 @@ public class ComparatorTest extends TestCase {
         Comparator<String> c = Comparator.naturalComparator();
         assertSame(c, c.invert().invert());
     }
-    
-    
+
+
     public void testChainTo() {
         assertTrue(Comparator.<Integer>naturalComparator().chainTo(this.<Integer>throwC()).compare(1, 2) < 0);
         assertTrue(Comparator.<Integer>naturalComparator().chainTo(this.<Integer>throwC()).compare(2, 1) > 0);
-        
+
         assertTrue(Comparator.<Integer>constEqualComparator().chainTo(Comparator.<Integer>naturalComparator()).compare(1, 2) < 0);
         assertTrue(Comparator.<Integer>constEqualComparator().chainTo(Comparator.<Integer>naturalComparator()).compare(2, 1) > 0);
         assertTrue(Comparator.<Integer>constEqualComparator().chainTo(Comparator.<Integer>naturalComparator()).compare(2, 2) == 0);

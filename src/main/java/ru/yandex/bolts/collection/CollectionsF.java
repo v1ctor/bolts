@@ -45,65 +45,65 @@ import ru.yandex.bolts.function.Function2;
  */
 public class CollectionsF {
     protected CollectionsF() { }
-    
+
     /**
      * Wrap List.
-     * 
+     *
      * @see #x(List)
      */
     public static <E> ListF<E> wrap(List<E> list) {
         return x(list);
     }
-    
+
     /**
      * Wrap Set.
-     * 
+     *
      * @see #x(Set)
      */
     public static <E> SetF<E> wrap(Set<E> set) {
         return x(set);
     }
-    
+
     /**
      * Wrap Collection.
-     * 
+     *
      * @see #x(Collection)
      */
     public static <E> CollectionF<E> wrap(Collection<E> coll) {
         return x(coll);
     }
-    
+
     /**
      * Wrap Iterator.
-     * 
+     *
      * @see #x(Iterator)
      */
     public static <E> IteratorF<E> wrap(Iterator<E> iter) {
         return x(iter);
     }
-    
+
     /**
      * Wrap Map.
-     * 
+     *
      * @see #x(Map)
      */
     public static <K, V> MapF<K, V> wrap(Map<K, V> map) {
         return x(map);
     }
-    
-    
+
+
     /**
      * Wrap Properties.
-     * 
+     *
      * @see #x(Properties)
      */
     public static MapF<String, String> wrap(Properties ps) {
         return x(ps);
     }
-    
+
     /**
      * Wrap array.
-     * 
+     *
      * @see #x(Object[])
      */
     public static <E> ListF<E> wrap(E[] array) {
@@ -145,18 +145,18 @@ public class CollectionsF {
     public static MapF<String, String> x(Properties properties) {
         return x((Map) properties);
     }
-    
+
     /**
      * Wrap array.
-     * 
+     *
      * @see Arrays#asList(Object...)
      * @see #list(Object...)
      */
     public static <E> ListF<E> x(E[] array) {
         return x(Arrays.asList(array));
     }
-    
-    
+
+
     /** Empty set */
     @SuppressWarnings({"unchecked"})
     public static <E> SetF<E> set() {
@@ -170,7 +170,7 @@ public class CollectionsF {
 
     /**
      * Create set of specified elements.
-     * 
+     *
      * @return set of either 1 or 2 elements
      */
     public static <E> SetF<E> set(E e1, E e2) {
@@ -179,7 +179,7 @@ public class CollectionsF {
 
     /**
      * Create set of specified elements.
-     * 
+     *
      * @return set of either 1, 2 or 3 elements
      */
     public static <E> SetF<E> set(E e1, E e2, E e3) {
@@ -224,14 +224,14 @@ public class CollectionsF {
     public static <E> SetF<E> hashSet(E... elements) {
         return hashSet(list(elements));
     }
-    
+
     /**
      * Create mutable identity hash set.
      */
     public static <E> SetF<E> identityHashSet() {
         return new SetFromMap<E>(new IdentityHashMap<E, Boolean>());
     }
-    
+
     /**
      * Create mutable identity hash set with specified elements.
      */
@@ -240,7 +240,7 @@ public class CollectionsF {
         set.addAll(elements);
         return set;
     }
-    
+
     /**
      * Create mutable identity hash set with specified elements.
      */
@@ -293,9 +293,9 @@ public class CollectionsF {
 
     /**
      * Create list of specified elements.
-     * 
+     *
      * The resulting list is immutable.
-     * 
+     *
      * @see #wrap(Object[]) for real array wrapping
      */
     public static <E> ListF<E> list(E... elements) {
@@ -336,7 +336,7 @@ public class CollectionsF {
 
     /**
      * Create array list with given capacity.
-     * 
+     *
      * @see ArrayList#ArrayList(int)
      */
     public static <A> ListF<A> arrayList(int initialCapacity) {
@@ -356,14 +356,14 @@ public class CollectionsF {
     public static <K, V> MapF<K, V> map(K key1, V value1, K key2, V value2) {
         return map(key1, value1).plus1(key2, value2);
     }
-    
+
     /** Create map from sequence of entries */
     public static <K, V> MapF<K, V> map(Collection<Tuple2<K, V>> pairs) {
         return ListMap.listMap(Cf.x(pairs).toList()).toMap();
     }
 
     /**
-     * Immutable empty map. 
+     * Immutable empty map.
      */
     @SuppressWarnings({"unchecked"})
     public static <K, V> MapF<K, V> map() {
@@ -379,7 +379,7 @@ public class CollectionsF {
 
     /**
      * Create hash map.
-     * 
+     *
      * @see HashMap
      */
     public static <K, V> MapF<K, V> hashMap() {
@@ -388,7 +388,7 @@ public class CollectionsF {
 
     /**
      * Identity hash map.
-     * 
+     *
      * @see IdentityHashMap
      */
     @SuppressWarnings("serial")
@@ -402,7 +402,7 @@ public class CollectionsF {
 
     /**
      * Create hash map of specified entries.
-     * 
+     *
      * @see HashMap
      */
     public static <K, V> MapF<K, V> hashMap(Iterable<Tuple2<K, V>> entries) {
@@ -439,9 +439,9 @@ public class CollectionsF {
      */
     public static <T> ListF<T> repeat(final T element, final int times) {
         if (times == 0) return list();
-        
+
         if (times < 0) throw new IllegalArgumentException();
-        
+
         return new AbstractListF<T>() {
             public int size() {
                 return times;
@@ -465,7 +465,7 @@ public class CollectionsF {
 
     /**
      * Immutable list of integer in given range.
-     * 
+     *
      * @return empty list if <code>end &lt; start</code>
      */
     public static ListF<Integer> range(final int startInclusive, final int endExclusive) {
@@ -475,7 +475,7 @@ public class CollectionsF {
 
     /**
      * Immutable set of integer in given range.
-     * 
+     *
      * @return empty set if <code>end &lt; start</code>
      */
     private static SetF<Integer> rangeAsSet(final int startInclusive, final int endExclusive) {
@@ -631,7 +631,7 @@ public class CollectionsF {
             }
         };
     }
-    
+
     /** @deprecated */
     public static <T> Function<Collection<T>, Integer> sizeM() {
         return sizeF();
@@ -645,7 +645,7 @@ public class CollectionsF {
             }
         };
     }
-    
+
     /** {@link Iterator#hasNext()} as function */
     public static <T> Function1B<Iterator<T>> hasNextF() {
         return new Function1B<Iterator<T>>() {
@@ -654,7 +654,7 @@ public class CollectionsF {
             }
         };
     }
-    
+
     /** {@link Iterable#iterator()} as function */
     public static <T> Function<Iterable<T>, IteratorF<T>> iteratorF() {
         return new Function<Iterable<T>, IteratorF<T>>() {
@@ -663,5 +663,5 @@ public class CollectionsF {
             }
         };
     }
-    
+
 } //~

@@ -37,6 +37,6 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     SetF<E> plus(E... additions);
 
     SetF<E> unmodifiable();
-    
+
     <F> SetF<F> uncheckedCast();
 } //~

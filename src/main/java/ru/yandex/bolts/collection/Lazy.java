@@ -16,7 +16,7 @@ public abstract class Lazy<T> extends Function0<T> {
         }
         return value;
     }
-    
+
     @Override
     public final T apply() {
         return get();

@@ -9,7 +9,7 @@ import ru.yandex.bolts.collection.ListF;
 
 /**
  * Copied-pasted from Harmony ArrayList r679987 and then refactored.
- * 
+ *
  * @author Stepan Koltsov
  */
 public class ArrayListF<E> extends ArrayListBase<E>
@@ -26,7 +26,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
 
     /**
      * Constructs a new instance of ArrayList with the specified capacity.
-     * 
+     *
      * @param capacity
      *            the initial capacity of this ArrayList
      */
@@ -44,7 +44,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
      * specified collection. The ArrayList will have an initial capacity which
      * is 110% of the size of the collection. The order of the elements in this
      * ArrayList is the order they are returned by the collection iterator.
-     * 
+     *
      * @param collection
      *            the collection of elements to add
      */
@@ -69,12 +69,12 @@ public class ArrayListF<E> extends ArrayListBase<E>
      * location. The object is inserted before any previous element at the
      * specified location. If the location is equal to the size of this
      * ArrayList, the object is added at the end.
-     * 
+     *
      * @param location
      *            the index at which to insert
      * @param object
      *            the object to add
-     * 
+     *
      * @exception IndexOutOfBoundsException
      *                when <code>location < 0 || >= size()</code>
      */
@@ -114,7 +114,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
 
     /**
      * Adds the specified object at the end of this ArrayList.
-     * 
+     *
      * @param object
      *            the object to add
      * @return true
@@ -133,13 +133,13 @@ public class ArrayListF<E> extends ArrayListBase<E>
      * Inserts the objects in the specified Collection at the specified location
      * in this ArrayList. The objects are added in the order they are returned
      * from the Collection iterator.
-     * 
+     *
      * @param location
      *            the index at which to insert
      * @param collection
      *            the Collection of objects
      * @return true if this ArrayList is modified, false otherwise
-     * 
+     *
      * @exception IndexOutOfBoundsException
      *                when <code>location < 0 || > size()</code>
      */
@@ -194,7 +194,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
 
     /**
      * Adds the objects in the specified Collection to this ArrayList.
-     * 
+     *
      * @param collection
      *            the Collection of objects
      * @return true if this ArrayList is modified, false otherwise
@@ -216,7 +216,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
 
     /**
      * Removes all elements from this ArrayList, leaving it empty.
-     * 
+     *
      * @see #isEmpty
      * @see #size
      */
@@ -232,9 +232,9 @@ public class ArrayListF<E> extends ArrayListBase<E>
     /**
      * Answers a new ArrayList with the same elements, size and capacity as this
      * ArrayList.
-     * 
+     *
      * @return a shallow copy of this ArrayList
-     * 
+     *
      * @see java.lang.Cloneable
      */
     @Override
@@ -253,7 +253,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
     /**
      * Ensures that this ArrayList can hold the specified number of elements
      * without growing.
-     * 
+     *
      * @param minimumCapacity
      *            the minimum number of elements that this ArrayList will hold
      *            before growing
@@ -354,11 +354,11 @@ public class ArrayListF<E> extends ArrayListBase<E>
 
     /**
      * Removes the object at the specified location from this ArrayList.
-     * 
+     *
      * @param location
      *            the index of the object to remove
      * @return the removed object
-     * 
+     *
      * @exception IndexOutOfBoundsException
      *                when <code>location < 0 || >= size()</code>
      */
@@ -399,7 +399,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
 
     /**
      * Removes the first one of the specified object in this list, if present.
-     * 
+     *
      * @param object
      *            the object to removes
      * @return true if the list contains the object
@@ -418,12 +418,12 @@ public class ArrayListF<E> extends ArrayListBase<E>
     /**
      * Removes the objects in the specified range from the start to the end, but
      * not including the end index.
-     * 
+     *
      * @param start
      *            the index at which to start removing
      * @param end
      *            the index one past the end of the range to remove
-     * 
+     *
      * @exception IndexOutOfBoundsException
      *                when <code>start < 0, start > end</code> or
      *                <code>end > size()</code>
@@ -457,13 +457,13 @@ public class ArrayListF<E> extends ArrayListBase<E>
     /**
      * Replaces the element at the specified location in this ArrayList with the
      * specified object.
-     * 
+     *
      * @param location
      *            the index at which to put the specified object
      * @param object
      *            the object to add
      * @return the previous element at the index
-     * 
+     *
      * @exception IndexOutOfBoundsException
      *                when <code>location < 0 || >= size()</code>
      */
@@ -479,7 +479,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
 
     /**
      * Sets the capacity of this ArrayList to be the same as the size.
-     * 
+     *
      * @see #size
      */
     public void trimToSize() {

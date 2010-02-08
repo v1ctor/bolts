@@ -13,7 +13,7 @@ import ru.yandex.bolts.collection.Unmodifiable;
  */
 class SetOf2<E> extends AbstractSetF<E> implements Serializable, Unmodifiable {
     private static final long serialVersionUID = 6009991372576971341L;
-    
+
     private final E e1;
     private final E e2;
 

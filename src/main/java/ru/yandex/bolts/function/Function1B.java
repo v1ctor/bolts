@@ -8,14 +8,14 @@ import ru.yandex.bolts.collection.CollectionsF;
 
 /**
  * Predicate.
- * 
+ *
  * @see Predicate
- * 
+ *
  * @author Stepan Koltsov
  */
 public abstract class Function1B<A> {
     public abstract boolean apply(A a);
-    
+
     public Function<A, Boolean> asFunction() {
         return new Function<A, Boolean>() {
             public Boolean apply(A a) {
@@ -28,12 +28,12 @@ public abstract class Function1B<A> {
             }
         };
     }
-    
+
     @SuppressWarnings("unchecked")
     public <B> Function1B<B> uncheckedCast() {
         return (Function1B<B>) this;
     }
-    
+
     /** Check for null before calling this p */
     public Function1B<A> nullIsFalseF() {
         return Function1B.<A>notNullF().andF(this);
@@ -60,7 +60,7 @@ public abstract class Function1B<A> {
             }
         };
     }
-    
+
     /**
      * @deprecated
      */
@@ -112,7 +112,7 @@ public abstract class Function1B<A> {
     public static <B> Function1B<B> equalsF(final B b) {
         return Function2B.<B>equalsF().bind2(b);
     }
-    
+
     /**
      * @deprecated
      */
@@ -235,7 +235,7 @@ public abstract class Function1B<A> {
     public static <B> Function1B<B> anyOfF(Function1B<B>... functions) {
         return anyOfF(CollectionsF.list(functions));
     }
-    
+
     public static <B> Function1B<B> instanceOfF(final Class<?> cl) {
         return new Function1B<B>() {
             public boolean apply(B b) {
@@ -247,7 +247,7 @@ public abstract class Function1B<A> {
             }
         };
     }
-    
+
     /** Wrap */
     public static <B> Function1B<B> wrap(final Function<B, Boolean> mapper) {
         return new Function1B<B>() {

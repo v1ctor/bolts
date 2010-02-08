@@ -7,7 +7,7 @@ import ru.yandex.bolts.collection.Tuple2;
  */
 public abstract class Function2B<A, B> {
     public abstract boolean apply(A a, B b);
-    
+
     public Function1B<B> bind1(final A a) {
         return new Function1B<B>() {
             public boolean apply(B b) {
@@ -15,7 +15,7 @@ public abstract class Function2B<A, B> {
             }
         };
     }
-    
+
     public Function1B<A> bind2(final B b) {
         return new Function1B<A>() {
             public boolean apply(A a) {
@@ -23,7 +23,7 @@ public abstract class Function2B<A, B> {
             }
         };
     }
-    
+
     public Function1B<Tuple2<A, B>> asTupleFunction() {
         return new Function1B<Tuple2<A, B>>() {
             public boolean apply(Tuple2<A, B> a) {
@@ -31,7 +31,7 @@ public abstract class Function2B<A, B> {
             }
         };
     }
-    
+
     public Function2B<A, B> notF() {
         return new Function2B<A, B>() {
             public boolean apply(A a, B b) {
@@ -47,10 +47,10 @@ public abstract class Function2B<A, B> {
             public String toString() {
                 return "not(" + Function2B.this + ")";
             }
-            
+
         };
     }
-    
+
     public static <A> Function2B<A, A> sameF() {
         return new Function2B<A, A>() {
             public boolean apply(A a, A b) {
@@ -62,7 +62,7 @@ public abstract class Function2B<A, B> {
             }
         };
     }
-    
+
     /**
      * Delegate to {@link #equals(Object, Object)}.
      */

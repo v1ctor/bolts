@@ -7,14 +7,14 @@ import ru.yandex.bolts.collection.Tuple2;
 
 /**
  * Function with two arguments.
- * 
+ *
  * @see F2
- * 
+ *
  * @author Stepan Koltsov
  */
 public abstract class Function2<A, B, R> {
     public abstract R apply(A a, B b);
-    
+
     /** Bind first param to the given value */
     public Function<B, R> bind1(final A a) {
         return new Function<B, R>() {
@@ -40,7 +40,7 @@ public abstract class Function2<A, B, R> {
             }
         };
     }
-    
+
     public Function<Tuple2<A, B>, R> asFunction() {
         return new Function<Tuple2<A,B>, R>() {
             public R apply(Tuple2<A, B> t) {

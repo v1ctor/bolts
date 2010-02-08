@@ -10,7 +10,7 @@ import ru.yandex.bolts.function.Function2I;
  * @author Stepan Koltsov
  */
 public abstract class Comparator<A> extends Function2I<A, A> implements java.util.Comparator<A> {
-    
+
     /** Call {@link #compare(Object, Object)} */
     @Override
     public final int apply(A a, A b) {
@@ -33,7 +33,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
     public <B> Comparator<B> compose(Function<B, A> mapper) {
         return mapper.andThen(this);
     }
-    
+
     public Comparator<A> chainTo(final Comparator<A> comparator) {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
@@ -88,7 +88,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
     public <B> Comparator<B> uncheckedCastC() {
         return (Comparator<B>) this;
     }
-    
+
     /** Inverted comparator */
     @Override
     public Comparator<A> invert() {
@@ -125,7 +125,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
             public Comparator<A> invert() {
                 return wrap(comparator.invert());
             }
-            
+
         };
     }
 
@@ -143,7 +143,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
             }
         };
     }
-    
+
     /**
      * Always returns <code>0</code>.
      */

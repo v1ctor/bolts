@@ -23,11 +23,11 @@ public interface IteratorF<E> extends Iterator<E> {
 
     /** Map */
     <B> IteratorF<B> map(Function<? super E, B> op);
-    
+
     <B> IteratorF<B> flatMap(Function<? super E, ? extends Iterator<B>> f);
-    
+
     <B> IteratorF<B> flatMapL(Function<? extends E, ? extends Iterable<B>> f);
-    
+
     IteratorF<E> filter(Function1B<? super E> f);
 
     /** Call function for each element */
@@ -67,15 +67,15 @@ public interface IteratorF<E> extends Iterator<E> {
      * Single or none element of this iterator.
      */
     Option<E> singleO();
-    
+
     IteratorF<E> drop(int count);
-    
+
     IteratorF<E> take(int count);
-    
+
     /** Longest prefix of elements that satisfy p */
     IteratorF<E> takeWhile(Function1B<? super E> p);
-    
+
     /** Elements after {@link #takeWhile(Function1B)} */
     IteratorF<E> dropWhile(Function1B<? super E> p);
-    
+
 } //~

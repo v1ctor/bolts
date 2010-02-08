@@ -6,18 +6,18 @@ import ru.yandex.bolts.function.Function;
 
 /**
  * Triple.
- * 
+ *
  * @author Stepan Koltsov
- * 
+ *
  * @see Tuple2
  */
 public class Tuple3<T1, T2, T3> implements Serializable {
     private static final long serialVersionUID = 2341548432691171988L;
-    
+
     private final T1 _1;
     private final T2 _2;
     private final T3 _3;
-    
+
     public Tuple3(T1 _1, T2 _2, T3 _3) {
         this._1 = _1;
         this._2 = _2;
@@ -38,15 +38,15 @@ public class Tuple3<T1, T2, T3> implements Serializable {
     public T3 get3() {
         return _3;
     }
-    
+
     public Tuple2<T1, T2> get12() {
         return Tuple2.tuple(_1, _2);
     }
-    
+
     public Tuple2<T2, T3> get23() {
         return Tuple2.tuple(_2, _3);
     }
-    
+
     public Tuple2<T1, T3> get13() {
         return Tuple2.tuple(_1, _3);
     }
@@ -91,7 +91,7 @@ public class Tuple3<T1, T2, T3> implements Serializable {
     public String toString() {
         return "(" + _1 + ", " + _2 + ", " + _3 + ")";
     }
-    
+
     /** <code>_1</code> as function */
     public static <A, B, C> Function<Tuple3<A, B, C>, A> get1F() {
         return new Function<Tuple3<A, B, C>, A>() {
@@ -118,7 +118,7 @@ public class Tuple3<T1, T2, T3> implements Serializable {
             }
         };
     }
-    
+
     public static <A, B, C, X> Function<Tuple3<A, B, C>, Tuple3<X, B, C>> map1F(final Function<A, X> m) {
         return new Function<Tuple3<A, B, C>, Tuple3<X, B, C>>() {
             public Tuple3<X, B, C> apply(Tuple3<A, B, C> t) {
@@ -142,9 +142,9 @@ public class Tuple3<T1, T2, T3> implements Serializable {
             }
         };
     }
-    
+
     // ?
-    
+
     public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<A, B>> get12F() {
         return new Function<Tuple3<A, B, C>, Tuple2<A, B>>() {
             public Tuple2<A, B> apply(Tuple3<A, B, C> a) {
@@ -168,10 +168,10 @@ public class Tuple3<T1, T2, T3> implements Serializable {
             }
         };
     }
-    
+
     /** Construct */
     public static <A, B, C> Tuple3<A, B, C> tuple(A a, B b, C c) {
         return new Tuple3<A, B, C>(a, b, c);
     }
-    
+
 } //~

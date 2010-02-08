@@ -31,7 +31,7 @@ public interface IterableF<E> extends Iterable<E> {
     <B> B foldLeft(B z, Function2<B, E, B> f);
 
     /**
-     * Fold right. Compute f(e_1, f(e_2, ... f(e_n-1, f(e_n, z)) ...)) 
+     * Fold right. Compute f(e_1, f(e_2, ... f(e_n-1, f(e_n, z)) ...))
      */
     <B> B foldRight(B z, Function2<E, B, B> f);
 

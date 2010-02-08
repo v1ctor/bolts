@@ -16,7 +16,7 @@ import ru.yandex.bolts.function.Function1B;
  */
 public class SingletonList<E> extends AbstractListF<E> implements RandomAccess, Serializable, Unmodifiable {
     private static final long serialVersionUID = -3371815609806480352L;
-    
+
     private final E e;
 
     public SingletonList(E e) {

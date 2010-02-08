@@ -12,9 +12,9 @@ import ru.yandex.bolts.collection.SetF;
 
 public class SetFromMap<E> extends AbstractSetF<E> implements Serializable {
     private static final long serialVersionUID = 8122743926193204170L;
-    
+
     private final Map<E, Boolean> map;
-    
+
     public SetFromMap(Map<E, Boolean> map) {
         if (map == null) throw new IllegalArgumentException();
         this.map = map;
@@ -63,5 +63,5 @@ public class SetFromMap<E> extends AbstractSetF<E> implements Serializable {
     public SetF<E> unmodifiable() {
         return new UnmodifiableSetFromMap<E>(map);
     }
-    
+
 }

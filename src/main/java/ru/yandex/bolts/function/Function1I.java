@@ -11,7 +11,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     public int compareTo(A o) {
         return apply(o);
     }
-    
+
     /** Greater then */
     public boolean gt(A o) {
         return compareTo(o) > 0;
@@ -41,7 +41,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     public boolean le(A o) {
         return compareTo(o) <= 0;
     }
-    
+
     public boolean useOperator(ru.yandex.bolts.function.forhuman.Comparator.Operator operator, A o) {
         return opF(operator).apply(o);
     }

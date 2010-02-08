@@ -92,7 +92,7 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
     public SetF<E> unique() {
         return this;
     }
-    
+
     @SuppressWarnings("unchecked")
     public <F> SetF<F> uncheckedCast() {
         return (SetF<F>) this;
@@ -116,7 +116,7 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
         }
         return false;
     }
-    
+
     public int hashCode() {
         int result = 0;
         Iterator<?> it = iterator();

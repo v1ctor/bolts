@@ -6,7 +6,7 @@ package ru.yandex.bolts.function;
  * @author Stepan Koltsov
  */
 public abstract class Function2I<A, B> {
-    
+
     public static enum Operator {
         GT(">"),
         GE(">="),
@@ -29,9 +29,9 @@ public abstract class Function2I<A, B> {
             return getName();
         }
     }
-    
+
     public abstract int apply(A a, B b);
-    
+
     public boolean gt(A a, B b) {
         return apply(a, b) > 0;
     }
@@ -55,7 +55,7 @@ public abstract class Function2I<A, B> {
     public boolean le(A a, B b) {
         return apply(a, b) <= 0;
     }
-    
+
     public Function1B<A> gtF(B b) {
         return bind2(b).gtF();
     }
@@ -91,7 +91,7 @@ public abstract class Function2I<A, B> {
         }
         throw new IllegalArgumentException("unknown operator: " + op);
     }
-    
+
     /** Bind first argument */
     public Function1I<B> bind1(final A a) {
         return new Function1I<B>() {
@@ -116,7 +116,7 @@ public abstract class Function2I<A, B> {
             }
         };
     }
-    
+
     /** Invert current comparator */
     public Function2I<B, A> invert() {
         return new Function2I<B, A>() {
@@ -132,7 +132,7 @@ public abstract class Function2I<A, B> {
             public Function2I<A, B> invert() {
                 return Function2I.this;
             }
-            
+
         };
 
     }

@@ -5,7 +5,7 @@ import ru.yandex.bolts.collection.ListF;
 
 /**
  * Propbably useless.
- * 
+ *
  * @author Stepan Koltsov
  */
 class ListSum<E> extends AbstractListF<E> {

@@ -8,12 +8,12 @@ package ru.yandex.bolts.function;
 public abstract class Function1V<A> {
 
     public abstract void apply(A a);
-    
+
     /** (f compose g)(x) = f(g(x)) */
     public <B> Function1V<B> compose(final Function<B, A> g) {
         return g.andThen(this);
     }
-    
+
     public Function0V bind(final A param) {
         return new Function0V() {
             public void apply() {
@@ -21,7 +21,7 @@ public abstract class Function1V<A> {
             }
         };
     }
-    
+
     public <R> Function<A, R> asFunctionReturn(final Function0<R> rv) {
         if (rv == null) throw new IllegalArgumentException("rv constructor must not be null");
         return new Function<A, R>() {
@@ -31,11 +31,11 @@ public abstract class Function1V<A> {
             }
         };
     }
-    
+
     public <R> Function<A, R> asFunctionReturnValue(R rv) {
         return asFunctionReturn(Function0.constF(rv));
     }
-    
+
     public <B> Function<A, B> asFunctionReturnNull() {
         return asFunctionReturnValue(null);
     }
@@ -44,7 +44,7 @@ public abstract class Function1V<A> {
     public <B> Function1V<B> uncheckedCast() {
         return (Function1V<B>) this;
     }
-    
+
     public static <A> Function1V<A> nop() {
         return new Function1V<A>() {
             public void apply(A a) {

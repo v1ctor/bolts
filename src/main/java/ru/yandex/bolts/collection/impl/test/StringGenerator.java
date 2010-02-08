@@ -5,15 +5,15 @@ package ru.yandex.bolts.collection.impl.test;
  * @author Stepan Koltsov
  */
 public class StringGenerator extends Generator<String> {
-    
+
     private final Generator<Integer> lengths;
     private final CharSequence alphabet;
-    
+
     public StringGenerator(CharSequence alphabet, Generator<Integer> lengths) {
         this.lengths = lengths;
         this.alphabet = alphabet;
     }
-    
+
     public char nextChar(CharSequence alphabet) {
         return alphabet.charAt(random.nextInt(alphabet.length()));
     }
@@ -30,5 +30,5 @@ public class StringGenerator extends Generator<String> {
     public String next() {
         return nextString(lengths.next(), alphabet);
     }
-    
+
 } //~

@@ -27,7 +27,7 @@ import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
  * Implementation of {@link CollectionF} algorithms.
- * 
+ *
  * @author Stepan Koltsov
  */
 public abstract class AbstractCollectionF<E> extends AbstractCollection<E> implements CollectionF<E> {
@@ -38,7 +38,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     protected <B> CollectionF<B> emptyCollection() {
         return Cf.list();
     }
-    
+
     protected <B> ListF<B> emptyList() {
         return Cf.list();
     }
@@ -54,7 +54,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public final Function1B<E> containsP() {
         return containsF();
     }
-    
+
     @Override
     public Function1B<E> containsF() {
         return new Function1B<E>() {
@@ -71,12 +71,12 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public SetF<E> unique() {
         return CollectionsF.set(this);
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public E[] toArray(Class<E> cl) {
         return toArray((E[]) Array.newInstance(cl, size()));
     }
-    
+
     private Object toPrimitiveArray(Class<?> componentClass) {
         Object array = Array.newInstance(componentClass, size());
         int i = 0;
@@ -85,11 +85,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         }
         return array;
     }
-    
+
     public boolean[] toBooleanArray() {
         return (boolean[]) toPrimitiveArray(boolean.class);
     }
-    
+
     public byte[] toByteArray() {
         return (byte[]) toPrimitiveArray(byte.class);
     }
@@ -138,7 +138,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         }
         return Tuple2.tuple(matched, unmatched);
     }
-    
+
     public <B> ListF<B> map(Function<? super E, B> f) {
         if (isEmpty()) return Cf.list();
         else return iterator().map(f).toList();
@@ -230,7 +230,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public ListF<E> sortBy(Function<? super E, ?> f) {
         return sort(f.andThenNaturalComparator().nullLowC());
     }
-    
+
     public ListF<E> sortByDesc(Function<? super E, ?> f) {
         return sort(f.andThenNaturalComparator().nullLowC().invert());
     }
@@ -340,7 +340,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public Option<E> singleO() throws NoSuchElementException {
         return iterator().singleO();
     }
-    
+
     @SuppressWarnings("unchecked")
     public <F> CollectionF<F> uncheckedCast() {
         return (CollectionF<F>) this;
@@ -368,5 +368,5 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public E max(Function2I<? super E, ? super E> comparator) {
         return reduceLeft(Comparator.wrap((Function2I<E, E>) comparator).maxF());
     }
-    
+
 } //~

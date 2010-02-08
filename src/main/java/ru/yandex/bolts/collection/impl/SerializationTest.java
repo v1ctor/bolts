@@ -6,7 +6,7 @@ import ru.yandex.bolts.collection.impl.test.SerializationUtils;
 import junit.framework.TestCase;
 
 public class SerializationTest extends TestCase {
-    
+
     private static <T> ListF<T> addInPlace(ListF<T> list, T... elements) {
         for (T element: elements) {
             list.add(element);
@@ -33,7 +33,7 @@ public class SerializationTest extends TestCase {
         SerializationUtils.assertSerializedDeserializedToEqual(Cf.linkedList());
         SerializationUtils.assertSerializedDeserializedToEqual(addInPlace(Cf.linkedList(), 2, 3));
     }
-    
+
     public void testSets() {
         SerializationUtils.assertSerializedDeserializedToSame(Cf.set());
         SerializationUtils.assertSerializedDeserializedToEqual(Cf.set(1));
@@ -52,11 +52,11 @@ public class SerializationTest extends TestCase {
         SerializationUtils.assertSerializedDeserializedToEqual(Cf.hashSet(1, 4, 8, 9, 2, 3));
         SerializationUtils.assertSerializedDeserializedToEqual(Cf.hashSet(1, 4, 8, 9, 2, 3, 5));
     }
-    
+
     public void testMaps() {
         SerializationUtils.assertSerializedDeserializedToSame(Cf.map());
         SerializationUtils.assertSerializedDeserializedToEqual(Cf.map(1, "a"));
         SerializationUtils.assertSerializedDeserializedToEqual(Cf.map(1, "a", 2, "b"));
     }
-    
+
 } //~

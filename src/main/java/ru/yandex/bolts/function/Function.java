@@ -12,19 +12,19 @@ import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
  * Function
- * 
+ *
  * @see F
  * @see Transformer
- * 
+ *
  * @author Stepan Koltsov
  */
 public abstract class Function<A, R> {
-    
+
     public abstract R apply(A a);
-    
+
     /**
      * (f andThen g)(x) = g(f(x))
-     * 
+     *
      * @see fj.Function#andThen(F, F)
      */
     public <C> Function<A, C> andThen(final Function<? super R, ? extends C> g) {
@@ -38,7 +38,7 @@ public abstract class Function<A, R> {
             }
         };
     }
-    
+
     public Function1V<A> andThen(final Function1V<? super R> g) {
         return new Function1V<A>() {
             public void apply(A a) {
@@ -50,7 +50,7 @@ public abstract class Function<A, R> {
             }
         };
     }
-    
+
     public Function1B<A> andThen(final Function1B<? super R> g) {
         return new Function1B<A>() {
             public boolean apply(A a) {
@@ -62,7 +62,7 @@ public abstract class Function<A, R> {
             }
         };
     }
-    
+
     /** Not true function composition */
     public Comparator<A> andThen(final Comparator<R> comparator) {
         return new Comparator<A>() {
@@ -76,7 +76,7 @@ public abstract class Function<A, R> {
             }
         };
     }
-    
+
     /** (f andThen g)(x) = g(f(x)) */
     public Comparator<A> andThen(final Function2I<R, R> comparator) {
         return new Comparator<A>() {
@@ -89,11 +89,11 @@ public abstract class Function<A, R> {
             }
         };
     }
-    
+
     public Function1B<A> andThenEquals(R value) {
         return andThen(Function1B.equalsF(value));
     }
-    
+
     /** And then null low natural comparator */
     @SuppressWarnings({"unchecked"})
     public Comparator<A> andThenNaturalComparator() {
@@ -102,13 +102,13 @@ public abstract class Function<A, R> {
 
     /**
      * (f compose g)(x) = f(g(x))
-     * 
+     *
      * @see fj.Function#compose(F, F)
      */
     public <C> Function<C, R> compose(Function<C, A> g) {
         return g.andThen(this);
     }
-    
+
     public Function0<R> bind(final A param) {
         return new Function0<R>() {
             public R apply() {
@@ -118,15 +118,15 @@ public abstract class Function<A, R> {
             public String toString() {
                 return Function.this.toString() + "(" + param + ")";
             }
-            
+
         };
     }
-    
+
     @SuppressWarnings("unchecked")
     public <B, S> Function<B, S> uncheckedCast() {
         return (Function<B, S>) this;
     }
-    
+
     /** Ignore result of mapping */
     public Function1V<A> ignoreResult() {
         return new Function1V<A>() {
@@ -139,7 +139,7 @@ public abstract class Function<A, R> {
             }
         };
     }
-    
+
     /** Map null to null */
     public Function<A, R> ignoreNullF() {
         return new Function<A, R>() {
@@ -159,13 +159,13 @@ public abstract class Function<A, R> {
             public A apply(A a) {
                 return a;
             }
-            
+
             @SuppressWarnings("unchecked")
             @Override
             public <C> Function<A, C> andThen(Function<? super A, ? extends C> g) {
                 return (Function<A, C>) g;
             }
-            
+
             @SuppressWarnings("unchecked")
             @Override
             public Function1B<A> andThen(Function1B<? super A> predicate) {
@@ -182,7 +182,7 @@ public abstract class Function<A, R> {
             }
         };
     }
-    
+
     public static <T> Function<T, String> toStringF() {
         return new Function<T, String>() {
             public String apply(T t) {
@@ -201,11 +201,11 @@ public abstract class Function<A, R> {
             public B apply(A a) {
                 return b;
             }
-            
+
             public String toString() {
                 return "const " + b;
             }
         };
     }
-    
+
 } //~

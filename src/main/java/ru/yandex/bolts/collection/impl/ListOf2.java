@@ -13,7 +13,7 @@ import ru.yandex.bolts.collection.Unmodifiable;
  */
 public class ListOf2<E> extends AbstractListF<E> implements RandomAccess, Unmodifiable, Serializable {
     private static final long serialVersionUID = -3152613254192270879L;
-    
+
     private final E e1;
     private final E e2;
 

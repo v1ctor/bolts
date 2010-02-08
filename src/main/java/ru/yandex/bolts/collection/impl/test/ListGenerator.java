@@ -7,10 +7,10 @@ import ru.yandex.bolts.collection.ListF;
  * @author Stepan Koltsov
  */
 public class ListGenerator<A> extends Generator<ListF<A>> {
-    
+
     private final Generator<A> elements;
     private final Generator<Integer> lengths;
-    
+
     public ListGenerator(Generator<A> elementGenerator, Generator<Integer> lengthsGenerator) {
         this.elements = elementGenerator;
         this.lengths = lengthsGenerator;
@@ -25,7 +25,7 @@ public class ListGenerator<A> extends Generator<ListF<A>> {
         }
         return r;
     }
-    
+
     public ListGenerator<A> maxLength(int length) {
         return new ListGenerator<A>(elements, Generator.ints(0, length + 1));
     }

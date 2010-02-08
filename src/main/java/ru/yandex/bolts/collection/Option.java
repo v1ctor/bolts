@@ -11,9 +11,9 @@ import ru.yandex.bolts.function.Function1B;
 
 /**
  * Port of scala <a href="http://www.scala-lang.org/docu/files/api/scala/Option.html">Option</a>.
- * 
+ *
  * @see fj.data.Option
- * 
+ *
  * @author Stepan Koltsov
  */
 @SuppressWarnings({"unchecked"})
@@ -34,7 +34,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * Get the value.
-     * 
+     *
      * @throws NoSuchElementException if this is none.
      */
     public abstract T get() throws NoSuchElementException;
@@ -70,7 +70,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     /**
-     * <code>this</code> if this is some, or evaluate function and return option otherwise. 
+     * <code>this</code> if this is some, or evaluate function and return option otherwise.
      */
     public final Option<T> orElse(Function0<Option<T>> elseOption) {
         if (isDefined()) return this;
@@ -153,7 +153,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     public SetF<T> unique() {
         return toSet();
     }
-    
+
     /** This object with different type parameters */
     @Override
     public <F> Option<F> uncheckedCast() {
@@ -180,7 +180,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * Some.
-     * 
+     *
      * @see #some(Object) to create Some instance
      * @see fj.data.Some
      */
@@ -223,7 +223,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * None. Instance could be obtained by {@link Option#none()}.
-     * 
+     *
      * @see #none() to optain None singleton
      * @see fj.data.None
      */
@@ -288,7 +288,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     public static <U> Function1B<Option<U>> isEmptyP() {
         return isEmptyF();
     }
-    
+
     /**
      * Delegate to {@link #isEmpty()}.
      */
@@ -331,5 +331,5 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
             }
         };
     }
-    
+
 } //~

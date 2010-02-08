@@ -7,7 +7,7 @@ package ru.yandex.bolts.function;
  */
 public abstract class Function0V implements Runnable {
     public abstract void apply();
-    
+
     @Override
     public final void run() {
         apply();
@@ -24,7 +24,7 @@ public abstract class Function0V implements Runnable {
 
         };
     }
-    
+
     public <R> Function0<R> asFunction0ReturnNull() {
         return new Function0<R>() {
             public R apply() {
@@ -33,7 +33,7 @@ public abstract class Function0V implements Runnable {
             }
         };
     }
-    
+
     @SuppressWarnings({"unchecked"})
     private static <E extends Throwable> void throw0(Throwable e) throws E {
         throw (E) e;
@@ -54,7 +54,7 @@ public abstract class Function0V implements Runnable {
     public static Function0V throwC(Throwable th) {
         return throwC(Function0.constF(th));
     }
-    
+
     public static Function0V wrap(final Runnable runnable) {
         if (runnable instanceof Function0V) return (Function0V) runnable;
         else return new Function0V() {

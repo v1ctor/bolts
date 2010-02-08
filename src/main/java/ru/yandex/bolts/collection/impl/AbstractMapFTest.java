@@ -47,13 +47,13 @@ public class AbstractMapFTest extends TestCase {
 
     public void testAsFunction() {
         Function<Integer, String> f = map123().asFunction();
-        
+
         assertEquals("3", f.apply(3));
     }
 
     public void testAsFunctionLookupFailure() {
         Function<Integer, String> f = map123().asFunction();
-        
+
         try {
             f.apply(4);
             fail("expecting NoSuchElementException");
@@ -64,7 +64,7 @@ public class AbstractMapFTest extends TestCase {
 
     public void testAsFunctionO() {
         Function<Integer, Option<String>> f = map123().asFunctionO();
-        
+
         assertEquals(Option.none(), f.apply(0));
         assertEquals(Option.some("1"), f.apply(1));
     }
