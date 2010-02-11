@@ -55,6 +55,11 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
                 }
             }
 
+            @Override
+            public Comparator<A> nullLowC() {
+                return this;
+            }
+
             public String toString() {
                 return "nullLow(" + Comparator.this + ")";
             }
