@@ -44,12 +44,16 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
         };
     }
 
+    private static int nullLowCompare(Object o1, Object o2) {
+        return o1 == o2 ? 0 : o1 != null ? 1 : -1;
+    }
+
     /** Null low comparator */
     public Comparator<A> nullLowC() {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
                 if (o1 == null || o2 == null) {
-                    return o1 == o2 ? 0 : o1 != null ? 1 : -1;
+                    return nullLowCompare(o1, o2);
                 } else {
                     return Comparator.this.compare(o1, o2);
                 }
@@ -134,13 +138,26 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
         };
     }
 
-    /** Compare {@link java.lang.Comparable}s. */
+    /**
+     * Compare {@link java.lang.Comparable}s. Null values are less then non-null.
+     */
     @SuppressWarnings("unchecked")
     public static <A extends java.lang.Comparable> Comparator<A> naturalComparator()  {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
-                //noinspection unchecked
-                return o1.compareTo(o2);
+                if (o1 == o2)
+                    return 0;
+                else if (o1 == null || o2 == null)
+                    return nullLowCompare(o1, o2);
+                else
+                    //noinspection unchecked
+                    return o1.compareTo(o2);
+            }
+
+            @Override
+            public Comparator<A> nullLowC() {
+                // naturalComparator is already null-low comparator
+                return this;
             }
 
             public String toString() {

@@ -73,7 +73,13 @@ public class ComparatorTest extends TestCase {
 
     @SuppressWarnings("unchecked")
     public void testNullLowC() {
-        Comparator c = Comparator.naturalComparator().nullLowC();
+        class NC extends Comparator<String> {
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        }
+
+        Comparator c = new NC().nullLowC();
         assertTrue(c.ge("b", "a"));
         assertTrue(c.lt("a", "b"));
         assertTrue(c.lt(null, "a"));
@@ -118,5 +124,14 @@ public class ComparatorTest extends TestCase {
         assertTrue(Comparator.<Integer>constEqualComparator().chainTo(Comparator.<Integer>naturalComparator()).compare(1, 2) < 0);
         assertTrue(Comparator.<Integer>constEqualComparator().chainTo(Comparator.<Integer>naturalComparator()).compare(2, 1) > 0);
         assertTrue(Comparator.<Integer>constEqualComparator().chainTo(Comparator.<Integer>naturalComparator()).compare(2, 2) == 0);
+    }
+
+    public void testNaturalComparator() {
+        assertTrue(Comparator.<Integer>naturalComparator().compare(1, 2) < 0);
+        assertTrue(Comparator.<Integer>naturalComparator().compare(2, 1) > 0);
+        assertTrue(Comparator.<Integer>naturalComparator().compare(2, 2) == 0);
+        assertTrue(Comparator.<Integer>naturalComparator().compare(null, null) == 0);
+        assertTrue(Comparator.<Integer>naturalComparator().compare(null, 1) < 0);
+        assertTrue(Comparator.<Integer>naturalComparator().compare(2, null) > 0);
     }
 } //~

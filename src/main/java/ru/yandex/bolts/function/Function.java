@@ -97,7 +97,7 @@ public abstract class Function<A, R> {
     /** And then null low natural comparator */
     @SuppressWarnings({"unchecked"})
     public Comparator<A> andThenNaturalComparator() {
-        return andThen((Comparator) Comparator.naturalComparator().nullLowC());
+        return andThen((Comparator) Comparator.naturalComparator());
     }
 
     /**
