@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
@@ -20,6 +21,7 @@ import ru.yandex.bolts.collection.impl.AbstractListF;
 import ru.yandex.bolts.collection.impl.AbstractSetF;
 import ru.yandex.bolts.collection.impl.ArrayListF;
 import ru.yandex.bolts.collection.impl.DefaultCollectionF;
+import ru.yandex.bolts.collection.impl.DefaultEnumerationF;
 import ru.yandex.bolts.collection.impl.DefaultIteratorF;
 import ru.yandex.bolts.collection.impl.DefaultListF;
 import ru.yandex.bolts.collection.impl.DefaultMapF;
@@ -83,6 +85,15 @@ public class CollectionsF {
     }
 
     /**
+     * Wrap Enumeration.
+     *
+     * @see #x(Enumeration)
+     */
+    public static <E> IteratorF<E> wrap(Enumeration<E> enumeration) {
+        return x(enumeration);
+    }
+
+    /**
      * Wrap Map.
      *
      * @see #x(Map)
@@ -113,6 +124,11 @@ public class CollectionsF {
     /** Wrap iterator */
     public static <E> IteratorF<E> x(Iterator<E> iterator) {
         return DefaultIteratorF.wrap(iterator);
+    }
+
+    /** Wrap enumeration */
+    public static <E> IteratorF<E> x(Enumeration<E> enumeration) {
+        return DefaultEnumerationF.wrap(enumeration);
     }
 
     /** Wrap collection */
@@ -628,6 +644,15 @@ public class CollectionsF {
         return new Function<Iterator<E>, IteratorF<E>>() {
             public IteratorF<E> apply(Iterator<E> iterator) {
                 return x(iterator);
+            }
+        };
+    }
+
+    /** {@link #x(Enumeration)} as function */
+    public static <E> Function<Enumeration<E>, IteratorF<E>> wrapEnumerationF() {
+        return new Function<Enumeration<E>, IteratorF<E>>() {
+            public IteratorF<E> apply(Enumeration<E> enumeration) {
+                return x(enumeration);
             }
         };
     }
