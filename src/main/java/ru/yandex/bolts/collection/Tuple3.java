@@ -14,9 +14,9 @@ import ru.yandex.bolts.function.Function;
 public class Tuple3<T1, T2, T3> implements Serializable {
     private static final long serialVersionUID = 2341548432691171988L;
 
-    private final T1 _1;
-    private final T2 _2;
-    private final T3 _3;
+    public final T1 _1;
+    public final T2 _2;
+    public final T3 _3;
 
     public Tuple3(T1 _1, T2 _2, T3 _3) {
         this._1 = _1;

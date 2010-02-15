@@ -17,10 +17,10 @@ import ru.yandex.bolts.function.Function;
 public class Tuple4<T1, T2, T3, T4> implements Serializable {
     private static final long serialVersionUID = 5566029783258786962L;
 
-    private final T1 _1;
-    private final T2 _2;
-    private final T3 _3;
-    private final T4 _4;
+    public final T1 _1;
+    public final T2 _2;
+    public final T3 _3;
+    public final T4 _4;
 
     public Tuple4(T1 _1, T2 _2, T3 _3, T4 _4) {
         this._1 = _1;
