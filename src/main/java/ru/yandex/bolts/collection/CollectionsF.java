@@ -428,6 +428,17 @@ public class CollectionsF {
     }
 
     /**
+     * Create hash map of specified entries.
+     *
+     * @see HashMap
+     */
+    public static <K, V> MapF<K, V> hashMap(Map<K, V> entries) {
+        MapF<K, V> map = hashMap();
+        map.putAll(entries);
+        return map;
+    }
+
+    /**
      * Wrapper around {@link ConcurrentHashMap}.
      */
     @SuppressWarnings("serial")
