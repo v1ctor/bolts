@@ -6,7 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import ru.yandex.bolts.collection.impl.DefaultListF;
-import ru.yandex.bolts.function.*;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.Function2B;
+import ru.yandex.bolts.function.Function2I;
+import ru.yandex.bolts.function.Function2V;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
@@ -239,6 +244,14 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
 
     public <W> ListF<W> mapEntries(Function2<K, V, W> mapper) {
         return map(mapper.asFunction());
+    }
+
+    public void forEach(Function2V<K, V> f) {
+        super.forEach(f.asFunction());
+    }
+
+    public boolean forAll(Function2B<K, V> f) {
+        return super.forAll(f.asTupleFunction());
     }
 
     public String mkString(String elemSep, final String tupleSep) {

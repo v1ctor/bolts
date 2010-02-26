@@ -27,6 +27,10 @@ public abstract class Function2V<A, B> {
     }
 
     public Function1V<Tuple2<A, B>> asFunction() {
+        return asTupleFunction();
+    }
+
+    public Function1V<Tuple2<A, B>> asTupleFunction() {
         return new Function1V<Tuple2<A, B>>() {
             public void apply(Tuple2<A, B> a) {
                 Function2V.this.apply(a.get1(), a.get2());
