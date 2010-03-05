@@ -1,12 +1,6 @@
 package ru.yandex.bolts.collection.impl;
 
-import java.util.Collection;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.NoSuchElementException;
-import java.util.RandomAccess;
+import java.util.*;
 
 import ru.yandex.bolts.collection.*;
 import ru.yandex.bolts.function.Function1B;
@@ -43,8 +37,14 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return (Tuple2<ListF<E>, ListF<E>>) super.filter2(p);
     }
 
+    @Override
     public ListF<Tuple2<E, Integer>> zipWithIndex() {
         return iterator().zipWithIndex().toList();
+    }
+
+    @Override
+    public ListMap<E, Integer> zipWithIndex2() {
+        return ListMap.listMap(zipWithIndex());
     }
 
     @SuppressWarnings({"unchecked"})

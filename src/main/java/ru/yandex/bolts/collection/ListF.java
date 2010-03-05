@@ -31,8 +31,16 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     /** Sub list from index to index */
     ListF<E> subList(int fromIndex, int toIndex);
 
-    /** Zip with index */
+    /**
+     * @deprecated
+     * @see #zipWithIndex2()
+     */
     ListF<Tuple2<E, Integer>> zipWithIndex();
+
+    /**
+     * Zip with index.
+     */
+    ListMap<E, Integer> zipWithIndex2();
 
     /** Concatenate two lists */
     ListF<E> plus(List<? extends E> addition);
