@@ -52,6 +52,14 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return (Tuple2) super.partition(p);
     }
 
+    public Tuple2<ListMap<K, V>, ListMap<K, V>> partitionByKey(Function1B<? super K> p) {
+        return partitionLm(Tuple2.<K, V>get1F().andThen(p));
+    }
+
+    public Tuple2<ListMap<K, V>, ListMap<K, V>> partitionByValue(Function1B<? super V> p) {
+        return partitionLm(Tuple2.<K, V>get2F().andThen(p));
+    }
+
     @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> subList(int fromIndex, int toIndex) {
