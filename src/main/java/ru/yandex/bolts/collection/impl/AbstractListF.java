@@ -32,9 +32,18 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return (ListF<E>) super.filter(p);
     }
 
+    /**
+     * @deprecated
+     * @see #partition(Function1B)
+     */
     @SuppressWarnings({"unchecked"})
     public Tuple2<ListF<E>, ListF<E>> filter2(Function1B<? super E> p) {
         return (Tuple2<ListF<E>, ListF<E>>) super.filter2(p);
+    }
+
+    @Override
+    public Tuple2<ListF<E>, ListF<E>> partition(Function1B<? super E> p) {
+        return (Tuple2<ListF<E>, ListF<E>>) super.partition(p);
     }
 
     @Override

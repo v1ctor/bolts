@@ -44,9 +44,9 @@ public class ListMapTest extends TestCase {
         assertEquals(ListMap.<String, Integer>listMapFromPairs("a", 1), lmf);
     }
 
-    public void testFilter2ToListMaps() {
+    public void testPartitionLm() {
         ListMap<String, Integer> lm = ListMap.listMapFromPairs("a", 1, "b", 2);
-        Tuple2<ListMap<String, Integer>, ListMap<String, Integer>> t = lm.filter2ToListMaps(new Function1B<Tuple2<String, Integer>>() {
+        Tuple2<ListMap<String, Integer>, ListMap<String, Integer>> t = lm.partitionLm(new Function1B<Tuple2<String, Integer>>() {
             @Override
             public boolean apply(Tuple2<String, Integer> t) {
                 return "a".equals(t.get1());

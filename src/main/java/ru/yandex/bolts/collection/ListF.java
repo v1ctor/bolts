@@ -25,8 +25,17 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     /**
      * Return pair of lists, first list contains elements matching <code>p</code>
      * and second lists contains elements matching <code>!p</code>.
+     *
+     * @deprecated
+     * @see #partition(Function1B)
      */
     Tuple2<ListF<E>, ListF<E>> filter2(Function1B<? super E> p);
+
+    /**
+     * Return pair of lists, first list contains elements matching <code>p</code>
+     * and second lists contains elements matching <code>!p</code>.
+     */
+    Tuple2<ListF<E>, ListF<E>> partition(Function1B<? super E> p);
 
     /** Sub list from index to index */
     ListF<E> subList(int fromIndex, int toIndex);

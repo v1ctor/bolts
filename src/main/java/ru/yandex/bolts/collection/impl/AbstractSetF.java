@@ -47,6 +47,11 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
         return (Tuple2<SetF<E>, SetF<E>>) super.filter2(p);
     }
 
+    @SuppressWarnings({"unchecked"})
+    public Tuple2<SetF<E>, SetF<E>> partition(Function1B<? super E> p) {
+        return (Tuple2<SetF<E>, SetF<E>>) super.partition(p);
+    }
+
     public SetF<E> minus(Set<E> es) {
         if (this.isEmpty() || es.isEmpty()) return this;
 

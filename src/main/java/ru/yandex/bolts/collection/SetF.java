@@ -18,7 +18,13 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     /** Filter */
     SetF<E> filter(Function1B<? super E> p);
 
+    /**
+     * @deprecated
+     * @see #partition(Function1B)
+     */
     Tuple2<SetF<E>, SetF<E>> filter2(Function1B<? super E> p);
+
+    Tuple2<SetF<E>, SetF<E>> partition(Function1B<? super E> p);
 
     /** this - set */
     SetF<E> minus(Set<E> set);
