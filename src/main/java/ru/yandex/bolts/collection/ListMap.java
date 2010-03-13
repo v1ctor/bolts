@@ -253,8 +253,8 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return (ListMap<F, G>) this;
     }
 
-    public <W> ListF<W> mapEntries(Function2<K, V, W> mapper) {
-        return map(mapper.asFunction());
+    public <W> ListF<W> mapEntries(Function2<? super K, ? super V, ? extends W> mapper) {
+        return map(mapper.<K, V, W>uncheckedCast().asFunction());
     }
 
     public void forEach(Function2V<K, V> f) {
