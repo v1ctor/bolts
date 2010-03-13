@@ -49,5 +49,10 @@ public abstract class Function2<A, B, R> {
         };
     }
 
+    @SuppressWarnings("unchecked")
+    public <A1, B1, R1> Function2<A1, B1, R1> uncheckedCast() {
+        return (Function2<A1, B1, R1>) this;
+    }
+
 
 } //~
