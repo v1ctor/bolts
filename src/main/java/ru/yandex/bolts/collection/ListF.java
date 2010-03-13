@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Collection;
 import java.util.Iterator;
 
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 
 /**
@@ -112,4 +113,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
     /** List of pairs of elements with the same index in two lists */
     <B> ListMap<E, B> zip(ListF<B> that);
+
+    <B> ListMap<E, B> zipWith(Function<? super E, ? extends B> f);
 } //~

@@ -3,6 +3,7 @@ package ru.yandex.bolts.collection.impl;
 import java.util.*;
 
 import ru.yandex.bolts.collection.*;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 
 /**
@@ -171,6 +172,15 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     public <B> ListMap<E, B> zip(ListF<B> that) {
         return ListMap.listMapFromKeysValues(this, that);
+    }
+
+    @Override
+    public <B> ListMap<E, B> zipWith(final Function<? super E, ? extends B> f) {
+        return ListMap.listMap(map(new Function<E, Tuple2<E, B>>() {
+            public Tuple2<E, B> apply(E a) {
+                return Tuple2.<E, B>tuple(a, f.apply(a));
+            }
+        }));
     }
 
     private class ReadOnlyItr extends SimpleListIterator {
