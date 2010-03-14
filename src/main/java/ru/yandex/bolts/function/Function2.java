@@ -41,6 +41,32 @@ public abstract class Function2<A, B, R> {
         };
     }
 
+
+    public static <A, B, R> Function2<Function2<A, B, R>, A, Function<B, R>> bind1F2() {
+        return new Function2<Function2<A, B, R>, A, Function<B, R>>() {
+            public Function<B, R> apply(Function2<A, B, R> f, A a) {
+                return f.bind1(a);
+            }
+        };
+    }
+
+    public Function<A, Function<B, R>> bind1F() {
+        return Function2.<A, B, R>bind1F2().bind1(this);
+    }
+
+    public static <A, B, R> Function2<Function2<A, B, R>, B, Function<A, R>> bind2F2() {
+        return new Function2<Function2<A, B, R>, B, Function<A, R>>() {
+            public Function<A, R> apply(Function2<A, B, R> f, B b) {
+                return f.bind2(b);
+            }
+        };
+    }
+
+    public Function<B, Function<A, R>> bind2F() {
+        return Function2.<A, B, R>bind2F2().bind1(this);
+    }
+
+
     public Function<Tuple2<A, B>, R> asFunction() {
         return new Function<Tuple2<A,B>, R>() {
             public R apply(Tuple2<A, B> t) {
