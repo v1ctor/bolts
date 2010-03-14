@@ -134,6 +134,15 @@ public abstract class Function<A, R> {
         return Function.<A, R>bindF2().bind1(this);
     }
 
+
+    public static <A, R> Function2<Function<A, R>, A, R> applyF() {
+        return new Function2<Function<A, R>, A, R>() {
+            public R apply(Function<A, R> f, A a) {
+                return f.apply(a);
+            }
+        };
+    }
+
     @SuppressWarnings("unchecked")
     public <B, S> Function<B, S> uncheckedCast() {
         return (Function<B, S>) this;
