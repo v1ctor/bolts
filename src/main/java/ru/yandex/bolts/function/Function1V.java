@@ -22,6 +22,18 @@ public abstract class Function1V<A> {
         };
     }
 
+    public static <A> Function2<Function1V<A>, A, Function0V> bindF2() {
+        return new Function2<Function1V<A>, A, Function0V>() {
+            public Function0V apply(Function1V<A> f, A a) {
+                return f.bind(a);
+            }
+        };
+    }
+
+    public Function<A, Function0V> bindF() {
+        return Function1V.<A>bindF2().bind1(this);
+    }
+
     public <R> Function<A, R> asFunctionReturn(final Function0<R> rv) {
         if (rv == null) throw new IllegalArgumentException("rv constructor must not be null");
         return new Function<A, R>() {
