@@ -13,6 +13,14 @@ public abstract class Function0V implements Runnable {
         apply();
     }
 
+    public static Function1V<Function0V> applyF() {
+        return new Function1V<Function0V>() {
+            public void apply(Function0V a) {
+                a.apply();
+            }
+        };
+    }
+
     public static Function0V nop() {
         return new Function0V() {
             public void apply() {
