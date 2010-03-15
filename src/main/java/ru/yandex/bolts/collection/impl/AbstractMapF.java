@@ -140,7 +140,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
 
     @Override
     public void forEachEntry(Function2V<? super K, ? super V> op) {
-        entries().forEach(op.asFunction().uncheckedCast());
+        entries().forEach(op.asFunction1V().uncheckedCast());
     }
 
     private static <K, V> Function<Entry<K, V>, V> entryValueM() {

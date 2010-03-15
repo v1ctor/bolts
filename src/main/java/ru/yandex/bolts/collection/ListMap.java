@@ -258,7 +258,7 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
     }
 
     public void forEach(Function2V<K, V> f) {
-        super.forEach(f.asFunction());
+        super.forEach(f.asFunction1V());
     }
 
     public boolean forAll(Function2B<K, V> f) {
