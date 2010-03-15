@@ -12,6 +12,10 @@ public abstract class Function3<A, B, C, R> {
             public R apply(B b, C c) {
                 return Function3.this.apply(a, b, c);
             }
+
+            public String toString() {
+                return Function3.this + "(" + a + ", _, _)";
+            }
         };
     }
 
@@ -19,6 +23,10 @@ public abstract class Function3<A, B, C, R> {
         return new Function2<A, C, R>() {
             public R apply(A a, C c) {
                 return Function3.this.apply(a, b, c);
+            }
+
+            public String toString() {
+                return Function3.this + "(_, " + b + ", _)";
             }
         };
     }
@@ -28,6 +36,10 @@ public abstract class Function3<A, B, C, R> {
             public R apply(A a, B b) {
                 return Function3.this.apply(a, b, c);
             }
+
+            public String toString() {
+                return Function3.this + "(_, _, " + c + ")";
+            }
         };
     }
 
@@ -36,6 +48,10 @@ public abstract class Function3<A, B, C, R> {
         return new Function2<Function3<A, B, C, R>, A, Function2<B, C, R>>() {
             public Function2<B, C, R> apply(Function3<A, B, C, R> f, A a) {
                 return f.bind1(a);
+            }
+
+            public String toString() {
+                return "bind1";
             }
         };
     }
@@ -49,6 +65,10 @@ public abstract class Function3<A, B, C, R> {
             public Function2<A, C, R> apply(Function3<A, B, C, R> f, B b) {
                 return f.bind2(b);
             }
+
+            public String toString() {
+                return "bind2";
+            }
         };
     }
 
@@ -60,6 +80,10 @@ public abstract class Function3<A, B, C, R> {
         return new Function2<Function3<A, B, C, R>, C, Function2<A, B, R>>() {
             public Function2<A, B, R> apply(Function3<A, B, C, R> f, C c) {
                 return f.bind3(c);
+            }
+
+            public String toString() {
+                return "bind3";
             }
         };
     }

@@ -127,6 +127,10 @@ public abstract class Function<A, R> {
             public Function0<R> apply(Function<A, R> f, A a) {
                 return f.bind(a);
             }
+
+            public String toString() {
+                return "bind";
+            }
         };
     }
 
@@ -139,6 +143,10 @@ public abstract class Function<A, R> {
         return new Function2<Function<A, R>, A, R>() {
             public R apply(Function<A, R> f, A a) {
                 return f.apply(a);
+            }
+
+            public String toString() {
+                return "apply";
             }
         };
     }

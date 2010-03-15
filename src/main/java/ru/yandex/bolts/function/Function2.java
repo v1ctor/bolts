@@ -47,6 +47,10 @@ public abstract class Function2<A, B, R> {
             public Function<B, R> apply(Function2<A, B, R> f, A a) {
                 return f.bind1(a);
             }
+
+            public String toString() {
+                return "bind1";
+            }
         };
     }
 
@@ -58,6 +62,10 @@ public abstract class Function2<A, B, R> {
         return new Function2<Function2<A, B, R>, B, Function<A, R>>() {
             public Function<A, R> apply(Function2<A, B, R> f, B b) {
                 return f.bind2(b);
+            }
+
+            public String toString() {
+                return "bind2";
             }
         };
     }
