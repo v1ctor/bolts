@@ -1,5 +1,7 @@
 package ru.yandex.bolts.collection;
 
+import java.util.Collection;
+
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.function.Function;
@@ -64,7 +66,7 @@ public class CollectionsFTest extends TestCase {
 
         MapF<String, ListF<Integer>> groupped
                 = data.groupBy(Tuple2.<String, Integer>get1F())
-                .mapValues(Cf.mapF(Tuple2.<String, Integer>get2F()).andThen(
+                .mapValues(Cf.<Tuple2<String, Integer>, Integer>mapF(Tuple2.<String, Integer>get2F()).andThen(
                         Cf.<Integer>sortF(IntegerF.naturalComparator())));
 
         assertEquals(Cf.list(102, 111, 111), groupped.get("foo"));
@@ -88,11 +90,11 @@ public class CollectionsFTest extends TestCase {
                 Cf.<Integer>set());
 
         ListF<ListF<Integer>> positiveIntegers = data.map(
-                Cf.filterF(new Function1B<Integer>() {
+                Cf.<Integer>filterF(new Function1B<Integer>() {
                     public boolean apply(Integer integer) {
                         return integer >= 0;
                     }})
-                .andThen(Cf.sortF(IntegerF.naturalComparator()))
+                .andThen(Cf.<Integer>sortF(IntegerF.naturalComparator()))
                 .andThen(Cf.<Integer>toListF()));
 
         assertEquals(Cf.list(
