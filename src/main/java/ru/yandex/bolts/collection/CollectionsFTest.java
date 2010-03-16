@@ -61,7 +61,7 @@ public class CollectionsFTest extends TestCase {
                 .plus1("baz", 97)
                 .plus1("bar", 114)
                 .plus1("baz", 122);
-        
+
         MapF<String, ListF<Integer>> groupped
                 = data.groupBy(Tuple2.<String, Integer>get1F())
                 .mapValues(Cf.mapF(Tuple2.<String, Integer>get2F()).andThen(
@@ -78,6 +78,7 @@ public class CollectionsFTest extends TestCase {
         assertEquals(Cf.set(97, 98, 122), unique.get("baz"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testFilterFandSortFandListF() {
         ListF<SetF<Integer>> data = Cf.list(
                 Cf.set(5, -3, 2, 1),
