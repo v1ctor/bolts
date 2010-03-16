@@ -39,6 +39,7 @@ import ru.yandex.bolts.collection.impl.SingletonSet;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.Function2I;
 
 /**
  * Utilities to create extended collections.
@@ -696,6 +697,79 @@ public class CollectionsF {
         return new Function<Iterable<T>, IteratorF<T>>() {
             public IteratorF<T> apply(Iterable<T> a) {
                 return x(a.iterator());
+            }
+        };
+    }
+
+    /** {@link Collection#filter()} as function */
+    public static <E> Function2<Collection<E>, Function1B<? super E>, CollectionF<E>> filterF() {
+        return new Function2<Collection<E>, Function1B<? super E>, CollectionF<E>>() {
+            public CollectionF<E> apply(Collection<E> source,
+                    Function1B<? super E> predicate)
+            {
+                return Cf.x(source).filter(predicate);
+            }
+        };
+    }
+
+    /** {@link Collection#filter()} as function, convenience form */
+    public static <E> Function<Collection<E>, CollectionF<E>> filterF(
+            Function1B<? super E> predicate)
+    {
+        return CollectionsF.<E>filterF().bind2(predicate);
+    }
+
+    /** {@link Collection#map()} as function */
+    public static <F, T> Function2<Collection<F>, Function<? super F, T>, ListF<T>> mapF() {
+        return new Function2<Collection<F>, Function<? super F, T>, ListF<T>>() {
+            public ListF<T> apply(Collection<F> input,
+                    Function<? super F, T> transform)
+            {
+                return Cf.x(input).map(transform);
+            }
+        };
+    }
+
+    /** {@link Collection#map()} as function, convenience form */
+    public static <F, T> Function<Collection<F>, ListF<T>> mapF(
+            Function<? super F, T> transform)
+    {
+        return CollectionsF.<F, T>mapF().bind2(transform);
+    }
+
+    /** {@link Collection#sort()} as function */
+    public static <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortF() {
+        return new Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>>() {
+            public ListF<E> apply(Collection<E> input,
+                    Function2I<? super E, ? super E> comparator)
+            {
+                return Cf.x(input).sort(comparator);
+            }
+        };
+    }
+
+    /** {@link Collection#sort()} as function, convenience form */
+    public static <E> Function<Collection<E>, ListF<E>> sortF(
+            Function2I<? super E, ? super E> comparator)
+    {
+        return Cf.<E>sortF().bind2(comparator);
+
+    }
+
+    /** {@link Collection#unique()} as function */
+    public static <E> Function<Collection<E>, SetF<E>> uniqueF() {
+        return new Function<Collection<E>, SetF<E>>() {
+            public SetF<E> apply(Collection<E> input) {
+                return Cf.x(input).unique();
+            }
+        };
+    }
+
+    /** {@link Collection#toList()} as function */
+    public static <E> Function<Collection<E>, ListF<E>> toListF() {
+        return new Function<Collection<E>, ListF<E>>() {
+            public ListF<E> apply(Collection<E> input) {
+                return Cf.x(input).toList();
             }
         };
     }
