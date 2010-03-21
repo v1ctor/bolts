@@ -774,4 +774,17 @@ public class CollectionsF {
         };
     }
 
+    /** {@link CollectionF#mkString(String)} */
+    public static Function2<Collection<?>, String, String> mkStringF() {
+        return new Function2<Collection<?>, String, String>() {
+            public String apply(Collection<?> a, String sep) {
+                return Cf.x(a).mkString(sep);
+            }
+        };
+    }
+
+    public static Function<Collection<?>, String> mkStringF(String sep) {
+        return mkStringF().bind2(sep);
+    }
+
 } //~
