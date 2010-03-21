@@ -140,6 +140,22 @@ public class Either<A, B> {
     public static <A, B> Either<A, B> left(A a) { return new Left<A, B>(a); }
     public static <A, B> Either<A, B> right(B b) { return new Right<A, B>(b); }
 
+    public static <A, B> Function<A, Either<A, B>> leftF() {
+        return new Function<A, Either<A, B>>() {
+            public Either<A, B> apply(A a) {
+                return left(a);
+            }
+        };
+    }
+
+    public static <A, B> Function<B, Either<A, B>> rightF() {
+        return new Function<B, Either<A, B>>() {
+            public Either<A, B> apply(B b) {
+                return right(b);
+            }
+        };
+    }
+
     /** Execution function and return left with value or right with {@link Throwable} */
     public static <A> Either<A, Throwable> tryCatch(Function0<A> f) {
         try {
