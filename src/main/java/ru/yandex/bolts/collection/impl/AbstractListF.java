@@ -48,13 +48,8 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
-    public ListF<Tuple2<E, Integer>> zipWithIndex() {
-        return iterator().zipWithIndex().toList();
-    }
-
-    @Override
-    public ListMap<E, Integer> zipWithIndex2() {
-        return ListMap.listMap(zipWithIndex());
+    public ListMap<E, Integer> zipWithIndex() {
+        return ListMap.listMap(iterator().zipWithIndex().toList());
     }
 
     @SuppressWarnings({"unchecked"})
