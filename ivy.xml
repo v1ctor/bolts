@@ -35,7 +35,7 @@ Package contains utilities that are
 
     
     <dependencies> 
-        <dependency org="junit" name="junit" rev="4.5" conf="test->runtime(*),master(*)"/>
+        <dependency org="junit" name="junit" rev="4.5" conf="test->runtime(*),master(*);sources->sources(*)"/>
         <dependency org="log4j" name="log4j" rev="1.2.15" conf="compile->master(*)"/>
         <dependency org="org.functionaljava" name="fj" rev="2.19" conf="compile->master"/>
         <dependency org="commons-collections" name="commons-collections" rev="3.2.1" conf="compile->master"/>
