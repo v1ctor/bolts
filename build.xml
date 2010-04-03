@@ -3,26 +3,25 @@
 <project name="bolts" basedir="." default="dist" xmlns:ivy="antlib:org.apache.ivy.ant">
     <property name="jar.suffix" value=""/>
     
-    <available property="ivy.available" file="lib/ivy/ivy-2.0.0-beta2.jar"/>
+    <available property="ivy.available" file="ivy/ivy-2.0.0-beta2.jar"/>
     <target name="download-ivy" unless="ivy.available">
-        <mkdir dir="lib/ivy"/>
+        <mkdir dir="ivy"/>
 
         <echo>Downloading ivy</echo>
 
         <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.0.0-beta2/ivy-2.0.0-beta2.jar"
-                dest="lib/ivy/ivy-2.0.0-beta2.jar"/>
+                dest="ivy/ivy-2.0.0-beta2.jar"/>
     </target>
 
     <target name="resolve" depends="download-ivy">
-        <mkdir dir="lib/dep"/>
         <taskdef resource="org/apache/ivy/ant/antlib.xml"
                 uri="antlib:org.apache.ivy.ant">
             <classpath>
-                <fileset dir="lib/ivy" includes="*.jar"/>
+                <fileset dir="ivy" includes="*.jar"/>
             </classpath>
         </taskdef>
 
-        <ivy:retrieve pattern="lib/dep/[organisation]-[artifact]-[revision].[ext]" sync="true"/>
+        <ivy:retrieve conf="*" pattern="lib/[type]s/[organisation]-[artifact]-[revision].[ext]" sync="true"/>
     </target>
    
     
@@ -35,7 +34,7 @@
         <javac source="1.6" target="1.6" srcdir="src/main/java" destdir="target/classes" debug="true">
             <classpath>
                 <fileset dir="lib" includes="*.jar"/>
-                <fileset dir="lib/dep" includes="*.jar"/>
+                <fileset dir="lib/jars" includes="*.jar"/>
             </classpath>
         </javac>
     </target>
@@ -54,7 +53,7 @@
             </fileset>
             <classpath>
                 <fileset dir="lib" includes="*.jar"/>
-                <fileset dir="lib/dep" includes="*.jar"/>
+                <fileset dir="lib/jars" includes="*.jar"/>
             </classpath>
             <link href="http://download.java.net/jdk7/docs/api/"/>
             <link href="http://functionaljava.googlecode.com/svn/artifacts/2.20/javadoc/"/>
