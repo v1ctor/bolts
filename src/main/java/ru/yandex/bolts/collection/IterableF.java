@@ -3,6 +3,7 @@ package ru.yandex.bolts.collection;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.weaving.annotation.FunctionParameter;
 
 /**
  * Extended iterable.
@@ -22,8 +23,12 @@ public interface IterableF<E> extends Iterable<E> {
     /** Return true iff element matching predicate exists */
     boolean exists(Function1B<? super E> p);
 
+    boolean existsW(@FunctionParameter E p);
+
     /** Find element matching predicate */
     Option<E> find(Function1B<? super E> p);
+
+    Option<E> findW(@FunctionParameter E p);
 
     /**
      * Fold left. Compute f(f(...f(f(z, e_1), e_2) ..., e_n-1), e_n)

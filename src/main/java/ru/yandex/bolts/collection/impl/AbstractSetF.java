@@ -8,6 +8,7 @@ import java.util.Iterator;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.IterableF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
@@ -55,6 +56,11 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
     @SuppressWarnings({"unchecked"})
     public Tuple2<SetF<E>, SetF<E>> partition(Function1B<? super E> p) {
         return (Tuple2<SetF<E>, SetF<E>>) super.partition(p);
+    }
+
+    @Override
+    public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partitionW(boolean p) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public SetF<E> minus(Set<E> es) {

@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.weaving.annotation.FunctionParameter;
 
 /**
  * Extended list.
@@ -40,6 +41,9 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
      * and second lists contains elements matching <code>!p</code>.
      */
     Tuple2<ListF<E>, ListF<E>> partition(Function1B<? super E> p);
+
+    @Override
+    Tuple2<ListF<E>, ListF<E>> partitionW(@FunctionParameter boolean p);
 
     /** Sub list from index to index */
     ListF<E> subList(int fromIndex, int toIndex);
@@ -89,8 +93,12 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     /** Longest prefix of elements that satisfy p */
     ListF<E> takeWhile(Function1B<? super E> f);
 
+    ListF<E> takeWhileW(@FunctionParameter boolean p);
+
     /** Elements after {@link #takeWhile(Function1B)} */
     ListF<E> dropWhile(Function1B<? super E> f);
+
+    ListF<E> dropWhileW(@FunctionParameter boolean p);
 
     /** Pair of sublists returned by {@link #takeWhile(Function1B)} and {@link #dropWhile(Function1B)} */
     //ListF<E> span(Function1B<? super E> p);
@@ -112,4 +120,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     <B> ListMap<E, B> zip(ListF<B> that);
 
     <B> ListMap<E, B> zipWith(Function<? super E, ? extends B> f);
+
+    <B> ListMap<E, B> zipWithW(@FunctionParameter B f);
 } //~

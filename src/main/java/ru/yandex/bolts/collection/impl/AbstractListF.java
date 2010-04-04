@@ -66,6 +66,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
+    public Tuple2<ListF<E>, ListF<E>> partitionW(boolean p) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
+    @Override
     public ListMap<E, Integer> zipWithIndex() {
         return ListMap.listMap(iterator().zipWithIndex().toList());
     }
@@ -138,8 +143,18 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
+    public ListF<E> dropWhileW(boolean p) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
+    @Override
     public ListF<E> takeWhile(Function1B<? super E> f) {
         return iterator().takeWhile(f).toList();
+    }
+
+    @Override
+    public ListF<E> takeWhileW(boolean p) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public ListF<E> toList() {
@@ -194,6 +209,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
                 return Tuple2.<E, B>tuple(a, f.apply(a));
             }
         }));
+    }
+
+    @Override
+    public <B> ListMap<E, B> zipWithW(B f) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     private class ReadOnlyItr extends SimpleListIterator {

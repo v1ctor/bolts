@@ -149,6 +149,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return Tuple2.tuple(matched, unmatched);
     }
 
+    @Override
+    public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partitionW(boolean p) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public <B> ListF<B> map(Function<? super E, B> f) {
         if (isEmpty()) return Cf.list();
         else return iterator().map(f).toList();
@@ -177,6 +182,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
                 return f.apply(e).toList();
             }
         });
+    }
+
+    @Override
+    public <B> ListF<B> flatMapW(Collection<? extends B> f) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public final Function1V<E> addOp() {
@@ -242,12 +252,27 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return r.convertToReadOnly();
     }
 
+    @Override
+    public ListF<E> sortW(int comparator) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public ListF<E> sortBy(Function<? super E, ?> f) {
         return sort(f.andThenNaturalComparator().nullLowC());
     }
 
+    @Override
+    public ListF<E> sortByW(Object f) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public ListF<E> sortByDesc(Function<? super E, ?> f) {
         return sort(f.andThenNaturalComparator().nullLowC().invert());
+    }
+
+    @Override
+    public ListF<E> sortByDescW(Object f) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public CollectionF<E> unmodifiable() {
@@ -267,8 +292,18 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return iterator().exists(p);
     }
 
+    @Override
+    public boolean existsW(E p) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public Option<E> find(Function1B<? super E> p) {
         return iterator().find(p);
+    }
+
+    @Override
+    public Option<E> findW(E p) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public <B> B foldLeft(B z, Function2<B, E, B> f) {
@@ -332,6 +367,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         else return CollectionsF.hashMap(map(mapper));
     }
 
+    @Override
+    public <K, V> MapF<K, V> toMapW(Tuple2<K, V> t) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public <K> MapF<K, E> toMapMappingToKey(final Function<? super E, K> mapper) {
         return toMap(new Function<E, Tuple2<K, E>>() {
             public Tuple2<K, E> apply(E e) {
@@ -340,12 +380,22 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         });
     }
 
+    @Override
+    public <K> MapF<K, E> toMapMappingToKey(K m) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public <V> MapF<E, V> toMapMappingToValue(final Function<? super E, V> mapper) {
         return toMap(new Function<E, Tuple2<E, V>>() {
             public Tuple2<E, V> apply(E e) {
                 return Tuple2.tuple(e, mapper.apply(e));
             }
         });
+    }
+
+    @Override
+    public <V> MapF<E, V> toMapMappingToValueW(V m) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m) {
@@ -358,6 +408,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
             list.add(e);
         }
         return map;
+    }
+
+    @Override
+    public <V> MapF<V, ListF<E>> groupByW(V m) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     protected boolean eq(Object a, Object b) {
@@ -395,6 +450,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return reduceLeft(Comparator.wrap((Function2I<E, E>) comparator).minF());
     }
 
+    @Override
+    public E minW(int comparator) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public E max() {
         return max(Comparator.naturalComparator().<E, E>uncheckedCast());
     }
@@ -402,6 +462,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     @SuppressWarnings("unchecked")
     public E max(Function2I<? super E, ? super E> comparator) {
         return reduceLeft(Comparator.wrap((Function2I<E, E>) comparator).maxF());
+    }
+
+    @Override
+    public E maxW(int comparator) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
 } //~
