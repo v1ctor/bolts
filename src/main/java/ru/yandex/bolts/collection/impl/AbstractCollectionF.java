@@ -381,7 +381,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     @Override
-    public <K> MapF<K, E> toMapMappingToKey(K m) {
+    public <K> MapF<K, E> toMapMappingToKeyW(K m) {
         throw new RuntimeException("weaving must be enabled");
     }
 

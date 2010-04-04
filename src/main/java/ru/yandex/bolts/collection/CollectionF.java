@@ -29,7 +29,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     CollectionF<E> filter(Function1B<? super E> p);
 
-    CollectionF<E> filterW(boolean p);
+    CollectionF<E> filterW(@FunctionParameter boolean p);
 
     /**
      * Pair of collection, first contains elements matching p, second contains element matching !p
@@ -47,7 +47,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     /** Map */
     <B> ListF<B> map(Function<? super E, B> mapper);
 
-    <B> ListF<B> mapW(B b);
+    <B> ListF<B> mapW(@FunctionParameter B b);
 
     /** Flat map */
     <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f);
@@ -65,7 +65,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     /** Map to list of map keys and construct map. Elements of this collection are used as values */
     <K> MapF<K, E> toMapMappingToKey(Function<? super E, K> m);
 
-    <K> MapF<K, E> toMapMappingToKey(@FunctionParameter K m);
+    <K> MapF<K, E> toMapMappingToKeyW(@FunctionParameter K m);
 
     /** Map to list of map values and construct map. Elements of this collection are used as keys */
     <V> MapF<E, V> toMapMappingToValue(Function<? super E, V> m);

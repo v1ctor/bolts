@@ -2,13 +2,12 @@ package ru.yandex.bolts.collection.impl;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 import java.util.Iterator;
+import java.util.Set;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.CollectionsF;
-import ru.yandex.bolts.collection.IterableF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
@@ -59,7 +58,7 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
     }
 
     @Override
-    public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partitionW(boolean p) {
+    public Tuple2<SetF<E>, SetF<E>> partitionW(boolean p) {
         throw new RuntimeException("weaving must be enabled");
     }
 

@@ -25,7 +25,7 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     ListF<E> filter(Function1B<? super E> p);
 
     @Override
-    ListF<E> filterW(boolean p);
+    ListF<E> filterW(@FunctionParameter boolean p);
 
     /**
      * Return pair of lists, first list contains elements matching <code>p</code>
