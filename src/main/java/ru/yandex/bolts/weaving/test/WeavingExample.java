@@ -12,9 +12,15 @@ import ru.yandex.bolts.collection.ListF;
  */
 public class WeavingExample extends TestCase {
     @Test
-    public void testMe() {
+    public void testMap() {
         ListF<Integer> r = Cf.list("1", "2", "3").mapW(Integer.parseInt(Cf.<String>p()));
         assertEquals(Cf.list(1, 2, 3), r);
+    }
+
+    @Test
+    public void testFilter() {
+        ListF<Integer> r = Cf.list(1, 2, 3).filterW(Cf.<Integer>p() % 2 == 0);
+        assertEquals(Cf.list(2), r);
     }
 
 } //~

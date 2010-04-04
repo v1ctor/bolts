@@ -9,6 +9,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.Method;
+import org.objectweb.asm.util.CheckClassAdapter;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
@@ -36,7 +37,8 @@ public class SecondPassVisitor extends ClassAdapter {
         private LambdaInfo currentLambda;
         private final IteratorF<LambdaInfo> lambdasIterator;
 
-        private ClassWriter lambdaWriter;
+        private ClassWriter lambdaWriter0;
+        private ClassVisitor lambdaWriter;
         private MethodVisitor originalMethodWriter;
 
         public SecondPassMethodVisitor(MethodVisitor mv, MethodInfo methodInfo) {
@@ -57,12 +59,12 @@ public class SecondPassVisitor extends ClassAdapter {
                 createLambdaClass();
                 createLambdaConstructor();
                 createApplyMethodAndRedirectMethodVisitorToIt();
-            } else if (isInLambda() && BoltsNames.isFunctionAcceptingMethod(method)) {
+            } else if (isInLambda() && BoltsNames.isFunctionAcceptingMethod(method).isDefined()) {
                 returnFromCall();
                 endLambdaClass();
                 restoreOriginalMethodWriterAndInstantiateTheLambda();
 
-                Method replacementMethod = BoltsNames.replacementMethod(method);
+                Method replacementMethod = BoltsNames.replacementMethod(method, currentLambda.functionType);
                 // XXX: switch writer back
                 super.visitMethodInsn(opcode, owner, replacementMethod.getName(), replacementMethod.getDescriptor());
             } else {
@@ -232,10 +234,14 @@ public class SecondPassVisitor extends ClassAdapter {
         private void createLambdaClass() {
             if (isInLambda())
                 throw new IllegalStateException();
-            lambdaWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+            lambdaWriter0 = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+            if (false && LambdaTransformer.DEBUG)
+                lambdaWriter = new CheckClassAdapter(lambdaWriter0);
+            else
+                lambdaWriter = lambdaWriter0;
             // XXX: better name
             // XXX: another function types
-            lambdaWriter.visit(Opcodes.V1_6, Opcodes.ACC_PUBLIC, currentLambdaClass().getInternalName(), null, BoltsNames.FUNCTION_TYPE.getInternalName(), null);
+            lambdaWriter.visit(Opcodes.V1_6, Opcodes.ACC_PUBLIC, currentLambdaClass().getInternalName(), null, currentLambda.functionTypeType().getInternalName(), null);
             lambdaWriter.visitOuterClass(type.getInternalName(), methodInfo.getMethod().getName(), methodInfo.getMethod().getDescriptor());
             lambdaWriter.visitInnerClass(currentLambdaClass().getInternalName(), null, null, 0);
         }
@@ -268,8 +274,9 @@ public class SecondPassVisitor extends ClassAdapter {
         }
 
         private void createApplyMethodAndRedirectMethodVisitorToIt() {
+
             mv = lambdaWriter.visitMethod(Opcodes.ACC_PUBLIC,
-                    BoltsNames.FUNCTION_APPLY_METHOD.getName(), BoltsNames.FUNCTION_APPLY_METHOD.getDescriptor(), null, null);
+                    currentLambda.applyMethod().getName(), currentLambda.applyMethod().getDescriptor(), null, null);
             mv.visitVarInsn(Opcodes.ALOAD, 1);
             mv.visitCode();
         }
@@ -286,7 +293,21 @@ public class SecondPassVisitor extends ClassAdapter {
         }
 
         void returnFromCall() {
-            mv.visitInsn(Opcodes.ARETURN);
+            switch (currentLambda.functionType.getReturnType()) {
+            case OBJECT:
+                mv.visitInsn(Opcodes.ARETURN);
+                break;
+            case BOOLEAN:
+            case INT:
+                mv.visitInsn(Opcodes.IRETURN);
+                break;
+            case VOID:
+                mv.visitInsn(Opcodes.RETURN);
+                break;
+            default:
+                throw new IllegalStateException();
+            }
+
             mv.visitMaxs(0, 0);
             mv.visitEnd();
         }
@@ -295,7 +316,7 @@ public class SecondPassVisitor extends ClassAdapter {
             lambdaWriter.visitEnd();
             cv.visitInnerClass(currentLambdaClass().getInternalName(), null, null, 0);
 
-            byte[] bs = lambdaWriter.toByteArray();
+            byte[] bs = lambdaWriter0.toByteArray();
             extraClasses.put(currentLambdaClass().getClassName(), bs);
 
             lambdaWriter = null;

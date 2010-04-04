@@ -5,6 +5,7 @@ import org.objectweb.asm.commons.Method;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.meta.FunctionType;
 import ru.yandex.bolts.function.meta.FunctionType.ReturnType;
@@ -21,8 +22,8 @@ public class BoltsNames {
 
     public static Method P_METHOD = new Method("p", OBJECT_TYPE, new Type[0]);
 
-    public static Type functionType(int arity, ReturnType returnType) {
-        return Type.getObjectType(new FunctionType(arity, returnType).fullClassName().replace('.', '/'));
+    public static Type functionType(FunctionType functionType) {
+        return Type.getObjectType(functionType.fullClassName().replace('.', '/'));
     }
 
     public static boolean isNewLambdaMethod(Type owner, Method method) {
@@ -30,16 +31,25 @@ public class BoltsNames {
     }
 
     // XXX: check annotations
-    public static boolean isFunctionAcceptingMethod(Method method) {
-        return method.getArgumentTypes().length == 1 && method.getArgumentTypes()[0].equals(OBJECT_TYPE) && method.getName().endsWith("W");
+    public static Option<ReturnType> isFunctionAcceptingMethod(Method method) {
+        if (method.getArgumentTypes().length != 1)
+            return Option.none();
+        if (!method.getName().endsWith("W"))
+            return Option.none();
+        if (method.getArgumentTypes()[0].equals(OBJECT_TYPE))
+            return Option.some(ReturnType.OBJECT);
+        else if (method.getArgumentTypes()[0].equals(Type.BOOLEAN_TYPE))
+            return Option.some(ReturnType.BOOLEAN);
+        else
+            return Option.none();
     }
 
     public static Method FUNCTION_APPLY_METHOD = new Method("apply", OBJECT_TYPE, new Type[] { OBJECT_TYPE });
 
-    public static Method replacementMethod(Method method) {
+    public static Method replacementMethod(Method method, FunctionType functionType) {
         Method replacementMethod = new Method(
                 method.getName().substring(0, method.getName().length() - 1),
-                method.getReturnType(), new Type[] { FUNCTION_TYPE });
+                method.getReturnType(), new Type[] { functionType(functionType) });
         return replacementMethod;
     }
 

@@ -128,6 +128,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return result;
     }
 
+    @Override
+    public CollectionF<E> filterW(boolean p) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public abstract IteratorF<E> iterator();
 
     public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> filter2(Function1B<? super E> p) {
@@ -151,7 +156,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     @Override
     public <B> ListF<B> mapW(B b) {
-        throw new RuntimeException("weaving must be enabled to use this method");
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f) {

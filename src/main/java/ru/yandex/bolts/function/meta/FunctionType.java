@@ -33,6 +33,14 @@ public class FunctionType {
         this.returnType = returnType;
     }
 
+    public int getArity() {
+        return arity;
+    }
+
+    public ReturnType getReturnType() {
+        return returnType;
+    }
+
     public String simpleClassName() {
         if (arity == 1 && returnType == ReturnType.OBJECT)
             return "Function";

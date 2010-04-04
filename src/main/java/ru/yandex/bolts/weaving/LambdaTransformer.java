@@ -16,6 +16,8 @@ import ru.yandex.bolts.collection.MapF;
  */
 public class LambdaTransformer {
 
+    public static final boolean DEBUG = true;
+
     static Set<String> packagesToSkip = new HashSet<String>();
 
     static {
@@ -60,7 +62,7 @@ public class LambdaTransformer {
 
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         ClassVisitor cv = cw;
-        if (true) {
+        if (DEBUG) {
             cv = new CheckClassAdapter(cw);
         }
         SecondPassVisitor secondPassVisitor = new SecondPassVisitor(cv, fetchLambdaInfoVisitor);

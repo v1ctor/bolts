@@ -28,6 +28,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     CollectionF<E> filter(Function1B<? super E> p);
 
+    CollectionF<E> filterW(boolean p);
+
     /**
      * Pair of collection, first contains elements matching p, second contains element matching !p
      *

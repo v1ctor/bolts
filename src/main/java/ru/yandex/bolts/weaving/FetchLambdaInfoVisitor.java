@@ -43,8 +43,8 @@ public class FetchLambdaInfoVisitor extends EmptyVisitor {
             if (functionArity == 0)
                 currentMethod.newLambda();
             ++functionArity;
-        } else if (isInLambda() && BoltsNames.isFunctionAcceptingMethod(method)) {
-            returnType = ReturnType.OBJECT; // XXX
+        } else if (isInLambda() && BoltsNames.isFunctionAcceptingMethod(method).isDefined()) {
+            returnType = BoltsNames.isFunctionAcceptingMethod(method).get();
 
             currentMethod.lastLambda().functionType = new FunctionType(functionArity, returnType);
 

@@ -1,8 +1,21 @@
 package ru.yandex.bolts.collection.impl;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
+import java.util.RandomAccess;
 
-import ru.yandex.bolts.collection.*;
+import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.IteratorF;
+import ru.yandex.bolts.collection.ListF;
+import ru.yandex.bolts.collection.ListIteratorF;
+import ru.yandex.bolts.collection.ListMap;
+import ru.yandex.bolts.collection.Option;
+import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 
@@ -31,6 +44,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     public ListF<E> filter(Function1B<? super E> p) {
         return (ListF<E>) super.filter(p);
+    }
+
+    @Override
+    public ListF<E> filterW(boolean p) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     /**

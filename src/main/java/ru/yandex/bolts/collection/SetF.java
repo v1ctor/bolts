@@ -18,6 +18,8 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     /** Filter */
     SetF<E> filter(Function1B<? super E> p);
 
+    SetF<E> filterW(boolean p);
+
     /**
      * @deprecated
      * @see #partition(Function1B)

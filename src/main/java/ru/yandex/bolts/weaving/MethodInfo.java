@@ -109,6 +109,25 @@ class MethodInfo {
         public Type functionTypeType() {
             return Type.getObjectType(functionType.fullClassName().replace('.', '/'));
         }
+
+        public Type functionTypeReturnType() {
+            switch (functionType.getReturnType()) {
+            case OBJECT:
+                return BoltsNames.OBJECT_TYPE;
+            case BOOLEAN:
+                return Type.BOOLEAN_TYPE;
+            case INT:
+                return Type.INT_TYPE;
+            case VOID:
+                return Type.VOID_TYPE;
+            default:
+                throw new IllegalStateException();
+            }
+        }
+
+        public Method applyMethod() {
+            return new Method("apply", functionTypeReturnType(), Cf.repeat(BoltsNames.OBJECT_TYPE, functionType.getArity()).toArray(Type.class));
+        }
     }
 
     Set<Integer> getAccessedLocals() {
