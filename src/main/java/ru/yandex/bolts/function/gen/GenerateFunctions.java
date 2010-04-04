@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.meta.FunctionType;
+import ru.yandex.bolts.function.meta.FunctionType.ReturnType;
 import ru.yandex.bolts.function.misc.ObjectF;
 import ru.yandex.bolts.function.misc.StringF;
 
@@ -13,34 +15,8 @@ import ru.yandex.bolts.function.misc.StringF;
  * @author Stepan Koltsov
  */
 public class GenerateFunctions {
-    enum ReturnType {
-        OBJECT,
-        BOOLEAN,
-        INT,
-        VOID
-    }
-
     private static String classNameSimple(int paramCount, ReturnType returnType) {
-        StringBuilder r = new StringBuilder();
-        r.append("Function");
-        if (paramCount != 1 || returnType != ReturnType.OBJECT)
-            r.append(paramCount);
-        switch (returnType) {
-        case BOOLEAN:
-            r.append("B");
-            break;
-        case INT:
-            r.append("I");
-            break;
-        case VOID:
-            r.append("V");
-            break;
-        case OBJECT:
-            break;
-        default:
-            throw new AssertionError();
-        }
-        return r.toString();
+        return new FunctionType(paramCount, returnType).simpleClassName();
     }
 
     private static ListF<String> paramTypeLetters(int paramCount) {
