@@ -149,6 +149,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         else return iterator().map(f).toList();
     }
 
+    @Override
+    public <B> ListF<B> mapW(B b) {
+        throw new RuntimeException("weaving must be enabled to use this method");
+    }
+
     public <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f) {
         if (isEmpty()) return CollectionsF.list();
 

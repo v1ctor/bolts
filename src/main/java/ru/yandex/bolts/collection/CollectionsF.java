@@ -787,4 +787,7 @@ public class CollectionsF {
         return mkStringF().bind2(sep);
     }
 
+    public static <T> T p() {
+        throw new RuntimeException("weaving must be enabled");
+    }
 } //~

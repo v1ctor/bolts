@@ -42,6 +42,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     /** Map */
     <B> ListF<B> map(Function<? super E, B> mapper);
 
+    <B> ListF<B> mapW(B b);
+
     /** Flat map */
     <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f);
 
