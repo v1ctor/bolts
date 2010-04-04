@@ -275,16 +275,36 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return iterator().foldLeft(z, f);
     }
 
+    @Override
+    public <B> B foldLeftW(B z, B f) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public <B> B foldRight(B z, Function2<E, B, B> f) {
         return iterator().foldRight(z, f);
+    }
+
+    @Override
+    public <B> B foldRightW(B z, B f) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public E reduceLeft(Function2<E, E, E> f) {
         return iterator().reduceLeft(f);
     }
 
+    @Override
+    public E reduceLeftW(E f) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public E reduceRight(Function2<E, E, E> f) {
         return iterator().reduceRight(f);
+    }
+
+    @Override
+    public E reduceRightW(E f) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public String mkString(String sep) {

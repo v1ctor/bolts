@@ -232,9 +232,19 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         return acc;
     }
 
+    @Override
+    public <B> B foldLeftW(B z, B f) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public <B> B foldRight(B z, Function2<E, B, B> f) {
         if (hasNext()) return f.apply(next(), foldRight(z, f));
         else return z;
+    }
+
+    @Override
+    public <B> B foldRightW(B z, B f) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public E reduceLeft(Function2<E, E, E> f) {
@@ -242,11 +252,21 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         else throw new IllegalStateException("empty.reduceLeft");
     }
 
+    @Override
+    public E reduceLeftW(E f) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public E reduceRight(Function2<E, E, E> f) {
         if (!hasNext()) throw new IllegalStateException("empty.reduceRight");
         E head = next();
         if (hasNext()) return f.apply(head, reduceRight(f));
         else return head;
+    }
+
+    @Override
+    public E reduceRightW(E f) {
+        throw new RuntimeException("weaving must be enabled");
     }
 
     public IteratorF<E> drop(int count) {

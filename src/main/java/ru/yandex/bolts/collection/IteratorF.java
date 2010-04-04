@@ -45,14 +45,22 @@ public interface IteratorF<E> extends Iterator<E> {
     /** Fold left */
     <B> B foldLeft(B z, Function2<B, E, B> f);
 
+    <B> B foldLeftW(B z, B f);
+
     /** Fold right */
     <B> B foldRight(B z, Function2<E, B, B> f);
+
+    <B> B foldRightW(B z, B f);
 
     /** Reduce left */
     E reduceLeft(Function2<E, E, E> f);
 
+    E reduceLeftW(E f);
+
     /** Reduce right */
     E reduceRight(Function2<E, E, E> f);
+
+    E reduceRightW(E f);
 
     /** Zip with index */
     IteratorF<Tuple2<E, Integer>> zipWithIndex();

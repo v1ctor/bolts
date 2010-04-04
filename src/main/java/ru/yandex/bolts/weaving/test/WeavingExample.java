@@ -23,4 +23,10 @@ public class WeavingExample extends TestCase {
         assertEquals(Cf.list(2), r);
     }
 
+    @Test
+    public void testReduceLeft() {
+        int sum = Cf.list(1, 2, 3).reduceLeftW(Cf.<Integer>p() + Cf.<Integer>p());
+        assertEquals(6, sum);
+    }
+
 } //~

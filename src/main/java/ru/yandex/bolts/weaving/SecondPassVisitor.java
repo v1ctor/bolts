@@ -35,6 +35,7 @@ public class SecondPassVisitor extends ClassAdapter {
     private class SecondPassMethodVisitor extends MethodAdapter {
         private final MethodInfo methodInfo;
         private LambdaInfo currentLambda;
+        private int currentLambdaParam;
         private final IteratorF<LambdaInfo> lambdasIterator;
 
         private ClassWriter lambdaWriter0;
@@ -53,12 +54,17 @@ public class SecondPassVisitor extends ClassAdapter {
         public void visitMethodInsn(int opcode, String owner, String name, String desc) {
             Method method = new Method(name, desc);
             if (BoltsNames.isNewLambdaMethod(Type.getObjectType(owner), method)) {
-                currentLambda = lambdasIterator.next();
-                nextLambdaId();
+                if (!isInLambda()) {
+                    currentLambda = lambdasIterator.next();
+                    currentLambdaParam = 0;
+                    nextLambdaId();
 
-                createLambdaClass();
-                createLambdaConstructor();
-                createApplyMethodAndRedirectMethodVisitorToIt();
+                    createLambdaClass();
+                    createLambdaConstructor();
+                    createApplyMethodAndRedirectMethodVisitorToIt();
+                }
+                mv.visitVarInsn(Opcodes.ALOAD, ++currentLambdaParam);
+
             } else if (isInLambda() && BoltsNames.isFunctionAcceptingMethod(method).isDefined()) {
                 returnFromCall();
                 endLambdaClass();
@@ -277,7 +283,6 @@ public class SecondPassVisitor extends ClassAdapter {
 
             mv = lambdaWriter.visitMethod(Opcodes.ACC_PUBLIC,
                     currentLambda.applyMethod().getName(), currentLambda.applyMethod().getDescriptor(), null, null);
-            mv.visitVarInsn(Opcodes.ALOAD, 1);
             mv.visitCode();
         }
 
