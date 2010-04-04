@@ -1,0 +1,46 @@
+package ru.yandex.bolts.weaving;
+
+import org.objectweb.asm.Type;
+import org.objectweb.asm.commons.Method;
+
+import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.meta.FunctionType;
+import ru.yandex.bolts.function.meta.FunctionType.ReturnType;
+
+/**
+ * @author Stepan Koltsov
+ */
+public class BoltsNames {
+    public static Type OBJECT_TYPE = Type.getType(Object.class);
+
+    public static Type COLLECTIONSF_TYPE = Type.getType(CollectionsF.class);
+    public static Type CF_TYPE = Type.getType(Cf.class);
+    public static Type FUNCTION_TYPE = Type.getType(Function.class);
+
+    public static Method P_METHOD = new Method("p", OBJECT_TYPE, new Type[0]);
+
+    public static Type functionType(int arity, ReturnType returnType) {
+        return Type.getObjectType(new FunctionType(arity, returnType).fullClassName().replace('.', '/'));
+    }
+
+    public static boolean isNewLambdaMethod(Type owner, Method method) {
+        return Cf.list(COLLECTIONSF_TYPE, CF_TYPE).contains(owner) && method.equals(P_METHOD);
+    }
+
+    // XXX: check annotations
+    public static boolean isFunctionAcceptingMethod(Method method) {
+        return method.getArgumentTypes().length == 1 && method.getArgumentTypes()[0].equals(OBJECT_TYPE) && method.getName().endsWith("W");
+    }
+
+    public static Method FUNCTION_APPLY_METHOD = new Method("apply", OBJECT_TYPE, new Type[] { OBJECT_TYPE });
+
+    public static Method replacementMethod(Method method) {
+        Method replacementMethod = new Method(
+                method.getName().substring(0, method.getName().length() - 1),
+                method.getReturnType(), new Type[] { FUNCTION_TYPE });
+        return replacementMethod;
+    }
+
+} //~
