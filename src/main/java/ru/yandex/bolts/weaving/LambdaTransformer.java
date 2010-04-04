@@ -8,9 +8,6 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.util.CheckClassAdapter;
 
-import ru.yandex.bolts.collection.Cf;
-import ru.yandex.bolts.collection.MapF;
-
 /**
  * @author Stepan Koltsov
  */
@@ -27,14 +24,14 @@ public class LambdaTransformer {
         packagesToSkip.add("$Proxy");
     }
 
-    private boolean isNotToBeInstrumented(String name) {
+    static boolean isNotToBeInstrumented(String javaName) {
         for (String prefix : packagesToSkip)
-            if (name.startsWith(prefix))
+            if (javaName.startsWith(prefix))
                 return true;
         return false;
     }
 
-    private MapF<String, byte[]> lambdasByJavaClassName = Cf.hashMap();
+    private FunctionParameterCache functionParameterCache = new FunctionParameterCache();
 
     /**
      * @return <code>null</code> if not needed to be transformed.
@@ -57,15 +54,17 @@ public class LambdaTransformer {
 
         System.err.println("weaving " + javaClassName);
 
-        FetchLambdaInfoVisitor fetchLambdaInfoVisitor = new FetchLambdaInfoVisitor();
+        FetchLambdaInfoVisitor fetchLambdaInfoVisitor = new FetchLambdaInfoVisitor(functionParameterCache);
         cr.accept(fetchLambdaInfoVisitor, 0);
+        fetchLambdaInfoVisitor.check();
+
 
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         ClassVisitor cv = cw;
         if (DEBUG) {
             cv = new CheckClassAdapter(cw);
         }
-        SecondPassVisitor secondPassVisitor = new SecondPassVisitor(cv, fetchLambdaInfoVisitor);
+        SecondPassVisitor secondPassVisitor = new SecondPassVisitor(cv, fetchLambdaInfoVisitor, functionParameterCache);
         cr.accept(secondPassVisitor, 0);
         return new ClassTransformationResult(cw.toByteArray(), secondPassVisitor.extraClasses);
     }

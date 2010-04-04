@@ -15,11 +15,13 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.ListMap;
+import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.weaving.MethodInfo.LambdaInfo;
 
 public class SecondPassVisitor extends ClassAdapter {
 
     private final FetchLambdaInfoVisitor fetchLambdaInfoVisitor;
+    private final FunctionParameterCache functionParameterCache;
 
     private Type type;
 
@@ -27,9 +29,10 @@ public class SecondPassVisitor extends ClassAdapter {
 
     ListMap<String, byte[]> extraClasses = ListMap.arrayList();
 
-    public SecondPassVisitor(ClassVisitor cv, FetchLambdaInfoVisitor fetchLambdaInfoVisitor) {
+    public SecondPassVisitor(ClassVisitor cv, FetchLambdaInfoVisitor fetchLambdaInfoVisitor, FunctionParameterCache functionParameterCache) {
         super(cv);
         this.fetchLambdaInfoVisitor = fetchLambdaInfoVisitor;
+        this.functionParameterCache = functionParameterCache;
     }
 
     private class SecondPassMethodVisitor extends MethodAdapter {
@@ -65,13 +68,17 @@ public class SecondPassVisitor extends ClassAdapter {
                 }
                 mv.visitVarInsn(Opcodes.ALOAD, ++currentLambdaParam);
 
-            } else if (isInLambda() && BoltsNames.isFunctionAcceptingMethod(method).isDefined()) {
-                returnFromCall();
+            } else if (isInLambda()) {
+                Option<FunctionParameterInfo> function = functionParameterCache.getFunctionParameterFor(Type.getObjectType(owner), method);
+                if (function.isEmpty()) {
+                    super.visitMethodInsn(opcode, owner, name, desc);
+                    return;
+                }
+                returnFromApply();
                 endLambdaClass();
                 restoreOriginalMethodWriterAndInstantiateTheLambda();
 
-                Method replacementMethod = BoltsNames.replacementMethod(method, currentLambda.functionType);
-                // XXX: switch writer back
+                Method replacementMethod = function.get().getImplMethod();
                 super.visitMethodInsn(opcode, owner, replacementMethod.getName(), replacementMethod.getDescriptor());
             } else {
                 super.visitMethodInsn(opcode, owner, name, desc);
@@ -297,7 +304,7 @@ public class SecondPassVisitor extends ClassAdapter {
             mv.visitMethodInsn(Opcodes.INVOKESPECIAL, currentLambdaClass().getInternalName(), "<init>", "()V");
         }
 
-        void returnFromCall() {
+        void returnFromApply() {
             switch (currentLambda.functionType.getReturnType()) {
             case OBJECT:
                 mv.visitInsn(Opcodes.ARETURN);
@@ -332,6 +339,8 @@ public class SecondPassVisitor extends ClassAdapter {
         }
 
         Type currentLambdaClass() {
+            if (currentLambda == null)
+                throw new IllegalStateException("not in lambda");
             String lambdaClass = currentLambda.functionType.simpleClassName();
             return Type.getObjectType(type.getInternalName() + "$" + lambdaClass + "_" + currentLambdaId);
         }
@@ -358,7 +367,7 @@ public class SecondPassVisitor extends ClassAdapter {
         if (methodInfo.lambdas.isEmpty())
             return superVisitor;
 
-        System.err.println("weaving method " + name);
+        //System.err.println("weaving method " + name);
         return new SecondPassMethodVisitor(superVisitor, methodInfo);
     }
 

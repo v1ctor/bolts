@@ -8,16 +8,22 @@ import org.objectweb.asm.commons.Method;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.MapF;
-import ru.yandex.bolts.function.meta.FunctionType;
-import ru.yandex.bolts.function.meta.FunctionType.ReturnType;
+import ru.yandex.bolts.collection.Option;
 
 public class FetchLambdaInfoVisitor extends EmptyVisitor {
+
+    private final FunctionParameterCache functionParameterCache;
+
+
+    public FetchLambdaInfoVisitor(FunctionParameterCache functionParameterCache) {
+        this.functionParameterCache = functionParameterCache;
+    }
+
 
     private MethodInfo currentMethod;
     private MapF<Method, MethodInfo> methods = Cf.hashMap();
 
     private int functionArity;
-    private ReturnType returnType;
 
 
     private boolean isInLambda() {
@@ -26,6 +32,13 @@ public class FetchLambdaInfoVisitor extends EmptyVisitor {
 
     public MethodInfo getMethod(Method method) {
         return methods.apply(method);
+    }
+
+    private void checkMethod(MethodInfo methodInfo) {
+        if (methodInfo.lambdas.length() > 0) {
+            if (methodInfo.lastLambda().functionType == null)
+                throw new IllegalStateException("method " + currentMethod.getMethod() + " has incomplete lambdas");
+        }
     }
 
     @Override
@@ -43,13 +56,17 @@ public class FetchLambdaInfoVisitor extends EmptyVisitor {
             if (functionArity == 0)
                 currentMethod.newLambda();
             ++functionArity;
-        } else if (isInLambda() && BoltsNames.isFunctionAcceptingMethod(method).isDefined()) {
-            returnType = BoltsNames.isFunctionAcceptingMethod(method).get();
+        } else if (isInLambda()) {
+            Option<FunctionParameterInfo> impl = functionParameterCache.getFunctionParameterFor(Type.getObjectType(owner), method);
+            if (impl.isDefined()) {
+                if (functionArity != impl.get().getFunctionType().getArity())
+                    throw new IllegalStateException("wrong number of parameters");
 
-            currentMethod.lastLambda().functionType = new FunctionType(functionArity, returnType);
+                currentMethod.lastLambda().functionType = impl.get().getFunctionType();
 
-            // reset
-            functionArity = 0;
+                // reset
+                functionArity = 0;
+            }
         }
     }
 
@@ -70,4 +87,10 @@ public class FetchLambdaInfoVisitor extends EmptyVisitor {
             currentMethod.accessLocalFromLambda(var);
     }
 
+
+
+    void check() {
+        for (MethodInfo methodInfo : methods.values())
+            checkMethod(methodInfo);
+    }
 } //~

@@ -29,4 +29,10 @@ public class WeavingExample extends TestCase {
         assertEquals(6, sum);
     }
 
+    @Test
+    public void testFoldRight() {
+        int r = Cf.list(1, 2, 3).foldRightW(1, Cf.<Integer>p() * Cf.<Integer>p());
+        assertEquals(6, r);
+    }
+
 } //~
