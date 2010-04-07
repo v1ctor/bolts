@@ -47,6 +47,11 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
         throw new RuntimeException("weaving must be enabled");
     }
 
+    @Override
+    public SetF<E> filterNotNull() {
+        return filter(Function1B.<E>notNullF());
+    }
+
     @SuppressWarnings({"unchecked"})
     public Tuple2<SetF<E>, SetF<E>> filter2(Function1B<? super E> p) {
         return (Tuple2<SetF<E>, SetF<E>>) super.filter2(p);

@@ -34,6 +34,8 @@ public interface IteratorF<E> extends Iterator<E> {
 
     IteratorF<E> filterW(@FunctionParameter E f);
 
+    IteratorF<E> filterNotNull();
+
     /** Call function for each element */
     void forEach(Function1V<? super E> f);
 

@@ -158,6 +158,11 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         throw new RuntimeException("weaving must be enabled");
     }
 
+    @Override
+    public IteratorF<E> filterNotNull() {
+        return filter(Function1B.<E>notNullF());
+    }
+
     public IteratorF<Tuple2<E, Integer>> zipWithIndex() {
         class ZippedIterator extends AbstractIteratorF<Tuple2<E, Integer>> {
             private int i = 0;

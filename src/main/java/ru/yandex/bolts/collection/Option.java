@@ -144,6 +144,11 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         else return none();
     }
 
+    @Override
+    public final Option<T> filterNotNull() {
+        return filter(Function1B.<T>notNullF());
+    }
+
     public final SetF<T> toSet() {
         if (isDefined()) return CollectionsF.set(get());
         else return CollectionsF.set();

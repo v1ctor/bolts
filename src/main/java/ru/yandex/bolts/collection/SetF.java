@@ -21,6 +21,8 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
 
     SetF<E> filterW(@FunctionParameter boolean p);
 
+    SetF<E> filterNotNull();
+
     /**
      * @deprecated
      * @see #partition(Function1B)

@@ -133,6 +133,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         throw new RuntimeException("weaving must be enabled");
     }
 
+    @Override
+    public CollectionF<E> filterNotNull() {
+        return filter(Function1B.<E>notNullF());
+    }
+
     public abstract IteratorF<E> iterator();
 
     public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> filter2(Function1B<? super E> p) {

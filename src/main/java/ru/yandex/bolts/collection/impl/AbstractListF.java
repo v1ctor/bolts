@@ -51,6 +51,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         throw new RuntimeException("weaving must be enabled");
     }
 
+    @Override
+    public ListF<E> filterNotNull() {
+        return filter(Function1B.<E>notNullF());
+    }
+
     /**
      * @deprecated
      * @see #partition(Function1B)

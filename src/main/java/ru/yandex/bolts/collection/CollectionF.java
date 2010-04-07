@@ -31,6 +31,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     CollectionF<E> filterW(@FunctionParameter boolean p);
 
+    CollectionF<E> filterNotNull();
+
     /**
      * Pair of collection, first contains elements matching p, second contains element matching !p
      *

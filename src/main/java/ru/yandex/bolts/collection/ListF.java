@@ -27,6 +27,9 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     @Override
     ListF<E> filterW(@FunctionParameter boolean p);
 
+    @Override
+    ListF<E> filterNotNull();
+
     /**
      * Return pair of lists, first list contains elements matching <code>p</code>
      * and second lists contains elements matching <code>!p</code>.
