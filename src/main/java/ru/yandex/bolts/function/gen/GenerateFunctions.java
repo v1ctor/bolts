@@ -171,7 +171,7 @@ public class GenerateFunctions {
                 w.write("\n");
             }
 
-            if (paramCount > 1 && returnType != ReturnType.OBJECT) {
+            if (paramCount > 1) {
                 String rt = "Function<Tuple" + paramCount + "<" + paramTypeLetters.mkString(", ") + ">, " + returnTypeNameObject(returnType) + ">";
                 w.write("    public " + rt + " asFunction() {\n");
                 w.write("        return new " + rt + "() {\n");

@@ -96,6 +96,18 @@ public abstract class Function3<A, B, C, R> {
         return Function3.<A, B, C, R>bind3F2().bind1(this);
     }
 
+    public Function<Tuple3<A, B, C>, R> asFunction() {
+        return new Function<Tuple3<A, B, C>, R>() {
+            public R apply(Tuple3<A, B, C> t) {
+                return Function3.this.apply(t._1, t._2, t._3);
+            }
+
+            public String toString() {
+                return Function3.this.toString();
+            }
+        };
+    }
+
     @SuppressWarnings("unchecked")
     public <A1, B1, C1, R1> Function3<A1, B1, C1, R1> uncheckedCast() {
         return (Function3<A1, B1, C1, R1>) this;
