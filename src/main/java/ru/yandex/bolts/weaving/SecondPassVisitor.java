@@ -248,8 +248,8 @@ public class SecondPassVisitor extends ClassAdapter {
             if (isInLambda())
                 throw new IllegalStateException();
             lambdaWriter0 = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-            if (false && LambdaTransformer.DEBUG)
-                lambdaWriter = new CheckClassAdapter(lambdaWriter0);
+            if (LambdaTransformer.DEBUG)
+                lambdaWriter = new CheckClassAdapter(lambdaWriter0, false);
             else
                 lambdaWriter = lambdaWriter0;
             // XXX: better name
