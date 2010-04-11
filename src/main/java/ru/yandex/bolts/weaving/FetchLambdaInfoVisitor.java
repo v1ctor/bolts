@@ -61,7 +61,10 @@ public class FetchLambdaInfoVisitor extends EmptyVisitor {
             Option<FunctionParameterInfo> impl = functionParameterCache.getFunctionParameterFor(Type.getObjectType(owner), method);
             if (impl.isDefined()) {
                 if (functionArity != impl.get().getFunctionType().getArity())
-                    throw new IllegalStateException("wrong number of parameters when calling " + name);
+                    throw new IllegalStateException(
+                            "wrong number of parameters when calling " + name + ", " +
+                            "we have " + functionArity + " params when passing to " + impl.get().getImplMethod()
+                            );
 
                 currentMethod.lastLambda().functionType = impl.get().getFunctionType();
 
