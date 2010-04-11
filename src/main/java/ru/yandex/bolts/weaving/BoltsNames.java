@@ -1,5 +1,8 @@
 package ru.yandex.bolts.weaving;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.Method;
 
@@ -23,14 +26,23 @@ public class BoltsNames {
 
     public static final String FUNCTION_PACKAGE_INTERNAL_NAME = FUNCTION_TYPE.getInternalName().replaceFirst("/[^/]*$", "");
 
-    public static Method P_METHOD = new Method("p", OBJECT_TYPE, new Type[0]);
-
     public static Type functionType(FunctionType functionType) {
         return Type.getObjectType(functionType.fullClassName().replace('.', '/'));
     }
 
-    public static boolean isNewLambdaMethod(Type owner, Method method) {
-        return Cf.list(COLLECTIONSF_TYPE, CF_TYPE).contains(owner) && method.equals(P_METHOD);
+    private static final Pattern P_METHOD_NAME_PATTERN = Pattern.compile("p(\\d+)");
+
+    public static Option<Integer> isNewLambdaMethod(Type owner, Method method) {
+        if (!Cf.list(COLLECTIONSF_TYPE, CF_TYPE).contains(owner))
+            return Option.none();
+        if (!method.getReturnType().equals(OBJECT_TYPE) || method.getArgumentTypes().length != 0)
+            return Option.none();
+        if (method.getName().equals("p"))
+            return Option.some(1);
+        Matcher m = P_METHOD_NAME_PATTERN.matcher(method.getName());
+        if (!m.matches())
+            return Option.none();
+        return Option.some(Integer.parseInt(m.group(1)));
     }
 
     // XXX: check annotations

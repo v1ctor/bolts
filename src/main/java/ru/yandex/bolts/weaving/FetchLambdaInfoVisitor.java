@@ -52,15 +52,16 @@ public class FetchLambdaInfoVisitor extends EmptyVisitor {
     @Override
     public void visitMethodInsn(int opcode, String owner, String name, String desc) {
         Method method = new Method(name, desc);
-        if (BoltsNames.isNewLambdaMethod(Type.getObjectType(owner), method)) {
+        Option<Integer> p = BoltsNames.isNewLambdaMethod(Type.getObjectType(owner), method);
+        if (p.isDefined()) {
             if (functionArity == 0)
                 currentMethod.newLambda();
-            ++functionArity;
+            functionArity = Math.max(functionArity, p.get());
         } else if (isInLambda()) {
             Option<FunctionParameterInfo> impl = functionParameterCache.getFunctionParameterFor(Type.getObjectType(owner), method);
             if (impl.isDefined()) {
                 if (functionArity != impl.get().getFunctionType().getArity())
-                    throw new IllegalStateException("wrong number of parameters");
+                    throw new IllegalStateException("wrong number of parameters when calling " + name);
 
                 currentMethod.lastLambda().functionType = impl.get().getFunctionType();
 

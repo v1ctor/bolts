@@ -56,7 +56,7 @@ public class SecondPassVisitor extends ClassAdapter {
         @Override
         public void visitMethodInsn(int opcode, String owner, String name, String desc) {
             Method method = new Method(name, desc);
-            if (BoltsNames.isNewLambdaMethod(Type.getObjectType(owner), method)) {
+            if (BoltsNames.isNewLambdaMethod(Type.getObjectType(owner), method).isDefined()) {
                 if (!isInLambda()) {
                     currentLambda = lambdasIterator.next();
                     currentLambdaParam = 0;

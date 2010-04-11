@@ -31,7 +31,7 @@ public class WeavingExample extends TestCase {
 
     @Test
     public void testFoldRight() {
-        int r = Cf.list(1, 2, 3).foldRightW(1, Cf.<Integer>p() * Cf.<Integer>p());
+        int r = Cf.list(1, 2, 3).foldRightW(1, Cf.<Integer>p1() * Cf.<Integer>p2());
         assertEquals(6, r);
     }
 

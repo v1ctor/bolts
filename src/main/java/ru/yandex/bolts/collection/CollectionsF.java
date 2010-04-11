@@ -790,4 +790,16 @@ public class CollectionsF {
     public static <T> T p() {
         throw new RuntimeException("weaving must be enabled");
     }
+
+    public static <T> T p1() {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
+    public static <T> T p2() {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
+    public static <T> T p3() {
+        throw new RuntimeException("weaving must be enabled");
+    }
 } //~

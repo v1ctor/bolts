@@ -20,7 +20,7 @@ public class FirstPassVisitor extends EmptyVisitor {
     @Override
     public void visitMethodInsn(int opcode, String owner, String name, String desc) {
         if (opcode == Opcodes.INVOKESTATIC) {
-            if (BoltsNames.isNewLambdaMethod(Type.getObjectType(owner), new Method(name, desc))) {
+            if (BoltsNames.isNewLambdaMethod(Type.getObjectType(owner), new Method(name, desc)).isDefined()) {
                 hasLambdas = true;
             }
         }
