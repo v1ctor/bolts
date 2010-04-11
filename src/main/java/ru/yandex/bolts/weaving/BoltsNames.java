@@ -45,22 +45,6 @@ public class BoltsNames {
         return Option.some(Integer.parseInt(m.group(1)));
     }
 
-    // XXX: check annotations
-    /*
-    public static Option<ReturnType> isFunctionAcceptingMethod(Method method) {
-        if (method.getArgumentTypes().length != 1)
-            return Option.none();
-        if (!method.getName().endsWith("W"))
-            return Option.none();
-        if (method.getArgumentTypes()[0].equals(OBJECT_TYPE))
-            return Option.some(ReturnType.OBJECT);
-        else if (method.getArgumentTypes()[0].equals(Type.BOOLEAN_TYPE))
-            return Option.some(ReturnType.BOOLEAN);
-        else
-            return Option.none();
-    }
-    */
-
     public static Option<FunctionType> isFunction(Type type) {
         if (type.getSort() != Type.OBJECT)
             return Option.none();
@@ -70,14 +54,5 @@ public class BoltsNames {
     }
 
     public static Method FUNCTION_APPLY_METHOD = new Method("apply", OBJECT_TYPE, new Type[] { OBJECT_TYPE });
-
-    /*
-    public static Method replacementMethod(Method method, FunctionType functionType) {
-        Method replacementMethod = new Method(
-                method.getName().substring(0, method.getName().length() - 1),
-                method.getReturnType(), new Type[] { functionType(functionType) });
-        return replacementMethod;
-    }
-    */
 
 } //~
