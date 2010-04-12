@@ -83,6 +83,14 @@ public abstract class Function2<A, B, R> {
         };
     }
 
+    public <S> Function2<A, B, S> andThen(final Function<? super R, ? extends S> f) {
+        return new Function2<A, B, S>() {
+            public S apply(A a, B b) {
+                return f.apply(Function2.this.apply(a, b));
+            }
+        };
+    }
+
     @SuppressWarnings("unchecked")
     public <A1, B1, R1> Function2<A1, B1, R1> uncheckedCast() {
         return (Function2<A1, B1, R1>) this;
