@@ -337,4 +337,15 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         };
     }
 
+    /**
+     * Delegate to {@link #some(Object)}.
+     */
+    public static <U> Function<U, Option<U>> someF() {
+        return new Function<U, Option<U>>() {
+            public Option<U> apply(U a) {
+                return some(a);
+            }
+        };
+    }
+
 } //~
