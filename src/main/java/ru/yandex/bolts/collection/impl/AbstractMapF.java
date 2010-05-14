@@ -155,7 +155,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return UnmodifiableDefaultMapF.wrap(this);
     }
 
-    public <W> MapF<K, W> mapValues(final Function<? super V, W> f) {
+    public <W> MapF<K, W> mapValues(final Function<? super V, ? extends W> f) {
         if (isEmpty()) return emptyMap();
 
         ListF<Tuple2<K, W>> xx = entrySet().map(new Function<Entry<K, V>, Tuple2<K, W>>() {
@@ -166,7 +166,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return newMapFromTuples(xx);
     }
 
-    public <W> ListF<W> mapEntries(final Function2<K, V, W> f) {
+    public <W> ListF<W> mapEntries(final Function2<? super K, ? super V, ? extends W> f) {
         return entrySet().map(new Function<Entry<K, V>, W>() {
             public W apply(Entry<K, V> entry) {
                 return f.apply(entry.getKey(), entry.getValue());

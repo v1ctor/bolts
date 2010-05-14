@@ -47,11 +47,11 @@ public interface MapF<K, V> extends Map<K, V> {
 
     MapF<K, V> filterKeys(Function1B<? super K> p);
 
-    <W> MapF<K, W> mapValues(Function<? super V, W> f);
+    <W> MapF<K, W> mapValues(Function<? super V, ? extends W> f);
 
     //<W> ListF<W> map(Function<Entry<K, V>, W> f);
 
-    <W> ListF<W> mapEntries(Function2<K, V, W> f);
+    <W> ListF<W> mapEntries(Function2<? super K, ? super V, ? extends W> f);
 
     MapF<K, V> filterEntries(Function1B<Entry<K, V>> p);
 
