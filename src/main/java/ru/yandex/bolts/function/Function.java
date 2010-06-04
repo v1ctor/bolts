@@ -134,7 +134,7 @@ public abstract class Function<A, R> {
         };
     }
 
-    public Function<A, Function0<R>> bind2F() {
+    public Function<A, Function0<R>> bindF() {
         return Function.<A, R>bindF2().bind1(this);
     }
 
