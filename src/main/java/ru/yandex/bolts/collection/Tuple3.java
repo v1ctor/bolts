@@ -3,6 +3,7 @@ package ru.yandex.bolts.collection;
 import java.io.Serializable;
 
 import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function3;
 
 /**
  * Triple.
@@ -173,5 +174,15 @@ public class Tuple3<T1, T2, T3> implements Serializable {
     public static <A, B, C> Tuple3<A, B, C> tuple(A a, B b, C c) {
         return new Tuple3<A, B, C>(a, b, c);
     }
+
+    /** Constructor function */
+    public static <A, B, C> Function3<A, B, C, Tuple3<A, B, C>> consF() {
+        return new Function3<A, B, C, Tuple3<A, B, C>>() {
+            public Tuple3<A, B, C> apply(A a, B b, C c) {
+                return tuple(a, b, c);
+            }
+        };
+    }
+
 
 } //~
