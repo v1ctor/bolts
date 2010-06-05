@@ -5,8 +5,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import ru.yandex.bolts.collection.impl.DefaultListF;
-import ru.yandex.bolts.function.*;
+import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.Function2B;
+import ru.yandex.bolts.function.Function2I;
+import ru.yandex.bolts.function.Function2V;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
@@ -14,8 +18,11 @@ import ru.yandex.bolts.function.forhuman.Comparator;
  *
  * @author Stepan Koltsov
  * @author Iliya Roubin
+ *
+ * @deprecated
+ * @see Tuple2List
  */
-public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
+public class ListMap<K, V> extends Tuple2List<K, V> {
     private ListMap(List<Tuple2<K, V>> list) {
         super(list);
     }
@@ -60,43 +67,36 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return partitionLm(Tuple2.<K, V>get2F().andThen(p));
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> subList(int fromIndex, int toIndex) {
         return ListMap.listMap(super.subList(fromIndex, toIndex));
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> plus(List<? extends Tuple2<K, V>> addition) {
         return ListMap.listMap(super.plus(addition));
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> plus(Collection<? extends Tuple2<K, V>> elements) {
         return ListMap.listMap(super.plus(elements));
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> plus(Iterator<? extends Tuple2<K, V>> iterator) {
         return ListMap.listMap(super.plus(iterator));
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> plus(Tuple2<K, V>... additions) {
         return ListMap.listMap(super.plus(additions));
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> take(int count) {
         return ListMap.listMap(super.take(count));
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> drop(int count) {
         return ListMap.listMap(super.drop(count));
@@ -107,25 +107,21 @@ public class ListMap<K, V> extends DefaultListF<Tuple2<K,V>> {
         return ListMap.listMap();
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> reverse() {
         return ListMap.listMap(super.reverse());
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> sort(Function2I<? super Tuple2<K, V>, ? super Tuple2<K, V>> comparator) {
         return ListMap.listMap(super.sort(comparator));
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> sortBy(Function<? super Tuple2<K, V>, ?> f) {
         return ListMap.listMap(super.sortBy(f));
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public ListMap<K, V> sortByDesc(Function<? super Tuple2<K, V>, ?> f) {
         return ListMap.listMap(super.sortByDesc(f));

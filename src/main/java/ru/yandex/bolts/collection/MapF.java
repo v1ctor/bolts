@@ -83,7 +83,7 @@ public interface MapF<K, V> extends Map<K, V> {
 
     SetF<Entry<K, V>> entrySet();
 
-    ListMap<K, V> entries();
+    Tuple2List<K, V> entries();
 
     /** Values */
     CollectionF<V> values();

@@ -1,6 +1,6 @@
 package ru.yandex.bolts.weaving;
 
-import ru.yandex.bolts.collection.ListMap;
+import ru.yandex.bolts.collection.Tuple2List;
 
 /**
  * @author Stepan Koltsov
@@ -8,9 +8,9 @@ import ru.yandex.bolts.collection.ListMap;
 public class ClassTransformationResult {
     private final byte[] transformedClass;
 
-    private final ListMap<String, byte[]> extraClasses;
+    private final Tuple2List<String, byte[]> extraClasses;
 
-    public ClassTransformationResult(byte[] transformedClass, ListMap<String, byte[]> extraClasses) {
+    public ClassTransformationResult(byte[] transformedClass, Tuple2List<String, byte[]> extraClasses) {
         this.transformedClass = transformedClass;
         this.extraClasses = extraClasses;
     }
@@ -19,7 +19,7 @@ public class ClassTransformationResult {
         return transformedClass;
     }
 
-    public ListMap<String, byte[]> getExtraClasses() {
+    public Tuple2List<String, byte[]> getExtraClasses() {
         return extraClasses;
     }
 

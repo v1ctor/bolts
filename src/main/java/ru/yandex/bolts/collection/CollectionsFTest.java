@@ -1,7 +1,5 @@
 package ru.yandex.bolts.collection;
 
-import java.util.Collection;
-
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.function.Function;
@@ -53,7 +51,7 @@ public class CollectionsFTest extends TestCase {
     }
 
     public void testMapFandSortFandUniqueF() {
-        ListMap<String, Integer> data = ListMap.<String, Integer>listMap()
+        Tuple2List<String, Integer> data = Tuple2List.<String, Integer>tuple2List()
                 .plus1("foo", 102)
                 .plus1("bar", 98)
                 .plus1("baz", 98)

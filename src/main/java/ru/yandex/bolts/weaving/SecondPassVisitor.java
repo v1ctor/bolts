@@ -14,8 +14,8 @@ import org.objectweb.asm.util.CheckClassAdapter;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
-import ru.yandex.bolts.collection.ListMap;
 import ru.yandex.bolts.collection.Option;
+import ru.yandex.bolts.collection.Tuple2List;
 import ru.yandex.bolts.weaving.MethodInfo.LambdaInfo;
 
 public class SecondPassVisitor extends ClassAdapter {
@@ -27,7 +27,7 @@ public class SecondPassVisitor extends ClassAdapter {
 
     private int currentLambdaId;
 
-    ListMap<String, byte[]> extraClasses = ListMap.arrayList();
+    Tuple2List<String, byte[]> extraClasses = Tuple2List.arrayList();
 
     public SecondPassVisitor(ClassVisitor cv, FetchLambdaInfoVisitor fetchLambdaInfoVisitor, FunctionParameterCache functionParameterCache) {
         super(cv);

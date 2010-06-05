@@ -1,8 +1,8 @@
 package ru.yandex.bolts.collection;
 
-import java.util.List;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
@@ -54,7 +54,7 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     /**
      * Zip with index.
      */
-    ListMap<E, Integer> zipWithIndex();
+    Tuple2List<E, Integer> zipWithIndex();
 
     /** Concatenate two lists */
     ListF<E> plus(List<? extends E> addition);
@@ -120,9 +120,9 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     <F> ListF<F> uncheckedCast();
 
     /** List of pairs of elements with the same index in two lists */
-    <B> ListMap<E, B> zip(ListF<B> that);
+    <B> Tuple2List<E, B> zip(ListF<B> that);
 
-    <B> ListMap<E, B> zipWith(Function<? super E, ? extends B> f);
+    <B> Tuple2List<E, B> zipWith(Function<? super E, ? extends B> f);
 
-    <B> ListMap<E, B> zipWithW(@FunctionParameter B f);
+    <B> Tuple2List<E, B> zipWithW(@FunctionParameter B f);
 } //~

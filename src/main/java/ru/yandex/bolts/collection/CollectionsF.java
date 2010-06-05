@@ -376,7 +376,7 @@ public class CollectionsF {
 
     /** Create map from sequence of entries */
     public static <K, V> MapF<K, V> map(Collection<Tuple2<K, V>> pairs) {
-        return ListMap.listMap(Cf.x(pairs).toList()).toMap();
+        return Tuple2List.tuple2List(Cf.x(pairs).toList()).toMap();
     }
 
     /**

@@ -13,9 +13,9 @@ import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.ListIteratorF;
-import ru.yandex.bolts.collection.ListMap;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.Tuple2;
+import ru.yandex.bolts.collection.Tuple2List;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 
@@ -76,8 +76,8 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
-    public ListMap<E, Integer> zipWithIndex() {
-        return ListMap.listMap(iterator().zipWithIndex().toList());
+    public Tuple2List<E, Integer> zipWithIndex() {
+        return Tuple2List.tuple2List(iterator().zipWithIndex().toList());
     }
 
     @SuppressWarnings({"unchecked"})
@@ -203,13 +203,13 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         };
     }
 
-    public <B> ListMap<E, B> zip(ListF<B> that) {
-        return ListMap.listMapFromKeysValues(this, that);
+    public <B> Tuple2List<E, B> zip(ListF<B> that) {
+        return Tuple2List.zip(this, that);
     }
 
     @Override
-    public <B> ListMap<E, B> zipWith(final Function<? super E, ? extends B> f) {
-        return ListMap.listMap(map(new Function<E, Tuple2<E, B>>() {
+    public <B> Tuple2List<E, B> zipWith(final Function<? super E, ? extends B> f) {
+        return Tuple2List.tuple2List(map(new Function<E, Tuple2<E, B>>() {
             public Tuple2<E, B> apply(E a) {
                 return Tuple2.<E, B>tuple(a, f.apply(a));
             }
@@ -217,7 +217,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
-    public <B> ListMap<E, B> zipWithW(B f) {
+    public <B> Tuple2List<E, B> zipWithW(B f) {
         throw new RuntimeException("weaving must be enabled");
     }
 
