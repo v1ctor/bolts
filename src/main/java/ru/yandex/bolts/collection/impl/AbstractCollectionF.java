@@ -64,6 +64,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         };
     }
 
+    @Override
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
+
     public ListF<E> toList() {
         return CollectionsF.list(this);
     }

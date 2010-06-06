@@ -22,6 +22,8 @@ import ru.yandex.bolts.weaving.annotation.FunctionParameter;
  * @author Stepan Koltsov
  */
 public interface CollectionF<E> extends Collection<E>, IterableF<E> {
+    boolean isNotEmpty();
+
     IteratorF<E> iterator();
 
     /**
