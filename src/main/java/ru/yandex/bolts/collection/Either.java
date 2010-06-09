@@ -69,6 +69,11 @@ public class Either<A, B> {
             return value;
         }
 
+        @Override
+        public String toString() {
+            return "Either.Left(" + value + ")";
+        }
+
     }
 
     private static class Right<A, B> extends Either<A, B> {
@@ -81,6 +86,11 @@ public class Either<A, B> {
         @Override
         public B getRight() {
             return value;
+        }
+
+        @Override
+        public String toString() {
+            return "Either.Right(" + value + ")";
         }
     }
 
@@ -123,6 +133,11 @@ public class Either<A, B> {
             if (isLeft()) return Either.left(f.apply(get()));
             else return either.uncheckedCast();
         }
+
+        @Override
+        public String toString() {
+            return "Either.LeftProjection(" + getO() + ")";
+        }
     }
 
     public static class RightProjection<A, B> extends Projection<A, B, B> {
@@ -135,6 +150,12 @@ public class Either<A, B> {
             if (isRight()) return Either.right(f.apply(get()));
             else return either.uncheckedCast();
         }
+
+        @Override
+        public String toString() {
+            return "Either.RightProjection(" + getO() + ")";
+        }
+
     }
 
     public static <A, B> Either<A, B> left(A a) { return new Left<A, B>(a); }
