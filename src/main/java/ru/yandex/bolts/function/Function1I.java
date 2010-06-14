@@ -1,12 +1,24 @@
 package ru.yandex.bolts.function;
 
-
 /**
  * @author Stepan Koltsov
  */
 public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     public abstract int apply(A a);
 
+    public Function<A, Integer> asFunction() {
+        return new Function<A, Integer>() {
+            public Integer apply(A a) {
+                return Function1I.this.apply(a);
+            }
+
+            @Override
+            public String toString() {
+                return Function1I.this.toString();
+            }
+        };
+    }
+    
     @Override
     public int compareTo(A o) {
         return apply(o);

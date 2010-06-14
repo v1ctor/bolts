@@ -56,9 +56,9 @@ public abstract class Function2B<A, B> {
         return Function2B.<A, B>bind2F2().bind1(this);
     }
 
-    public Function1B<Tuple2<A, B>> asTupleFunction() {
-        return new Function1B<Tuple2<A, B>>() {
-            public boolean apply(Tuple2<A, B> a) {
+    public Function<Tuple2<A, B>, Boolean> asFunction() {
+        return new Function<Tuple2<A, B>, Boolean>() {
+            public Boolean apply(Tuple2<A, B> a) {
                 return Function2B.this.apply(a.get1(), a.get2());
             }
         };

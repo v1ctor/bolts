@@ -1,5 +1,6 @@
 package ru.yandex.bolts.function;
 
+import ru.yandex.bolts.collection.Tuple2;
 
 
 /**
@@ -116,6 +117,15 @@ public abstract class Function2I<A, B> {
             }
         };
     }
+
+    public Function<Tuple2<A, B>, Integer> asFunction() {
+        return new Function<Tuple2<A, B>, Integer>() {
+            public Integer apply(Tuple2<A, B> a) {
+                return Function2I.this.apply(a.get1(), a.get2());
+            }
+        };
+    }
+
 
     /** Invert current comparator */
     public Function2I<B, A> invert() {
