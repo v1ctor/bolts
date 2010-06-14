@@ -4,6 +4,8 @@ import org.apache.commons.collections.Transformer;
 
 import fj.F;
 
+import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
 
@@ -233,6 +235,15 @@ public abstract class Function<A, R> {
 
             public String toString() {
                 return "const " + b;
+            }
+        };
+    }
+
+    public Function<A, R> memoize() {
+        return new Function<A, R>() {
+            private final MapF<A, R> cache = Cf.hashMap();
+            public R apply(A a) {
+                return cache.getOrElseUpdate(a, Function.this);
             }
         };
     }

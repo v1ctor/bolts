@@ -1,5 +1,10 @@
 package ru.yandex.bolts.function;
 
+import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.MapF;
+import ru.yandex.bolts.collection.Option;
+import ru.yandex.bolts.collection.SetF;
+
 
 /**
  * @author Stepan Koltsov
@@ -117,4 +122,18 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
             }
         };
     }
+
+    public Function0<R> memoize() {
+        return new Function0<R>() {
+            private boolean haveValue = false;
+            private R cached;
+            public R apply() {
+                if (haveValue) return cached;
+                cached = Function0.this.apply();
+                haveValue = true;
+                return cached;
+            }
+        };
+    }
+
 } //~

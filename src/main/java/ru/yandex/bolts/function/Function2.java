@@ -15,6 +15,8 @@ import ru.yandex.bolts.collection.Tuple2;
 public abstract class Function2<A, B, R> {
     public abstract R apply(A a, B b);
 
+
+
     /** Bind first param to the given value */
     public Function<B, R> bind1(final A a) {
         return new Function<B, R>() {
@@ -96,5 +98,13 @@ public abstract class Function2<A, B, R> {
         return (Function2<A1, B1, R1>) this;
     }
 
+    public Function2<A, B, R> memoize() {
+        return new Function2<A, B, R>() {
+            private final Function<Tuple2<A, B>, R> f = asFunction().memoize();
+            public R apply(A a, B b) {
+                return f.apply(Tuple2.tuple(a, b));
+            }
+        };
+    }
 
 } //~
