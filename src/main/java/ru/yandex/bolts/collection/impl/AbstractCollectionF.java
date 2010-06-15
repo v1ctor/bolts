@@ -479,4 +479,9 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         throw new RuntimeException("weaving must be enabled");
     }
 
+    @Override
+    public CollectionF<E> tee(Function1V<? super CollectionF<E>> f) {
+        f.apply(this);
+        return this;
+    }
 } //~

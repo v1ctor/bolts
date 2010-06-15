@@ -15,6 +15,7 @@ import ru.yandex.bolts.collection.Tuple2List;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2B;
 import ru.yandex.bolts.function.Function2V;
@@ -277,4 +278,10 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         }
     }
 
+    @Override
+    public MapF<K, V> tee(Function1V<? super MapF<K, V>> f) {
+        f.apply(this);
+        return this;
+    }
+    
 } //~

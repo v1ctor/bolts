@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
 import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
@@ -18,6 +19,7 @@ import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.Tuple2List;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function1V;
 
 /**
  * Implementation of {@link ListF} algorithms.
@@ -1001,4 +1003,8 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         throw new IndexOutOfBoundsException();
     }
 
+    @Override
+    public ListF<E> tee(Function1V<? super CollectionF<E>> f) {
+        return (ListF<E>) super.tee(f);
+    }
 } //~

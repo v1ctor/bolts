@@ -4,6 +4,8 @@ import static ru.yandex.bolts.collection.CollectionsF.list;
 import static ru.yandex.bolts.collection.CollectionsF.set;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.concurrent.atomic.AtomicReference;
 
 import junit.framework.TestCase;
 
@@ -110,4 +112,17 @@ public class AbstractCollectionFTest extends TestCase {
         assertEquals("d", coll.max());
         assertEquals("a", coll.max(Comparator.naturalComparator().<String, String>uncheckedCast().invert()));
     }
+
+    public void testTee() {
+        CollectionF<Integer> m1 = Cf.list(1, 2);
+        final AtomicReference<Integer> counter = new AtomicReference<Integer>(0);
+        CollectionF<Integer> m2 = m1.tee(new Function1V<Collection<Integer>>() {
+            public void apply(Collection<Integer> l) {
+                counter.set(l.size());
+            }
+        });
+        assertEquals(m1, m2);
+        assertEquals(Integer.valueOf(2), counter.get());
+    }
+
 } //~

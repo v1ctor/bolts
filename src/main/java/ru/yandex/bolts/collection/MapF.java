@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2B;
 import ru.yandex.bolts.function.Function2V;
@@ -97,4 +98,6 @@ public interface MapF<K, V> extends Map<K, V> {
     MapF<K, V> unmodifiable();
 
     <L, W> MapF<L, W> uncheckedCast();
+
+    MapF<K, V> tee(Function1V<? super MapF<K, V>> f);
 } //~

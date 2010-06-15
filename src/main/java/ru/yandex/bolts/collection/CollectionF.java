@@ -228,4 +228,5 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     E maxW(@FunctionParameter int comparator);
 
+    CollectionF<E> tee(Function1V<? super CollectionF<E>> f);
 } //~
