@@ -135,7 +135,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
 
     @Override
     public boolean forAllEntries(Function2B<? super K, ? super V> op) {
-        return entries().forAll(op.asTupleFunction().uncheckedCast());
+        return entries().forAll(op.asFunction1B().uncheckedCast());
     }
 
     @Override
@@ -276,4 +276,5 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
             return value;
         }
     }
+
 } //~

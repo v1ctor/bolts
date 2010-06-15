@@ -258,7 +258,7 @@ public class ListMap<K, V> extends Tuple2List<K, V> {
     }
 
     public boolean forAll(Function2B<K, V> f) {
-        return super.forAll(f.asTupleFunction());
+        return super.forAll(f.asFunction1B());
     }
 
     public String mkString(String elemSep, final String tupleSep) {
