@@ -29,6 +29,19 @@ public abstract class Function1B<A> {
         };
     }
 
+    public static <A> Function1B<A> asFunction1B(final Function<A, Boolean> f) {
+        return new Function1B<A>() {
+            public boolean apply(A a) {
+                return f.apply(a);
+            }
+
+            @Override
+            public String toString() {
+                return f.toString();
+            }
+        };
+    }
+
     @SuppressWarnings("unchecked")
     public <B> Function1B<B> uncheckedCast() {
         return (Function1B<B>) this;
@@ -259,6 +272,10 @@ public abstract class Function1B<A> {
                 return mapper.toString();
             }
         };
+    }
+
+    public Function1B<A> memoize() {
+        return asFunction1B(asFunction().memoize());
     }
 
 } //~

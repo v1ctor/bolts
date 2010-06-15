@@ -126,6 +126,18 @@ public abstract class Function2I<A, B> {
         };
     }
 
+    public static <A, B> Function2I<A, B> asFunction2I(final Function<Tuple2<A, B>, Integer> f) {
+        return new Function2I<A, B>() {
+            public int apply(A a, B b) {
+                return f.apply(Tuple2.tuple(a, b));
+            }
+            
+            @Override
+            public String toString() {
+                return f.toString();
+            }
+        };
+    }
 
     /** Invert current comparator */
     public Function2I<B, A> invert() {
@@ -150,6 +162,10 @@ public abstract class Function2I<A, B> {
     @SuppressWarnings("unchecked")
     public <C, D> Function2I<C, D> uncheckedCast() {
         return (Function2I<C, D>) this;
+    }
+
+    public Function2I<A, B> memoize() {
+        return asFunction2I(asFunction().memoize());
     }
 
 } //~

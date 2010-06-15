@@ -19,6 +19,19 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
         };
     }
     
+    public static <A> Function1I<A> asFunction1I(final Function<A, Integer> f) {
+        return new Function1I<A>() {
+            public int apply(A a) {
+                return f.apply(a);
+            }
+            
+            @Override
+            public String toString() {
+                return f.toString();
+            }
+        };
+    }
+    
     @Override
     public int compareTo(A o) {
         return apply(o);
@@ -169,4 +182,8 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
         };
     }
 
+    public Function1I<A> memoize() {
+        return asFunction1I(asFunction().memoize());
+    }
+    
 } //~

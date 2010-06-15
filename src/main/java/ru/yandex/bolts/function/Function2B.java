@@ -73,6 +73,19 @@ public abstract class Function2B<A, B> {
         };
     }
 
+    public static <A, B> Function2B<A, B> asFunction2B(final Function<Tuple2<A, B>, Boolean> f) {
+        return new Function2B<A, B>() {
+            public boolean apply(A a, B b) {
+                return f.apply(Tuple2.tuple(a, b));
+            }
+
+            @Override
+            public String toString() {
+                return f.toString();
+            }
+        };
+    }
+
     public Function2B<A, B> notF() {
         return new Function2B<A, B>() {
             public boolean apply(A a, B b) {
@@ -126,6 +139,10 @@ public abstract class Function2B<A, B> {
      */
     public static <A> boolean equals(A a, A b) {
         return a == null || b == null ? a == b : a.equals(b);
+    }
+
+    public Function2B<A, B> memoize() {
+        return asFunction2B(asFunction().memoize());
     }
 
 } //~
