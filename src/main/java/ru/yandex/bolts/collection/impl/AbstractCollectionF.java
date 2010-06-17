@@ -253,13 +253,24 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return r.convertToReadOnly();
     }
 
-    @SuppressWarnings({"unchecked"})
-    public ListF<E> sort(Function2I<? super E, ? super E> comparator) {
+    @Override
+    public ListF<E> sort(java.util.Comparator<? super E> comparator) {
         if (size() <= 1) return toList();
 
         ArrayListF<E> r = new ArrayListF<E>(this);
-        Collections.sort(r, Comparator.wrap((Function2I<E, E>) comparator));
+        Collections.sort(r, comparator);
         return r.convertToReadOnly();
+    }
+
+    @Override
+    public ListF<E> sort(Comparator<? super E> comparator) {
+        return sort((java.util.Comparator<? super E>) comparator);
+    }
+
+    @Override
+    @SuppressWarnings({"unchecked"})
+    public ListF<E> sort(Function2I<? super E, ? super E> comparator) {
+        return sort(Comparator.wrap((Function2I<E, E>) comparator));
     }
 
     @Override

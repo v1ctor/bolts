@@ -96,6 +96,10 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     /** Elements sorted by given comparator */
     ListF<E> sort(Function2I<? super E, ? super E> comparator);
 
+    ListF<E> sort(Comparator<? super E> comparator);
+
+    ListF<E> sort(java.util.Comparator<? super E> comparator);
+
     ListF<E> sortW(@FunctionParameter int comparator);
 
     ListF<E> sortBy(Function<? super E, ?> f);
