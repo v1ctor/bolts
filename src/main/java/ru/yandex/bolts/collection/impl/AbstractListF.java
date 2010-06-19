@@ -44,7 +44,13 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return iterator.toList();
     }
 
+    @Override
     public ListF<E> filter(Function1B<? super E> p) {
+        return (ListF<E>) super.filter(p);
+    }
+
+    @Override
+    public ListF<E> filter(Function<? super E, Boolean> p) {
         return (ListF<E>) super.filter(p);
     }
 
@@ -67,8 +73,15 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return (Tuple2<ListF<E>, ListF<E>>) super.filter2(p);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Tuple2<ListF<E>, ListF<E>> partition(Function1B<? super E> p) {
+        return (Tuple2<ListF<E>, ListF<E>>) super.partition(p);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Tuple2<ListF<E>, ListF<E>> partition(Function<? super E, Boolean> p) {
         return (Tuple2<ListF<E>, ListF<E>>) super.partition(p);
     }
 
@@ -150,6 +163,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
+    public ListF<E> dropWhile(Function<? super E, Boolean> f) {
+        return dropWhile(Function1B.wrap(f));
+    }
+
+    @Override
     public ListF<E> dropWhileW(boolean p) {
         throw new RuntimeException("weaving must be enabled");
     }
@@ -157,6 +175,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     @Override
     public ListF<E> takeWhile(Function1B<? super E> f) {
         return iterator().takeWhile(f).toList();
+    }
+
+    @Override
+    public ListF<E> takeWhile(Function<? super E, Boolean> f) {
+        return takeWhile(Function1B.wrap(f));
     }
 
     @Override

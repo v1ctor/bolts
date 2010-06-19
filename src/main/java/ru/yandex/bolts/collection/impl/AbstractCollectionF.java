@@ -134,6 +134,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     @Override
+    public CollectionF<E> filter(Function<? super E, Boolean> p) {
+        return filter(Function1B.wrap(p));
+    }
+
+    @Override
     public CollectionF<E> filterW(boolean p) {
         throw new RuntimeException("weaving must be enabled");
     }
@@ -157,6 +162,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
             (p.apply(e) ? matched : unmatched).add(e);
         }
         return Tuple2.tuple(matched, unmatched);
+    }
+
+    @Override
+    public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function<? super E, Boolean> p) {
+        return partition(Function1B.wrap(p));
     }
 
     @Override

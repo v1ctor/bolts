@@ -22,7 +22,11 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
     IteratorF<E> reverseIterator();
 
+    @Override
     ListF<E> filter(Function1B<? super E> p);
+
+    @Override
+    ListF<E> filter(Function<? super E, Boolean> p);
 
     @Override
     ListF<E> filterW(@FunctionParameter boolean p);
@@ -43,7 +47,11 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
      * Return pair of lists, first list contains elements matching <code>p</code>
      * and second lists contains elements matching <code>!p</code>.
      */
+    @Override
     Tuple2<ListF<E>, ListF<E>> partition(Function1B<? super E> p);
+
+    @Override
+    Tuple2<ListF<E>, ListF<E>> partition(Function<? super E, Boolean> p);
 
     @Override
     Tuple2<ListF<E>, ListF<E>> partitionW(@FunctionParameter boolean p);
@@ -96,10 +104,14 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     /** Longest prefix of elements that satisfy p */
     ListF<E> takeWhile(Function1B<? super E> f);
 
+    ListF<E> takeWhile(Function<? super E, Boolean> f);
+
     ListF<E> takeWhileW(@FunctionParameter boolean p);
 
     /** Elements after {@link #takeWhile(Function1B)} */
     ListF<E> dropWhile(Function1B<? super E> f);
+
+    ListF<E> dropWhile(Function<? super E, Boolean> f);
 
     ListF<E> dropWhileW(@FunctionParameter boolean p);
 

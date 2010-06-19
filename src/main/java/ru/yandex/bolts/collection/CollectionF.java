@@ -31,6 +31,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     CollectionF<E> filter(Function1B<? super E> p);
 
+    CollectionF<E> filter(Function<? super E, Boolean> p);
+
     CollectionF<E> filterW(@FunctionParameter boolean p);
 
     CollectionF<E> filterNotNull();
@@ -45,6 +47,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     /** Pair of collection, first contains elements matching p, second contains element matching !p */
     Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function1B<? super E> p);
+
+    Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function<? super E, Boolean> p);
 
     Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partitionW(@FunctionParameter boolean p);
 

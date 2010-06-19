@@ -17,10 +17,13 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     IteratorF<E> iterator();
 
     /** Filter */
+    @Override
     SetF<E> filter(Function1B<? super E> p);
 
+    @Override
     SetF<E> filterW(@FunctionParameter boolean p);
 
+    @Override
     SetF<E> filterNotNull();
 
     /**
