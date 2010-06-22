@@ -380,11 +380,11 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
             @Override
             public ListF<E> next() {
                 if (!hasNext()) throw new NoSuchElementException();
-                ListF<E> items = Cf.arrayList(pageSize);
+                ArrayListF<E> items = new ArrayListF<E>(pageSize);
                 for (int i = 0; i < pageSize && AbstractIteratorF.this.hasNext(); ++i) {
                     items.add(AbstractIteratorF.this.next());
                 }
-                return items;
+                return items.convertToReadOnly();
             }
         };
     }
