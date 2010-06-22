@@ -508,7 +508,6 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     @Override
     public ListF<ListF<E>> paginate(int pageSize) {
-        if (pageSize <= 0) throw new IllegalArgumentException();
         return iterator().paginate(pageSize).toList();
     }
 } //~
