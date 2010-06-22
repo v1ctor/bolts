@@ -150,4 +150,30 @@ public class AbstractIteratorFTest extends TestCase {
         assertFalse(it.hasNext());
     }
 
+    public void testPaginate() {
+        ListF<Integer> l = Cf.list(1, 2, 3, 4, 5);
+        IteratorF<ListF<Integer>> i = l.iterator().paginate(3);
+        assertTrue(i.hasNext());
+        assertEquals(Cf.list(1, 2, 3), i.next());
+        assertTrue(i.hasNext());
+        assertEquals(Cf.list(4, 5), i.next());
+        assertFalse(i.hasNext());
+    }
+
+    public void testPaginateExact() {
+        ListF<Integer> l = Cf.list(1, 2, 3, 4);
+        IteratorF<ListF<Integer>> i = l.iterator().paginate(2);
+        assertTrue(i.hasNext());
+        assertEquals(Cf.list(1, 2), i.next());
+        assertTrue(i.hasNext());
+        assertEquals(Cf.list(3, 4), i.next());
+        assertFalse(i.hasNext());
+    }
+
+    public void testPaginateEmpty() {
+        ListF<Integer> l = Cf.list();
+        IteratorF<ListF<Integer>> i = l.iterator().paginate(3);
+        assertFalse(i.hasNext());
+    }
+
 } //~

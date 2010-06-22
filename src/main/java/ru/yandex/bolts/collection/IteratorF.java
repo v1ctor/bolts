@@ -100,4 +100,5 @@ public interface IteratorF<E> extends Iterator<E> {
 
     IteratorF<E> dropWhileW(@FunctionParameter E p);
 
+    IteratorF<ListF<E>> paginate(int pageSize);
 } //~

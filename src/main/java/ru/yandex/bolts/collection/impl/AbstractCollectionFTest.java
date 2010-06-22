@@ -12,6 +12,7 @@ import junit.framework.TestCase;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.Function;
@@ -125,4 +126,11 @@ public class AbstractCollectionFTest extends TestCase {
         assertEquals(Integer.valueOf(2), counter.get());
     }
 
+    public void testPaginate() {
+        assertEquals(Cf.list(Cf.list(1, 2, 3), Cf.list(4, 5)),
+                Cf.list(1, 2, 3, 4, 5).paginate(3));
+        assertEquals(Cf.list(Cf.list(1, 2), Cf.list(3, 4)),
+                Cf.list(1, 2, 3, 4).paginate(2));
+        assertEquals(Cf.<ListF<Integer>>list(), Cf.<Integer>list().paginate(3));
+    }
 } //~

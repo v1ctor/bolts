@@ -368,4 +368,24 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         throw new RuntimeException("weaving must be enabled");
     }
 
+    @Override
+    public IteratorF<ListF<E>> paginate(final int pageSize) {
+        if (pageSize <= 0) throw new IllegalArgumentException();
+        return new AbstractIteratorF<ListF<E>>() {
+            @Override
+            public boolean hasNext() {
+                return AbstractIteratorF.this.hasNext();
+            }
+
+            @Override
+            public ListF<E> next() {
+                if (!hasNext()) throw new NoSuchElementException();
+                ListF<E> items = Cf.arrayList(pageSize);
+                for (int i = 0; i < pageSize && AbstractIteratorF.this.hasNext(); ++i) {
+                    items.add(AbstractIteratorF.this.next());
+                }
+                return items;
+            }
+        };
+    }
 } //~
