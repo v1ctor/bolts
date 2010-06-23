@@ -232,7 +232,7 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
         else return Cf.hashMap(this);
     }
 
-    @SuppressWarnings({"unchecked", "ToArrayCallWithZeroLengthArrayArgument"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public Tuple2<K, V>[] toArray() {
         return toArray(new Tuple2[0]);
