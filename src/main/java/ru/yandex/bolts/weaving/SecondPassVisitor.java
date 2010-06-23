@@ -329,7 +329,7 @@ public class SecondPassVisitor extends ClassAdapter {
             cv.visitInnerClass(currentLambdaClass().getInternalName(), null, null, 0);
 
             byte[] bs = lambdaWriter0.toByteArray();
-            extraClasses.put(currentLambdaClass().getClassName(), bs);
+            extraClasses.add(currentLambdaClass().getClassName(), bs);
 
             lambdaWriter = null;
         }
