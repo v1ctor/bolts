@@ -164,19 +164,19 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
         return find(get1F().andThen(p));
     }
 
-    public void put(K k, V v) {
+    public void add(K k, V v) {
         add(Tuple2.tuple(k, v));
     }
 
-    public Function2V<K, V> putOp() {
+    public Function2V<K, V> add2F() {
         return new Function2V<K, V>() {
             public void apply(K a, V b) {
-                put(a, b);
+                add(a, b);
             }
         };
     }
 
-    public void put(Tuple2<? extends K, ? extends V> tuple) {
+    public void add(Tuple2<? extends K, ? extends V> tuple) {
         super.add(tuple.<K, V>uncheckedCast());
     }
 
@@ -301,7 +301,7 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
         IteratorF<A> ki = list1.iterator();
         IteratorF<B> vi = list2.iterator();
         while (ki.hasNext() && vi.hasNext()) {
-            r.put(ki.next(), vi.next());
+            r.add(ki.next(), vi.next());
         }
 
         return r;
