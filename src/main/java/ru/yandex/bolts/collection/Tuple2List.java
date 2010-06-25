@@ -225,6 +225,23 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
         return new Tuple2List<K, V>(sort(get1F().andThen((Function2I<K, K>) comparator)));
     }
 
+    /**
+     * @see CollectionF#sort()
+     */
+    public Tuple2List<K, V> sortBy2() {
+        return sortBy2(Comparator.naturalComparator().<K, K>uncheckedCast());
+    }
+
+    /**
+     * @see CollectionF#sort(Function2I)
+     */
+    @SuppressWarnings("unchecked")
+    public Tuple2List<K, V> sortBy2(Function2I<? super K, ? super K> comparator) {
+        if (size() <= 1) return this;
+        return new Tuple2List<K, V>(sort(get1F().andThen((Function2I<K, K>) comparator)));
+    }
+
+
     // XXX: sortByKeyBy, sortByKeyByDesc
 
     public MapF<K, V> toMap() {
