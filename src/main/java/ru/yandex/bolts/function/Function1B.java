@@ -278,4 +278,8 @@ public abstract class Function1B<A> {
         return asFunction1B(asFunction().memoize());
     }
 
+    public static <B> Function1B<B> constF(boolean value) {
+        return value ? Function1B.<B>trueF() : Function1B.<B>falseF();
+    }
+
 } //~
