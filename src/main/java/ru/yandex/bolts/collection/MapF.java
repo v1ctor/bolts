@@ -68,6 +68,8 @@ public interface MapF<K, V> extends Map<K, V> {
     /** Delegate to {@link #getO(Object)} */
     Function<K, Option<V>> asFunctionO();
 
+    Function<K, V> asFunctionOrElse(V fallback);
+
     /** Put */
     void put(Tuple2<K, V> entry);
 
