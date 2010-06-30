@@ -127,7 +127,7 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
         return new Function0<R>() {
             private boolean haveValue = false;
             private R cached;
-            public R apply() {
+            public synchronized R apply() {
                 if (haveValue) return cached;
                 cached = Function0.this.apply();
                 haveValue = true;

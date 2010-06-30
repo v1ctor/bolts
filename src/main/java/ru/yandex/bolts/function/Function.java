@@ -242,7 +242,7 @@ public abstract class Function<A, R> {
     public Function<A, R> memoize() {
         return new Function<A, R>() {
             private final MapF<A, R> cache = Cf.hashMap();
-            public R apply(A a) {
+            public synchronized R apply(A a) {
                 return cache.getOrElseUpdate(a, Function.this);
             }
         };
