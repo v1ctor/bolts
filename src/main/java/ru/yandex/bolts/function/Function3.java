@@ -116,7 +116,7 @@ public abstract class Function3<A, B, C, R> {
     public Function3<A, B, C, R> memoize() {
         return new Function3<A, B, C, R>() {
             private final Function<Tuple3<A, B, C>, R> f = asFunction().memoize();
-            public synchronized R apply(A a, B b, C c) {
+            public R apply(A a, B b, C c) {
                 return f.apply(Tuple3.tuple(a, b, c));
             }
         };
