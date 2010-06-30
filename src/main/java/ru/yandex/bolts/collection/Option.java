@@ -338,6 +338,17 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     /**
+     * Delegate to {@link #getOrElse(Object)}.
+     */
+    public static <U> Function<Option<U>, U> getOrElseF(final U fallback) {
+        return new Function<Option<U>, U>() {
+            public U apply(Option<U> us) {
+                return us.getOrElse(fallback);
+            }
+        };
+    }
+
+    /**
      * Delegate to {@link #some(Object)}.
      */
     public static <U> Function<U, Option<U>> someF() {
