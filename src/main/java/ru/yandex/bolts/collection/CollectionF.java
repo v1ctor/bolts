@@ -239,4 +239,13 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     CollectionF<E> tee(Function1V<? super CollectionF<E>> f);
 
     ListF<ListF<E>> paginate(int pageSize);
+
+    /**
+     * A fluent-style friendly variant of Cf.flatten().  It is an unsafe method in that
+     * it requires you to specify a correct generic type.
+     *
+     * CollectionF<CollectionF<A>> coll = ...;
+     * CollectionF<A> = coll.<A>flatten();
+     */
+    <F> ListF<F> flatten();
 } //~

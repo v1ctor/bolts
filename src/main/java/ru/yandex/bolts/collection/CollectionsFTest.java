@@ -101,4 +101,8 @@ public class CollectionsFTest extends TestCase {
                 Cf.list(0, 7),
                 Cf.list(), Cf.list()), positiveIntegers);
     }
+
+    public void testFlatten() {
+        assertEquals(Cf.list(1, 2, 3, 4), Cf.flatten(Cf.list(Cf.list(1, 2), Cf.list(3, 4))));
+    }
 } //~

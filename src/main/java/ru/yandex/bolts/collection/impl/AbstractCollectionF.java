@@ -510,4 +510,9 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public ListF<ListF<E>> paginate(int pageSize) {
         return iterator().paginate(pageSize).toList();
     }
+
+    @Override
+    public <F> ListF<F> flatten() {
+        return Cf.flatten((CollectionF<? extends Collection<F>>) this);
+    }
 } //~

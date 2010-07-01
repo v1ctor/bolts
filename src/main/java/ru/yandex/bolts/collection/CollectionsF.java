@@ -40,6 +40,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
+import ru.yandex.bolts.function.misc.IntegerF;
 
 /**
  * Utilities to create extended collections.
@@ -801,5 +802,9 @@ public class CollectionsF {
 
     public static <T> T p3() {
         throw new RuntimeException("weaving must be enabled");
+    }
+
+    public static <T> ListF<T> flatten(Collection<? extends Collection<T>> l) {
+        return Cf.x(l).flatMap(Function.<Collection<T>>identityF());
     }
 } //~
