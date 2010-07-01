@@ -40,7 +40,6 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
-import ru.yandex.bolts.function.misc.IntegerF;
 
 /**
  * Utilities to create extended collections.
