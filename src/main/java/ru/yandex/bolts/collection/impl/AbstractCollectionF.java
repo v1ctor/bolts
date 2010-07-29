@@ -150,10 +150,6 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     public abstract IteratorF<E> iterator();
 
-    public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> filter2(Function1B<? super E> p) {
-        return partition(p);
-    }
-
     @Override
     public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function1B<? super E> p) {
         CollectionF<E> matched = this.newMutableCollection();

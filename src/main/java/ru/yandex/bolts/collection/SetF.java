@@ -26,12 +26,6 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     @Override
     SetF<E> filterNotNull();
 
-    /**
-     * @deprecated
-     * @see #partition(Function1B)
-     */
-    Tuple2<SetF<E>, SetF<E>> filter2(Function1B<? super E> p);
-
     @Override
     Tuple2<SetF<E>, SetF<E>> partition(Function1B<? super E> p);
 

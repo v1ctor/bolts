@@ -37,14 +37,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     CollectionF<E> filterNotNull();
 
-    /**
-     * Pair of collection, first contains elements matching p, second contains element matching !p
-     *
-     * @deprecated
-     * @see #partition(Function1B)
-     */
-    Tuple2<? extends IterableF<E>, ? extends IterableF<E>> filter2(Function1B<? super E> p);
-
     /** Pair of collection, first contains elements matching p, second contains element matching !p */
     Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function1B<? super E> p);
 

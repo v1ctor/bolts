@@ -46,14 +46,6 @@ public class ListMap<K, V> extends Tuple2List<K, V> {
         return (ListMap<K, V>) super.filter(p);
     }
 
-    /**
-     * @deprecated {@link #partitionLm(Function1B)}
-     */
-    @SuppressWarnings({"unchecked", "RedundantCast"})
-    public Tuple2<ListMap<K, V>, ListMap<K, V>> filter2ToListMaps(Function1B<? super Tuple2<K, V>> p) {
-        return (Tuple2) super.filter2(p);
-    }
-
     @SuppressWarnings("unchecked")
     public Tuple2<ListMap<K, V>, ListMap<K, V>> partitionLm(Function1B<? super Tuple2<K, V>> p) {
         return (Tuple2) super.partition(p);

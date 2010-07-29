@@ -21,7 +21,7 @@ public class AbstractSetFTest extends TestCase {
 
     public void testFilter2() {
         SetF<Integer> s = set(1, 2, 3, 4);
-        assertEquals(Tuple2.tuple(set(2, 4), set(1, 3)), s.filter2(Function1BTest.evenF()));
+        assertEquals(Tuple2.tuple(set(2, 4), set(1, 3)), s.partition(Function1BTest.evenF()));
     }
 
     public void testMinusEmpty() {
