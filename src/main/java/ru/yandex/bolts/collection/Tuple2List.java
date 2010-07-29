@@ -152,12 +152,26 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
         return r;
     }
 
-    public Tuple2List<K, V> filter2(Function1B<? super V> p) {
+    private Tuple2List<K, V> filterBy1(Function1B<? super K> p) {
+        return new Tuple2List<K, V>(filter(get1F().andThen(p)));
+    }
+
+    private Tuple2List<K, V> filterBy2(Function1B<? super V> p) {
         return new Tuple2List<K, V>(filter(get2F().andThen(p)));
     }
 
+    /**
+     * @deprecated
+     */
+    public Tuple2List<K, V> filter2(Function1B<? super V> p) {
+        return filterBy2(p);
+    }
+
+    /**
+     * @deprecated
+     */
     public Tuple2List<K, V> filter1(Function1B<? super K> p) {
-        return new Tuple2List<K, V>(filter(get1F().andThen(p)));
+        return filterBy1(p);
     }
 
     public Option<Tuple2<K, V>> findBy1(Function1B<? super K> p) {
