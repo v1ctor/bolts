@@ -38,7 +38,7 @@ public abstract class Function2I<A, B> {
     }
 
     public boolean ge(A a, B b) {
-        return apply(a, b) > 0;
+        return apply(a, b) >= 0;
     }
 
     public boolean eq(A a, B b) {
