@@ -70,6 +70,8 @@ public interface MapF<K, V> extends Map<K, V> {
 
     Function<K, V> asFunctionOrElse(V fallback);
 
+    Function<K, V> asFunctionOrElse(Function<K, V> fallback);
+
     /** Put */
     void put(Tuple2<K, V> entry);
 

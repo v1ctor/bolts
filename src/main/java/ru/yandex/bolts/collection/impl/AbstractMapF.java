@@ -199,6 +199,14 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return asFunctionO().andThen(Option.getOrElseF(fallback));
     }
 
+    public Function<K, V> asFunctionOrElse(final Function<K, V> fallbackF) {
+        return new Function<K, V>() {
+            public V apply(K key) {
+                return getO(key).getOrElse(fallbackF.apply(key));
+            }
+        };
+    }
+
     /** Must check for non-null arguments */
     public V put(K key, V value) {
         throw new UnsupportedOperationException("readonly map");
