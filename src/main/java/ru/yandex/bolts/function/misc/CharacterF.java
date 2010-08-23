@@ -38,6 +38,22 @@ public class CharacterF {
         };
     }
 
+    public static Function1B<Character> isLowerCaseF() {
+        return new Function1B<Character>() {
+            public boolean apply(Character c) {
+                return Character.isLowerCase(c);
+            }
+        };
+    }
+
+    public static Function1B<Character> isUpperCaseF() {
+        return new Function1B<Character>() {
+            public boolean apply(Character c) {
+                return Character.isUpperCase(c);
+            }
+        };
+    }
+
     public static Function<Character, Character> toUpperCaseF() {
         return new Function<Character, Character>() {
             public Character apply(Character c) {
