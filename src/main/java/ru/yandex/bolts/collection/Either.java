@@ -76,9 +76,9 @@ public class Either<A, B> {
 
         @Override
         public boolean equals(Object obj) {
-            return obj instanceof Left
-                    && (((Left<A, B>) obj).value == value
-                        || ((Left<A, B>) obj).value.equals(value));
+            if (!(obj instanceof Left)) return false;
+            if (value == null) return ((Left<A, B>) obj).value == null;
+            return value.equals(((Left<A, B>) obj).value);
         }
     }
 
@@ -99,12 +99,11 @@ public class Either<A, B> {
             return "Either.Right(" + value + ")";
         }
 
-
         @Override
         public boolean equals(Object obj) {
-            return obj instanceof Right
-                    && (((Right<A, B>) obj).value == value
-                        || ((Right<A, B>) obj).value.equals(value));
+            if (!(obj instanceof Right)) return false;
+            if (value == null) return ((Right<A, B>) obj).value == null;
+            return value.equals(((Right<A, B>) obj).value);
         }
     }
 

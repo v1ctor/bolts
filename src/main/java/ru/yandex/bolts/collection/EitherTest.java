@@ -26,4 +26,10 @@ public class EitherTest extends TestCase {
         assertEquals("Either.LeftProjection(None)", projection.toString());
     }
 
+    public void testEquals() {
+        assertEquals(Either.right(null), Either.right(null));
+        assertFalse(Either.right(null).equals(Either.right(1)));
+        assertFalse(Either.right(1).equals(Either.right(null)));
+    }
+
 }
