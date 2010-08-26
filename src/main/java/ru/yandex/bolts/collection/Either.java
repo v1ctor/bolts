@@ -74,6 +74,12 @@ public class Either<A, B> {
             return "Either.Left(" + value + ")";
         }
 
+        @Override
+        public boolean equals(Object obj) {
+            return obj instanceof Left
+                    && (((Left<A, B>) obj).value == value
+                        || ((Left<A, B>) obj).value.equals(value));
+        }
     }
 
     private static class Right<A, B> extends Either<A, B> {
@@ -91,6 +97,14 @@ public class Either<A, B> {
         @Override
         public String toString() {
             return "Either.Right(" + value + ")";
+        }
+
+
+        @Override
+        public boolean equals(Object obj) {
+            return obj instanceof Right
+                    && (((Right<A, B>) obj).value == value
+                        || ((Right<A, B>) obj).value.equals(value));
         }
     }
 
