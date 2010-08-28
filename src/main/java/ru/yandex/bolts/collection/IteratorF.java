@@ -72,6 +72,14 @@ public interface IteratorF<E> extends Iterator<E> {
 
     E reduceRightW(@FunctionParameter E f);
 
+    Option<E> reduceLeftO(Function2<E, E, E> f);
+
+    Option<E> reduceLeftOW(@FunctionParameter E f);
+
+    Option<E> reduceRightO(Function2<E, E, E> f);
+
+    Option<E> reduceRightOW(@FunctionParameter E f);
+
     /** Zip with index */
     IteratorF<Tuple2<E, Integer>> zipWithIndex();
 

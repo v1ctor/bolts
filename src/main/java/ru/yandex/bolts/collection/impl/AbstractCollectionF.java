@@ -369,6 +369,26 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         throw new RuntimeException("weaving must be enabled");
     }
 
+    @Override
+    public Option<E> reduceLeftO(Function2<E, E, E> f) {
+        return iterator().reduceLeftO(f);
+    }
+
+    @Override
+    public Option<E> reduceLeftOW(E f) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
+    @Override
+    public Option<E> reduceRightO(Function2<E, E, E> f) {
+        return iterator().reduceRightO(f);
+    }
+
+    @Override
+    public Option<E> reduceRightOW(E f) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public String mkString(String sep) {
         return mkString("", sep, "");
     }

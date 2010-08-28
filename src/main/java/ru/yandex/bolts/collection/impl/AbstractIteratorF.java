@@ -273,8 +273,7 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     }
 
     public E reduceLeft(Function2<E, E, E> f) {
-        if (hasNext()) return foldLeft(next(), f);
-        else throw new IllegalStateException("empty.reduceLeft");
+        return reduceLeftO(f).getOrThrow("empty.reduceLeft");
     }
 
     @Override
@@ -283,14 +282,41 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     }
 
     public E reduceRight(Function2<E, E, E> f) {
-        if (!hasNext()) throw new IllegalStateException("empty.reduceRight");
-        E head = next();
-        if (hasNext()) return f.apply(head, reduceRight(f));
-        else return head;
+        return reduceRightO(f).getOrThrow("empty.reduceRight");
     }
 
     @Override
     public E reduceRightW(E f) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
+    @Override
+    public Option<E> reduceLeftO(Function2<E, E, E> f) {
+        if (hasNext())
+            return Option.some(foldLeft(next(), f));
+        else
+            return Option.none();
+    }
+
+    @Override
+    public Option<E> reduceLeftOW(E f) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
+    @Override
+    public Option<E> reduceRightO(Function2<E, E, E> f) {
+        if (!hasNext())
+            return Option.none();
+
+        E head = next();
+        if (hasNext())
+            return Option.some(f.apply(head, reduceRight(f)));
+        else
+            return Option.some(head);
+    }
+
+    @Override
+    public Option<E> reduceRightOW(E f) {
         throw new RuntimeException("weaving must be enabled");
     }
 

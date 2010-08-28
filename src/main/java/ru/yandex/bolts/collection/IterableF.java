@@ -56,6 +56,14 @@ public interface IterableF<E> extends Iterable<E> {
 
     E reduceRightW(@FunctionParameter E f);
 
+    Option<E> reduceLeftO(Function2<E, E, E> f);
+
+    Option<E> reduceLeftOW(@FunctionParameter E f);
+
+    Option<E> reduceRightO(Function2<E, E, E> f);
+
+    Option<E> reduceRightOW(@FunctionParameter E f);
+
     /** Make string by joining elements with given separator */
     String mkString(String sep);
 
