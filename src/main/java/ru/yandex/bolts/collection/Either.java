@@ -199,4 +199,15 @@ public class Either<A, B> {
         }
     }
 
+    public static <A, B> Either<A, B> fromOptions(Option<A> left, Option<B> right) {
+        if (left.isDefined() && right.isDefined()) {
+            throw new IllegalArgumentException("Both are defined!");
+        } else if (left.isDefined()) {
+            return Either.left(left.get());
+        } else if (right.isDefined()) {
+            return Either.right(right.get());
+        } else {
+            throw new IllegalArgumentException("Neither is defined!");
+        }
+    }
 } //~
