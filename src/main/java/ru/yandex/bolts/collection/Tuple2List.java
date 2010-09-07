@@ -128,28 +128,12 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
         return Tuple2List.tuple2List(super.sortByDesc(f));
     }
 
-    public <U> Tuple2List<U, V> map1(final Function<K, U> mapper) {
-        Function<Tuple2<K, V>, Tuple2<U, V>> m2 = new Function<Tuple2<K, V>, Tuple2<U, V>>() {
-            public Tuple2<U, V> apply(Tuple2<K, V> a) {
-                return Tuple2.tuple(mapper.apply(a.get1()), a.get2());
-            }
-        };
-
-        Tuple2List<U, V> r = Tuple2List.arrayList();
-        this.iterator().map(m2).forEach(r.addOp());
-        return r;
+    public <U> Tuple2List<U, V> map1(final Function<K, U> f) {
+        return Tuple2List.tuple2List(map(Tuple2.<K, V, U>map1F(f)));
     }
 
-    public <U> Tuple2List<K, U> map2(final Function<V, U> mapper) {
-        Function<Tuple2<K, V>, Tuple2<K, U>> m2 = new Function<Tuple2<K, V>, Tuple2<K, U>>() {
-            public Tuple2<K, U> apply(Tuple2<K, V> a) {
-                return Tuple2.tuple(a.get1(), mapper.apply(a.get2()));
-            }
-        };
-
-        Tuple2List<K, U> r = Tuple2List.arrayList();
-        this.iterator().map(m2).forEach(r.addOp());
-        return r;
+    public <U> Tuple2List<K, U> map2(final Function<V, U> f) {
+        return Tuple2List.tuple2List(map(Tuple2.<K, V, U>map2F(f)));
     }
 
     public Tuple2List<K, V> filterBy1(Function1B<? super K> p) {
