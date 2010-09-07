@@ -123,7 +123,7 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     <F> ListF<F> uncheckedCast();
 
     /** List of pairs of elements with the same index in two lists */
-    <B> Tuple2List<E, B> zip(ListF<B> that);
+    <B> Tuple2List<E, B> zip(ListF<? extends B> that);
 
     <B> Tuple2List<E, B> zipWith(Function<? super E, ? extends B> f);
 

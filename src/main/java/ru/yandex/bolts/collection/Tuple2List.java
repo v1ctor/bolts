@@ -269,6 +269,18 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
         return (Tuple2List<F, G>) this;
     }
 
+    public <W> Tuple3List<K, V, W> zip3(ListF<W> list) {
+        return Tuple3List.tuple3List(zip(list).map(new Function2<Tuple2<K, V>, W, Tuple3<K, V, W>>() {
+            public Tuple3<K, V, W> apply(Tuple2<K, V> a, W b) {
+                return Tuple3.tuple(a._1, a._2, b);
+            }
+        }));
+    }
+
+    public <W> Tuple3List<K, V, W> zip3With(Function2<K, V, W> f) {
+        return zip3(map(f));
+    }
+
     public <W> ListF<W> map(Function2<? super K, ? super V, ? extends W> mapper) {
         return map(mapper.<K, V, W>uncheckedCast().asFunction());
     }
@@ -314,11 +326,11 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
     /**
      * @see ListF#zip(ListF)
      */
-    public static <A, B> Tuple2List<A, B> zip(ListF<A> list1, ListF<B> list2) {
+    public static <A, B> Tuple2List<A, B> zip(ListF<? extends A> list1, ListF<? extends B> list2) {
         Tuple2List<A, B> r = Tuple2List.arrayList();
 
-        IteratorF<A> ki = list1.iterator();
-        IteratorF<B> vi = list2.iterator();
+        IteratorF<? extends A> ki = list1.iterator();
+        IteratorF<? extends B> vi = list2.iterator();
         while (ki.hasNext() && vi.hasNext()) {
             r.add(ki.next(), vi.next());
         }

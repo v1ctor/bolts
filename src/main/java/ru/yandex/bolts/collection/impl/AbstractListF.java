@@ -219,17 +219,13 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         };
     }
 
-    public <B> Tuple2List<E, B> zip(ListF<B> that) {
+    public <B> Tuple2List<E, B> zip(ListF<? extends B> that) {
         return Tuple2List.zip(this, that);
     }
 
     @Override
     public <B> Tuple2List<E, B> zipWith(final Function<? super E, ? extends B> f) {
-        return Tuple2List.tuple2List(map(new Function<E, Tuple2<E, B>>() {
-            public Tuple2<E, B> apply(E a) {
-                return Tuple2.<E, B>tuple(a, f.apply(a));
-            }
-        }));
+        return zip(map(f));
     }
 
     @Override
