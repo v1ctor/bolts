@@ -162,6 +162,10 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
         return find(get1F().andThen(p));
     }
 
+    public Option<Tuple2<K, V>> findBy2(Function1B<? super V> p) {
+        return find(get2F().andThen(p));
+    }
+
     public void add(K k, V v) {
         add(Tuple2.tuple(k, v));
     }
