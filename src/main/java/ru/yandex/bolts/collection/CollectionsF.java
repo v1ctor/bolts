@@ -37,6 +37,7 @@ import ru.yandex.bolts.collection.impl.SingletonList;
 import ru.yandex.bolts.collection.impl.SingletonMap;
 import ru.yandex.bolts.collection.impl.SingletonSet;
 import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
@@ -242,6 +243,14 @@ public class CollectionsF {
         return hashSet(list(elements));
     }
 
+    public static <E> Function0<SetF<E>> newHashSetF() {
+        return new Function0<SetF<E>>() {
+            public SetF<E> apply() {
+                return hashSet();
+            }
+        };
+    }
+
     /**
      * Create mutable identity hash set.
      */
@@ -360,6 +369,14 @@ public class CollectionsF {
         return new ArrayListF<A>(initialCapacity);
     }
 
+    public static <A> Function0<ListF<A>> newArrayListF() {
+        return new Function0<ListF<A>>() {
+            public ListF<A> apply() {
+                return arrayList();
+            }
+        };
+    }
+
     /**
      * Singleton map.
      */
@@ -401,6 +418,14 @@ public class CollectionsF {
      */
     public static <K, V> MapF<K, V> hashMap() {
         return x(new HashMap<K, V>());
+    }
+
+    public static <K, V> Function0<MapF<K, V>> newHashMapF() {
+        return new Function0<MapF<K,V>>() {
+            public MapF<K, V> apply() {
+                return hashMap();
+            }
+        };
     }
 
     /**
