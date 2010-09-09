@@ -18,247 +18,247 @@ import ru.yandex.bolts.function.forhuman.Comparator;
  * @author Stepan Koltsov
  */
 @SuppressWarnings("serial")
-public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
+public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
 
-    private Tuple2List(List<Tuple2<K, V>> list) {
+    private Tuple2List(List<Tuple2<A, B>> list) {
         super(list);
     }
 
-    public Tuple2List(Collection<Tuple2<K, V>> elements) {
-        super(new ArrayList<Tuple2<K, V>>(elements));
+    public Tuple2List(Collection<Tuple2<A, B>> elements) {
+        super(new ArrayList<Tuple2<A, B>>(elements));
     }
 
     @SuppressWarnings({"unchecked"})
     @Override
-    protected Tuple2List<K, V> newMutableCollection() {
+    protected Tuple2List<A, B> newMutableCollection() {
         return Tuple2List.arrayList();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Tuple2List<K, V> filter(Function1B<? super Tuple2<K, V>> p) {
-        return (Tuple2List<K, V>) super.filter(p);
+    public Tuple2List<A, B> filter(Function1B<? super Tuple2<A, B>> p) {
+        return (Tuple2List<A, B>) super.filter(p);
     }
 
     @SuppressWarnings("unchecked")
-    public Tuple2<Tuple2List<K, V>, Tuple2List<K, V>> partitionT2l(Function1B<? super Tuple2<K, V>> p) {
+    public Tuple2<Tuple2List<A, B>, Tuple2List<A, B>> partitionT2l(Function1B<? super Tuple2<A, B>> p) {
         return (Tuple2) super.partition(p);
     }
 
-    public Tuple2<Tuple2List<K, V>, Tuple2List<K, V>> partitionBy1(Function1B<? super K> p) {
-        return partitionT2l(Tuple2.<K, V>get1F().andThen(p));
+    public Tuple2<Tuple2List<A, B>, Tuple2List<A, B>> partitionBy1(Function1B<? super A> p) {
+        return partitionT2l(Tuple2.<A, B>get1F().andThen(p));
     }
 
-    public Tuple2<Tuple2List<K, V>, Tuple2List<K, V>> partitionBy2(Function1B<? super V> p) {
-        return partitionT2l(Tuple2.<K, V>get2F().andThen(p));
+    public Tuple2<Tuple2List<A, B>, Tuple2List<A, B>> partitionBy2(Function1B<? super B> p) {
+        return partitionT2l(Tuple2.<A, B>get2F().andThen(p));
     }
 
     @Override
-    public Tuple2List<K, V> subList(int fromIndex, int toIndex) {
+    public Tuple2List<A, B> subList(int fromIndex, int toIndex) {
         return Tuple2List.tuple2List(super.subList(fromIndex, toIndex));
     }
 
     @Override
-    public Tuple2List<K, V> plus(List<? extends Tuple2<K, V>> addition) {
+    public Tuple2List<A, B> plus(List<? extends Tuple2<A, B>> addition) {
         return Tuple2List.tuple2List(super.plus(addition));
     }
 
     @Override
-    public Tuple2List<K, V> plus(Collection<? extends Tuple2<K, V>> elements) {
+    public Tuple2List<A, B> plus(Collection<? extends Tuple2<A, B>> elements) {
         return Tuple2List.tuple2List(super.plus(elements));
     }
 
     @Override
-    public Tuple2List<K, V> plus(Iterator<? extends Tuple2<K, V>> iterator) {
+    public Tuple2List<A, B> plus(Iterator<? extends Tuple2<A, B>> iterator) {
         return Tuple2List.tuple2List(super.plus(iterator));
     }
 
     @Override
-    public Tuple2List<K, V> plus(Tuple2<K, V>... additions) {
+    public Tuple2List<A, B> plus(Tuple2<A, B>... additions) {
         return Tuple2List.tuple2List(super.plus(additions));
     }
 
     @Override
-    public Tuple2List<K, V> take(int count) {
+    public Tuple2List<A, B> take(int count) {
         return Tuple2List.tuple2List(super.take(count));
     }
 
     @Override
-    public Tuple2List<K, V> drop(int count) {
+    public Tuple2List<A, B> drop(int count) {
         return Tuple2List.tuple2List(super.drop(count));
     }
 
     @Override
-    protected Tuple2List<K, V> emptyList() {
+    protected Tuple2List<A, B> emptyList() {
         return Tuple2List.tuple2List();
     }
 
     @Override
-    public Tuple2List<K, V> reverse() {
+    public Tuple2List<A, B> reverse() {
         return Tuple2List.tuple2List(super.reverse());
     }
 
     @Override
-    public Tuple2List<K, V> sort() {
+    public Tuple2List<A, B> sort() {
         return Tuple2List.tuple2List(super.sort());
     }
 
     @Override
-    public Tuple2List<K, V> sort(java.util.Comparator<? super Tuple2<K, V>> comparator) {
+    public Tuple2List<A, B> sort(java.util.Comparator<? super Tuple2<A, B>> comparator) {
         return Tuple2List.tuple2List(super.sort(comparator));
     }
 
     @Override
-    public Tuple2List<K, V> sort(Comparator<? super Tuple2<K, V>> comparator) {
+    public Tuple2List<A, B> sort(Comparator<? super Tuple2<A, B>> comparator) {
         return Tuple2List.tuple2List(super.sort(comparator));
     }
 
     @Override
-    public Tuple2List<K, V> sort(Function2I<? super Tuple2<K, V>, ? super Tuple2<K, V>> comparator) {
+    public Tuple2List<A, B> sort(Function2I<? super Tuple2<A, B>, ? super Tuple2<A, B>> comparator) {
         return Tuple2List.tuple2List(super.sort(comparator));
     }
 
     @Override
-    public Tuple2List<K, V> sortBy(Function<? super Tuple2<K, V>, ?> f) {
+    public Tuple2List<A, B> sortBy(Function<? super Tuple2<A, B>, ?> f) {
         return Tuple2List.tuple2List(super.sortBy(f));
     }
 
     @Override
-    public Tuple2List<K, V> sortByDesc(Function<? super Tuple2<K, V>, ?> f) {
+    public Tuple2List<A, B> sortByDesc(Function<? super Tuple2<A, B>, ?> f) {
         return Tuple2List.tuple2List(super.sortByDesc(f));
     }
 
-    public <U> Tuple2List<U, V> map1(final Function<K, U> f) {
-        return Tuple2List.tuple2List(map(Tuple2.<K, V, U>map1F(f)));
+    public <U> Tuple2List<U, B> map1(final Function<A, U> f) {
+        return Tuple2List.tuple2List(map(Tuple2.<A, B, U>map1F(f)));
     }
 
-    public <U> Tuple2List<K, U> map2(final Function<V, U> f) {
-        return Tuple2List.tuple2List(map(Tuple2.<K, V, U>map2F(f)));
+    public <U> Tuple2List<A, U> map2(final Function<B, U> f) {
+        return Tuple2List.tuple2List(map(Tuple2.<A, B, U>map2F(f)));
     }
 
-    public Tuple2List<K, V> filterBy1(Function1B<? super K> p) {
-        return new Tuple2List<K, V>(filter(get1F().andThen(p)));
+    public Tuple2List<A, B> filterBy1(Function1B<? super A> p) {
+        return new Tuple2List<A, B>(filter(get1F().andThen(p)));
     }
 
-    public Tuple2List<K, V> filterBy2(Function1B<? super V> p) {
-        return new Tuple2List<K, V>(filter(get2F().andThen(p)));
+    public Tuple2List<A, B> filterBy2(Function1B<? super B> p) {
+        return new Tuple2List<A, B>(filter(get2F().andThen(p)));
     }
 
     /**
      * @deprecated
      */
-    public Tuple2List<K, V> filter2(Function1B<? super V> p) {
+    public Tuple2List<A, B> filter2(Function1B<? super B> p) {
         return filterBy2(p);
     }
 
     /**
      * @deprecated
      */
-    public Tuple2List<K, V> filter1(Function1B<? super K> p) {
+    public Tuple2List<A, B> filter1(Function1B<? super A> p) {
         return filterBy1(p);
     }
 
-    public Option<Tuple2<K, V>> findBy1(Function1B<? super K> p) {
+    public Option<Tuple2<A, B>> findBy1(Function1B<? super A> p) {
         return find(get1F().andThen(p));
     }
 
-    public Option<Tuple2<K, V>> findBy2(Function1B<? super V> p) {
+    public Option<Tuple2<A, B>> findBy2(Function1B<? super B> p) {
         return find(get2F().andThen(p));
     }
 
-    public void add(K k, V v) {
+    public void add(A k, B v) {
         add(Tuple2.tuple(k, v));
     }
 
-    public Function2V<K, V> add2F() {
-        return new Function2V<K, V>() {
-            public void apply(K a, V b) {
+    public Function2V<A, B> add2F() {
+        return new Function2V<A, B>() {
+            public void apply(A a, B b) {
                 add(a, b);
             }
         };
     }
 
-    public void add(Tuple2<? extends K, ? extends V> tuple) {
-        super.add(tuple.<K, V>uncheckedCast());
+    public void add(Tuple2<? extends A, ? extends B> tuple) {
+        super.add(tuple.<A, B>uncheckedCast());
     }
 
     @Override
-    public Tuple2List<K, V> plus1(Tuple2<K, V> e) {
-        return new Tuple2List<K, V>(Cf.x(target).plus1(e));
+    public Tuple2List<A, B> plus1(Tuple2<A, B> e) {
+        return new Tuple2List<A, B>(Cf.x(target).plus1(e));
     }
 
-    public Tuple2List<K, V> plus1(K key, V value) {
+    public Tuple2List<A, B> plus1(A key, B value) {
         return plus1(Tuple2.tuple(key, value));
     }
 
-    private Function<Tuple2<K, V>, K> get1F() {
+    private Function<Tuple2<A, B>, A> get1F() {
         return Tuple2.get1F();
     }
 
-    private Function<Tuple2<K, V>, V> get2F() {
+    private Function<Tuple2<A, B>, B> get2F() {
         return Tuple2.get2F();
     }
 
-    public ListF<K> get1() {
+    public ListF<A> get1() {
         return map(get1F());
     }
 
-    public ListF<V> get2() {
+    public ListF<B> get2() {
         return map(get2F());
     }
 
-    public Tuple2List<V, K> invert() {
-        return tuple2List(map(Tuple2.<K, V>swapF()));
+    public Tuple2List<B, A> invert() {
+        return tuple2List(map(Tuple2.<A, B>swapF()));
     }
 
     /**
      * @see CollectionF#sort()
      */
-    public Tuple2List<K, V> sortBy1() {
-        return sortBy1(Comparator.naturalComparator().<K, K>uncheckedCast());
+    public Tuple2List<A, B> sortBy1() {
+        return sortBy1(Comparator.naturalComparator().<A, A>uncheckedCast());
     }
 
     /**
      * @see CollectionF#sort(Function2I)
      */
     @SuppressWarnings("unchecked")
-    public Tuple2List<K, V> sortBy1(Function2I<? super K, ? super K> comparator) {
+    public Tuple2List<A, B> sortBy1(Function2I<? super A, ? super A> comparator) {
         if (size() <= 1) return this;
-        return new Tuple2List<K, V>(sort(get1F().andThen((Function2I<K, K>) comparator)));
+        return new Tuple2List<A, B>(sort(get1F().andThen((Function2I<A, A>) comparator)));
     }
 
     /**
      * @see CollectionF#sort()
      */
-    public Tuple2List<K, V> sortBy2() {
-        return sortBy2(Comparator.naturalComparator().<V, V>uncheckedCast());
+    public Tuple2List<A, B> sortBy2() {
+        return sortBy2(Comparator.naturalComparator().<B, B>uncheckedCast());
     }
 
     /**
      * @see CollectionF#sort(Function2I)
      */
     @SuppressWarnings("unchecked")
-    public Tuple2List<K, V> sortBy2(Function2I<? super V, ? super V> comparator) {
+    public Tuple2List<A, B> sortBy2(Function2I<? super B, ? super B> comparator) {
         if (size() <= 1) return this;
-        return new Tuple2List<K, V>(sort(get2F().andThen((Function2I<V, V>) comparator)));
+        return new Tuple2List<A, B>(sort(get2F().andThen((Function2I<B, B>) comparator)));
     }
 
 
     // XXX: sortByKeyBy, sortByKeyByDesc
 
-    public MapF<K, V> toMap() {
+    public MapF<A, B> toMap() {
         if (isEmpty()) return Cf.map();
         else return Cf.hashMap(this);
     }
 
     @SuppressWarnings({"unchecked"})
     @Override
-    public Tuple2<K, V>[] toArray() {
+    public Tuple2<A, B>[] toArray() {
         return toArray(new Tuple2[0]);
     }
 
-    public Tuple2List<K, V> unmodifiable() {
-        return new Tuple2List<K, V>(Cf.x(target).unmodifiable());
+    public Tuple2List<A, B> unmodifiable() {
+        return new Tuple2List<A, B>(Cf.x(target).unmodifiable());
     }
 
     /**
@@ -269,42 +269,42 @@ public class Tuple2List<K, V> extends DefaultListF<Tuple2<K, V>> {
         return (Tuple2List<F, G>) this;
     }
 
-    public <W> Tuple3List<K, V, W> zip3(ListF<W> list) {
-        return Tuple3List.tuple3List(zip(list).map(new Function2<Tuple2<K, V>, W, Tuple3<K, V, W>>() {
-            public Tuple3<K, V, W> apply(Tuple2<K, V> a, W b) {
+    public <W> Tuple3List<A, B, W> zip3(ListF<W> list) {
+        return Tuple3List.tuple3List(zip(list).map(new Function2<Tuple2<A, B>, W, Tuple3<A, B, W>>() {
+            public Tuple3<A, B, W> apply(Tuple2<A, B> a, W b) {
                 return Tuple3.tuple(a._1, a._2, b);
             }
         }));
     }
 
-    public <W> Tuple3List<K, V, W> zip3With(Function2<K, V, W> f) {
+    public <W> Tuple3List<A, B, W> zip3With(Function2<A, B, W> f) {
         return zip3(map(f));
     }
 
-    public <W> ListF<W> map(Function2<? super K, ? super V, ? extends W> mapper) {
-        return map(mapper.<K, V, W>uncheckedCast().asFunction());
+    public <W> ListF<W> map(Function2<? super A, ? super B, ? extends W> mapper) {
+        return map(mapper.<A, B, W>uncheckedCast().asFunction());
     }
 
-    public void forEach(Function2V<K, V> f) {
+    public void forEach(Function2V<A, B> f) {
         super.forEach(f.asFunction1V());
     }
 
-    public boolean forAll(Function2B<K, V> f) {
+    public boolean forAll(Function2B<A, B> f) {
         return super.forAll(f.asFunction1B());
     }
 
     public String mkString(String elemSep, final String tupleSep) {
-        return map(new Function2<K, V, String>() {
-            public String apply(K a, V b) {
+        return map(new Function2<A, B, String>() {
+            public String apply(A a, B b) {
                 return a + tupleSep + b;
             }
         }).mkString(elemSep);
     }
 
-    public Tuple2List<K, V> plus(Tuple2List<K, V> that) {
+    public Tuple2List<A, B> plus(Tuple2List<A, B> that) {
         if (that.isEmpty()) return this;
         else if (this.isEmpty()) return that;
-        else return new Tuple2List<K, V>(super.plus(that.target));
+        else return new Tuple2List<A, B>(super.plus(that.target));
     }
 
     /**
