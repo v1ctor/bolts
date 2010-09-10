@@ -128,12 +128,12 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return Tuple2List.tuple2List(super.sortByDesc(f));
     }
 
-    public <U> Tuple2List<U, B> map1(final Function<A, U> f) {
-        return Tuple2List.tuple2List(map(Tuple2.<A, B, U>map1F(f)));
+    public <U> Tuple2List<U, B> map1(final Function<? super A, U> f) {
+        return Tuple2List.tuple2List(map(Tuple2.<A, B, U>map1F(f.<A, U>uncheckedCast())));
     }
 
-    public <U> Tuple2List<A, U> map2(final Function<B, U> f) {
-        return Tuple2List.tuple2List(map(Tuple2.<A, B, U>map2F(f)));
+    public <U> Tuple2List<A, U> map2(final Function<? super B, U> f) {
+        return Tuple2List.tuple2List(map(Tuple2.<A, B, U>map2F(f.<B, U>uncheckedCast())));
     }
 
     public Tuple2List<A, B> filterBy1(Function1B<? super A> p) {

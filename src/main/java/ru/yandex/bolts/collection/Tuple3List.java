@@ -131,16 +131,16 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
         return Tuple3List.tuple3List(super.sortByDesc(f));
     }
 
-    public <D> Tuple3List<D, B, C> map1(final Function<A, D> mapper) {
-        return Tuple3List.tuple3List(map(Tuple3.<A, B, C, D>map1F(mapper)));
+    public <D> Tuple3List<D, B, C> map1(final Function<? super A, D> f) {
+        return Tuple3List.tuple3List(map(Tuple3.<A, B, C, D>map1F(f.<A, D>uncheckedCast())));
     }
 
-    public <D> Tuple3List<A, D, C> map2(final Function<B, D> mapper) {
-        return Tuple3List.tuple3List(map(Tuple3.<A, B, C, D>map2F(mapper)));
+    public <D> Tuple3List<A, D, C> map2(final Function<? super B, D> f) {
+        return Tuple3List.tuple3List(map(Tuple3.<A, B, C, D>map2F(f.<B, D>uncheckedCast())));
     }
 
-    public <D> Tuple3List<A, B, D> map3(final Function<C, D> mapper) {
-        return Tuple3List.tuple3List(map(Tuple3.<A, B, C, D>map3F(mapper)));
+    public <D> Tuple3List<A, B, D> map3(final Function<? super C, D> f) {
+        return Tuple3List.tuple3List(map(Tuple3.<A, B, C, D>map3F(f.<C, D>uncheckedCast())));
     }
 
     public Tuple3List<A, B, C> filterBy1(Function1B<? super A> p) {
