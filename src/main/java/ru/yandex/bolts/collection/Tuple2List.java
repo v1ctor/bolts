@@ -251,6 +251,22 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         else return Cf.hashMap(this);
     }
 
+    public MapF<A, ListF<B>> groupBy1() {
+        if (isEmpty()) {
+            return Cf.map();
+        } else {
+            return groupBy(get1F()).mapValues(new Function<ListF<Tuple2<A, B>>, ListF<B>>() {
+                public ListF<B> apply(ListF<Tuple2<A, B>> list) {
+                    return list.map(get2F());
+                }
+            });
+        }
+    }
+
+    public MapF<B, ListF<A>> groupBy2() {
+        return invert().groupBy1();
+    }
+
     @SuppressWarnings({"unchecked"})
     @Override
     public Tuple2<A, B>[] toArray() {

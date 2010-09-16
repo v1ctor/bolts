@@ -72,4 +72,12 @@ public class Tuple2ListTest extends TestCase {
         assertEquals(1, Tuple2List.fromPairs("a", 1).map(Tuple2.get2F()).plus(Cf.list(2)).toArray()[0]);
         assertEquals(1, Tuple2List.tuple2List().map(Tuple2.get2F()).plus(Cf.list(1)).toArray()[0]);
     }
+
+    public void testGroupBy1() {
+        MapF<Integer, ListF<String>> g = Tuple2List.<Integer, String>fromPairs(1, "a", 1, "b", 2, "c", 3, "d", 1, "e").groupBy1();
+        assertEquals(3, g.size());
+        assertEquals(Cf.list("a", "b", "e"), g.apply(1));
+        assertEquals(Cf.list("c"), g.apply(2));
+        assertEquals(Cf.list("d"), g.apply(3));
+    }
 } //~
