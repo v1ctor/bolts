@@ -537,6 +537,8 @@ public class CollectionsF {
     }
 
     private static class Range extends AbstractListF<Integer> implements Serializable {
+        private static final long serialVersionUID = 5434453557597790996L;
+
         private final int startInclusive;
         private final int endExclusive;
 
