@@ -8,6 +8,7 @@ import java.util.List;
 import ru.yandex.bolts.collection.impl.DefaultListF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.Function3;
 import ru.yandex.bolts.function.Function3B;
@@ -287,6 +288,22 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
 
     public <D> ListF<D> map(Function3<? super A, ? super B, ? super C, ? extends D> mapper) {
         return map(mapper.<A, B, C, D>uncheckedCast().asFunction());
+    }
+
+    public <D> Tuple2List<D, C> map12(final Function2<? super A, ? super B, ? extends D> f) {
+        return Tuple2List.tuple2List(map(new Function3<A, B, C, Tuple2<D, C>>() {
+            public Tuple2<D, C> apply(A a, B b, C c) {
+                return Tuple2.<D, C>tuple(f.apply(a, b), c);
+            }
+        }));
+    }
+
+    public <D> Tuple2List<A, D> map23(final Function2<? super B, ? super C, ? extends D> f) {
+        return Tuple2List.tuple2List(map(new Function3<A, B, C, Tuple2<A, D>>() {
+            public Tuple2<A, D> apply(A a, B b, C c) {
+                return Tuple2.<A, D>tuple(a, f.apply(b, c));
+            }
+        }));
     }
 
     public void forEach(Function3V<A, B, C> f) {
