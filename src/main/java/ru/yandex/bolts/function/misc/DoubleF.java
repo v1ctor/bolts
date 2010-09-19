@@ -1,5 +1,7 @@
 package ru.yandex.bolts.function.misc;
 
+import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.forhuman.Comparator;
@@ -8,43 +10,33 @@ import ru.yandex.bolts.function.forhuman.Comparator;
  * Function on {@link Double}
  *
  * @author Stepan Koltsov
+ * @deprecated
+ * @see CollectionsF#Double
  */
 public class DoubleF {
 
     public static Function2<Double, Double, Double> plusF() {
-        return new Function2<Double, Double, Double>() {
-            public Double apply(Double a, Double b) {
-                return a + b;
-            }
-        };
+        return Cf.Double.plusF();
     }
 
     public static Function2<Double, Double, Double> minusF() {
-        return new Function2<Double, Double, Double>() {
-            public Double apply(Double a, Double b) {
-                return a - b;
-            }
-        };
+        return Cf.Double.minusF();
     }
 
     public static Comparator<Double> naturalComparator() {
-        return Comparator.naturalComparator();
+        return Cf.Double.comparator();
     }
 
     public static Function2<Double, Double, Double> maxF() {
-        return naturalComparator().maxF();
+        return Cf.Double.maxF();
     }
 
     public static Function2<Double, Double, Double> minF() {
-        return naturalComparator().minF();
+        return Cf.Double.minF();
     }
 
     public static Function<String, Double> parseF() {
-        return new Function<String, Double>() {
-            public Double apply(String a) {
-                return Double.parseDouble(a);
-            }
-        };
+        return Cf.Double.parseF();
     }
 
 } //~

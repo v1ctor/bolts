@@ -1,5 +1,7 @@
 package ru.yandex.bolts.function.misc;
 
+import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 
@@ -8,7 +10,8 @@ import ru.yandex.bolts.function.Function1B;
  *
  * @author Stepan Koltsov
  *
- * @see StringF
+ * @deprecated
+ * @see CollectionsF#CharSequence
  */
 public class CharSequenceF {
 
@@ -18,11 +21,7 @@ public class CharSequenceF {
      * @see #emptyF()
      */
     public static Function1B<CharSequence> notEmptyF() {
-        return new Function1B<CharSequence>() {
-            public boolean apply(CharSequence a) {
-                return a != null && a.length() > 0;
-            }
-        };
+        return Cf.CharSequence.notEmptyF();
     }
 
     /**
@@ -31,18 +30,14 @@ public class CharSequenceF {
      * @see #notEmptyF()
      */
     public static Function1B<CharSequence> emptyF() {
-        return notEmptyF().notF();
+        return Cf.CharSequence.notEmptyF();
     }
 
     /**
      * Length of char sequence.
      */
     public static Function<CharSequence, Integer> lengthF() {
-        return new Function<CharSequence, Integer>() {
-            public Integer apply(CharSequence a) {
-                return a.length();
-            }
-        };
+        return Cf.CharSequence.lengthF();
     }
 
 } //~

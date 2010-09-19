@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import ru.yandex.bolts.collection.impl.AbstractListF;
 import ru.yandex.bolts.collection.impl.AbstractSetF;
-import ru.yandex.bolts.collection.impl.ArrayListF;
 import ru.yandex.bolts.collection.impl.DefaultCollectionF;
 import ru.yandex.bolts.collection.impl.DefaultEnumerationF;
 import ru.yandex.bolts.collection.impl.DefaultIteratorF;
@@ -29,7 +28,6 @@ import ru.yandex.bolts.collection.impl.DefaultSetF;
 import ru.yandex.bolts.collection.impl.EmptyIterator;
 import ru.yandex.bolts.collection.impl.EmptyMap;
 import ru.yandex.bolts.collection.impl.EmptySet;
-import ru.yandex.bolts.collection.impl.ReadOnlyArrayList;
 import ru.yandex.bolts.collection.impl.SetFromMap;
 import ru.yandex.bolts.collection.impl.SingletonMap;
 import ru.yandex.bolts.collection.impl.SingletonSet;
@@ -38,6 +36,21 @@ import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
+import ru.yandex.bolts.type.CharSequenceType;
+import ru.yandex.bolts.type.CharacterType;
+import ru.yandex.bolts.type.ObjectType;
+import ru.yandex.bolts.type.StringType;
+import ru.yandex.bolts.type.collection.AnyListType;
+import ru.yandex.bolts.type.collection.AnySetType;
+import ru.yandex.bolts.type.collection.ArrayListType;
+import ru.yandex.bolts.type.collection.CollectionType;
+import ru.yandex.bolts.type.collection.ListType;
+import ru.yandex.bolts.type.number.ByteType;
+import ru.yandex.bolts.type.number.DoubleType;
+import ru.yandex.bolts.type.number.FloatType;
+import ru.yandex.bolts.type.number.IntegerType;
+import ru.yandex.bolts.type.number.LongType;
+import ru.yandex.bolts.type.number.ShortType;
 
 /**
  * Utilities to create extended collections.
@@ -295,23 +308,22 @@ public class CollectionsF {
     /**
      * Empty immutable list.
      */
-    @SuppressWarnings({"unchecked"})
     public static <E> ListF<E> list() {
-        return (ListF<E>) ReadOnlyArrayList.EMPTY;
+        return List.cons();
     }
 
     /**
      * Immutable singleton list.
      */
     public static <E> ListF<E> list(E e) {
-        return ReadOnlyArrayList.cons(e);
+        return List.cons(e);
     }
 
     /**
      * Immutable list with two elements.
      */
     public static <E> ListF<E> list(E e1, E e2) {
-        return ReadOnlyArrayList.cons(e1, e2);
+        return List.cons(e1, e2);
     }
 
     /**
@@ -322,37 +334,35 @@ public class CollectionsF {
      * @see #wrap(Object[]) for real array wrapping
      */
     public static <E> ListF<E> list(E... elements) {
-        if (elements.length == 0) return list();
-        return ReadOnlyArrayList.valueOf(elements);
+        return List.cons(elements);
     }
 
     /**
      * Create list of elements from given collection.
      */
-    @SuppressWarnings({"unchecked"})
     public static <E> ListF<E> list(Collection<E> elements) {
-        return (ListF<E>) list(elements.toArray());
+        return List.cons(elements);
     }
 
     /**
      * Create extended mutable array list.
      */
     public static <E> ListF<E> arrayList() {
-        return new ArrayListF<E>();
+        return ArrayList.cons();
     }
 
     /**
      * Create extended mutable array list containing given elements.
      */
     public static <A> ListF<A> arrayList(Collection<A> collection) {
-        return new ArrayListF<A>(collection);
+        return ArrayList.cons(collection);
     }
 
     /**
      * Create extended array list of elements.
      */
     public static <A> ListF<A> arrayList(A... elements) {
-        return arrayList(list(elements));
+        return ArrayList.cons(elements);
     }
 
     /**
@@ -361,15 +371,11 @@ public class CollectionsF {
      * @see ArrayList#ArrayList(int)
      */
     public static <A> ListF<A> arrayList(int initialCapacity) {
-        return new ArrayListF<A>(initialCapacity);
+        return ArrayList.cons(initialCapacity);
     }
 
     public static <A> Function0<ListF<A>> newArrayListF() {
-        return new Function0<ListF<A>>() {
-            public ListF<A> apply() {
-                return arrayList();
-            }
-        };
+        return ArrayList.consF();
     }
 
     /**
@@ -610,11 +616,7 @@ public class CollectionsF {
 
     /** Concatenate two lists function */
     public static <A> Function2<ListF<A>, ListF<A>, ListF<A>> listPlusF() {
-        return new Function2<ListF<A>, ListF<A>, ListF<A>>() {
-            public ListF<A> apply(ListF<A> l1, ListF<A> l2) {
-                return l1.plus(l2);
-            }
-        };
+        return List.plusF();
     }
 
     /** Union of two sets function */
@@ -633,11 +635,7 @@ public class CollectionsF {
 
     /** {@link #x(List)} as function */
     public static <E> Function<List<E>, ListF<E>> wrapListF() {
-        return new Function<List<E>, ListF<E>>() {
-            public ListF<E> apply(List<E> list) {
-                return x(list);
-            }
-        };
+        return List.wrapF();
     }
 
     /** @deprecated */
@@ -723,7 +721,12 @@ public class CollectionsF {
         };
     }
 
-    /** {@link Collection#filter()} as function */
+    /**
+     * {@link Collection#filter()} as function
+     * @deprecated
+     * @see AnySetType#filterF()
+     * @see AnyListType#filterF()
+     */
     public static <E> Function2<Collection<E>, Function1B<? super E>, CollectionF<E>> filterF() {
         return new Function2<Collection<E>, Function1B<? super E>, CollectionF<E>>() {
             public CollectionF<E> apply(Collection<E> source,
@@ -734,7 +737,9 @@ public class CollectionsF {
         };
     }
 
-    /** {@link Collection#filter()} as function, convenience form */
+    /**
+     * {@link Collection#filter()} as function, convenience form
+     */
     public static <E> Function<Collection<E>, CollectionF<E>> filterF(
             Function1B<? super E> predicate)
     {
@@ -743,20 +748,12 @@ public class CollectionsF {
 
     /** {@link Collection#map()} as function */
     public static <F, T> Function2<Collection<F>, Function<? super F, T>, ListF<T>> mapF() {
-        return new Function2<Collection<F>, Function<? super F, T>, ListF<T>>() {
-            public ListF<T> apply(Collection<F> input,
-                    Function<? super F, T> transform)
-            {
-                return Cf.x(input).map(transform);
-            }
-        };
+        return Collection.mapF();
     }
 
     /** {@link Collection#map()} as function, convenience form */
-    public static <F, T> Function<Collection<F>, ListF<T>> mapF(
-            Function<? super F, T> transform)
-    {
-        return CollectionsF.<F, T>mapF().bind2(transform);
+    public static <F, T> Function<Collection<F>, ListF<T>> mapF(Function<? super F, T> f) {
+        return Collection.mapF(f);
     }
 
     /** {@link Collection#sort()} as function */
@@ -828,4 +825,20 @@ public class CollectionsF {
     public static <T> ListF<T> flatten(Collection<? extends Collection<T>> l) {
         return Cf.x(l).flatMap(Function.<Collection<T>>identityF());
     }
+
+
+    public static final ObjectType Object = new ObjectType();
+    public static final IntegerType Integer = new IntegerType();
+    public static final LongType Long = new LongType();
+    public static final ShortType Short = new ShortType();
+    public static final ByteType Byte = new ByteType();
+    public static final FloatType Float = new FloatType();
+    public static final DoubleType Double = new DoubleType();
+    public static final CharacterType Character = new CharacterType();
+    public static final CharSequenceType CharSequence = new CharSequenceType();
+    public static final StringType String = new StringType();
+    public static final ListType List = new ListType();
+    public static final ArrayListType ArrayList = new ArrayListType();
+    public static final CollectionType Collection = new CollectionType();
+
 } //~

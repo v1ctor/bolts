@@ -1,5 +1,7 @@
 package ru.yandex.bolts.function.misc;
 
+import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.forhuman.Comparator;
@@ -8,43 +10,33 @@ import ru.yandex.bolts.function.forhuman.Comparator;
  * Functions on {@link Integer}
  *
  * @author Stepan Koltsov
+ * @deprecated
+ * @see CollectionsF#Integer
  */
 public class IntegerF {
 
     public static Function2<Integer, Integer, Integer> plusF() {
-        return new Function2<Integer, Integer, Integer>() {
-            public Integer apply(Integer a, Integer b) {
-                return a + b;
-            }
-        };
+        return Cf.Integer.plusF();
     }
 
     public static Function2<Integer, Integer, Integer> minusF() {
-        return new Function2<Integer, Integer, Integer>() {
-            public Integer apply(Integer a, Integer b) {
-                return a - b;
-            }
-        };
+        return Cf.Integer.minusF();
     }
 
     public static Comparator<Integer> naturalComparator() {
-        return Comparator.naturalComparator();
+        return Cf.Integer.comparator();
     }
 
     public static Function2<Integer, Integer, Integer> maxF() {
-        return naturalComparator().maxF();
+        return Cf.Integer.maxF();
     }
 
     public static Function2<Integer, Integer, Integer> minF() {
-        return naturalComparator().minF();
+        return Cf.Integer.minF();
     }
 
     public static Function<String, Integer> parseF() {
-        return new Function<String, Integer>() {
-            public Integer apply(String a) {
-                return Integer.parseInt(a);
-            }
-        };
+        return Cf.Integer.parseF();
     }
 
 }

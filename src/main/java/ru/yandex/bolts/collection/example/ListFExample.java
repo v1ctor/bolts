@@ -11,8 +11,6 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.misc.IntegerF;
-import ru.yandex.bolts.function.misc.StringF;
 
 /**
  * Examples of {@link ListF}.
@@ -95,39 +93,39 @@ public class ListFExample {
     @Test
     public void reduceFold() {
         // sum of elements
-        assertEquals(10, Cf.list(1, 2, 3, 4).foldLeft(0, IntegerF.plusF()).intValue());
+        assertEquals(10, Cf.list(1, 2, 3, 4).foldLeft(0, Cf.Integer.plusF()).intValue());
 
         // maximum element
-        assertEquals(4, Cf.list(1, 4, 3, 2).reduceLeft(IntegerF.maxF()).intValue());
+        assertEquals(4, Cf.list(1, 4, 3, 2).reduceLeft(Cf.Integer.maxF()).intValue());
         // actually, ListF has max() method that is implemented using foldLeft
         assertEquals(4, Cf.list(1, 4, 3, 2).max().intValue());
 
         // fold unlike reduce works with empty collections
-        assertEquals(0, Cf.<Integer>list().foldLeft(0, IntegerF.plusF()).intValue());
+        assertEquals(0, Cf.<Integer>list().foldLeft(0, Cf.Integer.plusF()).intValue());
     }
 
     @Test
     public void map() {
         // apply function to all elements
-        assertEquals(Cf.list(1, 2, 4), Cf.list("1", "2", "4").map(IntegerF.parseF()));
+        assertEquals(Cf.list(1, 2, 4), Cf.list("1", "2", "4").map(Cf.Integer.parseF()));
     }
 
     @Test
     public void filter() {
         // take only positive elements
-        assertEquals(Cf.list(1, 2), Cf.list(0, 1, -3, 2, 0).filter(IntegerF.naturalComparator().gtF(0)));
+        assertEquals(Cf.list(1, 2), Cf.list(0, 1, -3, 2, 0).filter(Cf.Integer.comparator().gtF(0)));
     }
 
     @Test
     public void flatMap() {
-        ListF<String> words = Cf.list("a,b", "c", "d,e,f").flatMap(StringF.splitF(","));
+        ListF<String> words = Cf.list("a,b", "c", "d,e,f").flatMap(Cf.String.splitF(","));
         assertEquals(Cf.list("a", "b", "c", "d", "e", "f"), words);
     }
 
     @Test
     public void forAllExists() {
         // predicate that tests that string length is greater or equal to 2
-        Function1B<String> lengthGe2 = StringF.lengthF().andThen(IntegerF.naturalComparator().geF(2));
+        Function1B<String> lengthGe2 = Cf.String.lengthF().andThen(Cf.Integer.geF(2));
 
         // All strings has length => 2?
         assertTrue(Cf.list("aaa", "bb", "cc").forAll(lengthGe2));

@@ -9,7 +9,6 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.Tuple3;
 import ru.yandex.bolts.collection.Tuple4;
-import ru.yandex.bolts.function.misc.DoubleF;
 import ru.yandex.bolts.function.misc.StringF;
 
 /**
@@ -60,7 +59,7 @@ public class TupleExample {
         ListF<Tuple3<String, String, Double>> dataParsed =
                 data
                 .map(StringF.split3F(";")) // split columns
-                .map(Tuple3.<String, String, String, Double>map3F(DoubleF.parseF())); // parse the third column
+                .map(Tuple3.<String, String, String, Double>map3F(Cf.Double.parseF())); // parse the third column
 
         ListF<Tuple3<String, String, Double>> expected = Cf.list(
                 Tuple3.tuple("Moscow", "Russia", 10.38e6),

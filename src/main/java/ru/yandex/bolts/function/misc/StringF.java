@@ -3,6 +3,7 @@ package ru.yandex.bolts.function.misc;
 import java.util.regex.Pattern;
 
 import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.Tuple3;
@@ -16,107 +17,71 @@ import ru.yandex.bolts.function.Function2B;
  * Misc {@link String} functions.
  *
  * @author Stepan Koltsov
- * @see CharSequenceF
+ * @deprecated
+ * @see CollectionsF#String
  */
 public class StringF {
 
-    /**
-     * @see CharSequenceF#notEmptyF()
-     */
     public static Function1B<String> notEmptyF() {
-        return CharSequenceF.notEmptyF().uncheckedCast();
+        return Cf.String.notEmptyF();
     }
 
-    /**
-     * @see CharSequenceF#emptyF()
-     */
     public static Function1B<String> emptyF() {
-        return CharSequenceF.emptyF().uncheckedCast();
+        return Cf.String.emptyF();
     }
 
-    /**
-     * @see CharSequenceF#lengthF()
-     */
     public static Function<String, Integer> lengthF() {
-        return CharSequenceF.lengthF().uncheckedCast();
+        return Cf.String.lengthF();
     }
 
     /**
      * Concatenate two strings.
      */
     public static Function2<String, String, String> plusF() {
-        return new Function2<String, String, String>() {
-            public String apply(String a, String b) {
-                return a + b;
-            }
-        };
+        return Cf.String.plusF();
     }
 
     /**
      * Join string using specified separator.
      */
     public static Function2<String, String, String> plusF(final String sep) {
-        return new Function2<String, String, String>() {
-            public String apply(String a, String b) {
-                return a + sep + b;
-            }
-        };
+        return Cf.String.joinF(sep);
     }
 
     public static Function<String, String> addSuffixF(String suffix) {
-        return plusF().bind2(suffix);
+        return Cf.String.addSuffixF(suffix);
     }
 
     public static Function<String, String> addPrefixF(String prefix) {
-        return plusF().bind1(prefix);
+        return Cf.String.addPrefixF(prefix);
     }
 
     public static Function2B<String, String> startsWithF() {
-        return new Function2B<String, String>() {
-            public boolean apply(String a, String b) {
-                return a.startsWith(b);
-            }
-        };
+        return Cf.String.startsWithF();
     }
 
     public static Function1B<String> startsWithF(String prefix) {
-        return startsWithF().bind2(prefix);
+        return Cf.String.startsWithF(prefix);
     }
 
     public static Function2B<String, String> endsWithF() {
-        return new Function2B<String, String>() {
-            public boolean apply(String a, String b) {
-                return a.endsWith(b);
-            }
-        };
+        return Cf.String.endsWithF();
     }
 
     public static Function1B<String> endsWithF(String suffix) {
-        return endsWithF().bind2(suffix);
+        return Cf.String.endsWithF(suffix);
     }
 
     public static Function<String, String> toLowerCaseF() {
-        return new Function<String, String>() {
-            public String apply(String a) {
-                return a.toLowerCase();
-            }
-        };
+        return Cf.String.toLowerCaseF();
     }
 
     public static Function<String, String> toUpperCaseF() {
-        return new Function<String, String>() {
-            public String apply(String a) {
-                return a.toUpperCase();
-            }
-        };
+        return Cf.String.toUpperCaseF();
     }
 
     public static Function<String, String> trimF() {
-        return new Function<String, String>() {
-            public String apply(String a) {
-                return a.trim();
-            }
-        };
+        return Cf.String.trimF();
     }
 
     /**
@@ -125,12 +90,7 @@ public class StringF {
      * @see Pattern#split(CharSequence)
      */
     public static Function<String, ListF<String>> splitF(String regex) {
-        final Pattern pattern = Pattern.compile(regex);
-        return new Function<String, ListF<String>>() {
-            public ListF<String> apply(String a) {
-                return Cf.list(pattern.split(a));
-            }
-        };
+        return Cf.String.splitF(regex);
     }
 
     /**

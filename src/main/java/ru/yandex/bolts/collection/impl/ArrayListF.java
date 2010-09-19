@@ -39,6 +39,13 @@ public class ArrayListF<E> extends ArrayListBase<E>
         }
     }
 
+    @SuppressWarnings("unchecked")
+    ArrayListF(Object[] array) {
+        this.array = (E[]) array;
+        this.firstIndex = 0;
+        this.lastIndex = array.length;
+    }
+
     /**
      * Constructs a new instance of ArrayList containing the elements in the
      * specified collection. The ArrayList will have an initial capacity which
@@ -490,6 +497,10 @@ public class ArrayListF<E> extends ArrayListBase<E>
         firstIndex = 0;
         lastIndex = array.length;
         modCount = 0;
+    }
+
+    public static <E> ArrayListF<E> valueOf(E[] array) {
+        return new ArrayListF<E>(Arrays.copyOf(array, array.length));
     }
 
 } //~

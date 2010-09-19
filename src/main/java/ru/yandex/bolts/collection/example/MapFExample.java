@@ -8,7 +8,6 @@ import org.junit.Test;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.misc.IntegerF;
 
 /**
  * Examples of {@link MapF}.
@@ -58,7 +57,7 @@ public class MapFExample {
     @Test
     public void mapValues() {
         // mapValues applies function to each value of map
-        assertEquals(Cf.map("a", 1, "b", 2), Cf.map("a", "1", "b", "2").mapValues(IntegerF.parseF()));
+        assertEquals(Cf.map("a", 1, "b", 2), Cf.map("a", "1", "b", "2").mapValues(Cf.Integer.parseF()));
     }
 
 } //~

@@ -1,5 +1,6 @@
 package ru.yandex.bolts.function;
 
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.Tuple2;
 
 /**
@@ -137,7 +138,7 @@ public abstract class Function2B<A, B> {
      * Check whether two values are equal.
      */
     public static <A> boolean equals(A a, A b) {
-        return a == null || b == null ? a == b : a.equals(b);
+        return Cf.Object.equals(a, b);
     }
 
     public Function2B<A, B> memoize() {
