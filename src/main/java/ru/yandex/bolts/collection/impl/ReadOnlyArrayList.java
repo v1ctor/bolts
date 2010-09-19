@@ -1,5 +1,6 @@
 package ru.yandex.bolts.collection.impl;
 
+import java.io.ObjectStreamException;
 import java.util.Arrays;
 
 import ru.yandex.bolts.collection.Cf;
@@ -99,6 +100,14 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
 
     public static <E> ReadOnlyArrayList<E> cons(E e1, E e2) {
         return new ReadOnlyArrayList<E>(new Object[] { e1, e2 });
+    }
+
+    private Object readResolve() throws ObjectStreamException {
+        if (isEmpty()) {
+            return EMPTY;
+        } else {
+            return this;
+        }
     }
 
 } //~
