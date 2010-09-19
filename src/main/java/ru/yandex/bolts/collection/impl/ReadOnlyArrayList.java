@@ -16,7 +16,9 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
 
     private static final long serialVersionUID = -4843929454311459758L;
 
-    public static final ReadOnlyArrayList<?> EMPTY = new ReadOnlyArrayList<Object>(new Object[0], 0, 0);
+    private static final Object[] EMPTY_ARRAY = new Object[0];
+
+    public static final ReadOnlyArrayList<?> EMPTY = new ReadOnlyArrayList<Object>(EMPTY_ARRAY, 0, 0);
 
     /**
      * Construct this by destroying ArrayListF
@@ -30,7 +32,7 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
         firstIndex = arrayList.firstIndex;
         lastIndex = arrayList.lastIndex;
 
-        arrayList.array = (E[]) new Object[0];
+        arrayList.array = (E[]) EMPTY_ARRAY;
         arrayList.firstIndex = arrayList.lastIndex = 0;
     }
 
