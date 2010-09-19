@@ -16,6 +16,8 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
 
     private static final long serialVersionUID = -4843929454311459758L;
 
+    public static final ReadOnlyArrayList<?> EMPTY = new ReadOnlyArrayList<Object>(new Object[0], 0, 0);
+
     /**
      * Construct this by destroying ArrayListF
      *
@@ -32,8 +34,9 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
         arrayList.firstIndex = arrayList.lastIndex = 0;
     }
 
-    ReadOnlyArrayList(E[] array, int firstIndex, int lastIndex) {
-        super(array, firstIndex, lastIndex);
+    @SuppressWarnings("unchecked")
+    ReadOnlyArrayList(Object[] array, int firstIndex, int lastIndex) {
+        super((E[]) array, firstIndex, lastIndex);
 
         if (firstIndex < 0 || lastIndex < 0)
             throw new IllegalArgumentException();
@@ -41,6 +44,10 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
             throw new IllegalArgumentException();
         if (lastIndex > array.length)
             throw new IllegalArgumentException();
+    }
+
+    ReadOnlyArrayList(Object[] array) {
+        this(array, 0, array.length);
     }
 
     @Override
@@ -78,6 +85,14 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
 
     public static <E> ReadOnlyArrayList<E> valueOf(E[] array) {
         return new ReadOnlyArrayList<E>(Arrays.copyOf(array, array.length), 0, array.length);
+    }
+
+    public static <E> ReadOnlyArrayList<E> cons(E e) {
+        return new ReadOnlyArrayList<E>(new Object[] { e });
+    }
+
+    public static <E> ReadOnlyArrayList<E> cons(E e1, E e2) {
+        return new ReadOnlyArrayList<E>(new Object[] { e1, e2 });
     }
 
 } //~

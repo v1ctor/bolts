@@ -27,13 +27,10 @@ import ru.yandex.bolts.collection.impl.DefaultListF;
 import ru.yandex.bolts.collection.impl.DefaultMapF;
 import ru.yandex.bolts.collection.impl.DefaultSetF;
 import ru.yandex.bolts.collection.impl.EmptyIterator;
-import ru.yandex.bolts.collection.impl.EmptyList;
 import ru.yandex.bolts.collection.impl.EmptyMap;
 import ru.yandex.bolts.collection.impl.EmptySet;
-import ru.yandex.bolts.collection.impl.ListOf2;
 import ru.yandex.bolts.collection.impl.ReadOnlyArrayList;
 import ru.yandex.bolts.collection.impl.SetFromMap;
-import ru.yandex.bolts.collection.impl.SingletonList;
 import ru.yandex.bolts.collection.impl.SingletonMap;
 import ru.yandex.bolts.collection.impl.SingletonSet;
 import ru.yandex.bolts.function.Function;
@@ -300,21 +297,21 @@ public class CollectionsF {
      */
     @SuppressWarnings({"unchecked"})
     public static <E> ListF<E> list() {
-        return EmptyList.INSTANCE;
+        return (ListF<E>) ReadOnlyArrayList.EMPTY;
     }
 
     /**
      * Immutable singleton list.
      */
     public static <E> ListF<E> list(E e) {
-        return new SingletonList<E>(e);
+        return ReadOnlyArrayList.cons(e);
     }
 
     /**
      * Immutable list with two elements.
      */
     public static <E> ListF<E> list(E e1, E e2) {
-        return new ListOf2<E>(e1, e2);
+        return ReadOnlyArrayList.cons(e1, e2);
     }
 
     /**
@@ -326,8 +323,6 @@ public class CollectionsF {
      */
     public static <E> ListF<E> list(E... elements) {
         if (elements.length == 0) return list();
-        else if (elements.length == 1) return list(elements[0]);
-        else if (elements.length == 2) return list(elements[0], elements[1]);
         return ReadOnlyArrayList.valueOf(elements);
     }
 
