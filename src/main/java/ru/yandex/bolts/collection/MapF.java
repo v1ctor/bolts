@@ -104,4 +104,29 @@ public interface MapF<K, V> extends Map<K, V> {
     <L, W> MapF<L, W> uncheckedCast();
 
     MapF<K, V> tee(Function1V<? super MapF<K, V>> f);
+
+
+    /** @deprecated */
+    @Override
+    boolean containsKey(Object key);
+    boolean containsKeyTs(K key);
+    boolean containsKeyTu(Object key);
+
+    /** @deprecated */
+    @Override
+    boolean containsValue(Object value);
+    boolean containsValueTs(V value);
+    boolean containsValueTu(Object value);
+
+    /** @deprecated */
+    @Override
+    V remove(Object key);
+    V removeTs(K key);
+    V removeTu(Object key);
+
+    /** @deprecated */
+    @Override
+    V get(Object key);
+    V getTs(K key);
+    V getTu(Object key);
 } //~

@@ -295,5 +295,45 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         f.apply(this);
         return this;
     }
-    
+
+    @Override
+    public boolean containsKeyTs(K key) {
+        return containsKey(key);
+    }
+
+    @Override
+    public boolean containsKeyTu(Object key) {
+        return containsKey(key);
+    }
+
+    @Override
+    public boolean containsValueTs(V value) {
+        return containsValue(value);
+    }
+
+    @Override
+    public boolean containsValueTu(Object value) {
+        return containsValue(value);
+    }
+
+    @Override
+    public V removeTs(K key) {
+        return remove(key);
+    }
+
+    @Override
+    public V removeTu(Object key) {
+        return remove(key);
+    }
+
+    @Override
+    public V getTs(K key) {
+        return get(key);
+    }
+
+    @Override
+    public V getTu(Object key) {
+        return get(key);
+    }
+
 } //~

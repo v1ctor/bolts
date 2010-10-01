@@ -531,4 +531,45 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     public <F> ListF<F> flatten() {
         return Cf.flatten((CollectionF<? extends Collection<F>>) this);
     }
+
+    @Override
+    public boolean removeTs(E e) {
+        return remove(e);
+    }
+
+    @Override
+    public boolean removeTu(Object e) {
+        return remove(e);
+    }
+
+    @Override
+    public boolean containsTs(E e) {
+        return contains(e);
+    }
+
+    @Override
+    public boolean containsTu(Object e) {
+        return contains(e);
+    }
+
+    @Override
+    public boolean containsAllTs(Collection<? extends E> coll) {
+        return containsAll(coll);
+    }
+
+    @Override
+    public boolean containsAllTu(Collection<?> coll) {
+        return containsAll(coll);
+    }
+
+    @Override
+    public boolean retainAllTs(Collection<? extends E> c) {
+        return retainAll(c);
+    }
+
+    @Override
+    public boolean retainAllTu(Collection<?> c) {
+        return retainAll(c);
+    }
+
 } //~
