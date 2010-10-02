@@ -51,12 +51,18 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     SetF<E> unmodifiable();
 
     <F> SetF<F> uncheckedCast();
-    
+
     /** @deprecated */
     @Override
     boolean remove(Object o);
     boolean removeTs(E e);
     boolean removeTu(Object e);
+
+    /** @deprecated */
+    @Override
+    boolean removeAll(Collection<?> c);
+    boolean removeAllTs(Collection<? extends E> c);
+    boolean removeAllRu(Collection<?> c);
 
     /** @deprecated */
     @Override

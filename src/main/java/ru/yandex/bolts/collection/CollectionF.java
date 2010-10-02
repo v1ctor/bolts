@@ -249,6 +249,12 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     /** @deprecated */
     @Override
+    boolean removeAll(Collection<?> c);
+    boolean removeAllTs(Collection<? extends E> c);
+    boolean removeAllRu(Collection<?> c);
+
+    /** @deprecated */
+    @Override
     boolean contains(Object o);
     boolean containsTs(E e);
     boolean containsTu(Object e);
