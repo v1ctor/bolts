@@ -27,6 +27,11 @@ import ru.yandex.bolts.function.Function2V;
  */
 public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements MapF<K, V> {
 
+    @Override
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
+
     public SetF<K> keySet() {
         return CollectionsF.x(super.keySet());
     }

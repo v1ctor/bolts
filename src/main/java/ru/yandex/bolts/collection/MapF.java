@@ -18,6 +18,8 @@ import ru.yandex.bolts.function.Function2V;
  * @author Stepan Koltsov
  */
 public interface MapF<K, V> extends Map<K, V> {
+    boolean isNotEmpty();
+
     /** Get value by key */
     Option<V> getO(K key);
 
