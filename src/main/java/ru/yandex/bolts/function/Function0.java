@@ -1,9 +1,5 @@
 package ru.yandex.bolts.function;
 
-import ru.yandex.bolts.collection.Cf;
-import ru.yandex.bolts.collection.MapF;
-import ru.yandex.bolts.collection.Option;
-import ru.yandex.bolts.collection.SetF;
 
 
 /**
