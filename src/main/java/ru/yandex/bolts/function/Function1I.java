@@ -185,5 +185,10 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     public Function1I<A> memoize() {
         return asFunction1I(asFunction().memoize());
     }
-    
+
+    @SuppressWarnings("unchecked")
+    public <B> Function1I<B> uncheckedCast() {
+        return (Function1I<B>) this;
+    }
+
 } //~

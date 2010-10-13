@@ -105,6 +105,11 @@ public abstract class Function2B<A, B> {
         };
     }
 
+    @SuppressWarnings("unchecked")
+    public <C, D> Function2B<C, D> uncheckedCast() {
+        return (Function2B<C, D>) this;
+    }
+
     public static <A> Function2B<A, A> sameF() {
         return new Function2B<A, A>() {
             public boolean apply(A a, A b) {

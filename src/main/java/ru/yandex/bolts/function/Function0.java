@@ -131,5 +131,10 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
             }
         };
     }
+    
+    @SuppressWarnings("unchecked")
+    public <B> Function0<B> uncheckedCast() {
+        return (Function0<B>) this;
+    }
 
 } //~
