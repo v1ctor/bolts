@@ -8,6 +8,7 @@ import ru.yandex.bolts.collection.impl.AbstractListF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function2;
 
 /**
  * Port of scala <a href="http://www.scala-lang.org/docu/files/api/scala/Option.html">Option</a>.
@@ -357,6 +358,24 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
                 return some(a);
             }
         };
+    }
+
+    /**
+     * @see #map(Function)
+     */
+    public static <A, B> Function2<Option<A>, Function<A, B>, Option<B>> mapF() {
+        return new Function2<Option<A>, Function<A, B>, Option<B>>() {
+            public Option<B> apply(Option<A> o, Function<A, B> f) {
+                return o.map(f);
+            }
+        };
+    }
+
+    /**
+     * @see #map(Function)
+     */
+    public static <A, B> Function<Option<A>, Option<B>> mapF(Function<A, B> f) {
+        return Option.<A, B>mapF().bind2(f);
     }
 
 } //~
