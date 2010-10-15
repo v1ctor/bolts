@@ -4,7 +4,9 @@ import java.util.Collection;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
+import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 
 
@@ -27,5 +29,18 @@ public abstract class AnyCollectionType {
         return this.<F, T>mapF().bind2(transform);
     }
 
+    public <F> Function2<Collection<F>, Function1B<? super F>, Option<F>> findF() {
+        return new Function2<Collection<F>, Function1B<? super F>, Option<F>>() {
+            public Option<F> apply(Collection<F> c, Function1B<? super F> f) {
+                return Cf.x(c).find(f);
+            }
+        };
+    }
+
+    public <F> Function<Collection<F>, Option<F>> findF(
+            Function1B<? super F> f)
+    {
+        return this.<F>findF().bind2(f);
+    }
 
 } //~
