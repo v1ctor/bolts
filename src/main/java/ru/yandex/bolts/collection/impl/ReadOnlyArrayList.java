@@ -88,7 +88,7 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
 
     @SuppressWarnings("unchecked")
     public static <E> ReadOnlyArrayList<E> valueOf(E[] array) {
-        if (array.length == 0)
+        if (array == null || array.length == 0)
             return (ReadOnlyArrayList<E>) EMPTY;
         else
             return new ReadOnlyArrayList<E>(Arrays.copyOf(array, array.length), 0, array.length);

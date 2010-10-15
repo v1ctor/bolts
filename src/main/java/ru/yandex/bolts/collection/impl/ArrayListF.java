@@ -500,7 +500,11 @@ public class ArrayListF<E> extends ArrayListBase<E>
     }
 
     public static <E> ArrayListF<E> valueOf(E[] array) {
-        return new ArrayListF<E>(Arrays.copyOf(array, array.length));
+        if (array == null) {
+            return new ArrayListF<E>();
+        } else {
+            return new ArrayListF<E>(Arrays.copyOf(array, array.length));
+        }
     }
 
 } //~
