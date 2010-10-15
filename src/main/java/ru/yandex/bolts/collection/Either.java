@@ -2,8 +2,8 @@ package ru.yandex.bolts.collection;
 
 import java.util.NoSuchElementException;
 
-import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 
@@ -49,6 +49,13 @@ public class Either<A, B> {
     public Either<B, A> swap() {
         if (isLeft()) return Either.<B, A>right(getLeft());
         else return Either.<B, A>left(getRight());
+    }
+
+    public <C> C fold(Function<A, C> leftF, Function<B, C> rightF) {
+        if (isLeft())
+            return leftF.apply(getLeft());
+        else
+            return rightF.apply(getRight());
     }
 
     /** This with different type parameters and no type checks */
