@@ -62,11 +62,6 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     }
 
     @Override
-    public <B> IteratorF<B> mapW(B op) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
     public <B> IteratorF<B> flatMap(final Function<? super E, ? extends Iterator<B>> f) {
         // copy-paste of scala.Iterator.flatMap
         class FlatMappedIterator extends AbstractIteratorF<B> {
@@ -154,11 +149,6 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     }
 
     @Override
-    public IteratorF<E> filterW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
     public IteratorF<E> filterNotNull() {
         return filter(Function1B.<E>notNullF());
     }
@@ -231,22 +221,12 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         return false;
     }
 
-    @Override
-    public boolean existsW(E p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
     public Option<E> find(Function1B<? super E> p) {
         while (hasNext()) {
             E e = next();
             if (p.apply(e)) return Option.some(e);
         }
         return Option.none();
-    }
-
-    @Override
-    public Option<E> findW(E p) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     public <B> B foldLeft(B z, Function2<B, E, B> f) {
@@ -257,37 +237,17 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         return acc;
     }
 
-    @Override
-    public <B> B foldLeftW(B z, B f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
     public <B> B foldRight(B z, Function2<E, B, B> f) {
         if (hasNext()) return f.apply(next(), foldRight(z, f));
         else return z;
-    }
-
-    @Override
-    public <B> B foldRightW(B z, B f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     public E reduceLeft(Function2<E, E, E> f) {
         return reduceLeftO(f).getOrThrow("empty.reduceLeft");
     }
 
-    @Override
-    public E reduceLeftW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
     public E reduceRight(Function2<E, E, E> f) {
         return reduceRightO(f).getOrThrow("empty.reduceRight");
-    }
-
-    @Override
-    public E reduceRightW(E f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override
@@ -296,11 +256,6 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
             return Option.some(foldLeft(next(), f));
         else
             return Option.none();
-    }
-
-    @Override
-    public Option<E> reduceLeftOW(E f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override
@@ -313,11 +268,6 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
             return Option.some(f.apply(head, reduceRight(f)));
         else
             return Option.some(head);
-    }
-
-    @Override
-    public Option<E> reduceRightOW(E f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     public IteratorF<E> drop(int count) {
@@ -361,11 +311,6 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         return Cf.emptyIterator();
     }
 
-    @Override
-    public IteratorF<E> dropWhileW(E p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
     public IteratorF<E> takeWhile(final Function1B<? super E> f) {
         class TakeWhileIterator extends AbstractPrefetchingIterator<E> {
             boolean end = false;
@@ -387,11 +332,6 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         }
 
         return new TakeWhileIterator();
-    }
-
-    @Override
-    public IteratorF<E> takeWhileW(E p) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override

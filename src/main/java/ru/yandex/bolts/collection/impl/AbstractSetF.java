@@ -44,11 +44,6 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
     }
 
     @Override
-    public SetF<E> filterW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
     public SetF<E> filterNotNull() {
         return filter(Function1B.<E>notNullF());
     }
@@ -56,11 +51,6 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
     @SuppressWarnings({"unchecked"})
     public Tuple2<SetF<E>, SetF<E>> partition(Function1B<? super E> p) {
         return (Tuple2<SetF<E>, SetF<E>>) super.partition(p);
-    }
-
-    @Override
-    public Tuple2<SetF<E>, SetF<E>> partitionW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     public SetF<E> minus(Set<E> es) {

@@ -6,7 +6,6 @@ import java.util.List;
 
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.weaving.annotation.FunctionParameter;
 
 /**
  * Extended list.
@@ -29,9 +28,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     ListF<E> filter(Function<? super E, Boolean> p);
 
     @Override
-    ListF<E> filterW(@FunctionParameter boolean p);
-
-    @Override
     ListF<E> filterNotNull();
 
     /**
@@ -43,9 +39,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
     @Override
     Tuple2<ListF<E>, ListF<E>> partition(Function<? super E, Boolean> p);
-
-    @Override
-    Tuple2<ListF<E>, ListF<E>> partitionW(@FunctionParameter boolean p);
 
     /** Sub list from index to index */
     ListF<E> subList(int fromIndex, int toIndex);
@@ -97,14 +90,10 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
     ListF<E> takeWhile(Function<? super E, Boolean> f);
 
-    ListF<E> takeWhileW(@FunctionParameter boolean p);
-
     /** Elements after {@link #takeWhile(Function1B)} */
     ListF<E> dropWhile(Function1B<? super E> f);
 
     ListF<E> dropWhile(Function<? super E, Boolean> f);
-
-    ListF<E> dropWhileW(@FunctionParameter boolean p);
 
     /** Pair of sublists returned by {@link #takeWhile(Function1B)} and {@link #dropWhile(Function1B)} */
     //ListF<E> span(Function1B<? super E> p);
@@ -126,8 +115,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     <B> Tuple2List<E, B> zip(ListF<? extends B> that);
 
     <B> Tuple2List<E, B> zipWith(Function<? super E, ? extends B> f);
-
-    <B> Tuple2List<E, B> zipWithW(@FunctionParameter B f);
 
     /** @deprecated */
     @Override
