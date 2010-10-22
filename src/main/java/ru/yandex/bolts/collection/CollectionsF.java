@@ -45,6 +45,7 @@ import ru.yandex.bolts.type.collection.AnySetType;
 import ru.yandex.bolts.type.collection.ArrayListType;
 import ru.yandex.bolts.type.collection.CollectionType;
 import ru.yandex.bolts.type.collection.ListType;
+import ru.yandex.bolts.type.collection.Tuple2ListType;
 import ru.yandex.bolts.type.number.ByteType;
 import ru.yandex.bolts.type.number.DoubleType;
 import ru.yandex.bolts.type.number.FloatType;
@@ -394,7 +395,7 @@ public class CollectionsF {
 
     /** Create map from sequence of entries */
     public static <K, V> MapF<K, V> map(Collection<Tuple2<K, V>> pairs) {
-        return Tuple2List.tuple2List(Cf.x(pairs).toList()).toMap();
+        return Tuple2List.cons(Cf.x(pairs).toList()).toMap();
     }
 
     /**
@@ -840,5 +841,6 @@ public class CollectionsF {
     public static final ListType List = new ListType();
     public static final ArrayListType ArrayList = new ArrayListType();
     public static final CollectionType Collection = new CollectionType();
+    public static final Tuple2ListType Tuple2List = new Tuple2ListType();
 
 } //~

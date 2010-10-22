@@ -69,7 +69,7 @@ public class Tuple2ListTest extends TestCase {
     }
 
     public void testMapPlusToArray() {
-        assertEquals(1, Tuple2List.fromPairs("a", 1).map(Tuple2.get2F()).plus(Cf.list(2)).toArray()[0]);
+        assertEquals(1, Tuple2List.fromPairs("a", 1).map(Tuple2.<String, Integer>get2F()).plus(Cf.list(2)).toArray()[0]);
         assertEquals(1, Tuple2List.tuple2List().map(Tuple2.get2F()).plus(Cf.list(1)).toArray()[0]);
     }
 

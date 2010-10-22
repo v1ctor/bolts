@@ -326,17 +326,16 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     /**
      * Unchecked.
      */
-    @SuppressWarnings("unchecked")
     public static <A, B> Tuple2List<A, B> fromPairs(Object... elements) {
-        if (elements.length % 2 != 0)
-            throw new IllegalArgumentException();
-        if (elements.length == 0)
-            return tuple2List();
-        Tuple2<A, B>[] es = new Tuple2[elements.length / 2];
-        for (int i = 0; i < es.length; ++i) {
-            es[i] = Tuple2.tuple((A) elements[i * 2], (B) elements[i * 2 + 1]);
-        }
-        return tuple2List(es);
+        return Cf.Tuple2List.fromPairs(elements);
+    }
+
+    public static <A, B> Tuple2List<A, B> fromPairs(A a, B b) {
+        return Cf.Tuple2List.fromPairs(a, b);
+    }
+
+    public static <A, B> Tuple2List<A, B> fromPairs(A a1, B b1, A a2, B b2) {
+        return Cf.Tuple2List.fromPairs(a1, b2, a2, b2);
     }
 
     /**
@@ -358,18 +357,26 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
      * Empty immutable.
      */
     public static <A, B> Tuple2List<A, B> tuple2List() {
-        return tuple2List(Cf.<Tuple2<A, B>>list());
+        return Cf.Tuple2List.cons();
     }
 
     public static <A, B> Tuple2List<A, B> arrayList() {
-        return tuple2List(Cf.<Tuple2<A, B>>arrayList());
+        return Cf.Tuple2List.arrayList();
     }
 
     public static <A, B> Tuple2List<A, B> tuple2List(Tuple2<A, B>... pairs) {
-        return tuple2List(Cf.list(pairs));
+        return Cf.Tuple2List.cons(pairs);
+    }
+
+    public static <A, B> Tuple2List<A, B> wrap(ListF<Tuple2<A, B>> pairs) {
+        return new Tuple2List<A, B>(pairs);
     }
 
     public static <A, B> Tuple2List<A, B> tuple2List(ListF<Tuple2<A, B>> pairs) {
+        return Cf.Tuple2List.cons(pairs);
+    }
+
+    public static <A, B> Tuple2List<A, B> tuple2List(Collection<Tuple2<A, B>> pairs) {
         return new Tuple2List<A, B>(pairs);
     }
 
