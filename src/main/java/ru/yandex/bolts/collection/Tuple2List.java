@@ -335,7 +335,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public static <A, B> Tuple2List<A, B> fromPairs(A a1, B b1, A a2, B b2) {
-        return Cf.Tuple2List.fromPairs(a1, b2, a2, b2);
+        return Cf.Tuple2List.fromPairs(a1, b1, a2, b2);
     }
 
     /**
