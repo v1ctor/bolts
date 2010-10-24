@@ -20,9 +20,7 @@ import ru.yandex.bolts.function.Function1V;
 /**
  * @author Stepan Koltsov
  */
-@SuppressWarnings({"UnusedDeclaration", "unused"})
 public class AbstractMapFTest extends TestCase {
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AbstractMapFTest.class);
 
     private static MapF<Integer, String> map123() {
         return list(1, 2, 3).toMapMappingToValue(Function.toStringF());
@@ -35,7 +33,6 @@ public class AbstractMapFTest extends TestCase {
     }
 
     public void testMapValues() {
-        MapF<Integer, String> m = map123();
         MapF<Integer, String> n = map123().mapValues(new Function<String, String>() {
             public String apply(String s) {
                 return "a" + s;
@@ -78,8 +75,8 @@ public class AbstractMapFTest extends TestCase {
     }
 
     public void testGet() {
-        assertEquals("1", map123().get(1));
-        assertNull(map123().get(4));
+        assertEquals("1", map123().getTs(1));
+        assertNull(map123().getTs(4));
     }
 
     public void testGetOrElseConst() {
@@ -129,11 +126,9 @@ public class AbstractMapFTest extends TestCase {
     }
 
     public void testPlus() {
-        MapF<Integer, String> m1 = map123();
         MapF<Integer, String> m2 = CollectionsF.hashMap();
         m2.put(3, "a");
         m2.put(4, "b");
-        MapF<Integer, String> r = m1.plus(m2);
 
         MapF<Integer, String> e = CollectionsF.hashMap();
         e.put(1, "1");
@@ -158,5 +153,5 @@ public class AbstractMapFTest extends TestCase {
         assertEquals(m1, m2);
         assertEquals(Integer.valueOf(2), counter.get());
     }
-    
+
 } //~

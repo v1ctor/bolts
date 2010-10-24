@@ -24,7 +24,6 @@ import ru.yandex.bolts.function.Function1BTest;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2Test;
 import ru.yandex.bolts.function.FunctionTest;
-import ru.yandex.bolts.function.misc.IntegerF;
 
 /**
  * @author Stepan Koltsov
@@ -88,7 +87,7 @@ public class AbstractListFTest extends TestCase {
                         a = a0;
                     }
 
-                    Function1B<Integer> f = IntegerF.naturalComparator().gtF(0);
+                    Function1B<Integer> f = Cf.Integer.comparator().gtF(0);
                     ListF<Integer> b = a.takeWhile(f);
                     ListF<Integer> c = a.dropWhile(f);
                     assertEquals(a, b.plus(c));

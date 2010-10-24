@@ -78,12 +78,12 @@ public class AbstractSetFTest extends TestCase {
         assertEquals(is, s2.intersect(s1));
 
         for (int e : is) {
-            assertTrue(s1.contains(e));
-            assertTrue(s2.contains(e));
+            assertTrue(s1.containsTs(e));
+            assertTrue(s2.containsTs(e));
         }
 
         for (int e : s1) {
-            assertTrue(is.contains(e) || !s2.contains(e));
+            assertTrue(is.containsTs(e) || !s2.containsTs(e));
         }
     }
 
@@ -93,11 +93,11 @@ public class AbstractSetFTest extends TestCase {
         assertEquals(u, s2.plus(s1));
 
         for (int e : u) {
-            assertTrue(s1.contains(e) || s2.contains(e));
+            assertTrue(s1.containsTs(e) || s2.containsTs(e));
         }
 
         for (int e : s1) {
-            assertTrue(u.contains(e));
+            assertTrue(u.containsTs(e));
         }
     }
 
@@ -105,16 +105,16 @@ public class AbstractSetFTest extends TestCase {
         SetF<Integer> d = s1.minus(s2);
 
         for (int e : d) {
-            assertTrue(s1.contains(e));
-            assertFalse(s2.contains(e));
+            assertTrue(s1.containsTs(e));
+            assertFalse(s2.containsTs(e));
         }
 
         for (int e : s1) {
-            assertTrue(d.contains(e) || s2.contains(e));
+            assertTrue(d.containsTs(e) || s2.containsTs(e));
         }
 
         for (int e : s2) {
-            assertFalse(d.contains(e));
+            assertFalse(d.containsTs(e));
         }
     }
 
