@@ -59,6 +59,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return filter(Function1B.<E>notNullF());
     }
 
+    @Override
+    public <F extends E> ListF<F> filterByType(Class<F> type) {
+        return filter(Function1B.instanceOfF(type)).uncheckedCast();
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public Tuple2<ListF<E>, ListF<E>> partition(Function1B<? super E> p) {

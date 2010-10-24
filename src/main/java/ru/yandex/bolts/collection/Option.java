@@ -150,6 +150,14 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         return filter(Function1B.<T>notNullF());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <F extends T> ListF<F> filterByType(Class<F> type) {
+        return filter(Function1B.instanceOfF(type)).uncheckedCast();
+    }
+
     public final SetF<T> toSet() {
         if (isDefined()) return CollectionsF.set(get());
         else return CollectionsF.set();

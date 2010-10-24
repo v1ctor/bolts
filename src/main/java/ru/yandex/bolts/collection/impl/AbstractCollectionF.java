@@ -143,6 +143,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return filter(Function1B.<E>notNullF());
     }
 
+    @Override
+    public <F extends E> CollectionF<F> filterByType(Class<F> type) {
+        return filter(Function1B.instanceOfF(type)).uncheckedCast();
+    }
+
     public abstract IteratorF<E> iterator();
 
     @Override

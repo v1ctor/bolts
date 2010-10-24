@@ -31,6 +31,12 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     ListF<E> filterNotNull();
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    <F extends E> ListF<F> filterByType(Class<F> type);
+
+    /**
      * Return pair of lists, first list contains elements matching <code>p</code>
      * and second lists contains elements matching <code>!p</code>.
      */

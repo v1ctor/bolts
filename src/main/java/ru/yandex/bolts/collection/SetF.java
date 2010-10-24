@@ -22,6 +22,12 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     @Override
     SetF<E> filterNotNull();
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    <F extends E> SetF<F> filterByType(Class<F> type);
+
     @Override
     Tuple2<SetF<E>, SetF<E>> partition(Function1B<? super E> p);
 

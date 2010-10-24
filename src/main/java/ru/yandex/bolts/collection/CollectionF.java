@@ -34,6 +34,11 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     CollectionF<E> filterNotNull();
 
+    /**
+     * @see Class#isInstance(Object)
+     */
+    <F extends E> CollectionF<F> filterByType(Class<F> type);
+
     /** Pair of collection, first contains elements matching p, second contains element matching !p */
     Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function1B<? super E> p);
 

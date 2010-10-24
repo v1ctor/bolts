@@ -48,6 +48,11 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
         return filter(Function1B.<E>notNullF());
     }
 
+    @Override
+    public <F extends E> SetF<F> filterByType(Class<F> type) {
+        return filter(Function1B.instanceOfF(type)).uncheckedCast();
+    }
+
     @SuppressWarnings({"unchecked"})
     public Tuple2<SetF<E>, SetF<E>> partition(Function1B<? super E> p) {
         return (Tuple2<SetF<E>, SetF<E>>) super.partition(p);
