@@ -43,6 +43,9 @@ public interface IteratorF<E> extends Iterator<E> {
     /** Find element that matches predicate */
     Option<E> find(Function1B<? super E> p);
 
+    /** Count elements matching predicate */
+    int count(Function1B<? super E> p);
+
     /** Fold left */
     <B> B foldLeft(B z, Function2<B, E, B> f);
 

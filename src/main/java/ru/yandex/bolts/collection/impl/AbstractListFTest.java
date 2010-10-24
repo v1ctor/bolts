@@ -197,6 +197,10 @@ public class AbstractListFTest extends TestCase {
         assertFalse(list(1, 5, 3).find(Function1BTest.evenF()).isDefined());
     }
 
+    public void testCount() {
+        assertEquals(2, list(3, 2, 6).count(Function1BTest.evenF()));
+    }
+
     private static <T> Function1B<Collection<T>> notEmptyF() {
         return new Function1B<Collection<T>>() {
             public boolean apply(Collection<T> a) {

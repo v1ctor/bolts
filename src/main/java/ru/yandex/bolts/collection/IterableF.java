@@ -25,6 +25,9 @@ public interface IterableF<E> extends Iterable<E> {
     /** Find element matching predicate */
     Option<E> find(Function1B<? super E> p);
 
+    /** Count elements matching predicate */
+    int count(Function1B<? super E> p);
+
     /**
      * Fold left. Compute f(f(...f(f(z, e_1), e_2) ..., e_n-1), e_n)
      */

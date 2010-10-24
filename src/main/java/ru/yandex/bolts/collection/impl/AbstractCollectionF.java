@@ -293,6 +293,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return iterator().find(p);
     }
 
+    @Override
+    public int count(Function1B<? super E> p) {
+        return iterator().count(p);
+    }
+
     public <B> B foldLeft(B z, Function2<B, E, B> f) {
         return iterator().foldLeft(z, f);
     }
