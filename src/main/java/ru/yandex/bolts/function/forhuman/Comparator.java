@@ -1,5 +1,6 @@
 package ru.yandex.bolts.function.forhuman;
 
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
@@ -34,6 +35,9 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
         return mapper.andThen(this);
     }
 
+    /**
+     * Call specified comparator if object are equal by this comparator.
+     */
     public Comparator<A> chainTo(final Comparator<A> comparator) {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
@@ -46,6 +50,19 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
 
     private static int nullLowCompare(Object o1, Object o2) {
         return o1 == o2 ? 0 : o1 != null ? 1 : -1;
+    }
+
+    private static <A> int valueLowCompare(A low, A o1, A o2) {
+        if (low == null) {
+            return nullLowCompare(o1, o2);
+        }
+        if (Cf.Object.equals(o1, o2))
+            return 0;
+        if (o1 != null && low.equals(o1))
+            return -1;
+        if (o2 != null && low.equals(o2))
+            return 1;
+        return 0;
     }
 
     /** Null low comparator */
@@ -68,6 +85,18 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
                 return "nullLow(" + Comparator.this + ")";
             }
         };
+    }
+
+    public static <A> Comparator<A> valueLowC(final A low) {
+        return new Comparator<A>() {
+            public int compare(A o1, A o2) {
+                return valueLowCompare(low, o1, o2);
+            }
+        };
+    }
+
+    public Comparator<A> chainToValueLowC(A low) {
+        return chainTo(valueLowC(low));
     }
 
     /**

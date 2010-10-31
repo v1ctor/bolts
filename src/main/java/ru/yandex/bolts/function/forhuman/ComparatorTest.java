@@ -2,6 +2,7 @@ package ru.yandex.bolts.function.forhuman;
 
 import junit.framework.TestCase;
 
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2I;
 
@@ -133,5 +134,27 @@ public class ComparatorTest extends TestCase {
         assertTrue(Comparator.<Integer>naturalComparator().compare(null, null) == 0);
         assertTrue(Comparator.<Integer>naturalComparator().compare(null, 1) < 0);
         assertTrue(Comparator.<Integer>naturalComparator().compare(2, null) > 0);
+    }
+
+    public void testValueLowC() {
+        assertTrue(Comparator.valueLowC("a").compare("a", "b")  <  0);
+        assertTrue(Comparator.valueLowC("a").compare("b", "a")  >  0);
+        assertTrue(Comparator.valueLowC("a").compare("a", "a")  == 0);
+        assertTrue(Comparator.valueLowC("a").compare("b", "b")  == 0);
+        assertTrue(Comparator.valueLowC("a").compare("b", null) == 0);
+        assertTrue(Comparator.valueLowC("a").compare(null, "b") == 0);
+
+        assertTrue(Comparator.valueLowC(null).compare(null, "b")  <  0);
+        assertTrue(Comparator.valueLowC(null).compare("b", null)  >  0);
+        assertTrue(Comparator.valueLowC(null).compare("b", "b")   == 0);
+        assertTrue(Comparator.valueLowC(null).compare(null, null) == 0);
+
+        Comparator<Integer> c = Comparator.valueLowC(999).chainTo(Comparator.<Integer>naturalComparator());
+        assertTrue(c.compare(1, 1) == 0);
+        assertTrue(c.compare(1, 2) <  0);
+        assertTrue(c.compare(2, 1) >  0);
+        assertTrue(c.compare(999, 1) < 0);
+        assertTrue(c.compare(1, 999) > 0);
+        assertTrue(c.compare(999, 999) == 0);
     }
 } //~
