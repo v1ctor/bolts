@@ -141,9 +141,9 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
     /**
      * Compare {@link java.lang.Comparable}s. Null values are less then non-null.
      */
-    @SuppressWarnings("unchecked")
-    public static <A extends java.lang.Comparable> Comparator<A> naturalComparator()  {
+    public static <A extends java.lang.Comparable<?>> Comparator<A> naturalComparator()  {
         return new Comparator<A>() {
+            @SuppressWarnings("unchecked")
             public int compare(A o1, A o2) {
                 if (o1 == o2)
                     return 0;
@@ -151,7 +151,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
                     return nullLowCompare(o1, o2);
                 else
                     //noinspection unchecked
-                    return o1.compareTo(o2);
+                    return ((Comparable<Object>) o1).compareTo(o2);
             }
 
             @Override
