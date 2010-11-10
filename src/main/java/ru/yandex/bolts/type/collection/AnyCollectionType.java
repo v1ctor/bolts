@@ -43,4 +43,12 @@ public abstract class AnyCollectionType {
         return this.<F>findF().bind2(f);
     }
 
+    public Function<Collection<?>, Integer> sizeF() {
+        return new Function<Collection<?>, Integer>() {
+            public Integer apply(Collection<?> c) {
+                return c.size();
+            }
+        };
+    }
+
 } //~

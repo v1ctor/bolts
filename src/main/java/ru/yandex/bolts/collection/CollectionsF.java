@@ -697,11 +697,7 @@ public class CollectionsF {
 
     /** {@link Collection#size()} as function */
     public static <T> Function<Collection<T>, Integer> sizeF() {
-        return new Function<Collection<T>, Integer>() {
-            public Integer apply(Collection<T> a) {
-                return a.size();
-            }
-        };
+        return Collection.sizeF().uncheckedCast();
     }
 
     /** {@link Iterator#hasNext()} as function */
