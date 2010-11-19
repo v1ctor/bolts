@@ -386,7 +386,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     public E single() throws NoSuchElementException {
-        return singleO().get();
+        return iterator().single();
     }
 
     public Option<E> singleO() throws NoSuchElementException {

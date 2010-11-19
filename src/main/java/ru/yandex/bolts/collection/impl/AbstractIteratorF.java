@@ -197,6 +197,13 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         else return Option.none();
     }
 
+    @Override
+    public E single() {
+        E r = next();
+        if (hasNext()) throw new NoSuchElementException("more then one element");
+        return r;
+    }
+
     public Option<E> singleO() {
         Option<E> r = nextO();
         if (hasNext()) throw new NoSuchElementException("more then one element");

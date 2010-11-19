@@ -76,6 +76,8 @@ public interface IteratorF<E> extends Iterator<E> {
      */
     Option<E> singleO();
 
+    E single();
+
     IteratorF<E> drop(int count);
 
     IteratorF<E> take(int count);
