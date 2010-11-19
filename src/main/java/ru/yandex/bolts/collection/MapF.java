@@ -88,6 +88,8 @@ public interface MapF<K, V> extends Map<K, V> {
     /** Key set */
     SetF<K> keySet();
 
+    ListF<K> keys();
+
     SetF<Entry<K, V>> entrySet();
 
     Tuple2List<K, V> entries();

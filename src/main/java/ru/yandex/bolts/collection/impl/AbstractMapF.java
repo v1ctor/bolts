@@ -36,6 +36,11 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return CollectionsF.x(super.keySet());
     }
 
+    @Override
+    public ListF<K> keys() {
+        return keySet().toList();
+    }
+
     public abstract SetF<Entry<K, V>> entrySet();
 
     public Tuple2List<K, V> entries() {
