@@ -30,11 +30,15 @@ public class ReflectionUtils {
 
     @SuppressWarnings("unchecked")
     public static <A> Class<A> defineClass(ClassLoader classLoader, final byte[] classData) {
-        return (Class<A>) new ClassLoader(classLoader) {
-            public Class<?> defineClass() {
-                return defineClass(null, classData, 0, classData.length);
-            }
-        }.defineClass();
+        try {
+            return (Class<A>) new ClassLoader(classLoader) {
+                public Class<?> defineClass() {
+                    return defineClass(null, classData, 0, classData.length);
+                }
+            }.defineClass();
+        } catch (VerifyError e) {
+            throw new ReflectionException("failed to define class: " + e, e);
+        }
     }
 
     public static ClassLoader getAnyClassLoader(Class<?> clazz) {

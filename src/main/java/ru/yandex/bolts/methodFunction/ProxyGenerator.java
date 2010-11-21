@@ -1,6 +1,7 @@
 package ru.yandex.bolts.methodFunction;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
@@ -17,7 +18,9 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.internal.NotImplementedException;
+import ru.yandex.bolts.internal.ReflectionException;
 import ru.yandex.bolts.internal.ReflectionUtils;
+import ru.yandex.bolts.internal.Validate;
 
 /**
  * @author Stepan Koltsov
@@ -42,6 +45,8 @@ public class ProxyGenerator {
 
     @SuppressWarnings("unchecked")
     private ProxyGenerator(Class<?> clazz) {
+        Validate.isTrue((clazz.getModifiers() & Modifier.FINAL) == 0, "cannot inherit from final class " + clazz);
+
         this.clazz = (Class<Object>) clazz;
         this.methodsToCatch = findMethods();
 
@@ -76,7 +81,11 @@ public class ProxyGenerator {
     }
 
     public static Tuple2<Object, ListF<java.lang.reflect.Method>> generateProxy(Class<?> clazz) {
-        return new ProxyGenerator(clazz).generate();
+        try {
+            return new ProxyGenerator(clazz).generate();
+        } catch (Exception e) {
+            throw new ReflectionException("failed to generate proxy for " + clazz + ": " + e, e);
+        }
     }
 
     private void pushDefaultValue(GeneratorAdapter ma, Type type) {
