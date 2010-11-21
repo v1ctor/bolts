@@ -1,5 +1,8 @@
 package ru.yandex.bolts.function;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
 import org.apache.commons.collections.Transformer;
 
 import fj.F;
@@ -7,6 +10,8 @@ import fj.F;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.forhuman.Comparator;
+import ru.yandex.bolts.internal.ReflectionUtils;
+import ru.yandex.bolts.internal.Validate;
 
 
 
@@ -237,6 +242,33 @@ public abstract class Function<A, R> {
                 return "const " + b;
             }
         };
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <A, B> Function<A, B> wrap(final Method method) {
+        if ((method.getModifiers() & Modifier.STATIC) != 0) {
+            Validate.isTrue(method.getParameterTypes().length == 1, "static method must have single argument");
+            return new Function<A, B>() {
+                public B apply(A a) {
+                    try {
+                        return (B) method.invoke(null, a);
+                    } catch (Exception e) {
+                        throw ReflectionUtils.translate(e);
+                    }
+                }
+            };
+        } else {
+            Validate.isTrue(method.getParameterTypes().length == 0, "instance method must have single argument");
+            return new Function<A, B>() {
+                public B apply(A a) {
+                    try {
+                        return (B) method.invoke(a);
+                    } catch (Exception e) {
+                        throw ReflectionUtils.translate(e);
+                    }
+                }
+            };
+        }
     }
 
     public Function<A, R> memoize() {
