@@ -2,8 +2,6 @@ package ru.yandex.bolts.methodFunction;
 
 import java.lang.reflect.Method;
 
-import com.sun.istack.internal.Nullable;
-
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.function.Function;
@@ -26,7 +24,7 @@ public class FunctionsForClass {
         return proxy;
     }
 
-    public static void setCurrent(FunctionsForClass ffc, @Nullable Object thiz) {
+    public static void setCurrent(FunctionsForClass ffc, Object thiz) {
         Invocation invocation = new Invocation();
         invocation.ffc = ffc;
         invocation.thiz = thiz;

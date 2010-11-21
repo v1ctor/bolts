@@ -3,8 +3,6 @@ package ru.yandex.bolts.methodFunction;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import com.sun.istack.internal.Nullable;
-
 import ru.yandex.bolts.function.Function;
 
 /**
@@ -29,7 +27,7 @@ public class FunctionBuilder {
 
     // XXX: global lock
     @SuppressWarnings("unchecked")
-    private static synchronized <A> A getProxy(Class<A> clazz, @Nullable A thiz) {
+    private static synchronized <A> A getProxy(Class<A> clazz, A thiz) {
         FunctionsForClass ffc = cache.get(clazz);
         if (ffc == null) {
             ffc = new FunctionsForClass(clazz);
