@@ -45,7 +45,7 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
 
     @Override
     public SetF<E> filterW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
+        return filter(Function1B.f(p));
     }
 
     @Override
