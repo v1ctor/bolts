@@ -20,15 +20,17 @@ public interface IterableF<E> extends Iterable<E> {
     /** Return true iff predicate matches all elements */
     boolean forAll(Function1B<? super E> p);
 
+    boolean forAllW(@FunctionParameter boolean p);
+
     /** Return true iff element matching predicate exists */
     boolean exists(Function1B<? super E> p);
 
-    boolean existsW(@FunctionParameter E p);
+    boolean existsW(@FunctionParameter boolean p);
 
     /** Find element matching predicate */
     Option<E> find(Function1B<? super E> p);
 
-    Option<E> findW(@FunctionParameter E p);
+    Option<E> findW(@FunctionParameter boolean p);
 
     /** Count elements matching predicate */
     int count(Function1B<? super E> p);

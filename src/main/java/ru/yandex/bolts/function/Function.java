@@ -12,6 +12,7 @@ import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.forhuman.Comparator;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
+import ru.yandex.bolts.methodFunction.FunctionsForClass;
 
 
 
@@ -247,25 +248,17 @@ public abstract class Function<A, R> {
     @SuppressWarnings("unchecked")
     public static <A, B> Function<A, B> wrap(final Method method) {
         if ((method.getModifiers() & Modifier.STATIC) != 0) {
-            Validate.isTrue(method.getParameterTypes().length == 1, "static method must have single argument");
+            Validate.isTrue(method.getParameterTypes().length == 1, "static method must have single argument, " + method);
             return new Function<A, B>() {
                 public B apply(A a) {
-                    try {
-                        return (B) method.invoke(null, a);
-                    } catch (Exception e) {
-                        throw ReflectionUtils.translate(e);
-                    }
+                    return (B) ReflectionUtils.invoke(method, null, a);
                 }
             };
         } else {
-            Validate.isTrue(method.getParameterTypes().length == 0, "instance method must have single argument");
+            Validate.isTrue(method.getParameterTypes().length == 0, "instance method must have no arguments, " + method);
             return new Function<A, B>() {
                 public B apply(A a) {
-                    try {
-                        return (B) method.invoke(a);
-                    } catch (Exception e) {
-                        throw ReflectionUtils.translate(e);
-                    }
+                    return (B) ReflectionUtils.invoke(method, a);
                 }
             };
         }
@@ -278,6 +271,15 @@ public abstract class Function<A, R> {
                 return cache.getOrElseUpdate(a, Function.this);
             }
         };
+    }
+
+    public static <A, B> Function<A, B> getCurrent() {
+        // XXX: add message weaving
+        return FunctionsForClass.getCurrentFunction();
+    }
+
+    public static <A, B> Function<A, B> f(B b) {
+        return getCurrent();
     }
 
 } //~

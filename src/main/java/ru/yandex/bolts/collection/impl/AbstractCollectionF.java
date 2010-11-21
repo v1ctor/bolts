@@ -182,7 +182,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     @Override
     public <B> ListF<B> mapW(B b) {
-        throw new RuntimeException("weaving must be enabled");
+        return map(Function.<E, B>getCurrent());
     }
 
     public <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f) {
@@ -207,7 +207,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     @Override
     public <B> ListF<B> flatMapW(Collection<? extends B> f) {
-        throw new RuntimeException("weaving must be enabled");
+        return flatMap(Function.f(f)).uncheckedCast();
     }
 
     public final Function1V<E> addOp() {
@@ -320,13 +320,18 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return iterator().forAll(p);
     }
 
+    @Override
+    public boolean forAllW(boolean p) {
+        return forAll(Function1B.f(p));
+    }
+
     public boolean exists(Function1B<? super E> p) {
         return iterator().exists(p);
     }
 
     @Override
-    public boolean existsW(E p) {
-        throw new RuntimeException("weaving must be enabled");
+    public boolean existsW(boolean p) {
+        return exists(Function1B.f(p));
     }
 
     public Option<E> find(Function1B<? super E> p) {
@@ -334,8 +339,8 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     @Override
-    public Option<E> findW(E p) {
-        throw new RuntimeException("weaving must be enabled");
+    public Option<E> findW(boolean p) {
+        return find(Function1B.f(p));
     }
 
     @Override

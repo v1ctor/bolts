@@ -36,6 +36,7 @@ import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
+import ru.yandex.bolts.methodFunction.FunctionBuilder;
 import ru.yandex.bolts.type.CharSequenceType;
 import ru.yandex.bolts.type.CharacterType;
 import ru.yandex.bolts.type.ObjectType;
@@ -817,6 +818,14 @@ public class CollectionsF {
 
     public static <T> T p3() {
         throw new RuntimeException("weaving must be enabled");
+    }
+
+    public static <T> T p(Class<T> clazz) {
+        return FunctionBuilder.p(clazz);
+    }
+
+    public static <T> T p(T p) {
+        return FunctionBuilder.p(p);
     }
 
     public static <T> ListF<T> flatten(Collection<? extends Collection<T>> l) {

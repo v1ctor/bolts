@@ -56,7 +56,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @Override
     public ListF<E> filterW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
+        return filter(Function1B.f(p));
     }
 
     @Override

@@ -1,7 +1,12 @@
 package ru.yandex.bolts.function;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.Tuple2;
+import ru.yandex.bolts.internal.ReflectionUtils;
+import ru.yandex.bolts.internal.Validate;
 
 /**
  * @author Stepan Koltsov
@@ -148,6 +153,26 @@ public abstract class Function2B<A, B> {
 
     public Function2B<A, B> memoize() {
         return asFunction2B(asFunction().memoize());
+    }
+
+    public static <A, B> Function2B<A, B> wrap(final Method method) {
+        Validate.isTrue(method.getReturnType().equals(boolean.class) || method.getReturnType().equals(Boolean.class), "method return type must be boolean or Boolean");
+        if ((method.getModifiers() & Modifier.STATIC) != 0) {
+            Validate.isTrue(method.getParameterTypes().length == 2, "static method must have 2 arguments, " + method);
+            return new Function2B<A, B>() {
+                public boolean apply(A a, B b) {
+                    return (Boolean) ReflectionUtils.invoke(method, null, a, b);
+                }
+            };
+        } else {
+            Validate.isTrue(method.getParameterTypes().length == 1, "instance method must have 1 argument, " + method);
+            return new Function2B<A, B>() {
+                public boolean apply(A a, B b) {
+                    return (Boolean) ReflectionUtils.invoke(method, a, b);
+
+                }
+            };
+        }
     }
 
 } //~

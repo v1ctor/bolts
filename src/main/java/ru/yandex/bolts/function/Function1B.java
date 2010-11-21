@@ -1,10 +1,15 @@
 package ru.yandex.bolts.function;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 
 import org.apache.commons.collections.Predicate;
 
 import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.internal.ReflectionUtils;
+import ru.yandex.bolts.internal.Validate;
+import ru.yandex.bolts.methodFunction.FunctionsForClass;
 
 /**
  * Predicate.
@@ -280,6 +285,34 @@ public abstract class Function1B<A> {
 
     public static <B> Function1B<B> constF(boolean value) {
         return value ? Function1B.<B>trueF() : Function1B.<B>falseF();
+    }
+
+    public static <A> Function1B<A> getCurrent() {
+        // XXX: add message weaving
+        return FunctionsForClass.getCurrentFunction1B();
+    }
+
+    public static <A> Function1B<A> f(boolean b) {
+        return getCurrent();
+    }
+
+    public static <A> Function1B<A> wrap(final Method method) {
+        Validate.isTrue(method.getReturnType().equals(boolean.class) || method.getReturnType().equals(Boolean.class), "method return type must be boolean or Boolean");
+        if ((method.getModifiers() & Modifier.STATIC) != 0) {
+            Validate.isTrue(method.getParameterTypes().length == 1, "static method must have single argument, " + method);
+            return new Function1B<A>() {
+                public boolean apply(A a) {
+                    return (Boolean) ReflectionUtils.invoke(method, null, a);
+                }
+            };
+        } else {
+            Validate.isTrue(method.getParameterTypes().length == 0, "instance method must have no arguments, " + method);
+            return new Function1B<A>() {
+                public boolean apply(A a) {
+                    return (Boolean) ReflectionUtils.invoke(method, a);
+                }
+            };
+        }
     }
 
 } //~

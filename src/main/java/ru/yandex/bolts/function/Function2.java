@@ -1,8 +1,13 @@
 package ru.yandex.bolts.function;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
 import fj.F2;
 
 import ru.yandex.bolts.collection.Tuple2;
+import ru.yandex.bolts.internal.ReflectionUtils;
+import ru.yandex.bolts.internal.Validate;
 
 
 /**
@@ -105,6 +110,25 @@ public abstract class Function2<A, B, R> {
                 return f.apply(Tuple2.tuple(a, b));
             }
         };
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <A, B, R> Function2<A, B, R> wrap(final Method method) {
+        if ((method.getModifiers() & Modifier.STATIC) != 0) {
+            Validate.isTrue(method.getParameterTypes().length == 2, "static method must have 2 arguments, " + method);
+            return new Function2<A, B, R>() {
+                public R apply(A a, B b) {
+                    return (R) ReflectionUtils.invoke(method, null, a, b);
+                }
+            };
+        } else {
+            Validate.isTrue(method.getParameterTypes().length == 1, "instance method must have 1 argument, " + method);
+            return new Function2<A, B, R>() {
+                public R apply(A a, B b) {
+                    return (R) ReflectionUtils.invoke(method, a, b);
+                }
+            };
+        }
     }
 
 } //~
