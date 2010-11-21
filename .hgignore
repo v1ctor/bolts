@@ -4,3 +4,4 @@ syntax:glob
 .*
 target
 bin
+eclipse-classes
