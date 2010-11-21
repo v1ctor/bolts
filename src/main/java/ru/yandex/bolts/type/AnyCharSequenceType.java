@@ -22,6 +22,11 @@ public abstract class AnyCharSequenceType<T extends CharSequence> extends Monoid
             public boolean apply(T a) {
                 return empty(a);
             }
+
+            @Override
+            public String toString() {
+                return "empty";
+            }
         };
     }
 
@@ -30,6 +35,11 @@ public abstract class AnyCharSequenceType<T extends CharSequence> extends Monoid
             public boolean apply(T a) {
                 return notEmpty(a);
             }
+
+            @Override
+            public String toString() {
+                return "notEmpty";
+            }
         };
     }
 
@@ -37,6 +47,11 @@ public abstract class AnyCharSequenceType<T extends CharSequence> extends Monoid
         return new Function<T, Integer>() {
             public Integer apply(T a) {
                 return a.length();
+            }
+
+            @Override
+            public String toString() {
+                return "length";
             }
         };
     }
