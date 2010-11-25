@@ -37,6 +37,7 @@ import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.methodFunction.FunctionBuilder;
+import ru.yandex.bolts.type.BooleanType;
 import ru.yandex.bolts.type.CharSequenceType;
 import ru.yandex.bolts.type.CharacterType;
 import ru.yandex.bolts.type.ObjectType;
@@ -834,6 +835,7 @@ public class CollectionsF {
 
 
     public static final ObjectType Object = new ObjectType();
+    public static final BooleanType Boolean = new BooleanType();
     public static final IntegerType Integer = new IntegerType();
     public static final LongType Long = new LongType();
     public static final ShortType Short = new ShortType();
