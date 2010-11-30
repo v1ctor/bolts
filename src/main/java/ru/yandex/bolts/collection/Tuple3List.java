@@ -204,15 +204,15 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     private Function<Tuple3<A, B, C>, C> get3F() {
         return Tuple3.get3F();
     }
-    
+
     private Function<Tuple3<A, B, C>, Tuple2<A, B>> get12F() {
         return Tuple3.get12F();
     }
-    
+
     private Function<Tuple3<A, B, C>, Tuple2<B, C>> get23F() {
         return Tuple3.get23F();
     }
-    
+
     private Function<Tuple3<A, B, C>, Tuple2<A, C>> get13F() {
         return Tuple3.get13F();
     }
@@ -228,15 +228,15 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     public ListF<C> get3() {
         return map(get3F());
     }
-    
+
     public Tuple2List<A, B> get12() {
         return Tuple2List.tuple2List(map(get12F()));
     }
-    
+
     public Tuple2List<B, C> get23() {
         return Tuple2List.tuple2List(map(get23F()));
     }
-    
+
     public Tuple2List<A, C> get13() {
         return Tuple2List.tuple2List(map(get13F()));
     }

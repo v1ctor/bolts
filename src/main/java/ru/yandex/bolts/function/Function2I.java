@@ -131,7 +131,7 @@ public abstract class Function2I<A, B> {
             public int apply(A a, B b) {
                 return f.apply(Tuple2.tuple(a, b));
             }
-            
+
             @Override
             public String toString() {
                 return f.toString();
