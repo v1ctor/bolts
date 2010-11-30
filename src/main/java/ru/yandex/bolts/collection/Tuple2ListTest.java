@@ -80,4 +80,10 @@ public class Tuple2ListTest extends TestCase {
         assertEquals(Cf.list("c"), g.apply(2));
         assertEquals(Cf.list("d"), g.apply(3));
     }
+
+    public void testSort() {
+        Tuple2List<Integer, String> list = Cf.Tuple2List.fromPairs(2, "a", 1, "b");
+        assertEquals(Cf.Tuple2List.fromPairs(1, "b", 2, "a"), list.sort());
+    }
+
 } //~

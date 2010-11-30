@@ -100,7 +100,8 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
 
     @Override
     public Tuple2List<A, B> sort() {
-        return Tuple2List.tuple2List(super.sort());
+        Comparator<Tuple2<A, B>> comparator = get1F().andThenNaturalComparator().chainTo(get2F().andThenNaturalComparator());
+        return sort(comparator);
     }
 
     @Override

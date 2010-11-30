@@ -104,7 +104,12 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
 
     @Override
     public Tuple3List<A, B, C> sort() {
-        return Tuple3List.tuple3List(super.sort());
+        Comparator<Tuple3<A, B, C>> comparator =
+                get1F().andThenNaturalComparator().chainTo(
+                get2F().andThenNaturalComparator()).chainTo(
+                get3F().andThenNaturalComparator());
+        return sort(comparator);
+
     }
 
     @Override
