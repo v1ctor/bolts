@@ -474,7 +474,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     @Override
     public <V> MapF<V, ListF<E>> groupByW(V m) {
-        throw new RuntimeException("weaving must be enabled");
+        return groupBy(Function.f(m));
     }
 
     protected boolean eq(Object a, Object b) {
