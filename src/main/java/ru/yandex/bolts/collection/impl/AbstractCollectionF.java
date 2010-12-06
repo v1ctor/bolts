@@ -294,8 +294,8 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     @Override
-    public ListF<E> sortByW(Object f) {
-        throw new RuntimeException("weaving must be enabled");
+    public ListF<E> sortByW(Object b) {
+        return sortBy(Function.f(b));
     }
 
     public ListF<E> sortByDesc(Function<? super E, ?> f) {
@@ -303,8 +303,8 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     @Override
-    public ListF<E> sortByDescW(Object f) {
-        throw new RuntimeException("weaving must be enabled");
+    public ListF<E> sortByDescW(Object b) {
+        return sortByDescW(Function.f(b));
     }
 
     public CollectionF<E> unmodifiable() {
