@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import junit.framework.Assert;
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.Cf;
@@ -316,6 +318,17 @@ public class AbstractListFTest extends TestCase {
         i2.next();
         i2.next();
         assertEquals(Cf.list(), i2.toList());
+    }
+
+    public void testStableUnique() {
+        Assert.assertEquals(Cf.list(1, 2, 3, 4), Cf.list(1, 2, 1, 1, 3, 3, 4, 2, 3).stableUnique());
+
+        Generator.ints().lists().checkForAll(new Function1V<ListF<Integer>>() {
+            public void apply(ListF<Integer> list) {
+                Assert.assertEquals(list.unique().size(), list.stableUnique().size());
+                Assert.assertEquals(list.unique(), list.stableUnique().unique());
+            }
+        });
     }
 
 } //~

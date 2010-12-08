@@ -15,6 +15,7 @@ import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.ListIteratorF;
 import ru.yandex.bolts.collection.Option;
+import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.Tuple2List;
 import ru.yandex.bolts.function.Function;
@@ -84,6 +85,18 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     @Override
     public Tuple2<ListF<E>, ListF<E>> partitionW(boolean p) {
         throw new RuntimeException("weaving must be enabled");
+    }
+
+    @Override
+    public ListF<E> stableUnique() {
+        return filter(new Function1B<E>() {
+            private SetF<E> added = Cf.hashSet();
+
+            @Override
+            public boolean apply(E a) {
+                return added.add(a);
+            }
+        });
     }
 
     @Override

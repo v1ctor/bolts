@@ -53,6 +53,11 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     @Override
     Tuple2<ListF<E>, ListF<E>> partitionW(@FunctionParameter boolean p);
 
+    /**
+     * @see #unique()
+     */
+    ListF<E> stableUnique();
+
     /** Sub list from index to index */
     ListF<E> subList(int fromIndex, int toIndex);
 
