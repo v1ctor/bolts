@@ -71,6 +71,11 @@ public class ArrayListF<E> extends ArrayListBase<E>
         return new ReadOnlyArrayList<E>(this);
     }
 
+    @Override
+    public ListF<E> makeReadOnly() {
+        return convertToReadOnly();
+    }
+
     /**
      * Inserts the specified object into this ArrayList at the specified
      * location. The object is inserted before any previous element at the

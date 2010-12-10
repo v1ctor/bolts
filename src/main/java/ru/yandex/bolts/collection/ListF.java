@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import ru.yandex.bolts.collection.impl.ArrayListF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.weaving.annotation.FunctionParameter;
@@ -120,8 +121,20 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     /** Pair of sublists returned by {@link #takeWhile(Function1B)} and {@link #dropWhile(Function1B)} */
     //ListF<E> span(Function1B<? super E> p);
 
-    /** Unmodifiable view or copy of this collection */
+    /**
+     * Unmodifiable view or copy of this collection
+     * @deprecated
+     * @see #makeReadOnly()
+     */
     ListF<E> unmodifiable();
+
+    /**
+     * Return unmodifiable list with content of this list.
+     * This list becomes invalid after method invocation.
+     *
+     * @see ArrayListF#convertToReadOnly()
+     */
+    ListF<E> makeReadOnly();
 
     /** Alias for {@link #size()} */
     int length();

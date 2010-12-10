@@ -86,6 +86,11 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
         return this;
     }
 
+    @Override
+    public ListF<E> makeReadOnly() {
+        return this;
+    }
+
     @SuppressWarnings("unchecked")
     public static <E> ReadOnlyArrayList<E> valueOf(E[] array) {
         if (array == null || array.length == 0)

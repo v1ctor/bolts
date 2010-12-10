@@ -210,6 +210,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return UnmodifiableDefaultListF.wrap(this);
     }
 
+    @Override
+    public ListF<E> makeReadOnly() {
+        return Cf.list(this);
+    }
+
     @SuppressWarnings("unchecked")
     public <F> ListF<F> uncheckedCast() {
         return (ListF<F>) this;
