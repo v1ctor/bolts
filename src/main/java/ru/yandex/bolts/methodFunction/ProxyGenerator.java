@@ -139,11 +139,14 @@ public class ProxyGenerator {
     }
 
     private Constructor<?> getBestConstructor() {
-        Option<Constructor<?>> r = Cf.x(clazz.getConstructors()).sortBy(ReflectionUtils.getConstructorParameterCountF()).firstO();
+        Option<Constructor<?>> r = Cf.x(clazz.getDeclaredConstructors())
+            .filter(ReflectionUtils.isPublicOrProtectedF())
+            .sortBy(ReflectionUtils.getConstructorParameterCountF())
+            .firstO();
         if (r.isDefined()) {
             return r.get();
         }
-        throw new NotImplementedException();
+        throw new IllegalStateException("constructors not found in " + clazz);
     }
 
     private void generateConstructor() {

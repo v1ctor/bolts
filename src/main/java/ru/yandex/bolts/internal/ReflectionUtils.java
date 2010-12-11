@@ -67,6 +67,14 @@ public class ReflectionUtils {
         };
     }
 
+    public static Function1B<Constructor<?>> isPublicOrProtectedF() {
+        return new Function1B<Constructor<?>>() {
+            public boolean apply(Constructor<?> c) {
+                return (c.getModifiers() & (Modifier.PUBLIC | Modifier.PROTECTED)) != 0;
+            }
+        };
+    }
+
     public static String getSimpleName(String className) {
         return className.replaceFirst(".*\\.", "");
     }
