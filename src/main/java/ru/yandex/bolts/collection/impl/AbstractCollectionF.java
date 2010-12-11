@@ -431,7 +431,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     @Override
     public <K, V> MapF<K, V> toMapW(Tuple2<K, V> t) {
-        throw new RuntimeException("weaving must be enabled");
+        return toMap(Function.f(t));
     }
 
     public <K> MapF<K, E> toMapMappingToKey(final Function<? super E, K> mapper) {
@@ -444,7 +444,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     @Override
     public <K> MapF<K, E> toMapMappingToKeyW(K m) {
-        throw new RuntimeException("weaving must be enabled");
+        return toMapMappingToKey(Function.f(m));
     }
 
     public <V> MapF<E, V> toMapMappingToValue(final Function<? super E, V> mapper) {
@@ -457,7 +457,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     @Override
     public <V> MapF<E, V> toMapMappingToValueW(V m) {
-        throw new RuntimeException("weaving must be enabled");
+        return toMapMappingToValue(Function.f(m));
     }
 
     public <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m) {
