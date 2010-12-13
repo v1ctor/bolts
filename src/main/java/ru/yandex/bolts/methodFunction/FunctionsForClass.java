@@ -80,7 +80,11 @@ public class FunctionsForClass {
     }
 
     private Integer getCurrentMethodIndex() {
-        return Invocation.current.get().currentMethodIndex;
+        int currentMethodIndex = Invocation.current.get().currentMethodIndex;
+        if (currentMethodIndex < 0) {
+            throw new IllegalStateException("current method is not recorded (index < 0)");
+        }
+        return currentMethodIndex;
     }
 
     private Function<?, ?> getCurrentFunctionI() {

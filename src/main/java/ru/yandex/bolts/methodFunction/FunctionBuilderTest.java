@@ -32,6 +32,10 @@ public class FunctionBuilderTest {
         public int add(int b) {
             return a + b;
         }
+
+        protected int addProtected(int b) {
+            return a + b;
+        }
     }
 
     @Test
@@ -40,8 +44,10 @@ public class FunctionBuilderTest {
         ListF<Integer> list = Cf.list(5, 6, 8);
 
         ListF<Integer> r = list.mapW(Cf.p(a).add(0));
-
         Assert.assertEquals(Cf.list(8, 9, 11), r);
+
+        ListF<Integer> r2 = list.mapW(Cf.p(a).addProtected(0));
+        Assert.assertEquals(Cf.list(8, 9, 11), r2);
     }
 
     @Test
@@ -49,8 +55,10 @@ public class FunctionBuilderTest {
         ListF<Adder> list = Cf.list(new Adder(2), new Adder(4));
 
         ListF<Integer> r = list.mapW(Cf.p(Adder.class).add(3));
-
         Assert.assertEquals(Cf.list(5, 7), r);
+
+        ListF<Integer> r2 = list.mapW(Cf.p(Adder.class).addProtected(5));
+        Assert.assertEquals(Cf.list(7, 9), r2);
     }
 
 } //~
