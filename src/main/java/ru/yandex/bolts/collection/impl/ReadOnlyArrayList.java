@@ -55,10 +55,7 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
 
     @Override
     public ListF<E> take(int count) {
-        if (count < 0)
-            throw new IllegalArgumentException();
-
-        if (count == 0)
+        if (count <= 0)
             return Cf.list();
 
         if (count >= length())
@@ -69,10 +66,7 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
 
     @Override
     public ListF<E> drop(int count) {
-        if (count < 0)
-            throw new IllegalArgumentException();
-
-        if (count == 0)
+        if (count <= 0)
             return this;
 
         if (count >= length())

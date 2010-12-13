@@ -104,6 +104,10 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     /** Drop first count elements */
     ListF<E> drop(int count);
 
+    ListF<E> rtake(int count);
+
+    ListF<E> rdrop(int count);
+
     /** Longest prefix of elements that satisfy p */
     ListF<E> takeWhile(Function1B<? super E> f);
 

@@ -77,6 +77,22 @@ public class AbstractListFTest extends TestCase {
         assertEquals(list(), list.drop(6));
     }
 
+    public void testRtake() {
+        ListF<Integer> list = list(1, 2, 3, 4, 5);
+        assertEquals(list(), list.rtake(0));
+        assertEquals(list(4, 5), list.rtake(2));
+        assertSame(list, list.rtake(5));
+        assertSame(list, list.rtake(6));
+    }
+
+    public void testRdrop() {
+        ListF<Integer> list = list(1, 2, 3, 4, 5);
+        assertSame(list, list.rdrop(0));
+        assertEquals(list(1, 2, 3), list.rdrop(2));
+        assertEquals(list(), list.rdrop(5));
+        assertEquals(list(), list.rdrop(6));
+    }
+
     public void testTakeDropWhile() {
         Generator.ints().lists().checkForAll(new Function1V<ListF<Integer>>() {
             public void apply(ListF<Integer> a0) {

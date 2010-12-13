@@ -167,6 +167,16 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
+    public ListF<E> rtake(int count) {
+        return drop(length() - count);
+    }
+
+    @Override
+    public ListF<E> rdrop(int count) {
+        return take(length() - count);
+    }
+
+    @Override
     public ListF<E> dropWhile(Function1B<? super E> f) {
         return iterator().dropWhile(f).toList();
     }
