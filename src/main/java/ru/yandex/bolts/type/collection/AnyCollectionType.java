@@ -3,11 +3,14 @@ package ru.yandex.bolts.type.collection;
 import java.util.Collection;
 
 import ru.yandex.bolts.collection.Cf;
+import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.Function2I;
+import ru.yandex.bolts.function.forhuman.Comparator;
 
 
 /**
@@ -49,6 +52,33 @@ public abstract class AnyCollectionType {
                 return c.size();
             }
         };
+    }
+
+    /** {@link CollectionF#sort()} as function */
+    public <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortF() {
+        return new Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>>() {
+            public ListF<E> apply(Collection<E> input,
+                    Function2I<? super E, ? super E> comparator)
+            {
+                return Cf.x(input).sort(comparator);
+            }
+        };
+    }
+
+    /** {@link CollectionF#sort()} as function, convenience form */
+    public <E> Function<Collection<E>, ListF<E>> sortF(
+            Function2I<? super E, ? super E> comparator)
+    {
+        return this.<E>sortF().bind2(comparator);
+
+    }
+
+    public <E extends Comparable<?>> Function<Collection<E>, ListF<E>> sortComparablesF() {
+        return this.<E>sortF().bind2(Comparator.<E>naturalComparator());
+    }
+
+    public <E> Function<Collection<E>, ListF<E>> sortByF(Function<? super E, ?> by) {
+        return this.<E>sortF(by.andThenNaturalComparator());
     }
 
 } //~

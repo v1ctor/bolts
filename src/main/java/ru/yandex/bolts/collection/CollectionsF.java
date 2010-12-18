@@ -757,21 +757,14 @@ public class CollectionsF {
 
     /** {@link Collection#sort()} as function */
     public static <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortF() {
-        return new Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>>() {
-            public ListF<E> apply(Collection<E> input,
-                    Function2I<? super E, ? super E> comparator)
-            {
-                return Cf.x(input).sort(comparator);
-            }
-        };
+        return Collection.sortF();
     }
 
     /** {@link Collection#sort()} as function, convenience form */
     public static <E> Function<Collection<E>, ListF<E>> sortF(
             Function2I<? super E, ? super E> comparator)
     {
-        return Cf.<E>sortF().bind2(comparator);
-
+        return Collection.sortF(comparator);
     }
 
     /** {@link Collection#unique()} as function */
