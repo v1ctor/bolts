@@ -40,6 +40,14 @@ public abstract class AnyListType extends AnyCollectionType {
         };
     }
 
+    public <A> Function<A, ListF<A>> consFrom1F() {
+        return new Function<A, ListF<A>>() {
+            public ListF<A> apply(A a) {
+                return cons(a);
+            }
+        };
+    }
+
     public <A> ListF<A> plus(ListF<A> l1, ListF<A> l2) {
         return l1.plus(l2);
     }
