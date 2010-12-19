@@ -6,6 +6,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
+import ru.yandex.bolts.internal.ObjectUtils;
 
 /**
  * Either something or something else
@@ -14,7 +15,7 @@ import ru.yandex.bolts.function.Function1V;
  *
  * @see fj.data.Either
  */
-public class Either<A, B> {
+public abstract class Either<A, B> {
     private Either() { }
 
     public A getLeft() {
@@ -64,11 +65,33 @@ public class Either<A, B> {
         return (Either<C, D>) this;
     }
 
+    protected abstract Object getValue();
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Either<?, ?>))
+            return false;
+        Either<?, ?> that = (Either<?, ?>) obj;
+        if (this.isLeft() != that.isLeft())
+            return false;
+        return ObjectUtils.equals(this.getValue(), that.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return ObjectUtils.hashCode(getValue()) ^ (isLeft() ? 0 : 0xB12328AB);
+    }
+
     private static class Left<A, B> extends Either<A, B> {
         private final A value;
 
         private Left(A value) {
             this.value = value;
+        }
+
+        @Override
+        protected Object getValue() {
+            return value;
         }
 
         @Override
@@ -81,12 +104,6 @@ public class Either<A, B> {
             return "Either.Left(" + value + ")";
         }
 
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof Left)) return false;
-            if (value == null) return ((Left<A, B>) obj).value == null;
-            return value.equals(((Left<A, B>) obj).value);
-        }
     }
 
     private static class Right<A, B> extends Either<A, B> {
@@ -94,6 +111,11 @@ public class Either<A, B> {
 
         private Right(B value) {
             this.value = value;
+        }
+
+        @Override
+        protected Object getValue() {
+            return value;
         }
 
         @Override
@@ -106,12 +128,6 @@ public class Either<A, B> {
             return "Either.Right(" + value + ")";
         }
 
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof Right)) return false;
-            if (value == null) return ((Right<A, B>) obj).value == null;
-            return value.equals(((Right<A, B>) obj).value);
-        }
     }
 
     /** Base class for left and right projection */
