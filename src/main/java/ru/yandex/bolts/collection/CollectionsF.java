@@ -764,7 +764,7 @@ public class CollectionsF {
     public static <E> Function<Collection<E>, ListF<E>> sortF(
             Function2I<? super E, ? super E> comparator)
     {
-        return Collection.sortF(comparator);
+        return Collection.<E>sortF(comparator);
     }
 
     /** {@link Collection#unique()} as function */
