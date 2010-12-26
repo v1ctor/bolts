@@ -17,7 +17,6 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.Tuple2;
-import ru.yandex.bolts.internal.NotImplementedException;
 import ru.yandex.bolts.internal.ReflectionException;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
@@ -110,6 +109,9 @@ public class ProxyGenerator {
             break;
         case Type.BOOLEAN:
             ma.push(false);
+            break;
+        case Type.CHAR:
+            ma.push('\0');
             break;
         case Type.ARRAY:
         case Type.OBJECT:
