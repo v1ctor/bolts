@@ -1,5 +1,6 @@
 package ru.yandex.bolts.type;
 
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function3;
@@ -22,6 +23,10 @@ public abstract class MonoidPlus<T> extends AnyObjectType<T> {
                 return plus(a, b);
             }
         };
+    }
+
+    public Function<T, T> plusF(T param) {
+        return plusF().bind1(param);
     }
 
     public Function3<T, T, T, T> plus3F() {
