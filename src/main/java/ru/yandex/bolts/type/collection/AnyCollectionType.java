@@ -54,6 +54,15 @@ public abstract class AnyCollectionType {
         };
     }
 
+    /** {@link CollectionF#single()} as function */
+    public <A> Function<Collection<A>, A> singleF() {
+        return new Function<Collection<A>, A>() {
+            public A apply(Collection<A> c) {
+                return Cf.x(c).single();
+            }
+        };
+    }
+
     /** {@link CollectionF#sort()} as function */
     public <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortF() {
         return new Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>>() {
