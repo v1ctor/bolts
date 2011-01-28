@@ -49,6 +49,10 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return (Tuple2) super.partition(p);
     }
 
+    public Tuple2<Tuple2List<A, B>, Tuple2List<A, B>> partition(Function2B<? super A, ? super B> p) {
+        return partitionT2l(p.<A, B>uncheckedCast().asFunction1B());
+    }
+
     public Tuple2<Tuple2List<A, B>, Tuple2List<A, B>> partitionBy1(Function1B<? super A> p) {
         return partitionT2l(Tuple2.<A, B>get1F().andThen(p));
     }

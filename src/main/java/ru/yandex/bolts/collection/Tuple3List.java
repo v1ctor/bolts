@@ -49,6 +49,10 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
         return (Tuple2) super.partition(p);
     }
 
+    public Tuple2<Tuple3List<A, B, C>, Tuple3List<A, B, C>> partition(Function3B<? super A, ? super B, ? super C> p) {
+        return partitionT3l(p.<A, B, C>uncheckedCast().asFunction1B());
+    }
+
     public Tuple2<Tuple3List<A, B, C>, Tuple3List<A, B, C>> partitionBy1(Function1B<? super A> p) {
         return partitionT3l(Tuple3.<A, B, C>get1F().andThen(p));
     }
