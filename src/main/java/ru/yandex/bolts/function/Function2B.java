@@ -91,6 +91,20 @@ public abstract class Function2B<A, B> {
         };
     }
 
+    public static <A, B> Function2B<A, B> asFunction2B(Function1B<Tuple2<A, B>> f) {
+        return asFunction2B(f.asFunction());
+    }
+
+    public static <A, B> Function2B<A, B> combine(final Function1B<A> fA,
+            final Function1B<B> fB)
+    {
+        return new Function2B<A, B>() {
+            public boolean apply(A a, B b) {
+                return fA.apply(a) && fB.apply(b);
+            }
+        };
+    }
+
     public Function2B<A, B> notF() {
         return new Function2B<A, B>() {
             public boolean apply(A a, B b) {
