@@ -127,11 +127,13 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public MapF<K, V> filterKeys(final Function1B<? super K> p) {
         Function1B<K> p1 = (Function1B<K>) p;
         return filterEntries(p1.compose(entryKeyM()));
     }
 
+    @Override
     public MapF<K, V> filterEntries(Function1B<Entry<K, V>> p) {
         if (isEmpty()) return this;
 
