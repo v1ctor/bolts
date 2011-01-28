@@ -55,6 +55,10 @@ public interface MapF<K, V> extends Map<K, V> {
 
     <W> ListF<W> mapEntries(Function2<? super K, ? super V, ? extends W> f);
 
+    MapF<K, V> filter(Function1B<? super Tuple2<K, V>> p);
+
+    MapF<K, V> filter(Function2B<? super K, ? super V> p);
+
     MapF<K, V> filterEntries(Function1B<Entry<K, V>> p);
 
     MapF<K, V> filterValues(Function1B<? super V> p);

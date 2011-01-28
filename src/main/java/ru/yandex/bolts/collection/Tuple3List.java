@@ -40,6 +40,10 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
         return (Tuple3List<A, B, C>) super.filter(p);
     }
 
+    public Tuple3List<A, B, C> filter(Function3B<? super A, ? super B, ? super C> p) {
+        return filter(p.<A, B, C>uncheckedCast().asFunction1B().uncheckedCast());
+    }
+
     @SuppressWarnings("unchecked")
     public Tuple2<Tuple3List<A, B, C>, Tuple3List<A, B, C>> partitionT3l(Function1B<? super Tuple3<A, B, C>> p) {
         return (Tuple2) super.partition(p);

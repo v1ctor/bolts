@@ -13,6 +13,7 @@ import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1BTest;
+import ru.yandex.bolts.function.Function2B;
 
 /**
  * @author Stepan Koltsov
@@ -27,6 +28,16 @@ public class AbstractMapFTest extends TestCase {
         MapF<Integer, String> m = map123();
         MapF<Integer, String> n = m.filterKeys(Function1BTest.evenF());
         assertEquals(CollectionsF.map(2, "2"), n);
+    }
+
+    public void testFilter() {
+        MapF<Integer, String> m = map123().plus1(11, "11");
+        MapF<Integer, String> n = m.filter(new Function2B<Integer, String>() {
+            public boolean apply(Integer a, String b) {
+                return (a % 2) == 0 || b.length() > 1;
+            }
+        });
+        assertEquals(CollectionsF.map(2, "2", 11, "11"), n);
     }
 
     public void testMapValues() {

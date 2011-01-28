@@ -141,6 +141,20 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     @Override
+    public MapF<K, V> filter(final Function1B<? super Tuple2<K, V>> p) {
+        return filterEntries(new Function1B<Entry<K, V>>() {
+            public boolean apply(Entry<K, V> entry) {
+                return p.apply(Tuple2.tuple(entry.getKey(), entry.getValue()));
+            }
+        });
+    }
+
+    @Override
+    public MapF<K, V> filter(final Function2B<? super K, ? super V> p) {
+        return filter(p.<K, V>uncheckedCast().asFunction1B());
+    }
+
+    @Override
     public MapF<K, V> filterValues(Function1B<? super V> p) {
         return filterEntries(AbstractMapF.<K, V>entryValueM().andThen(p));
     }

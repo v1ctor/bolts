@@ -40,6 +40,10 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return (Tuple2List<A, B>) super.filter(p);
     }
 
+    public Tuple2List<A, B> filter(Function2B<? super A, ? super B> p) {
+        return filter(p.<A, B>uncheckedCast().asFunction1B().uncheckedCast());
+    }
+
     @SuppressWarnings("unchecked")
     public Tuple2<Tuple2List<A, B>, Tuple2List<A, B>> partitionT2l(Function1B<? super Tuple2<A, B>> p) {
         return (Tuple2) super.partition(p);
