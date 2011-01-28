@@ -12,7 +12,6 @@ import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.Function1V;
 
 /**
  * @author Stepan Koltsov
@@ -165,11 +164,6 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
             }
         }
         return result;
-    }
-
-    @Override
-    public SetF<E> tee(Function1V<? super CollectionF<E>> f) {
-        return (SetF<E>) super.tee(f);
     }
 
 } //~

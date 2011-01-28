@@ -3,9 +3,7 @@ package ru.yandex.bolts.collection.impl;
 import static ru.yandex.bolts.collection.CollectionsF.list;
 import static ru.yandex.bolts.collection.CollectionsF.set;
 
-import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicReference;
 
 import junit.framework.TestCase;
 
@@ -15,7 +13,6 @@ import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1BTest;
-import ru.yandex.bolts.function.Function1V;
 
 /**
  * @author Stepan Koltsov
@@ -140,18 +137,6 @@ public class AbstractMapFTest extends TestCase {
     public void testPlus1() {
         MapF<Integer, String> m = map123().plus1(11, "11");
         assertEquals(m, Cf.list(1, 2, 3, 11).toMapMappingToValue(Function.toStringF()));
-    }
-
-    public void testTee() {
-        MapF<Integer, String> m1 = Cf.map(1, "qwer", 2, "asdf");
-        final AtomicReference<Integer> counter = new AtomicReference<Integer>(0);
-        MapF<Integer, String> m2 = m1.tee(new Function1V<Map<Integer, String>>() {
-            public void apply(Map<Integer, String> map) {
-                counter.set(map.size());
-            }
-        });
-        assertEquals(m1, m2);
-        assertEquals(Integer.valueOf(2), counter.get());
     }
 
 } //~

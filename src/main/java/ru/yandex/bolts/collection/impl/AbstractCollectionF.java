@@ -532,12 +532,6 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     @Override
-    public CollectionF<E> tee(Function1V<? super CollectionF<E>> f) {
-        f.apply(this);
-        return this;
-    }
-
-    @Override
     public ListF<ListF<E>> paginate(int pageSize) {
         return iterator().paginate(pageSize).toList();
     }
