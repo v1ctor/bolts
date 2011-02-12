@@ -175,6 +175,15 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
         };
     }
 
+    public static <A, B, C, D, E> Function<E, Tuple4<A, B, C, D>> join(final Function<E, A> fa, final Function<E, B> fb, final Function<E, C> fc, final Function<E, D> fd) {
+        return new Function<E, Tuple4<A, B, C, D>>() {
+            public Tuple4<A, B, C, D> apply(E e) {
+                return Tuple4.tuple(fa.apply(e), fb.apply(e), fc.apply(e), fd.apply(e));
+            }
+        };
+    }
+
+
 
     public static <A, B, C, D> Tuple4<A, B, C, D> tuple(A a, B b, C c, D d) {
         return new Tuple4<A, B, C, D>(a, b, c, d);

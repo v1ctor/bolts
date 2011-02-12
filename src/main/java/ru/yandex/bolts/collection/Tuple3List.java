@@ -378,4 +378,12 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
         return new Tuple3List<A, B, C>(pairs);
     }
 
+    public static <A, B, C> Tuple3List<A, B, C> tuple3List(Collection<Tuple3<A, B, C>> pairs) {
+        return new Tuple3List<A, B, C>(pairs);
+    }
+
+    public static <A, B, C> Tuple3List<A, B, C> wrap(ListF<Tuple3<A, B, C>> pairs) {
+        return new Tuple3List<A, B, C>(pairs);
+    }
+
 } //~

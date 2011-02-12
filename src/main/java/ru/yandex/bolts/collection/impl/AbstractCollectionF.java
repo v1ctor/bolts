@@ -18,6 +18,9 @@ import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
+import ru.yandex.bolts.collection.Tuple2List;
+import ru.yandex.bolts.collection.Tuple3;
+import ru.yandex.bolts.collection.Tuple3List;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
@@ -434,6 +437,16 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return toMap(Function.f(t));
     }
 
+    @Override
+    public <K, V> MapF<K, V> toMap(Function<? super E, K> fk, Function<? super E, ? extends V> fv) {
+        return toTuple2List(fk, fv).toMap();
+    }
+
+    @Override
+    public <K, V> MapF<K, V> toMapW(K fk, V fv) {
+        return toMap(Function.f(fk), Function.f(fv));
+    };
+
     public <K> MapF<K, E> toMapMappingToKey(final Function<? super E, K> mapper) {
         return toMap(new Function<E, Tuple2<K, E>>() {
             public Tuple2<K, E> apply(E e) {
@@ -458,6 +471,46 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     @Override
     public <V> MapF<E, V> toMapMappingToValueW(V m) {
         return toMapMappingToValue(Function.f(m));
+    }
+
+    @Override
+    public <A, B> Tuple2List<A, B> toTuple2List(Function<? super E, ? extends A> fa, Function<? super E, ? extends B> fb) {
+        return toTuple2List(Tuple2.join(fa.<E, A>uncheckedCast(), fb.<E, B>uncheckedCast()));
+    }
+
+    @Override
+    public <A, B> Tuple2List<A,B> toTuple2ListW(A fa, B fb) {
+        return toTuple2List(Function.f(fa), Function.f(fb));
+    }
+
+    @Override
+    public <A, B> Tuple2List<A, B> toTuple2List(Function<? super E, Tuple2<A, B>> f) {
+        return Cf.Tuple2List.cons(map(f));
+    }
+
+    @Override
+    public <A, B> Tuple2List<A, B> toTuple2ListW(Tuple2<A, B> f) {
+        return toTuple2List(Function.f(f));
+    }
+
+    @Override
+    public <A, B, C> Tuple3List<A, B, C> toTuple3List(Function<? super E, ? extends A> fa, Function<? super E, ? extends B> fb, Function<? super E, ? extends C> fc) {
+        return toTuple3List(Tuple3.join(fa.<E, A>uncheckedCast(), fb.<E, B>uncheckedCast(), fc.<E, C>uncheckedCast()));
+    }
+
+    @Override
+    public <A, B, C> Tuple3List<A, B, C> toTuple3ListW(A fa, B fb, C fc) {
+        return toTuple3List(Function.f(fa), Function.f(fb), Function.f(fc));
+    }
+
+    @Override
+    public <A, B, C> Tuple3List<A, B, C> toTuple3List(Function<? super E, Tuple3<A, B, C>> f) {
+        return Cf.Tuple3List.cons(map(f));
+    }
+
+    @Override
+    public <A, B, C> Tuple3List<A, B, C> toTuple3ListW(Tuple3<A, B, C> f) {
+        return toTuple3List(Function.f(f));
     }
 
     public <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m) {

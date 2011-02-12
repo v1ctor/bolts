@@ -62,10 +62,21 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     <B> ListF<B> flatMapW(@FunctionParameter Collection<? extends B> f);
 
-    /** Map to list of map entries and construct map */
+    /**
+     * Map to list of map entries and construct map
+     * @see #toMap(Function, Function)
+     * @see #toTuple2List(Function)
+     */
     <K, V> MapF<K, V> toMap(Function<? super E, Tuple2<K, V>> t);
 
     <K, V> MapF<K, V> toMapW(@FunctionParameter Tuple2<K, V> t);
+
+    /**
+     * @see #toMap(Function)
+     */
+    <K, V> MapF<K, V> toMap(Function<? super E, K> fk, Function<? super E, ? extends V> fv);
+
+    <K, V> MapF<K, V> toMapW(@FunctionParameter K fk, @FunctionParameter V fv);
 
     /** Map to list of map keys and construct map. Elements of this collection are used as values */
     <K> MapF<K, E> toMapMappingToKey(Function<? super E, K> m);
@@ -76,6 +87,30 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     <V> MapF<E, V> toMapMappingToValue(Function<? super E, V> m);
 
     <V> MapF<E, V> toMapMappingToValueW(@FunctionParameter V m);
+
+    /**
+     * @see #toMap(Function)
+     * @see #toTuple2List(Function, Function)
+     */
+    <A, B> Tuple2List<A, B> toTuple2List(Function<? super E, Tuple2<A, B>> f);
+
+    <A, B> Tuple2List<A, B> toTuple2ListW(@FunctionParameter Tuple2<A, B> f);
+
+    /**
+     * @see #toTuple2List(Function)
+     * @see #toMap(Function, Function)
+     */
+    <A, B> Tuple2List<A, B> toTuple2List(Function<? super E, ? extends A> fa, Function<? super E, ? extends B> fb);
+
+    <A, B> Tuple2List<A, B> toTuple2ListW(@FunctionParameter A fa, @FunctionParameter B fb);
+
+    <A, B, C> Tuple3List<A, B, C> toTuple3List(Function<? super E, Tuple3<A, B, C>> f);
+
+    <A, B, C> Tuple3List<A, B, C> toTuple3ListW(@FunctionParameter Tuple3<A, B, C> f);
+
+    <A, B, C> Tuple3List<A, B, C> toTuple3List(Function<? super E, ? extends A> fa, Function<? super E, ? extends B> fb, Function<? super E, ? extends C> fc);
+
+    <A, B, C> Tuple3List<A, B, C> toTuple3ListW(@FunctionParameter A fa, @FunctionParameter B fb, @FunctionParameter C fc);
 
     /**
      * @deprecated

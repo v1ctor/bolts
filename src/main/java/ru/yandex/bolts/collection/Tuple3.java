@@ -144,6 +144,14 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         };
     }
 
+    public static <A, B, C, D> Function<D, Tuple3<A, B, C>> join(final Function<D, A> fa, final Function<D, B> fb, final Function<D, C> fc) {
+        return new Function<D, Tuple3<A, B, C>>() {
+            public Tuple3<A, B, C> apply(D d) {
+                return Tuple3.tuple(fa.apply(d), fb.apply(d), fc.apply(d));
+            }
+        };
+    }
+
     // ?
 
     public static <A, B, C> Function<Tuple3<A, B, C>, Tuple2<A, B>> get12F() {

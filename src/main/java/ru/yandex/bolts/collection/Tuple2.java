@@ -157,6 +157,14 @@ public class Tuple2<T1, T2> implements Serializable {
         };
     }
 
+    public static <A, B, C> Function<C, Tuple2<A, B>> join(final Function<C, A> fa, final Function<C, B> fb) {
+        return new Function<C, Tuple2<A, B>>() {
+            public Tuple2<A, B> apply(C c) {
+                return Tuple2.tuple(fa.apply(c), fb.apply(c));
+            }
+        };
+    }
+
     /** Construct */
     public static <A, B> Tuple2<A, B> tuple(A a, B b) {
         return new Tuple2<A, B>(a, b);

@@ -48,6 +48,7 @@ import ru.yandex.bolts.type.collection.ArrayListType;
 import ru.yandex.bolts.type.collection.CollectionType;
 import ru.yandex.bolts.type.collection.ListType;
 import ru.yandex.bolts.type.collection.Tuple2ListType;
+import ru.yandex.bolts.type.collection.Tuple3ListType;
 import ru.yandex.bolts.type.number.ByteType;
 import ru.yandex.bolts.type.number.DoubleType;
 import ru.yandex.bolts.type.number.FloatType;
@@ -842,5 +843,6 @@ public class CollectionsF {
     public static final ArrayListType ArrayList = new ArrayListType();
     public static final CollectionType Collection = new CollectionType();
     public static final Tuple2ListType Tuple2List = new Tuple2ListType();
+    public static final Tuple3ListType Tuple3List = new Tuple3ListType();
 
 } //~
