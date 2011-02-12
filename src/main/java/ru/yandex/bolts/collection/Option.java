@@ -9,6 +9,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.internal.ObjectUtils;
 
 /**
  * Port of scala <a href="http://www.scala-lang.org/docu/files/api/scala/Option.html">Option</a>.
@@ -32,6 +33,10 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      * <code>true</code> iff this is some.
      */
     public final boolean isDefined() { return !isEmpty(); }
+
+    public final boolean isSome(T value) {
+        return isDefined() && ObjectUtils.equals(get(), value);
+    }
 
     /**
      * Get the value.
