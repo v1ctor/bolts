@@ -257,6 +257,13 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     E min(Function2I<? super E, ? super E> comparator);
 
     E minW(@FunctionParameter int comparator);
+
+    Option<E> minO();
+
+    Option<E> minO(Function2I<? super E, ? super E> comparator);
+
+    Option<E> minOW(@FunctionParameter int comparator);
+
     /**
      * Max element using {@link Comparator#naturalComparator()}.
      */
@@ -267,6 +274,12 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     E max(Function2I<? super E, ? super E> comparator);
 
     E maxW(@FunctionParameter int comparator);
+
+    Option<E> maxO();
+
+    Option<E> maxO(Function2I<? super E, ? super E> comparator);
+
+    Option<E> maxOW(@FunctionParameter int comparator);
 
     ListF<ListF<E>> paginate(int pageSize);
 

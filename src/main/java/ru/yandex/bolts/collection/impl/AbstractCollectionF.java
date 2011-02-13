@@ -570,6 +570,24 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         throw new RuntimeException("weaving must be enabled");
     }
 
+    @Override
+    public Option<E> minO() {
+        return minO(Comparator.naturalComparator().<E, E>uncheckedCast());
+    }
+
+    @Override
+    public Option<E> minO(Function2I<? super E, ? super E> comparator) {
+        if (isEmpty())
+            return Option.none();
+        else
+            return Option.some(min(comparator));
+    }
+
+    @Override
+    public Option<E> minOW(int comparator) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
     public E max() {
         return max(Comparator.naturalComparator().<E, E>uncheckedCast());
     }
@@ -581,6 +599,24 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
 
     @Override
     public E maxW(int comparator) {
+        throw new RuntimeException("weaving must be enabled");
+    }
+
+    @Override
+    public Option<E> maxO() {
+        return maxO(Comparator.naturalComparator().<E, E>uncheckedCast());
+    }
+
+    @Override
+    public Option<E> maxO(Function2I<? super E, ? super E> comparator) {
+        if (isEmpty())
+            return Option.none();
+        else
+            return Option.some(max(comparator));
+    }
+
+    @Override
+    public Option<E> maxOW(int comparator) {
         throw new RuntimeException("weaving must be enabled");
     }
 
