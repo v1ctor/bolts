@@ -9,6 +9,7 @@ import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2B;
 import ru.yandex.bolts.function.Function2V;
+import ru.yandex.bolts.weaving.annotation.FunctionParameter;
 
 /**
  * Mutable map with Scala-like Map methods.
@@ -50,6 +51,8 @@ public interface MapF<K, V> extends Map<K, V> {
     MapF<K, V> filterKeys(Function1B<? super K> p);
 
     <W> MapF<K, W> mapValues(Function<? super V, ? extends W> f);
+
+    <W> MapF<K, W> mapValuesW(@FunctionParameter W f);
 
     //<W> ListF<W> map(Function<Entry<K, V>, W> f);
 

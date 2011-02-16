@@ -192,6 +192,11 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return newMapFromTuples(xx);
     }
 
+    @Override
+    public <W> MapF<K,W> mapValuesW(W f) {
+        return mapValues(Function.f(f));
+    };
+
     public <W> ListF<W> mapEntries(final Function2<? super K, ? super V, ? extends W> f) {
         return entrySet().map(new Function<Entry<K, V>, W>() {
             public W apply(Entry<K, V> entry) {
