@@ -306,6 +306,10 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return zip3(map(f));
     }
 
+    public <W> Tuple3List<A, B, W> zip3With(Function<Tuple2<A, B>, W> f) {
+        return zip3(map(f));
+    }
+
     public <W> ListF<W> map(Function2<? super A, ? super B, ? extends W> mapper) {
         return map(mapper.<A, B, W>uncheckedCast().asFunction());
     }
