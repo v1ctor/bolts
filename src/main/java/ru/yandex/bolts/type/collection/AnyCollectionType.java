@@ -9,6 +9,7 @@ import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
+import ru.yandex.bolts.function.Function2B;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
@@ -88,6 +89,14 @@ public abstract class AnyCollectionType {
 
     public <E> Function<Collection<E>, ListF<E>> sortByF(Function<? super E, ?> by) {
         return this.<E>sortF(by.andThenNaturalComparator());
+    }
+
+    public <E> Function2B<Collection<E>, E> containsF() {
+        return new Function2B<Collection<E>, E>() {
+            public boolean apply(Collection<E> collection, E element) {
+                return collection.contains(element);
+            }
+        };
     }
 
 } //~
