@@ -68,7 +68,7 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     @Override
     boolean removeAll(Collection<?> c);
     boolean removeAllTs(Collection<? extends E> c);
-    boolean removeAllRu(Collection<?> c);
+    boolean removeAllTu(Collection<?> c);
 
     /** @deprecated */
     @Override

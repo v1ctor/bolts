@@ -167,7 +167,7 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     @Override
     boolean removeAll(Collection<?> c);
     boolean removeAllTs(Collection<? extends E> c);
-    boolean removeAllRu(Collection<?> c);
+    boolean removeAllTu(Collection<?> c);
 
     /** @deprecated */
     @Override
