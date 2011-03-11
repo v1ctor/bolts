@@ -647,7 +647,7 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
     }
 
     @Override
-    public boolean removeAllRu(Collection<?> c) {
+    public boolean removeAllTu(Collection<?> c) {
         return removeAll(c);
     }
 
