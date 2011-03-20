@@ -223,9 +223,19 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return Cf.list(this);
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public <F> ListF<F> uncheckedCast() {
-        return (ListF<F>) this;
+        return cast();
+    }
+
+    @Override
+    public <F> ListF<F> cast() {
+        return (ListF<F>) super.<F>cast();
+    }
+
+    @Override
+    public <F> ListF<F> cast(Class<F> type) {
+        return (ListF<F>) super.cast(type);
     }
 
     public int length() {

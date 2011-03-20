@@ -148,7 +148,14 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
      */
     ListF<E> reverse();
 
+    @Override
     <F> ListF<F> uncheckedCast();
+
+    @Override
+    <F> ListF<F> cast();
+
+    @Override
+    <F> ListF<F> cast(Class<F> type);
 
     /** List of pairs of elements with the same index in two lists */
     <B> Tuple2List<E, B> zip(ListF<? extends B> that);

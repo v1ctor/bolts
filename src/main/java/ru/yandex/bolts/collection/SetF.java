@@ -1,8 +1,8 @@
 package ru.yandex.bolts.collection;
 
-import java.util.Set;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.weaving.annotation.FunctionParameter;
@@ -57,6 +57,12 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     SetF<E> unmodifiable();
 
     <F> SetF<F> uncheckedCast();
+
+    @Override
+    <F> SetF<F> cast();
+
+    @Override
+    <F> SetF<F> cast(Class<F> type);
 
     /** @deprecated */
     @Override

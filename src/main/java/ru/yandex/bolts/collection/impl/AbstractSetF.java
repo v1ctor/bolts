@@ -113,9 +113,19 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
         return this;
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public <F> SetF<F> uncheckedCast() {
-        return (SetF<F>) this;
+        return this.cast();
+    }
+
+    @Override
+    public <F> SetF<F> cast() {
+        return (SetF<F>) super.<F>cast();
+    }
+
+    @Override
+    public <F> SetF<F> cast(Class<F> type) {
+        return (SetF<F>) super.cast(type);
     }
 
     // Copy paste from AbstractSet from Harmony r532306. Do not add anything below this line, please

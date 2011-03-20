@@ -546,9 +546,22 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return iterator().singleO();
     }
 
-    @SuppressWarnings("unchecked")
     public <F> CollectionF<F> uncheckedCast() {
+        return cast();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <F> CollectionF<F> cast() {
         return (CollectionF<F>) this;
+    }
+
+    @Override
+    public <F> CollectionF<F> cast(Class<F> type) {
+        for (E item : this) {
+            type.cast(item);
+        }
+        return cast();
     }
 
     public static boolean equals(Object a, Object b) {

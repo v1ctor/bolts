@@ -243,9 +243,21 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     Option<E> singleO() throws NoSuchElementException;
 
     /**
-     * Return <code>this</code> with another type parameter and no type checks.
+     * Old name for {@link #cast()}.
      */
     <F> CollectionF<F> uncheckedCast();
+
+    /**
+     * Return <code>this</code> with another type parameter and no type checks.
+     */
+    <F> CollectionF<F> cast();
+
+    /**
+     * @throws ClassCastException if any element of this cannot be cast to specified type
+     *
+     * @return <code>this</code>
+     */
+    <F> CollectionF<F> cast(Class<F> type);
 
     /**
      * Min element using {@link Comparator#naturalComparator()}.
