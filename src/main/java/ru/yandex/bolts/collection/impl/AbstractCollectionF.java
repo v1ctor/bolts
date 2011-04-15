@@ -310,6 +310,13 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return sortByDescW(Function.f(b));
     }
 
+    @Override
+    public ListF<E> shuffle() {
+        ListF<E> r = Cf.arrayList(this);
+        Collections.shuffle(r);
+        return r.makeReadOnly();
+    }
+
     public CollectionF<E> unmodifiable() {
         //if (this instanceof Unmodifiable) return this;
         return UnmodifiableDefaultCollectionF.wrap(this);

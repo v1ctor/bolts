@@ -146,6 +146,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     ListF<E> sortByDescW(@FunctionParameter Object f);
 
+    ListF<E> shuffle();
+
     /**
      * Group elements by applying given function to each element.
      */
