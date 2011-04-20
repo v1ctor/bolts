@@ -47,6 +47,30 @@ public abstract class AnyCollectionType {
         return this.<F>findF().bind2(f);
     }
 
+    public <E> Function<Collection<E>, E> maxF(final Function2I<? super E, ? super E> f) {
+        return new Function<Collection<E>, E>() {
+            public E apply(Collection<E> collection) {
+                return Cf.x(collection).max(f);
+            }
+        };
+    }
+
+    public <E> Function<Collection<E>, E> maxF() {
+        return maxF(Comparator.naturalComparator().<E, E>uncheckedCast());
+    }
+
+    public <E> Function<Collection<E>, E> minF(final Function2I<? super E, ? super E> f) {
+        return new Function<Collection<E>, E>() {
+            public E apply(Collection<E> collection) {
+                return Cf.x(collection).min(f);
+            }
+        };
+    }
+
+    public <E> Function<Collection<E>, E> minF() {
+        return minF(Comparator.naturalComparator().<E, E>uncheckedCast());
+    }
+
     public Function<Collection<?>, Integer> sizeF() {
         return new Function<Collection<?>, Integer>() {
             public Integer apply(Collection<?> c) {
