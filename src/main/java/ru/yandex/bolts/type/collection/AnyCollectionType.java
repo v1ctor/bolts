@@ -56,7 +56,7 @@ public abstract class AnyCollectionType {
     }
 
     public <E> Function<Collection<E>, E> maxF() {
-        return maxF(Comparator.naturalComparator().<E, E>uncheckedCast());
+        return this.<E>maxF(Comparator.naturalComparator().<E, E>uncheckedCast());
     }
 
     public <E> Function<Collection<E>, E> minF(final Function2I<? super E, ? super E> f) {
@@ -68,7 +68,7 @@ public abstract class AnyCollectionType {
     }
 
     public <E> Function<Collection<E>, E> minF() {
-        return minF(Comparator.naturalComparator().<E, E>uncheckedCast());
+        return this.<E>minF(Comparator.naturalComparator().<E, E>uncheckedCast());
     }
 
     public Function<Collection<?>, Integer> sizeF() {
