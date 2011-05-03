@@ -552,24 +552,29 @@ public class CollectionsF {
             this.endExclusive = endExclusive;
         }
 
+        @Override
         public int size() {
             return endExclusive - startInclusive;
         }
 
+        @Override
         public Integer get(int index) {
             if (index < 0 || index >= size())
                 throw new IndexOutOfBoundsException();
             return startInclusive + index;
         }
 
+        @Override
         public SetF<Integer> unique() {
             return rangeAsSet(startInclusive, endExclusive);
         }
 
+        @Override
         public boolean contains(Object o) {
             return unique().contains(o);
         }
 
+        @Override
         public String toString() {
             return "[" + startInclusive + "," + endExclusive + ")";
         }
@@ -584,24 +589,29 @@ public class CollectionsF {
             this.endExclusive = endExclusive;
         }
 
+        @Override
         public IteratorF<Integer> iterator() {
             return toList().iterator();
         }
 
+        @Override
         public int size() {
             return endExclusive - startInclusive;
         }
 
+        @Override
         public boolean contains(Object o) {
             if (!(o instanceof Integer)) return false;
             Integer v = (Integer) o;
             return v >= startInclusive && v < endExclusive;
         }
 
+        @Override
         public ListF<Integer> toList() {
             return range(startInclusive, endExclusive);
         }
 
+        @Override
         public String toString() {
             return toList().toString();
         }
