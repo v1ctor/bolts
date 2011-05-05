@@ -99,6 +99,15 @@ public class StringType extends AnyCharSequenceType<String> {
         };
     }
 
+    public Function1B<String> matchesF(String regex) {
+        final Pattern pattern = Pattern.compile(regex);
+        return new Function1B<String>() {
+            public boolean apply(String string) {
+                return pattern.matcher(string).matches();
+            }
+        };
+    }
+
     public boolean equalsIgnoreCase(String a, String b) {
         if (a == null || b == null) {
             return a == b;
