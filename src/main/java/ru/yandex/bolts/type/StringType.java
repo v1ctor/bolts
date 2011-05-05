@@ -25,6 +25,66 @@ public class StringType extends AnyCharSequenceType<String> {
         return "";
     }
 
+    public Function2<String, Integer, Character> charAtF() {
+        return new Function2<String, Integer, Character>() {
+            public Character apply(String s, Integer index) {
+                return s.charAt(index);
+            }
+        };
+    }
+
+    public Function2<String, Integer, Integer> codePointAtF() {
+        return new Function2<String, Integer, Integer>() {
+            public Integer apply(String s, Integer index) {
+                return s.codePointAt(index);
+            }
+        };
+    }
+
+    public Function2B<String, CharSequence> containsF() {
+        return new Function2B<String, CharSequence>() {
+            public boolean apply(String string, CharSequence substring) {
+                return string.contains(substring);
+            }
+        };
+    }
+
+    public Function1B<String> containsF(CharSequence substring) {
+        return containsF().bind2(substring);
+    }
+
+    public Function<String, String> internF() {
+        return new Function<String, String>() {
+            public String apply(String s) {
+                return s.intern();
+            }
+        };
+    }
+
+    public Function<String, Integer> lengthF() {
+        return new Function<String, Integer>() {
+            public Integer apply(String s) {
+                return s.length();
+            }
+        };
+    }
+
+    public Function1B<String> isEmptyF() {
+        return new Function1B<String>() {
+            public boolean apply(String s) {
+                return s == null || s.isEmpty();
+            }
+        };
+    }
+
+    public Function1B<String> isNotEmptyF() {
+        return new Function1B<String>() {
+            public boolean apply(String s) {
+                return s != null && !s.isEmpty();
+            }
+        };
+    }
+
     public Function2<String, String, String> joinF(String sep) {
         return plus3F().bind2(sep);
     }
