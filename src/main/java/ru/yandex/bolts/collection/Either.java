@@ -233,4 +233,37 @@ public abstract class Either<A, B> {
             throw new IllegalArgumentException("Neither is defined!");
         }
     }
+
+    public static <A, B> Function<Either<A, B>, Option<A>> leftOF() {
+        return new Function<Either<A, B>, Option<A>>() {
+            public Option<A> apply(Either<A, B> either) {
+                return either.leftO();
+            }
+        };
+    }
+
+    public static <A, B> Function<Either<A, B>, Option<B>> rightOF() {
+        return new Function<Either<A,B>, Option<B>>() {
+            public Option<B> apply(Either<A, B> either) {
+                return either.rightO();
+            }
+        };
+    }
+
+    public static Function1B<Either<?, ?>> isLeftF() {
+        return new Function1B<Either<?,?>>() {
+            public boolean apply(Either<?, ?> either) {
+                return either.isLeft();
+            }
+        };
+    }
+
+    public static Function1B<Either<?, ?>> isRightF() {
+        return new Function1B<Either<?,?>>() {
+            public boolean apply(Either<?, ?> either) {
+                return either.isRight();
+            }
+        };
+    }
+
 } //~
