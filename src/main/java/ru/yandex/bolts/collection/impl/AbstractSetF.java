@@ -114,6 +114,11 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
     }
 
     @Override
+    public CollectionF<E> stableUnique() {
+        return this;
+    }
+
+    @Override
     public <F> SetF<F> uncheckedCast() {
         return this.cast();
     }

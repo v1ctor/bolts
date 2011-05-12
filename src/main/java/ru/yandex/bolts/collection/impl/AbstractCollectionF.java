@@ -80,6 +80,11 @@ public abstract class AbstractCollectionF<E> extends AbstractCollection<E> imple
         return CollectionsF.set(this);
     }
 
+    @Override
+    public CollectionF<E> stableUnique() {
+        return toList().stableUnique();
+    }
+
     @SuppressWarnings({"unchecked"})
     public E[] toArray(Class<E> cl) {
         return toArray((E[]) Array.newInstance(cl, size()));

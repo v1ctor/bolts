@@ -126,6 +126,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     /** Return set of elements of this */
     SetF<E> unique();
 
+    CollectionF<E> stableUnique();
+
     /** Elements sorted by {@link Comparator#naturalComparator()} */
     ListF<E> sort();
 

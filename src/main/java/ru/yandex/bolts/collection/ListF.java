@@ -57,6 +57,7 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     /**
      * @see #unique()
      */
+    @Override
     ListF<E> stableUnique();
 
     /** Sub list from index to index */
