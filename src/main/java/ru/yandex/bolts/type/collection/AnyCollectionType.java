@@ -6,6 +6,7 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
+import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
@@ -104,6 +105,14 @@ public abstract class AnyCollectionType {
                     Function2I<? super E, ? super E> comparator)
             {
                 return Cf.x(input).sort(comparator);
+            }
+        };
+    }
+
+    public <E> Function<Collection<E>, SetF<E>> uniqueF() {
+        return new Function<Collection<E>, SetF<E>>() {
+            public SetF<E> apply(Collection<E> c) {
+                return Cf.x(c).unique();
             }
         };
     }
