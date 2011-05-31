@@ -25,4 +25,20 @@ public class AnySetType extends AnyCollectionType {
         return this.<A>filterF().bind2(f);
     }
 
+    public <A> Function2<SetF<A>, SetF<A>, SetF<A>> intersectF() {
+        return new Function2<SetF<A>, SetF<A>, SetF<A>>() {
+            public SetF<A> apply(SetF<A> a, SetF<A> b) {
+                return a.intersect(b);
+            }
+        };
+    }
+
+    public <A> Function2<SetF<A>, SetF<A>, SetF<A>> plusF() {
+        return new Function2<SetF<A>, SetF<A>, SetF<A>>() {
+            public SetF<A> apply(SetF<A> a, SetF<A> b) {
+                return a.plus(b);
+            }
+        };
+    }
+
 } //~

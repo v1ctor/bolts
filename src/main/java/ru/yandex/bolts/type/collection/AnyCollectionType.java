@@ -117,6 +117,14 @@ public abstract class AnyCollectionType {
         };
     }
 
+    public <E> Function<Collection<E>, ListF<E>> toListF() {
+        return new Function<Collection<E>, ListF<E>>() {
+            public ListF<E> apply(Collection<E> c) {
+                return Cf.x(c).toList();
+            }
+        };
+    }
+
     /** {@link CollectionF#sort()} as function, convenience form */
     public <E> Function<Collection<E>, ListF<E>> sortF(
             Function2I<? super E, ? super E> comparator)
