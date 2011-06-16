@@ -52,7 +52,7 @@ public abstract class Either<A, B> {
         else return Either.<B, A>left(getRight());
     }
 
-    public <C> C fold(Function<A, C> leftF, Function<B, C> rightF) {
+    public <C> C fold(Function<? super A, C> leftF, Function<? super B, C> rightF) {
         if (isLeft())
             return leftF.apply(getLeft());
         else
