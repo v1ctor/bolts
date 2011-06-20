@@ -12,6 +12,7 @@ public class FunctionBuilder {
 
     public static final boolean DEBUG = true;
 
+    // XXX: no GCed
     private static final Map<Class<?>, FunctionsForClass> cache
         = new WeakHashMap<Class<?>, FunctionsForClass>();
 
