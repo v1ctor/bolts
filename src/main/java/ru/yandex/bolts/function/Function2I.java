@@ -118,6 +118,22 @@ public abstract class Function2I<A, B> {
         };
     }
 
+    public <C> Function2I<C, B> compose1(final Function<? super C, ? extends A> f) {
+        return new Function2I<C, B>() {
+            public int apply(C c, B b) {
+                return Function2I.this.apply(f.apply(c), b);
+            }
+        };
+    }
+
+    public <C> Function2I<A, C> compose2(final Function<? super C, ? extends B> f) {
+        return new Function2I<A, C>() {
+            public int apply(A a, C c) {
+                return Function2I.this.apply(a, f.apply(c));
+            }
+        };
+    }
+
     public Function<Tuple2<A, B>, Integer> asFunction() {
         return new Function<Tuple2<A, B>, Integer>() {
             public Integer apply(Tuple2<A, B> a) {

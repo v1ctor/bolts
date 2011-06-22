@@ -68,6 +68,22 @@ public abstract class Function2V<A, B> {
         return Function2V.<A, B>bind2F2().bind1(this);
     }
 
+    public <C> Function2V<C, B> compose1(final Function<? super C, ? extends A> f) {
+        return new Function2V<C, B>() {
+            public void apply(C c, B b) {
+                Function2V.this.apply(f.apply(c), b);
+            }
+        };
+    }
+
+    public <C> Function2V<A, C> compose2(final Function<? super C, ? extends B> f) {
+        return new Function2V<A, C>() {
+            public void apply(A a, C c) {
+                Function2V.this.apply(a, f.apply(c));
+            }
+        };
+    }
+
     public Function<Tuple2<A, B>, Object> asFunction() {
         return new Function<Tuple2<A, B>, Object>() {
             public Object apply(Tuple2<A, B> t) {

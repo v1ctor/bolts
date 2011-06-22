@@ -98,6 +98,22 @@ public abstract class Function2<A, B, R> {
         };
     }
 
+    public <C> Function2<C, B, R> compose1(final Function<? super C, ? extends A> f) {
+        return new Function2<C, B, R>() {
+            public R apply(C c, B b) {
+                return Function2.this.apply(f.apply(c), b);
+            }
+        };
+    }
+
+    public <C> Function2<A, C, R> compose2(final Function<? super C, ? extends B> f) {
+        return new Function2<A, C, R>() {
+            public R apply(A a, C c) {
+                return Function2.this.apply(a, f.apply(c));
+            }
+        };
+    }
+
     @SuppressWarnings("unchecked")
     public <A1, B1, R1> Function2<A1, B1, R1> uncheckedCast() {
         return (Function2<A1, B1, R1>) this;

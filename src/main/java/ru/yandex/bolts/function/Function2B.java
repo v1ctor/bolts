@@ -141,6 +141,22 @@ public abstract class Function2B<A, B> {
         };
     }
 
+    public <C> Function2B<C, B> compose1(final Function<? super C, ? extends A> f) {
+        return new Function2B<C, B>() {
+            public boolean apply(C c, B b) {
+                return Function2B.this.apply(f.apply(c), b);
+            }
+        };
+    }
+
+    public <C> Function2B<A, C> compose2(final Function<? super C, ? extends B> f) {
+        return new Function2B<A, C>() {
+            public boolean apply(A a, C c) {
+                return Function2B.this.apply(a, f.apply(c));
+            }
+        };
+    }
+
     /**
      * Delegate to {@link #equals(Object, Object)}.
      */
