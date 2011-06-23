@@ -6,6 +6,7 @@ import java.util.List;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
+import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
@@ -86,6 +87,14 @@ public abstract class AnyListType extends AnyCollectionType {
 
     public <A> Function<ListF<A>, A> firstF() {
         return getF(0);
+    }
+
+    public <A> Function<List<A>, Option<A>> firstOF() {
+        return new Function<List<A>, Option<A>>() {
+            public Option<A> apply(List<A> a) {
+                return Cf.x(a).firstO();
+            }
+        };
     }
 
 
