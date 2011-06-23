@@ -266,6 +266,11 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
         return r;
     }
 
+    @Override
+    public int count() {
+        return count(Function1B.trueF());
+    }
+
     public <B> B foldLeft(B z, Function2<B, E, B> f) {
         B acc = z;
         while (hasNext()) {

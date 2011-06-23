@@ -55,6 +55,8 @@ public interface IteratorF<E> extends Iterator<E> {
     /** Count elements matching predicate */
     int count(Function1B<? super E> p);
 
+    int count();
+
     /** Fold left */
     <B> B foldLeft(B z, Function2<B, E, B> f);
 
