@@ -73,19 +73,19 @@ public abstract class AnyListType extends AnyCollectionType {
         return this.<A>filterF().bind2(f);
     }
 
-    public <A> Function2<ListF<A>, Integer, A> getF() {
-        return new Function2<ListF<A>, Integer, A>() {
-            public A apply(ListF<A> list, Integer index) {
+    public <A> Function2<List<A>, Integer, A> getF() {
+        return new Function2<List<A>, Integer, A>() {
+            public A apply(List<A> list, Integer index) {
                 return list.get(index);
             }
         };
     }
 
-    public <A> Function<ListF<A>, A> getF(final int index) {
+    public <A> Function<List<A>, A> getF(final int index) {
         return this.<A>getF().bind2(index);
     }
 
-    public <A> Function<ListF<A>, A> firstF() {
+    public <A> Function<List<A>, A> firstF() {
         return getF(0);
     }
 
