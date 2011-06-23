@@ -80,6 +80,32 @@ public abstract class AnyCollectionType {
         };
     }
 
+    public Function1B<Collection<?>> isEmptyF() {
+        return new Function1B<Collection<?>>() {
+            public boolean apply(Collection<?> c) {
+                return c.isEmpty();
+            }
+
+            @Override
+            public Function1B<Collection<?>> notF() {
+                return isNotEmptyF();
+            }
+        };
+    }
+
+    public Function1B<Collection<?>> isNotEmptyF() {
+        return new Function1B<Collection<?>>() {
+            public boolean apply(Collection<?> c) {
+                return !c.isEmpty();
+            }
+
+            @Override
+            public Function1B<Collection<?>> notF() {
+                return isEmptyF();
+            }
+        };
+    }
+
     /** {@link CollectionF#single()} as function */
     public <A> Function<Collection<A>, A> singleF() {
         return new Function<Collection<A>, A>() {
