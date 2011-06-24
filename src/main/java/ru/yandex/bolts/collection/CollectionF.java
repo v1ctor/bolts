@@ -235,18 +235,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     CollectionF<E> unmodifiable();
 
     /**
-     * Single element of collection
-     *
-     * @throws NoSuchElementException if this collection is empty or has more then one element.
-     */
-    E single() throws NoSuchElementException;
-
-    /**
-     * @throws NoSuchElementException is collection has more then one element.
-     */
-    Option<E> singleO() throws NoSuchElementException;
-
-    /**
      * Old name for {@link #cast()}.
      */
     <F> CollectionF<F> uncheckedCast();
@@ -262,40 +250,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      * @return <code>this</code>
      */
     <F> CollectionF<F> cast(Class<F> type);
-
-    /**
-     * Min element using {@link Comparator#naturalComparator()}.
-     */
-    E min();
-    /**
-     * Min element using given comparator.
-     */
-    E min(Function2I<? super E, ? super E> comparator);
-
-    E minW(@FunctionParameter int comparator);
-
-    Option<E> minO();
-
-    Option<E> minO(Function2I<? super E, ? super E> comparator);
-
-    Option<E> minOW(@FunctionParameter int comparator);
-
-    /**
-     * Max element using {@link Comparator#naturalComparator()}.
-     */
-    E max();
-    /**
-     * Max element using given comparator.
-     */
-    E max(Function2I<? super E, ? super E> comparator);
-
-    E maxW(@FunctionParameter int comparator);
-
-    Option<E> maxO();
-
-    Option<E> maxO(Function2I<? super E, ? super E> comparator);
-
-    Option<E> maxOW(@FunctionParameter int comparator);
 
     ListF<ListF<E>> paginate(int pageSize);
 

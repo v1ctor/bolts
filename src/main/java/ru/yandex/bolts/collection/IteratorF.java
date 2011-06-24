@@ -2,10 +2,9 @@ package ru.yandex.bolts.collection;
 
 import java.util.Iterator;
 
+import ru.yandex.bolts.collection.impl.TraversableF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.Function1V;
-import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.weaving.annotation.FunctionParameter;
 
 /**
@@ -14,7 +13,7 @@ import ru.yandex.bolts.weaving.annotation.FunctionParameter;
  * @see IterableF
  * @author Stepan Koltsov
  */
-public interface IteratorF<E> extends Iterator<E> {
+public interface IteratorF<E> extends TraversableF<E>, Iterator<E> {
     /** Collect elements */
     ListF<E> toList();
 
@@ -36,54 +35,7 @@ public interface IteratorF<E> extends Iterator<E> {
 
     IteratorF<E> filterNotNull();
 
-    /** Call function for each element */
-    void forEach(Function1V<? super E> f);
-
-    /** True iff all elements match predicate */
-    boolean forAll(Function1B<? super E> p);
-
-    /** True iff element matching predicate exists */
-    boolean exists(Function1B<? super E> p);
-
-    boolean existsW(@FunctionParameter E p);
-
-    /** Find element that matches predicate */
-    Option<E> find(Function1B<? super E> p);
-
-    Option<E> findW(@FunctionParameter E p);
-
-    /** Count elements matching predicate */
-    int count(Function1B<? super E> p);
-
     int count();
-
-    /** Fold left */
-    <B> B foldLeft(B z, Function2<B, E, B> f);
-
-    <B> B foldLeftW(B z, @FunctionParameter B f);
-
-    /** Fold right */
-    <B> B foldRight(B z, Function2<E, B, B> f);
-
-    <B> B foldRightW(B z, @FunctionParameter B f);
-
-    /** Reduce left */
-    E reduceLeft(Function2<E, E, E> f);
-
-    E reduceLeftW(@FunctionParameter E f);
-
-    /** Reduce right */
-    E reduceRight(Function2<E, E, E> f);
-
-    E reduceRightW(@FunctionParameter E f);
-
-    Option<E> reduceLeftO(Function2<E, E, E> f);
-
-    Option<E> reduceLeftOW(@FunctionParameter E f);
-
-    Option<E> reduceRightO(Function2<E, E, E> f);
-
-    Option<E> reduceRightOW(@FunctionParameter E f);
 
     /** Zip with index */
     IteratorF<Tuple2<E, Integer>> zipWithIndex();
@@ -93,13 +45,6 @@ public interface IteratorF<E> extends Iterator<E> {
     IteratorF<E> unmodifiable();
 
     Option<E> nextO();
-
-    /**
-     * Single or none element of this iterator.
-     */
-    Option<E> singleO();
-
-    E single();
 
     IteratorF<E> drop(int count);
 

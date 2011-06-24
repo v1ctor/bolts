@@ -33,7 +33,7 @@ import ru.yandex.bolts.function.forhuman.Comparator;
  *
  * @author Stepan Koltsov
  */
-public abstract class AbstractCollectionF<E> implements CollectionF<E> {
+public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> implements CollectionF<E> {
 
     @Override
     public boolean isEmpty() {
@@ -499,118 +499,7 @@ public abstract class AbstractCollectionF<E> implements CollectionF<E> {
         return UnmodifiableDefaultCollectionF.wrap(this);
     }
 
-    public void forEach(Function1V<? super E> f) {
-        iterator().forEach(f);
-    }
-
-    public boolean forAll(Function1B<? super E> p) {
-        return iterator().forAll(p);
-    }
-
     @Override
-    public boolean forAllW(boolean p) {
-        return forAll(Function1B.f(p));
-    }
-
-    public boolean exists(Function1B<? super E> p) {
-        return iterator().exists(p);
-    }
-
-    @Override
-    public boolean existsW(boolean p) {
-        return exists(Function1B.f(p));
-    }
-
-    public Option<E> find(Function1B<? super E> p) {
-        return iterator().find(p);
-    }
-
-    @Override
-    public Option<E> findW(boolean p) {
-        return find(Function1B.f(p));
-    }
-
-    @Override
-    public int count(Function1B<? super E> p) {
-        return iterator().count(p);
-    }
-
-    public <B> B foldLeft(B z, Function2<B, E, B> f) {
-        return iterator().foldLeft(z, f);
-    }
-
-    @Override
-    public <B> B foldLeftW(B z, B f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public <B> B foldRight(B z, Function2<E, B, B> f) {
-        return iterator().foldRight(z, f);
-    }
-
-    @Override
-    public <B> B foldRightW(B z, B f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public E reduceLeft(Function2<E, E, E> f) {
-        return iterator().reduceLeft(f);
-    }
-
-    @Override
-    public E reduceLeftW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public E reduceRight(Function2<E, E, E> f) {
-        return iterator().reduceRight(f);
-    }
-
-    @Override
-    public E reduceRightW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
-    public Option<E> reduceLeftO(Function2<E, E, E> f) {
-        return iterator().reduceLeftO(f);
-    }
-
-    @Override
-    public Option<E> reduceLeftOW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
-    public Option<E> reduceRightO(Function2<E, E, E> f) {
-        return iterator().reduceRightO(f);
-    }
-
-    @Override
-    public Option<E> reduceRightOW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public String mkString(String sep) {
-        return mkString("", sep, "");
-    }
-
-    public String mkString(String start, String sep, String end) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(start);
-
-        IteratorF<E> i = iterator();
-
-        if (i.hasNext()) sb.append(i.next());
-
-        while (i.hasNext()) sb.append(sep).append(i.next());
-
-        sb.append(end);
-
-        return sb.toString();
-    }
-
     public <K, V> MapF<K, V> toMap(Function<? super E, Tuple2<K, V>> mapper) {
         if (isEmpty()) return CollectionsF.map();
         else return CollectionsF.hashMap(map(mapper));
@@ -629,8 +518,9 @@ public abstract class AbstractCollectionF<E> implements CollectionF<E> {
     @Override
     public <K, V> MapF<K, V> toMapW(K fk, V fv) {
         return toMap(Function.f(fk), Function.f(fv));
-    };
+    }
 
+    @Override
     public <K> MapF<K, E> toMapMappingToKey(final Function<? super E, K> mapper) {
         return toMap(new Function<E, Tuple2<K, E>>() {
             public Tuple2<K, E> apply(E e) {
@@ -644,6 +534,7 @@ public abstract class AbstractCollectionF<E> implements CollectionF<E> {
         return toMapMappingToKey(Function.f(m));
     }
 
+    @Override
     public <V> MapF<E, V> toMapMappingToValue(final Function<? super E, V> mapper) {
         return toMap(new Function<E, Tuple2<E, V>>() {
             public Tuple2<E, V> apply(E e) {
@@ -722,14 +613,6 @@ public abstract class AbstractCollectionF<E> implements CollectionF<E> {
         addAll(CollectionsF.list(additions));
     }
 
-    public E single() throws NoSuchElementException {
-        return iterator().single();
-    }
-
-    public Option<E> singleO() throws NoSuchElementException {
-        return iterator().singleO();
-    }
-
     public <F> CollectionF<F> uncheckedCast() {
         return cast();
     }
@@ -751,70 +634,6 @@ public abstract class AbstractCollectionF<E> implements CollectionF<E> {
     public static boolean equals(Object a, Object b) {
         if (b == null || a == null) return b == a;
         else return b.equals(a);
-    }
-
-    public E min() {
-        return min(Comparator.naturalComparator().<E, E>uncheckedCast());
-    }
-
-    @SuppressWarnings("unchecked")
-    public E min(Function2I<? super E, ? super E> comparator) {
-        return reduceLeft(Comparator.wrap((Function2I<E, E>) comparator).minF());
-    }
-
-    @Override
-    public E minW(int comparator) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
-    public Option<E> minO() {
-        return minO(Comparator.naturalComparator().<E, E>uncheckedCast());
-    }
-
-    @Override
-    public Option<E> minO(Function2I<? super E, ? super E> comparator) {
-        if (isEmpty())
-            return Option.none();
-        else
-            return Option.some(min(comparator));
-    }
-
-    @Override
-    public Option<E> minOW(int comparator) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public E max() {
-        return max(Comparator.naturalComparator().<E, E>uncheckedCast());
-    }
-
-    @SuppressWarnings("unchecked")
-    public E max(Function2I<? super E, ? super E> comparator) {
-        return reduceLeft(Comparator.wrap((Function2I<E, E>) comparator).maxF());
-    }
-
-    @Override
-    public E maxW(int comparator) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
-    public Option<E> maxO() {
-        return maxO(Comparator.naturalComparator().<E, E>uncheckedCast());
-    }
-
-    @Override
-    public Option<E> maxO(Function2I<? super E, ? super E> comparator) {
-        if (isEmpty())
-            return Option.none();
-        else
-            return Option.some(max(comparator));
-    }
-
-    @Override
-    public Option<E> maxOW(int comparator) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override

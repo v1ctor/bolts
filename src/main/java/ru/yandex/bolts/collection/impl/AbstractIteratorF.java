@@ -12,15 +12,19 @@ import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.Function1V;
-import ru.yandex.bolts.function.Function2;
 
 /**
  * Implementation of {@link IteratorF} algorithms.
  *
  * @author Stepan Koltsov
  */
-public abstract class AbstractIteratorF<E> implements IteratorF<E> {
+public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> implements IteratorF<E> {
+
+    @Override
+    protected IteratorF<E> iterator() {
+        return this;
+    }
+
     private IteratorF<E> self() { return this; }
 
     public void remove() {
@@ -208,138 +212,8 @@ public abstract class AbstractIteratorF<E> implements IteratorF<E> {
     }
 
     @Override
-    public E single() {
-        E r = next();
-        if (hasNext()) throw new NoSuchElementException("more then one element");
-        return r;
-    }
-
-    public Option<E> singleO() {
-        Option<E> r = nextO();
-        if (hasNext()) throw new NoSuchElementException("more then one element");
-        return r;
-    }
-
-    public void forEach(Function1V<? super E> closure) {
-        while (hasNext()) closure.apply(next());
-    }
-
-    public boolean forAll(Function1B<? super E> p) {
-        while (hasNext()) {
-            if (!p.apply(next())) return false;
-        }
-        return true;
-    }
-
-    public boolean exists(Function1B<? super E> p) {
-        while (hasNext()) {
-            if (p.apply(next())) return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean existsW(E p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public Option<E> find(Function1B<? super E> p) {
-        while (hasNext()) {
-            E e = next();
-            if (p.apply(e)) return Option.some(e);
-        }
-        return Option.none();
-    }
-
-    @Override
-    public Option<E> findW(E p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
-    public int count(Function1B<? super E> p) {
-        int r = 0;
-        while (hasNext()) {
-            if (p.apply(next()))
-                ++r;
-        }
-        return r;
-    }
-
-    @Override
     public int count() {
         return count(Function1B.trueF());
-    }
-
-    public <B> B foldLeft(B z, Function2<B, E, B> f) {
-        B acc = z;
-        while (hasNext()) {
-            acc = f.apply(acc, next());
-        }
-        return acc;
-    }
-
-    @Override
-    public <B> B foldLeftW(B z, B f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public <B> B foldRight(B z, Function2<E, B, B> f) {
-        if (hasNext()) return f.apply(next(), foldRight(z, f));
-        else return z;
-    }
-
-    @Override
-    public <B> B foldRightW(B z, B f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public E reduceLeft(Function2<E, E, E> f) {
-        return reduceLeftO(f).getOrThrow("empty.reduceLeft");
-    }
-
-    @Override
-    public E reduceLeftW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public E reduceRight(Function2<E, E, E> f) {
-        return reduceRightO(f).getOrThrow("empty.reduceRight");
-    }
-
-    @Override
-    public E reduceRightW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
-    public Option<E> reduceLeftO(Function2<E, E, E> f) {
-        if (hasNext())
-            return Option.some(foldLeft(next(), f));
-        else
-            return Option.none();
-    }
-
-    @Override
-    public Option<E> reduceLeftOW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
-    public Option<E> reduceRightO(Function2<E, E, E> f) {
-        if (!hasNext())
-            return Option.none();
-
-        E head = next();
-        if (hasNext())
-            return Option.some(f.apply(head, reduceRight(f)));
-        else
-            return Option.some(head);
-    }
-
-    @Override
-    public Option<E> reduceRightOW(E f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     public IteratorF<E> drop(int count) {
