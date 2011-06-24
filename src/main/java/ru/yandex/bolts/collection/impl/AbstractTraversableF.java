@@ -40,6 +40,11 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     }
 
     @Override
+    public boolean forAllW(boolean p) {
+        return forAll(Function1B.getCurrent());
+    }
+
+    @Override
     public boolean exists(Function1B<? super E> p) {
         IteratorF<E> i = iterator();
         while (i.hasNext()) {
@@ -50,7 +55,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
 
     @Override
     public boolean existsW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
+        return exists(Function1B.getCurrent());
     }
 
     @Override
@@ -65,7 +70,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
 
     @Override
     public Option<E> findW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
+        return find(Function1B.getCurrent());
     }
 
     @Override

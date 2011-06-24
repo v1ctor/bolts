@@ -22,6 +22,8 @@ public interface TraversableF<E> {
     /** True iff all elements match predicate */
     boolean forAll(Function1B<? super E> p);
 
+    boolean forAllW(@FunctionParameter boolean p);
+
     /** True iff element matching predicate exists */
     boolean exists(Function1B<? super E> p);
 
