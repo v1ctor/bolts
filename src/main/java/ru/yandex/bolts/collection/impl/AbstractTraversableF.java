@@ -119,20 +119,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
         throw new RuntimeException("weaving must be enabled");
     }
 
-    @Override
-    public <B> B foldRight(B z, Function2<E, B, B> f) {
-        IteratorF<E> i = iterator();
-        if (i.hasNext()) {
-            return f.apply(i.next(), foldRight(z, f));
-        } else {
-            return z;
-        }
-    }
-
-    @Override
-    public <B> B foldRightW(B z, B f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
 
     @Override
     public E reduceLeft(Function2<E, E, E> f) {
@@ -141,16 +127,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
 
     @Override
     public E reduceLeftW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
-    public E reduceRight(Function2<E, E, E> f) {
-        return reduceRightO(f).getOrThrow("empty.reduceRight");
-    }
-
-    @Override
-    public E reduceRightW(E f) {
         throw new RuntimeException("weaving must be enabled");
     }
 
@@ -166,26 +142,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
 
     @Override
     public Option<E> reduceLeftOW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
-    public Option<E> reduceRightO(Function2<E, E, E> f) {
-        IteratorF<E> i = iterator();
-        if (!i.hasNext()) {
-            return Option.none();
-        }
-
-        E head = i.next();
-        if (i.hasNext()) {
-            return Option.some(f.apply(head, reduceRight(f)));
-        } else {
-            return Option.some(head);
-        }
-    }
-
-    @Override
-    public Option<E> reduceRightOW(E f) {
         throw new RuntimeException("weaving must be enabled");
     }
 

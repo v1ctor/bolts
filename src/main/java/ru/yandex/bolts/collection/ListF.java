@@ -7,6 +7,7 @@ import java.util.List;
 import ru.yandex.bolts.collection.impl.ArrayListF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.weaving.annotation.FunctionParameter;
 
 /**
@@ -125,6 +126,22 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
     /** Pair of sublists returned by {@link #takeWhile(Function1B)} and {@link #dropWhile(Function1B)} */
     //ListF<E> span(Function1B<? super E> p);
+
+
+    /** Fold right */
+    <B> B foldRight(B z, Function2<E, B, B> f);
+
+    <B> B foldRightW(B z, @FunctionParameter B f);
+
+    /** Reduce right */
+    E reduceRight(Function2<E, E, E> f);
+
+    E reduceRightW(@FunctionParameter E f);
+
+    Option<E> reduceRightO(Function2<E, E, E> f);
+
+    Option<E> reduceRightOW(@FunctionParameter E f);
+
 
     /**
      * Unmodifiable view or copy of this collection

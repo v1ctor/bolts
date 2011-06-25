@@ -49,28 +49,14 @@ public interface TraversableF<E> {
 
     <B> B foldLeftW(B z, @FunctionParameter B f);
 
-    /** Fold right */
-    <B> B foldRight(B z, Function2<E, B, B> f);
-
-    <B> B foldRightW(B z, @FunctionParameter B f);
-
     /** Reduce left */
     E reduceLeft(Function2<E, E, E> f);
 
     E reduceLeftW(@FunctionParameter E f);
 
-    /** Reduce right */
-    E reduceRight(Function2<E, E, E> f);
-
-    E reduceRightW(@FunctionParameter E f);
-
     Option<E> reduceLeftO(Function2<E, E, E> f);
 
     Option<E> reduceLeftOW(@FunctionParameter E f);
-
-    Option<E> reduceRightO(Function2<E, E, E> f);
-
-    Option<E> reduceRightOW(@FunctionParameter E f);
 
 
     /**
