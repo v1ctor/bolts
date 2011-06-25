@@ -63,6 +63,11 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     <B> ListF<B> flatMapW(@FunctionParameter Collection<? extends B> f);
 
     /**
+     * @see #flatMapO(Function)
+     */
+    <B> Tuple2List<E, B> zipWithFlatMapO(Function<? super E, Option<B>> f);
+
+    /**
      * Map to list of map entries and construct map
      * @see #toMap(Function, Function)
      * @see #toTuple2List(Function)

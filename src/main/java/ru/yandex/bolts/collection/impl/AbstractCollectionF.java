@@ -390,6 +390,15 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         return flatMap(Function.f(f)).uncheckedCast();
     }
 
+    @Override
+    public <B> Tuple2List<E, B> zipWithFlatMapO(Function<? super E, Option<B>> f) {
+        return toList()
+            .zipWith(f)
+            .filterBy2(Option.<B>isDefinedF())
+            .map2(Option.<B>getF())
+        ;
+    }
+
     public final Function1V<E> addOp() {
         return addF();
     }
