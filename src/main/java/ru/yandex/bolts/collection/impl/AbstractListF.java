@@ -208,7 +208,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @Override
     public E reduceRight(Function2<E, E, E> f) {
-        return reduceRightO(f).getOrThrow("empty.reduceRight");
+        return reverseIterator().reduceLeft(f.swap());
     }
 
     @Override
@@ -218,17 +218,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @Override
     public Option<E> reduceRightO(Function2<E, E, E> f) {
-        IteratorF<E> i = iterator();
-        if (!i.hasNext()) {
-            return Option.none();
-        }
-
-        E head = i.next();
-        if (i.hasNext()) {
-            return Option.some(f.apply(head, reduceRight(f)));
-        } else {
-            return Option.some(head);
-        }
+        return reverseIterator().reduceLeftO(f.swap());
     }
 
     @Override
@@ -238,12 +228,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @Override
     public <B> B foldRight(B z, Function2<E, B, B> f) {
-        IteratorF<E> i = iterator();
-        if (i.hasNext()) {
-            return f.apply(i.next(), foldRight(z, f));
-        } else {
-            return z;
-        }
+        return reverseIterator().foldLeft(z, f.swap());
     }
 
     @Override
