@@ -90,6 +90,14 @@ public abstract class Function2<A, B, R> {
         };
     }
 
+    public Function2<B, A, R> swap() {
+        return new Function2<B, A, R>() {
+            public R apply(B b, A a) {
+                return Function2.this.apply(a, b);
+            }
+        };
+    }
+
     public <S> Function2<A, B, S> andThen(final Function<? super R, ? extends S> f) {
         return new Function2<A, B, S>() {
             public S apply(A a, B b) {
