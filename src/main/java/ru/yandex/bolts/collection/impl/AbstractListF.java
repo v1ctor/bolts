@@ -283,12 +283,19 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     public IteratorF<E> reverseIterator() {
         final ListIterator<E> listIterator = listIterator(size());
         return new AbstractIteratorF<E>() {
+            @Override
             public boolean hasNext() {
                 return listIterator.hasPrevious();
             }
 
+            @Override
             public E next() {
                 return listIterator.previous();
+            }
+
+            @Override
+            public void remove() {
+                listIterator.remove();
             }
         };
     }
