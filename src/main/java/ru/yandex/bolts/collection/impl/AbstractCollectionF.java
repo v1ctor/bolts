@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionF;
@@ -24,7 +23,6 @@ import ru.yandex.bolts.collection.Tuple3List;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
-import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
@@ -357,7 +355,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     public <B> ListF<B> map(Function<? super E, B> f) {
         if (isEmpty()) return Cf.list();
-        else return iterator().map(f).toList();
+        else return iterator().map(f).toList(size());
     }
 
     @Override

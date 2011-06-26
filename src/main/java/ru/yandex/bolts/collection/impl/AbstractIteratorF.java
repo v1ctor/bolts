@@ -31,10 +31,25 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public ListF<E> toList() {
+        return toListImpl(-1);
+    }
+
+    @Override
+    public ListF<E> toList(int initialCapacity) {
+        return toListImpl(initialCapacity);
+    }
+
+    private ListF<E> toListImpl(int initialCapacity) {
         if (!hasNext()) return CollectionsF.list();
 
-        ArrayListF<E> result = new ArrayListF<E>();
+        ArrayListF<E> result;
+        if (initialCapacity < 0) {
+            result = new ArrayListF<E>();
+        } else {
+            result = new ArrayListF<E>(initialCapacity);
+        }
         forEach(result.addF());
         return result.convertToReadOnly();
     }

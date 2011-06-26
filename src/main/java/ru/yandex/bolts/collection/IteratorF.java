@@ -17,6 +17,8 @@ public interface IteratorF<E> extends TraversableF<E>, Iterator<E> {
     /** Collect elements */
     ListF<E> toList();
 
+    ListF<E> toList(int initialCapacity);
+
     /** Collect elements to set */
     SetF<E> toSet();
 
