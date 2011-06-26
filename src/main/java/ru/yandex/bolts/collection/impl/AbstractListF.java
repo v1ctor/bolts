@@ -88,6 +88,10 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @Override
     public ListF<E> stableUnique() {
+        if (size() <= 1) {
+            return this;
+        }
+
         return filter(new Function1B<E>() {
             private SetF<E> added = Cf.hashSet();
 
