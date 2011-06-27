@@ -134,7 +134,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     public Option<E> reduceLeftO(Function2<E, E, E> f) {
         IteratorF<E> i = iterator();
         if (i.hasNext()) {
-            return Option.some(foldLeft(i.next(), f));
+            return Option.some(i.foldLeft(i.next(), f));
         } else {
             return Option.none();
         }
