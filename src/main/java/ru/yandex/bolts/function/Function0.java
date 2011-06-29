@@ -55,9 +55,9 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
         };
     }
 
-    public Function<Object, R> asFunction() {
-        return new Function<Object, R>() {
-            public R apply(Object a) {
+    public <A> Function<A, R> asFunction() {
+        return new Function<A, R>() {
+            public R apply(A a) {
                 return Function0.this.apply();
             }
 
