@@ -67,6 +67,14 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
         };
     }
 
+    public Function0V asFunction0V() {
+        return new Function0V() {
+            public void apply() {
+                Function0.this.apply();
+            }
+        };
+    }
+
     /** Function0 that always return same value */
     public static <T> Function0<T> constF(final T t) {
         return new Function0<T>() {
