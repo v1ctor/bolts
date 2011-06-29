@@ -42,6 +42,15 @@ public abstract class Function0V implements Runnable {
         };
     }
 
+    public <R> Function<R, R> asFunctionReturnParam() {
+        return new Function<R, R>() {
+            public R apply(R r) {
+                Function0V.this.apply();
+                return r;
+            }
+        };
+    }
+
     @SuppressWarnings({"unchecked"})
     private static <E extends Throwable> void throw0(Throwable e) throws E {
         throw (E) e;
