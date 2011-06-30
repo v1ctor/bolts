@@ -331,6 +331,11 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     @Override
+    public Function1B<K> containsKeyF() {
+        return keySet().containsF();
+    }
+
+    @Override
     public boolean containsValueTs(V value) {
         return containsValue(value);
     }

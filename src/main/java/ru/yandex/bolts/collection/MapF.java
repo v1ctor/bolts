@@ -119,6 +119,8 @@ public interface MapF<K, V> extends Map<K, V> {
     boolean containsKeyTs(K key);
     boolean containsKeyTu(Object key);
 
+    Function1B<K> containsKeyF();
+
     /** @deprecated */
     @Override
     boolean containsValue(Object value);
