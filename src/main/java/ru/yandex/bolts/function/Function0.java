@@ -37,6 +37,14 @@ public abstract class Function0<R> implements java.util.concurrent.Callable<R> {
         };
     }
 
+    public Function0V andThen(final Function1V<R> then) {
+        return new Function0V() {
+            public void apply() {
+                then.apply(Function0.this.apply());
+            }
+        };
+    }
+
     public static <T> Function0<T> newInstanceF(final Class<? extends T> clazz) {
         if (clazz == null) throw new IllegalArgumentException();
         return new Function0<T>() {
