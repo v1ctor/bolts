@@ -61,6 +61,16 @@ public abstract class AnyListType extends AnyCollectionType {
         };
     }
 
+    public <A> ListF<A> concat(ListF<ListF<A>> lists) {
+        Function2<Integer, Collection<?>, Integer> c = Cf.Integer.plusF().compose2(Cf.List.sizeF());
+        int totalLength = lists.foldLeft(0, c);
+        ListF<A> r = Cf.arrayList(totalLength);
+        for (ListF<A> l : lists) {
+            r.addAll(l);
+        }
+        return r.makeReadOnly();
+    }
+
     public <A> Function2<List<A>, Function1B<? super A>, ListF<A>> filterF() {
         return new Function2<List<A>, Function1B<? super A>, ListF<A>>() {
             public ListF<A> apply(List<A> set, Function1B<? super A> f) {
