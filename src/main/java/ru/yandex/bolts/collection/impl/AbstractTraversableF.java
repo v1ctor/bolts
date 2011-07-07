@@ -105,7 +105,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     }
 
     @Override
-    public <B> B foldLeft(B z, Function2<B, E, B> f) {
+    public <B> B foldLeft(B z, Function2<? super B, ? super E, B> f) {
         IteratorF<E> i = iterator();
         B acc = z;
         while (i.hasNext()) {

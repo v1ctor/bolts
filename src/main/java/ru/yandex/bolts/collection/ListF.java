@@ -129,7 +129,7 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
 
     /** Fold right */
-    <B> B foldRight(B z, Function2<E, B, B> f);
+    <B> B foldRight(B z, Function2<? super E, ? super B, B> f);
 
     <B> B foldRightW(B z, @FunctionParameter B f);
 

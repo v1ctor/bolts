@@ -231,7 +231,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
-    public <B> B foldRight(B z, Function2<E, B, B> f) {
+    public <B> B foldRight(B z, Function2<? super E, ? super B, B> f) {
         return reverseIterator().foldLeft(z, f.swap());
     }
 

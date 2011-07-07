@@ -45,7 +45,7 @@ public interface TraversableF<E> {
     E single();
 
     /** Fold left */
-    <B> B foldLeft(B z, Function2<B, E, B> f);
+    <B> B foldLeft(B z, Function2<? super B, ? super E, B> f);
 
     <B> B foldLeftW(B z, @FunctionParameter B f);
 
