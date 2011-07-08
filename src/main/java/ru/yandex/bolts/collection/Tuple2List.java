@@ -330,10 +330,10 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         }).mkString(elemSep);
     }
 
-    public Tuple2List<A, B> plus(Tuple2List<A, B> that) {
+    public Tuple2List<A, B> plus(Tuple2List<? extends A, ? extends B> that) {
         if (that.isEmpty()) return this;
-        else if (this.isEmpty()) return that;
-        else return new Tuple2List<A, B>(super.plus(that.target));
+        else if (this.isEmpty()) return that.uncheckedCastT2l();
+        else return new Tuple2List<A, B>(super.plus(that.<A, B>uncheckedCastT2l().target));
     }
 
     /**
