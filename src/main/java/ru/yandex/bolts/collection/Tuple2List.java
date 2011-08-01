@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ru.yandex.bolts.collection.impl.DefaultListF;
+import ru.yandex.bolts.collection.impl.ReadOnlyArrayList;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
@@ -282,8 +283,22 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return toArray(new Tuple2[0]);
     }
 
+    /**
+     * @deprecated
+     * @see #makeReadOnly()
+     */
+    @Override
     public Tuple2List<A, B> unmodifiable() {
         return new Tuple2List<A, B>(Cf.x(target).unmodifiable());
+    }
+
+    @Override
+    public Tuple2List<A, B> makeReadOnly() {
+        if (target instanceof ReadOnlyArrayList<?>) {
+            return this;
+        } else {
+            return new Tuple2List<A, B>(super.makeReadOnly());
+        }
     }
 
     /**
