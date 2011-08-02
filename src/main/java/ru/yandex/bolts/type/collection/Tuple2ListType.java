@@ -19,7 +19,7 @@ public class Tuple2ListType {
     }
 
     public <A, B> Tuple2List<A, B> arrayList() {
-        return cons(Cf.<Tuple2<A, B>>arrayList());
+        return wrap(Cf.<Tuple2<A, B>>arrayList());
     }
 
     public <A, B> Tuple2List<A, B> cons(Tuple2<A, B>... pairs) {
