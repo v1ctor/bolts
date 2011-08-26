@@ -885,6 +885,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * @param object
      *            the object to search for
      * @return the index of the first occurrence of the object
+     * @deprecated
      */
     public int indexOf(Object object) {
         ListIterator<?> it = listIterator();
@@ -902,6 +903,16 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
             }
         }
         return -1;
+    }
+
+    @Override
+    public int indexOfTs(E o) {
+        return indexOf(o);
+    }
+
+    @Override
+    public int indexOfTu(Object o) {
+        return indexOf(o);
     }
 
     /**

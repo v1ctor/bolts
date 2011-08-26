@@ -212,4 +212,9 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     public boolean retainAllTs(Collection<? extends E> c);
     public boolean retainAllTu(Collection<?> c);
 
+    @Override
+    public int indexOf(Object o);
+    public int indexOfTs(E o);
+    public int indexOfTu(Object o);
+
 } //~
