@@ -3,6 +3,7 @@ package ru.yandex.bolts.collection.impl;
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.CollectionsF;
@@ -99,6 +100,10 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     public V apply(K key) {
+        return getOrThrow(key);
+    }
+
+    public V getOrThrow(K key) {
         return getO(key).get();
     }
 

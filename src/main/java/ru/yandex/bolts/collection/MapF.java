@@ -45,8 +45,13 @@ public interface MapF<K, V> extends Map<K, V> {
 
     boolean containsEntry(Entry<K, V> entry);
 
-    /** Throws if there is no entry for key */
+    /**
+     * Use {@link #getOrThrow(Object)} instead.
+     */
     V apply(K key) throws NoSuchElementException;
+
+    /** Throws if there is no entry for key */
+    V getOrThrow(K key) throws NoSuchElementException;
 
     MapF<K, V> filterKeys(Function1B<? super K> p);
 
