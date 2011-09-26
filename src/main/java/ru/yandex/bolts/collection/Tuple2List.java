@@ -329,6 +329,10 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return map(mapper.<A, B, W>uncheckedCast().asFunction());
     }
 
+    public <C, D> Tuple2List<C, D> toTuple2List(Function2<? super A, ? super B, Tuple2<C, D>> f) {
+        return super.toTuple2List(f.<A, B, Tuple2<C, D>>uncheckedCast().asFunction());
+    }
+
     public void forEach(Function2V<A, B> f) {
         super.forEach(f.asFunction1V());
     }
