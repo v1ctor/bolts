@@ -115,7 +115,7 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
 
     @SuppressWarnings("unchecked")
     @Override
-    public <B> IteratorF<B> flatMapL(Function<? extends E, ? extends Iterable<B>> f0) {
+    public <B> IteratorF<B> flatMapL(Function<? super E, ? extends Iterable<B>> f0) {
         Function<E, Iterable<B>> f = (Function<E, Iterable<B>>) f0;
         Function<E, Iterator<B>> g = f.andThen(new Function<Iterable<B>, Iterator<B>>() {
             public Iterator<B> apply(Iterable<B> a) {
