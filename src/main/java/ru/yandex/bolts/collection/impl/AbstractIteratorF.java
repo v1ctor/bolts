@@ -125,6 +125,11 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
         return flatMap(g);
     }
 
+    @Override
+    public <B> IteratorF<B> flatMapO(Function<? super E, Option<B>> f) {
+        return flatMapL(f);
+    }
+
     private static abstract class AbstractPrefetchingIterator<E> extends AbstractIteratorF<E> {
         private Option<E> next = Option.none();
         private boolean eof = false;

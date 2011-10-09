@@ -31,6 +31,8 @@ public interface IteratorF<E> extends TraversableF<E>, Iterator<E> {
 
     <B> IteratorF<B> flatMapL(Function<? super E, ? extends Iterable<B>> f);
 
+    <B> IteratorF<B> flatMapO(Function<? super E, Option<B>> f);
+
     IteratorF<E> filter(Function1B<? super E> f);
 
     IteratorF<E> filterW(@FunctionParameter E f);
