@@ -85,6 +85,41 @@ public class StringType extends AnyCharSequenceType<String> {
         };
     }
 
+    public boolean isBlank(String s) {
+        if (s == null || s.isEmpty()) {
+            return true;
+        }
+
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            if (!Character.isWhitespace(s.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isNotBlank(String s) {
+        return !isBlank(s);
+    }
+
+    public Function1B<String> isBlankF() {
+        return new Function1B<String>() {
+            public boolean apply(String s) {
+                return isBlank(s);
+            }
+        };
+    }
+
+    public Function1B<String> isNotBlankF() {
+        return new Function1B<String>() {
+            public boolean apply(String s) {
+                return isNotBlank(s);
+            }
+        };
+    }
+
     public Function2<String, String, String> joinF(String sep) {
         return plus3F().bind2(sep);
     }
