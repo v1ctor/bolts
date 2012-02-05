@@ -168,7 +168,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
     }
 
     /**
-     * Compare {@link java.lang.Comparable}s. Null values are less then non-null.
+     * Compare {@link java.lang.Comparable}s. Null values are less than non-null.
      */
     public static <A extends java.lang.Comparable<?>> Comparator<A> naturalComparator()  {
         return new Comparator<A>() {

@@ -50,7 +50,7 @@ public class ListFExample {
         // "take" first elements
         assertEquals(Cf.list(1, 2), Cf.list(1, 2, 3, 4).take(2));
 
-        // it is OK to take more elements then collection contains
+        // it is OK to take more elements than collection contains
         assertEquals(Cf.list(1, 2), Cf.list(1, 2).take(10));
 
         // "drop" first elements

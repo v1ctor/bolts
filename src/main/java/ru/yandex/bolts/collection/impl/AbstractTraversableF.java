@@ -89,7 +89,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
         IteratorF<E> i = iterator();
         E r = i.next();
         if (i.hasNext()) {
-            throw new NoSuchElementException("more then one element");
+            throw new NoSuchElementException("more than one element");
         }
         return r;
     }
@@ -99,7 +99,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
         IteratorF<E> i = iterator();
         Option<E> r = i.nextO();
         if (i.hasNext()) {
-            throw new NoSuchElementException("more then one element");
+            throw new NoSuchElementException("more than one element");
         }
         return r;
     }
