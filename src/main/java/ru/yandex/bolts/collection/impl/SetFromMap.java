@@ -36,7 +36,7 @@ public class SetFromMap<E> extends AbstractSetF<E> implements Serializable {
 
     @Override
     public boolean add(E o) {
-        return map.put(o, Boolean.TRUE) != null;
+        return map.put(o, Boolean.TRUE) == null;
     }
 
     @Override

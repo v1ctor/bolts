@@ -45,6 +45,14 @@ public class CollectionsFTest extends TestCase {
         }
     }
 
+    public void testSetFromMap() {
+        SetF<Object> set = Cf.identityHashSet();
+        assertTrue(set.add(new Object()));
+        Object o = new Object();
+        assertTrue(set.add(o));
+        assertFalse(set.add(o));
+    }
+
     public void testRepeatEmpty() {
         ListF<String> set = Cf.repeat("a", 0);
         assertFalse(set.contains("a"));
