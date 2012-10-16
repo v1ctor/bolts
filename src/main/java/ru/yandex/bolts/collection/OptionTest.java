@@ -1,6 +1,7 @@
 package ru.yandex.bolts.collection;
 
 import junit.framework.TestCase;
+
 import ru.yandex.bolts.collection.impl.test.SerializationUtils;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
@@ -57,6 +58,15 @@ public class OptionTest extends TestCase {
         assertSame(s1, s1.orElse(n));
         assertSame(s1, n.orElse(s1));
         assertSame(n, n.orElse(n));
+    }
+
+    public void testWhen() {
+        Option<Integer> s1 = Option.when(true, 1);
+        Option<Integer> s2 = Option.when(false, 2);
+        Option<Integer> s3 = Option.when(s1.isDefined(), Function0.constF(3));;
+        assertEquals(s1, Option.some(1));
+        assertEquals(s2, Option.none());
+        assertEquals(s3, Option.some(3));
     }
 
     protected Function0 throwFactory() {

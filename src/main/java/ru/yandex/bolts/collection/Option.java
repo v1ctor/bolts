@@ -203,6 +203,22 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     /**
+     * Some if pred, None otherwise.
+     */
+    public static <T> Option<T> when(boolean pred, T x) {
+        if (pred) return some(x);
+        else return none();
+    }
+
+    /**
+     * Some if pred, None otherwise, lazy evaluation.
+     */
+    public static <T> Option<T> when(boolean pred, Function0<T> x) {
+        if (pred) return some(x.apply());
+        else return none();
+    }
+
+    /**
      * Some.
      *
      * @see #some(Object) to create Some instance
