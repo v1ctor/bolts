@@ -87,26 +87,21 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
 
     @Override
     public <B> IteratorF<B> flatMap(final Function<? super E, ? extends Iterator<B>> f) {
-        // copy-paste of scala.Iterator.flatMap
         class FlatMappedIterator extends AbstractIteratorF<B> {
             private IteratorF<B> cur = Cf.emptyIterator();
 
             @Override
             public boolean hasNext() {
-                if (cur.hasNext()) return true;
-                else if (self().hasNext()) {
+                while (!cur.hasNext() && self().hasNext()) {
                     cur = Cf.x(f.apply(self().next()));
-                    return hasNext();
-                } else return false;
+                }
+                return cur.hasNext();
             }
 
             @Override
             public B next() {
-                if (cur.hasNext()) return cur.next();
-                else if (self().hasNext()) {
-                    cur = Cf.x(f.apply(self().next()));
-                    return next();
-                } else throw new NoSuchElementException("next on empty iterator");
+                if (hasNext()) return cur.next();
+                throw new NoSuchElementException("next on empty iterator");
             }
 
         }
