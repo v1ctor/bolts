@@ -40,6 +40,21 @@ public class AbstractMapFTest extends TestCase {
         assertEquals(CollectionsF.map(2, "2", 11, "11"), n);
     }
 
+    public void testFilterStinky() {
+        Object stinky = new Object() {
+            public int hashCode() {
+                throw new UnsupportedOperationException("I stink");
+            }
+        };
+        MapF<Integer, Object> mapToFilter = Cf.hashMap();
+        mapToFilter.put(1, stinky);
+        mapToFilter.put(-3, "flower");
+        mapToFilter.put(2, 2);
+        mapToFilter.put(-1, mapToFilter);
+        assertEquals(set(1, 2), mapToFilter.filterKeys(Cf.Integer.gtF(0)).keySet());
+        assertEquals(set(-1, -3), mapToFilter.filterKeys(Cf.Integer.ltF(0)).keySet());
+    }
+
     public void testMapValues() {
         MapF<Integer, String> n = map123().mapValues(new Function<String, String>() {
             public String apply(String s) {

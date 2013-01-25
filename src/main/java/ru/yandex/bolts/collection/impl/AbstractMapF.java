@@ -3,7 +3,6 @@ package ru.yandex.bolts.collection.impl;
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.CollectionsF;
@@ -142,7 +141,11 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     public MapF<K, V> filterEntries(Function1B<Entry<K, V>> p) {
         if (isEmpty()) return this;
 
-        return newMap(entrySet().filter(p));
+        MapF<K, V> result = newMutableMap();
+        for (Entry<K, V> e : entrySet()) {
+            if (p.apply(e)) result.put(e.getKey(), e.getValue());
+        }
+        return result;
     }
 
     @Override
