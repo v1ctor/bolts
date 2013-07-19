@@ -292,7 +292,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
      * @see CollectionF#sort()
      */
     public Tuple3List<A, B, C> sortBy3() {
-        return sortBy2(Comparator.naturalComparator().<B, B>uncheckedCast());
+        return sortBy3(Comparator.naturalComparator().<C, C>uncheckedCast());
     }
 
     /**
