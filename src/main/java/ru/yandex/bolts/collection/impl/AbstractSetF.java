@@ -67,6 +67,13 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
         throw new RuntimeException("weaving must be enabled");
     }
 
+    @Override
+    public SetF<E> minus1(E e) {
+        if (isEmpty()) return this;
+
+        return filter(Function1B.equalsF(e).notF());
+    }
+
     public SetF<E> minus(Set<E> es) {
         if (this.isEmpty() || es.isEmpty()) return this;
 

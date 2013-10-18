@@ -107,6 +107,8 @@ public class AbstractSetFTest extends TestCase {
         for (int e : d) {
             assertTrue(s1.containsTs(e));
             assertFalse(s2.containsTs(e));
+            assertFalse(s1.equals(s1.minus1(e)));
+            assertEquals(s2, s2.minus1(e));
         }
 
         for (int e : s1) {
