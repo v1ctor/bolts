@@ -38,9 +38,9 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     @Override
     Tuple2<SetF<E>, SetF<E>> partitionW(@FunctionParameter boolean p);
 
-    /** this - set */
     SetF<E> minus1(E e);
 
+    /** this - set */
     SetF<E> minus(Set<E> set);
 
     SetF<E> minus(Collection<E> set);
