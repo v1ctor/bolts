@@ -21,6 +21,7 @@ import ru.yandex.bolts.collection.Tuple2List;
 import ru.yandex.bolts.collection.Tuple3;
 import ru.yandex.bolts.collection.Tuple3List;
 import ru.yandex.bolts.function.Function;
+import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2I;
@@ -598,10 +599,12 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     public <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m) {
         if (isEmpty()) return CollectionsF.map();
 
+        Function0<ListF<E>> newArrayListF = CollectionsF.<E>newArrayListF();
+
         MapF<V, ListF<E>> map = CollectionsF.hashMap();
         for (E e : this) {
             V key = m.apply(e);
-            ListF<E> list = map.getOrElseUpdate(key, CollectionsF.<E>newArrayListF());
+            ListF<E> list = map.getOrElseUpdate(key, newArrayListF);
             list.add(e);
         }
         return map;
