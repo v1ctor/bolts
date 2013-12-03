@@ -601,7 +601,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         MapF<V, ListF<E>> map = CollectionsF.hashMap();
         for (E e : this) {
             V key = m.apply(e);
-            ListF<E> list = map.getOrElseUpdate(key, CollectionsF.<E>arrayList());
+            ListF<E> list = map.getOrElseUpdate(key, CollectionsF.<E>newArrayListF());
             list.add(e);
         }
         return map;
