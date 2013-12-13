@@ -3,14 +3,12 @@ package ru.yandex.bolts.collection;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
-import ru.yandex.bolts.weaving.annotation.FunctionParameter;
 
 /**
  * Extended collection.
@@ -33,8 +31,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     CollectionF<E> filter(Function<? super E, Boolean> p);
 
-    CollectionF<E> filterW(@FunctionParameter boolean p);
-
     CollectionF<E> filterNotNull();
 
     /**
@@ -47,20 +43,14 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function<? super E, Boolean> p);
 
-    Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partitionW(@FunctionParameter boolean p);
-
     /** Map */
     <B> ListF<B> map(Function<? super E, B> mapper);
-
-    <B> ListF<B> mapW(@FunctionParameter B b);
 
     /** Flat map */
     <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f);
 
     /** Flat map variant that accept mapper that returns Option instead of Collection */
     <B> ListF<B> flatMapO(Function<? super E, Option<B>> f);
-
-    <B> ListF<B> flatMapW(@FunctionParameter Collection<? extends B> f);
 
     /**
      * @see #flatMapO(Function)
@@ -74,24 +64,16 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     <K, V> MapF<K, V> toMap(Function<? super E, Tuple2<K, V>> t);
 
-    <K, V> MapF<K, V> toMapW(@FunctionParameter Tuple2<K, V> t);
-
     /**
      * @see #toMap(Function)
      */
     <K, V> MapF<K, V> toMap(Function<? super E, K> fk, Function<? super E, ? extends V> fv);
 
-    <K, V> MapF<K, V> toMapW(@FunctionParameter K fk, @FunctionParameter V fv);
-
     /** Map to list of map keys and construct map. Elements of this collection are used as values */
     <K> MapF<K, E> toMapMappingToKey(Function<? super E, K> m);
 
-    <K> MapF<K, E> toMapMappingToKeyW(@FunctionParameter K m);
-
     /** Map to list of map values and construct map. Elements of this collection are used as keys */
     <V> MapF<E, V> toMapMappingToValue(Function<? super E, V> m);
-
-    <V> MapF<E, V> toMapMappingToValueW(@FunctionParameter V m);
 
     /**
      * @see #toMap(Function)
@@ -99,23 +81,15 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     <A, B> Tuple2List<A, B> toTuple2List(Function<? super E, Tuple2<A, B>> f);
 
-    <A, B> Tuple2List<A, B> toTuple2ListW(@FunctionParameter Tuple2<A, B> f);
-
     /**
      * @see #toTuple2List(Function)
      * @see #toMap(Function, Function)
      */
     <A, B> Tuple2List<A, B> toTuple2List(Function<? super E, ? extends A> fa, Function<? super E, ? extends B> fb);
 
-    <A, B> Tuple2List<A, B> toTuple2ListW(@FunctionParameter A fa, @FunctionParameter B fb);
-
     <A, B, C> Tuple3List<A, B, C> toTuple3List(Function<? super E, Tuple3<A, B, C>> f);
 
-    <A, B, C> Tuple3List<A, B, C> toTuple3ListW(@FunctionParameter Tuple3<A, B, C> f);
-
     <A, B, C> Tuple3List<A, B, C> toTuple3List(Function<? super E, ? extends A> fa, Function<? super E, ? extends B> fb, Function<? super E, ? extends C> fc);
-
-    <A, B, C> Tuple3List<A, B, C> toTuple3ListW(@FunctionParameter A fa, @FunctionParameter B fb, @FunctionParameter C fc);
 
     /**
      * @deprecated
@@ -143,15 +117,9 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     ListF<E> sort(java.util.Comparator<? super E> comparator);
 
-    ListF<E> sortW(@FunctionParameter int comparator);
-
     ListF<E> sortBy(Function<? super E, ?> f);
 
-    ListF<E> sortByW(@FunctionParameter Object f);
-
     ListF<E> sortByDesc(Function<? super E, ?> f);
-
-    ListF<E> sortByDescW(@FunctionParameter Object f);
 
     ListF<E> shuffle();
 
@@ -159,8 +127,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      * Group elements by applying given function to each element.
      */
     <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m);
-
-    <V> MapF<V, ListF<E>> groupByW(@FunctionParameter V m);
 
     /** @deprecated */
     Function1V<E> addOp();

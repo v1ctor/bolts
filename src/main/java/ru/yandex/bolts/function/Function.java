@@ -5,14 +5,12 @@ import java.lang.reflect.Modifier;
 
 import org.apache.commons.collections.Transformer;
 
-import fj.F;
-
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.forhuman.Comparator;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
-import ru.yandex.bolts.methodFunction.FunctionsForClass;
+import fj.F;
 
 
 
@@ -272,14 +270,4 @@ public abstract class Function<A, R> {
             }
         };
     }
-
-    public static <A, B> Function<A, B> getCurrent() {
-        // XXX: add message weaving
-        return FunctionsForClass.getCurrentFunction();
-    }
-
-    public static <A, B> Function<A, B> f(B b) {
-        return getCurrent();
-    }
-
 } //~

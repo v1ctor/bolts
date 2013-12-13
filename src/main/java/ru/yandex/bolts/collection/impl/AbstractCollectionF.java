@@ -317,10 +317,6 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         return filter(Function1B.wrap(p));
     }
 
-    @Override
-    public CollectionF<E> filterW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
 
     @Override
     public CollectionF<E> filterNotNull() {
@@ -349,19 +345,9 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         return partition(Function1B.wrap(p));
     }
 
-    @Override
-    public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partitionW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
     public <B> ListF<B> map(Function<? super E, B> f) {
         if (isEmpty()) return Cf.list();
         else return iterator().map(f).toList(size());
-    }
-
-    @Override
-    public <B> ListF<B> mapW(B b) {
-        return map(Function.<E, B>getCurrent());
     }
 
     public <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f) {
@@ -382,11 +368,6 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
                 return f.apply(e).toList();
             }
         });
-    }
-
-    @Override
-    public <B> ListF<B> flatMapW(Collection<? extends B> f) {
-        return flatMap(Function.f(f)).uncheckedCast();
     }
 
     @Override
@@ -472,27 +453,12 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         return sort(Comparator.wrap((Function2I<E, E>) comparator));
     }
 
-    @Override
-    public ListF<E> sortW(int comparator) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
     public ListF<E> sortBy(Function<? super E, ?> f) {
         return sort(f.andThenNaturalComparator().nullLowC());
     }
 
-    @Override
-    public ListF<E> sortByW(Object b) {
-        return sortBy(Function.f(b));
-    }
-
     public ListF<E> sortByDesc(Function<? super E, ?> f) {
         return sort(f.andThenNaturalComparator().nullLowC().invert());
-    }
-
-    @Override
-    public ListF<E> sortByDescW(Object b) {
-        return sortByDescW(Function.f(b));
     }
 
     @Override
@@ -514,18 +480,8 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
-    public <K, V> MapF<K, V> toMapW(Tuple2<K, V> t) {
-        return toMap(Function.f(t));
-    }
-
-    @Override
     public <K, V> MapF<K, V> toMap(Function<? super E, K> fk, Function<? super E, ? extends V> fv) {
         return toTuple2List(fk, fv).toMap();
-    }
-
-    @Override
-    public <K, V> MapF<K, V> toMapW(K fk, V fv) {
-        return toMap(Function.f(fk), Function.f(fv));
     }
 
     @Override
@@ -538,11 +494,6 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
-    public <K> MapF<K, E> toMapMappingToKeyW(K m) {
-        return toMapMappingToKey(Function.f(m));
-    }
-
-    @Override
     public <V> MapF<E, V> toMapMappingToValue(final Function<? super E, V> mapper) {
         return toMap(new Function<E, Tuple2<E, V>>() {
             public Tuple2<E, V> apply(E e) {
@@ -552,18 +503,8 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
-    public <V> MapF<E, V> toMapMappingToValueW(V m) {
-        return toMapMappingToValue(Function.f(m));
-    }
-
-    @Override
     public <A, B> Tuple2List<A, B> toTuple2List(Function<? super E, ? extends A> fa, Function<? super E, ? extends B> fb) {
         return toTuple2List(Tuple2.join(fa.<E, A>uncheckedCast(), fb.<E, B>uncheckedCast()));
-    }
-
-    @Override
-    public <A, B> Tuple2List<A,B> toTuple2ListW(A fa, B fb) {
-        return toTuple2List(Function.f(fa), Function.f(fb));
     }
 
     @Override
@@ -572,28 +513,13 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
-    public <A, B> Tuple2List<A, B> toTuple2ListW(Tuple2<A, B> f) {
-        return toTuple2List(Function.f(f));
-    }
-
-    @Override
     public <A, B, C> Tuple3List<A, B, C> toTuple3List(Function<? super E, ? extends A> fa, Function<? super E, ? extends B> fb, Function<? super E, ? extends C> fc) {
         return toTuple3List(Tuple3.join(fa.<E, A>uncheckedCast(), fb.<E, B>uncheckedCast(), fc.<E, C>uncheckedCast()));
     }
 
     @Override
-    public <A, B, C> Tuple3List<A, B, C> toTuple3ListW(A fa, B fb, C fc) {
-        return toTuple3List(Function.f(fa), Function.f(fb), Function.f(fc));
-    }
-
-    @Override
     public <A, B, C> Tuple3List<A, B, C> toTuple3List(Function<? super E, Tuple3<A, B, C>> f) {
         return Cf.Tuple3List.cons(map(f));
-    }
-
-    @Override
-    public <A, B, C> Tuple3List<A, B, C> toTuple3ListW(Tuple3<A, B, C> f) {
-        return toTuple3List(Function.f(f));
     }
 
     public <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m) {
@@ -608,11 +534,6 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
             list.add(e);
         }
         return map;
-    }
-
-    @Override
-    public <V> MapF<V, ListF<E>> groupByW(V m) {
-        return groupBy(Function.f(m));
     }
 
     protected boolean eq(Object a, Object b) {

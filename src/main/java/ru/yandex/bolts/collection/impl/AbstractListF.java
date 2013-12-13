@@ -55,11 +55,6 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
-    public ListF<E> filterW(boolean p) {
-        return filter(Function1B.f(p));
-    }
-
-    @Override
     public ListF<E> filterNotNull() {
         return filter(Function1B.<E>notNullF());
     }
@@ -79,11 +74,6 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     @Override
     public Tuple2<ListF<E>, ListF<E>> partition(Function<? super E, Boolean> p) {
         return (Tuple2<ListF<E>, ListF<E>>) super.partition(p);
-    }
-
-    @Override
-    public Tuple2<ListF<E>, ListF<E>> partitionW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override
@@ -190,11 +180,6 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
-    public ListF<E> dropWhileW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
     public ListF<E> takeWhile(Function1B<? super E> f) {
         return iterator().takeWhile(f).toList();
     }
@@ -205,19 +190,8 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
-    public ListF<E> takeWhileW(boolean p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-
-    @Override
     public E reduceRight(Function2<E, E, E> f) {
         return reverseIterator().reduceLeft(f.swap());
-    }
-
-    @Override
-    public E reduceRightW(E f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override
@@ -226,18 +200,8 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
-    public Option<E> reduceRightOW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
     public <B> B foldRight(B z, Function2<? super E, ? super B, B> f) {
         return reverseIterator().foldLeft(z, f.swap());
-    }
-
-    @Override
-    public <B> B foldRightW(B z, B f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
 
@@ -311,11 +275,6 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     @Override
     public <B> Tuple2List<E, B> zipWith(final Function<? super E, ? extends B> f) {
         return zip(map(f));
-    }
-
-    @Override
-    public <B> Tuple2List<E, B> zipWithW(B f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     private class ReadOnlyItr extends SimpleListIterator {

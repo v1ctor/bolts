@@ -9,7 +9,6 @@ import org.apache.commons.collections.Predicate;
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
-import ru.yandex.bolts.methodFunction.FunctionsForClass;
 
 /**
  * Predicate.
@@ -285,15 +284,6 @@ public abstract class Function1B<A> {
 
     public static <B> Function1B<B> constF(boolean value) {
         return value ? Function1B.<B>trueF() : Function1B.<B>falseF();
-    }
-
-    public static <A> Function1B<A> getCurrent() {
-        // XXX: add message weaving
-        return FunctionsForClass.getCurrentFunction1B();
-    }
-
-    public static <A> Function1B<A> f(boolean b) {
-        return getCurrent();
     }
 
     public static <A> Function1B<A> wrap(final Method method) {

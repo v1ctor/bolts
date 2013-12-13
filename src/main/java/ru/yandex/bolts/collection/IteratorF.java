@@ -5,7 +5,6 @@ import java.util.Iterator;
 import ru.yandex.bolts.collection.impl.TraversableF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.weaving.annotation.FunctionParameter;
 
 /**
  * Extended iterator.
@@ -25,8 +24,6 @@ public interface IteratorF<E> extends TraversableF<E>, Iterator<E> {
     /** Map */
     <B> IteratorF<B> map(Function<? super E, B> op);
 
-    <B> IteratorF<B> mapW(@FunctionParameter B op);
-
     <B> IteratorF<B> flatMap(Function<? super E, ? extends Iterator<B>> f);
 
     <B> IteratorF<B> flatMapL(Function<? super E, ? extends Iterable<B>> f);
@@ -34,8 +31,6 @@ public interface IteratorF<E> extends TraversableF<E>, Iterator<E> {
     <B> IteratorF<B> flatMapO(Function<? super E, Option<B>> f);
 
     IteratorF<E> filter(Function1B<? super E> f);
-
-    IteratorF<E> filterW(@FunctionParameter E f);
 
     IteratorF<E> filterNotNull();
 
@@ -57,12 +52,8 @@ public interface IteratorF<E> extends TraversableF<E>, Iterator<E> {
     /** Longest prefix of elements that satisfy p */
     IteratorF<E> takeWhile(Function1B<? super E> p);
 
-    IteratorF<E> takeWhileW(@FunctionParameter E p);
-
     /** Elements after {@link #takeWhile(Function1B)} */
     IteratorF<E> dropWhile(Function1B<? super E> p);
-
-    IteratorF<E> dropWhileW(@FunctionParameter E p);
 
     IteratorF<ListF<E>> paginate(int pageSize);
 } //~

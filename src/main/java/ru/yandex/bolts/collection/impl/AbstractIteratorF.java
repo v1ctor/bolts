@@ -80,10 +80,6 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
         return new MappedIterator();
     }
 
-    @Override
-    public <B> IteratorF<B> mapW(B op) {
-        throw new RuntimeException("weaving must be enabled");
-    }
 
     @Override
     public <B> IteratorF<B> flatMap(final Function<? super E, ? extends Iterator<B>> f) {
@@ -170,11 +166,6 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
         };
 
         return new FilterIterator();
-    }
-
-    @Override
-    public IteratorF<E> filterW(E f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override
@@ -272,11 +263,6 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
         return Cf.emptyIterator();
     }
 
-    @Override
-    public IteratorF<E> dropWhileW(E p) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
     public IteratorF<E> takeWhile(final Function1B<? super E> f) {
         class TakeWhileIterator extends AbstractPrefetchingIterator<E> {
             boolean end = false;
@@ -298,11 +284,6 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
         }
 
         return new TakeWhileIterator();
-    }
-
-    @Override
-    public IteratorF<E> takeWhileW(E p) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override

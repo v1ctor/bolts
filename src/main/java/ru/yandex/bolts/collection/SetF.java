@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.weaving.annotation.FunctionParameter;
 
 /**
  * Extended set.
@@ -21,9 +20,6 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     SetF<E> filter(Function1B<? super E> p);
 
     @Override
-    SetF<E> filterW(@FunctionParameter boolean p);
-
-    @Override
     SetF<E> filterNotNull();
 
     /**
@@ -34,9 +30,6 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
 
     @Override
     Tuple2<SetF<E>, SetF<E>> partition(Function1B<? super E> p);
-
-    @Override
-    Tuple2<SetF<E>, SetF<E>> partitionW(@FunctionParameter boolean p);
 
     SetF<E> minus1(E e);
 

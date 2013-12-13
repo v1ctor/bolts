@@ -133,11 +133,6 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     @Override
-    public <B> Option<B> mapW(B b) {
-        return map(Function.f(b));
-    }
-
-    @Override
     public final <U> Option<U> flatMapO(Function<? super T, Option<U>> f) {
         if (isDefined()) return f.apply(get());
         else return none();

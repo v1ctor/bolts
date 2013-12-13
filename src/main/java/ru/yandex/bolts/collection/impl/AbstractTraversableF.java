@@ -40,22 +40,12 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     }
 
     @Override
-    public boolean forAllW(boolean p) {
-        return forAll(Function1B.getCurrent());
-    }
-
-    @Override
     public boolean exists(Function1B<? super E> p) {
         IteratorF<E> i = iterator();
         while (i.hasNext()) {
             if (p.apply(i.next())) return true;
         }
         return false;
-    }
-
-    @Override
-    public boolean existsW(boolean p) {
-        return exists(Function1B.getCurrent());
     }
 
     @Override
@@ -66,11 +56,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
             if (p.apply(e)) return Option.some(e);
         }
         return Option.none();
-    }
-
-    @Override
-    public Option<E> findW(boolean p) {
-        return find(Function1B.getCurrent());
     }
 
     @Override
@@ -115,19 +100,8 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     }
 
     @Override
-    public <B> B foldLeftW(B z, B f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-
-    @Override
     public E reduceLeft(Function2<E, E, E> f) {
         return reduceLeftO(f).getOrThrow("empty.reduceLeft");
-    }
-
-    @Override
-    public E reduceLeftW(E f) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override
@@ -141,12 +115,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     }
 
     @Override
-    public Option<E> reduceLeftOW(E f) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-
-    @Override
     public E min() {
         return min(Comparator.naturalComparator().<E, E>uncheckedCast());
     }
@@ -154,11 +122,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     @SuppressWarnings("unchecked")
     public E min(Function2I<? super E, ? super E> comparator) {
         return reduceLeft(Comparator.wrap((Function2I<E, E>) comparator).minF());
-    }
-
-    @Override
-    public E minW(int comparator) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override
@@ -176,11 +139,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     }
 
     @Override
-    public Option<E> minOW(int comparator) {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    @Override
     public E max() {
         return max(Comparator.naturalComparator().<E, E>uncheckedCast());
     }
@@ -189,11 +147,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     @Override
     public E max(Function2I<? super E, ? super E> comparator) {
         return reduceLeft(Comparator.wrap((Function2I<E, E>) comparator).maxF());
-    }
-
-    @Override
-    public E maxW(int comparator) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
     @Override
@@ -208,11 +161,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
         } else {
             return Option.some(max(comparator));
         }
-    }
-
-    @Override
-    public Option<E> maxOW(int comparator) {
-        throw new RuntimeException("weaving must be enabled");
     }
 
 
