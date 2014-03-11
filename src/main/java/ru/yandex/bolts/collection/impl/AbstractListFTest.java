@@ -138,10 +138,10 @@ public class AbstractListFTest extends TestCase {
         ListF<Integer> l2 = list(2, 1);
         ListF<Integer> l4 = list(1, 4, 2, 3);
 
-        assertSame(l0, l0.sort());
-        assertSame(l1, l1.sort());
-        assertEquals(list(1, 2), l2.sort());
-        assertEquals(list(1, 2, 3, 4), l4.sort());
+        assertSame(l0, l0.sorted());
+        assertSame(l1, l1.sorted());
+        assertEquals(list(1, 2), l2.sorted());
+        assertEquals(list(1, 2, 3, 4), l4.sorted());
     }
 
     public void testAddAllArray() {

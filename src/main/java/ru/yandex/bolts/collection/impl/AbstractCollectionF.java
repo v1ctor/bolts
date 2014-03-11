@@ -425,7 +425,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @SuppressWarnings({"unchecked"})
-    public ListF<E> sort() {
+    public ListF<E> sorted() {
         if (size() <= 1) return toList();
 
         ArrayListF<E> r = new ArrayListF<E>(this);
@@ -434,7 +434,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
-    public ListF<E> sort(java.util.Comparator<? super E> comparator) {
+    public ListF<E> sorted(java.util.Comparator<? super E> comparator) {
         if (size() <= 1) return toList();
 
         ArrayListF<E> r = new ArrayListF<E>(this);
@@ -443,22 +443,22 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
-    public ListF<E> sort(Comparator<? super E> comparator) {
-        return sort((java.util.Comparator<? super E>) comparator);
+    public ListF<E> sorted(Comparator<? super E> comparator) {
+        return sorted((java.util.Comparator<? super E>) comparator);
     }
 
     @Override
     @SuppressWarnings({"unchecked"})
-    public ListF<E> sort(Function2I<? super E, ? super E> comparator) {
-        return sort(Comparator.wrap((Function2I<E, E>) comparator));
+    public ListF<E> sorted(Function2I<? super E, ? super E> comparator) {
+        return sorted(Comparator.wrap((Function2I<E, E>) comparator));
     }
 
-    public ListF<E> sortBy(Function<? super E, ?> f) {
-        return sort(f.andThenNaturalComparator().nullLowC());
+    public ListF<E> sortedBy(Function<? super E, ?> f) {
+        return sorted(f.andThenNaturalComparator().nullLowC());
     }
 
-    public ListF<E> sortByDesc(Function<? super E, ?> f) {
-        return sort(f.andThenNaturalComparator().nullLowC().invert());
+    public ListF<E> sortedByDesc(Function<? super E, ?> f) {
+        return sorted(f.andThenNaturalComparator().nullLowC().invert());
     }
 
     @Override

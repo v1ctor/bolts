@@ -111,38 +111,38 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     @Override
-    public Tuple3List<A, B, C> sort() {
+    public Tuple3List<A, B, C> sorted() {
         Comparator<Tuple3<A, B, C>> comparator =
                 get1F().andThenNaturalComparator().chainTo(
                 get2F().andThenNaturalComparator()).chainTo(
                 get3F().andThenNaturalComparator());
-        return sort(comparator);
+        return sorted(comparator);
 
     }
 
     @Override
-    public Tuple3List<A, B, C> sort(java.util.Comparator<? super Tuple3<A, B, C>> comparator) {
-        return Tuple3List.tuple3List(super.sort(comparator));
+    public Tuple3List<A, B, C> sorted(java.util.Comparator<? super Tuple3<A, B, C>> comparator) {
+        return Tuple3List.tuple3List(super.sorted(comparator));
     }
 
     @Override
-    public Tuple3List<A, B, C> sort(Comparator<? super Tuple3<A, B, C>> comparator) {
-        return Tuple3List.tuple3List(super.sort(comparator));
+    public Tuple3List<A, B, C> sorted(Comparator<? super Tuple3<A, B, C>> comparator) {
+        return Tuple3List.tuple3List(super.sorted(comparator));
     }
 
     @Override
-    public Tuple3List<A, B, C> sort(Function2I<? super Tuple3<A, B, C>, ? super Tuple3<A, B, C>> comparator) {
-        return Tuple3List.tuple3List(super.sort(comparator));
+    public Tuple3List<A, B, C> sorted(Function2I<? super Tuple3<A, B, C>, ? super Tuple3<A, B, C>> comparator) {
+        return Tuple3List.tuple3List(super.sorted(comparator));
     }
 
     @Override
-    public Tuple3List<A, B, C> sortBy(Function<? super Tuple3<A, B, C>, ?> f) {
-        return Tuple3List.tuple3List(super.sortBy(f));
+    public Tuple3List<A, B, C> sortedBy(Function<? super Tuple3<A, B, C>, ?> f) {
+        return Tuple3List.tuple3List(super.sortedBy(f));
     }
 
     @Override
-    public Tuple3List<A, B, C> sortByDesc(Function<? super Tuple3<A, B, C>, ?> f) {
-        return Tuple3List.tuple3List(super.sortByDesc(f));
+    public Tuple3List<A, B, C> sortedByDesc(Function<? super Tuple3<A, B, C>, ?> f) {
+        return Tuple3List.tuple3List(super.sortedByDesc(f));
     }
 
     public <D> Tuple3List<D, B, C> map1(final Function<? super A, D> f) {
@@ -257,51 +257,51 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
 
 
     /**
-     * @see CollectionF#sort()
+     * @see CollectionF#sorted()
      */
-    public Tuple3List<A, B, C> sortBy1() {
-        return sortBy1(Comparator.naturalComparator().<A, A>uncheckedCast());
+    public Tuple3List<A, B, C> sortedBy1() {
+        return sortedBy1(Comparator.naturalComparator().<A, A>uncheckedCast());
     }
 
     /**
-     * @see CollectionF#sort(Function2I)
+     * @see CollectionF#sorted(Function2I)
      */
     @SuppressWarnings("unchecked")
-    public Tuple3List<A, B, C> sortBy1(Function2I<? super A, ? super A> comparator) {
+    public Tuple3List<A, B, C> sortedBy1(Function2I<? super A, ? super A> comparator) {
         if (size() <= 1) return this;
-        return new Tuple3List<A, B, C>(sort(get1F().andThen((Function2I<A, A>) comparator)));
+        return new Tuple3List<A, B, C>(sorted(get1F().andThen((Function2I<A, A>) comparator)));
     }
 
     /**
-     * @see CollectionF#sort()
+     * @see CollectionF#sorted()
      */
-    public Tuple3List<A, B, C> sortBy2() {
-        return sortBy2(Comparator.naturalComparator().<B, B>uncheckedCast());
+    public Tuple3List<A, B, C> sortedBy2() {
+        return sortedBy2(Comparator.naturalComparator().<B, B>uncheckedCast());
     }
 
     /**
-     * @see CollectionF#sort(Function2I)
+     * @see CollectionF#sorted(Function2I)
      */
     @SuppressWarnings("unchecked")
-    public Tuple3List<A, B, C> sortBy2(Function2I<? super B, ? super B> comparator) {
+    public Tuple3List<A, B, C> sortedBy2(Function2I<? super B, ? super B> comparator) {
         if (size() <= 1) return this;
-        return new Tuple3List<A, B, C>(sort(get2F().andThen((Function2I<B, B>) comparator)));
+        return new Tuple3List<A, B, C>(sorted(get2F().andThen((Function2I<B, B>) comparator)));
     }
 
     /**
-     * @see CollectionF#sort()
+     * @see CollectionF#sorted()
      */
-    public Tuple3List<A, B, C> sortBy3() {
-        return sortBy3(Comparator.naturalComparator().<C, C>uncheckedCast());
+    public Tuple3List<A, B, C> sortedBy3() {
+        return sortedBy3(Comparator.naturalComparator().<C, C>uncheckedCast());
     }
 
     /**
-     * @see CollectionF#sort(Function2I)
+     * @see CollectionF#sorted(Function2I)
      */
     @SuppressWarnings("unchecked")
-    public Tuple3List<A, B, C> sortBy3(Function2I<? super C, ? super C> comparator) {
+    public Tuple3List<A, B, C> sortedBy3(Function2I<? super C, ? super C> comparator) {
         if (size() <= 1) return this;
-        return new Tuple3List<A, B, C>(sort(get3F().andThen((Function2I<C, C>) comparator)));
+        return new Tuple3List<A, B, C>(sorted(get3F().andThen((Function2I<C, C>) comparator)));
     }
 
 

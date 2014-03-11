@@ -767,15 +767,15 @@ public class CollectionsF {
     }
 
     /** {@link Collection#sort()} as function */
-    public static <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortF() {
-        return Collection.sortF();
+    public static <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortedF() {
+        return Collection.sortedF();
     }
 
     /** {@link Collection#sort()} as function, convenience form */
-    public static <E> Function<Collection<E>, ListF<E>> sortF(
+    public static <E> Function<Collection<E>, ListF<E>> sortedF(
             Function2I<? super E, ? super E> comparator)
     {
-        return Collection.<E>sortF(comparator);
+        return Collection.<E>sortedF(comparator);
     }
 
     /** {@link Collection#unique()} as function */

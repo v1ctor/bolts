@@ -74,15 +74,15 @@ public class AbstractCollectionFTest extends TestCase {
     }
 
     public void testSort() {
-        assertEquals(Cf.list(1, 2, 3), Cf.list(1, 3, 2).sort());
-        assertEquals(Cf.list(3, 2, 1), Cf.list(1, 3, 2).sort(Comparator.naturalComparator().invert()));
-        assertEquals(Cf.list("1", "30", "200"), Cf.list("1", "200", "30").sortBy(stringLengthM()));
-        assertEquals(Cf.list("200", "30", "1"), Cf.list("1", "200", "30").sortByDesc(stringLengthM()));
+        assertEquals(Cf.list(1, 2, 3), Cf.list(1, 3, 2).sorted());
+        assertEquals(Cf.list(3, 2, 1), Cf.list(1, 3, 2).sorted(Comparator.naturalComparator().invert()));
+        assertEquals(Cf.list("1", "30", "200"), Cf.list("1", "200", "30").sortedBy(stringLengthM()));
+        assertEquals(Cf.list("200", "30", "1"), Cf.list("1", "200", "30").sortedByDesc(stringLengthM()));
     }
 
     public void testSortByIsNullLow() {
-        assertEquals(Cf.list(null, "1", "30", "200"), Cf.list("1", null, "200", "30").sortBy(stringLengthM()));
-        assertEquals(Cf.list("200", "30", "1", null), Cf.list("1", null, "200", "30").sortByDesc(stringLengthM()));
+        assertEquals(Cf.list(null, "1", "30", "200"), Cf.list("1", null, "200", "30").sortedBy(stringLengthM()));
+        assertEquals(Cf.list("200", "30", "1", null), Cf.list("1", null, "200", "30").sortedByDesc(stringLengthM()));
     }
 
     public void testToPrimitiveArray() {

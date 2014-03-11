@@ -29,9 +29,9 @@ public class DefaultSetF<E> extends AbstractSetF<E> implements Serializable {
         return UnmodifiableDefaultSetF.wrap(target);
     }
 
-    public ListF<E> sort() {
+    public ListF<E> sorted() {
         if (target instanceof SortedSet<?>) return toList();
-        else return super.sort();
+        else return super.sorted();
     }
 
     public int size() {

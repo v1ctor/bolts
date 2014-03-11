@@ -13,7 +13,7 @@ import ru.yandex.bolts.function.forhuman.Comparator;
 /**
  * Extended collection.
  *
- * Methods like {@link #filter(Function1B)}, {@link #sort()} or {@link #plus(Collection)}
+ * Methods like {@link #filter(Function1B)}, {@link #sorted()} or {@link #plus(Collection)}
  * are permitted to return <code>this</code> collection if result of operation is a collection equal to this,
  * even if this collection is mutable.
  *
@@ -108,18 +108,18 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     CollectionF<E> stableUnique();
 
     /** Elements sorted by {@link Comparator#naturalComparator()} */
-    ListF<E> sort();
+    ListF<E> sorted();
 
     /** Elements sorted by given comparator */
-    ListF<E> sort(Function2I<? super E, ? super E> comparator);
+    ListF<E> sorted(Function2I<? super E, ? super E> comparator);
 
-    ListF<E> sort(Comparator<? super E> comparator);
+    ListF<E> sorted(Comparator<? super E> comparator);
 
-    ListF<E> sort(java.util.Comparator<? super E> comparator);
+    ListF<E> sorted(java.util.Comparator<? super E> comparator);
 
-    ListF<E> sortBy(Function<? super E, ?> f);
+    ListF<E> sortedBy(Function<? super E, ?> f);
 
-    ListF<E> sortByDesc(Function<? super E, ?> f);
+    ListF<E> sortedByDesc(Function<? super E, ?> f);
 
     ListF<E> shuffle();
 

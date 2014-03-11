@@ -108,34 +108,34 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     @Override
-    public Tuple2List<A, B> sort() {
+    public Tuple2List<A, B> sorted() {
         Comparator<Tuple2<A, B>> comparator = get1F().andThenNaturalComparator().chainTo(get2F().andThenNaturalComparator());
-        return sort(comparator);
+        return sorted(comparator);
     }
 
     @Override
-    public Tuple2List<A, B> sort(java.util.Comparator<? super Tuple2<A, B>> comparator) {
-        return Tuple2List.tuple2List(super.sort(comparator));
+    public Tuple2List<A, B> sorted(java.util.Comparator<? super Tuple2<A, B>> comparator) {
+        return Tuple2List.tuple2List(super.sorted(comparator));
     }
 
     @Override
-    public Tuple2List<A, B> sort(Comparator<? super Tuple2<A, B>> comparator) {
-        return Tuple2List.tuple2List(super.sort(comparator));
+    public Tuple2List<A, B> sorted(Comparator<? super Tuple2<A, B>> comparator) {
+        return Tuple2List.tuple2List(super.sorted(comparator));
     }
 
     @Override
-    public Tuple2List<A, B> sort(Function2I<? super Tuple2<A, B>, ? super Tuple2<A, B>> comparator) {
-        return Tuple2List.tuple2List(super.sort(comparator));
+    public Tuple2List<A, B> sorted(Function2I<? super Tuple2<A, B>, ? super Tuple2<A, B>> comparator) {
+        return Tuple2List.tuple2List(super.sorted(comparator));
     }
 
     @Override
-    public Tuple2List<A, B> sortBy(Function<? super Tuple2<A, B>, ?> f) {
-        return Tuple2List.tuple2List(super.sortBy(f));
+    public Tuple2List<A, B> sortedBy(Function<? super Tuple2<A, B>, ?> f) {
+        return Tuple2List.tuple2List(super.sortedBy(f));
     }
 
     @Override
-    public Tuple2List<A, B> sortByDesc(Function<? super Tuple2<A, B>, ?> f) {
-        return Tuple2List.tuple2List(super.sortByDesc(f));
+    public Tuple2List<A, B> sortedByDesc(Function<? super Tuple2<A, B>, ?> f) {
+        return Tuple2List.tuple2List(super.sortedByDesc(f));
     }
 
     public <U> Tuple2List<U, B> map1(final Function<? super A, U> f) {
@@ -222,35 +222,35 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     /**
-     * @see CollectionF#sort()
+     * @see CollectionF#sorted()
      */
-    public Tuple2List<A, B> sortBy1() {
-        return sortBy1(Comparator.naturalComparator().<A, A>uncheckedCast());
+    public Tuple2List<A, B> sortedBy1() {
+        return sortedBy1(Comparator.naturalComparator().<A, A>uncheckedCast());
     }
 
     /**
-     * @see CollectionF#sort(Function2I)
+     * @see CollectionF#sorted(Function2I)
      */
     @SuppressWarnings("unchecked")
-    public Tuple2List<A, B> sortBy1(Function2I<? super A, ? super A> comparator) {
+    public Tuple2List<A, B> sortedBy1(Function2I<? super A, ? super A> comparator) {
         if (size() <= 1) return this;
-        return new Tuple2List<A, B>(sort(get1F().andThen((Function2I<A, A>) comparator)));
+        return new Tuple2List<A, B>(sorted(get1F().andThen((Function2I<A, A>) comparator)));
     }
 
     /**
-     * @see CollectionF#sort()
+     * @see CollectionF#sorted()
      */
-    public Tuple2List<A, B> sortBy2() {
-        return sortBy2(Comparator.naturalComparator().<B, B>uncheckedCast());
+    public Tuple2List<A, B> sortedBy2() {
+        return sortedBy2(Comparator.naturalComparator().<B, B>uncheckedCast());
     }
 
     /**
-     * @see CollectionF#sort(Function2I)
+     * @see CollectionF#sorted(Function2I)
      */
     @SuppressWarnings("unchecked")
-    public Tuple2List<A, B> sortBy2(Function2I<? super B, ? super B> comparator) {
+    public Tuple2List<A, B> sortedBy2(Function2I<? super B, ? super B> comparator) {
         if (size() <= 1) return this;
-        return new Tuple2List<A, B>(sort(get2F().andThen((Function2I<B, B>) comparator)));
+        return new Tuple2List<A, B>(sorted(get2F().andThen((Function2I<B, B>) comparator)));
     }
 
 

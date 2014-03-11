@@ -105,18 +105,18 @@ public class ListMap<K, V> extends Tuple2List<K, V> {
     }
 
     @Override
-    public ListMap<K, V> sort(Function2I<? super Tuple2<K, V>, ? super Tuple2<K, V>> comparator) {
-        return ListMap.listMap(super.sort(comparator));
+    public ListMap<K, V> sorted(Function2I<? super Tuple2<K, V>, ? super Tuple2<K, V>> comparator) {
+        return ListMap.listMap(super.sorted(comparator));
     }
 
     @Override
-    public ListMap<K, V> sortBy(Function<? super Tuple2<K, V>, ?> f) {
-        return ListMap.listMap(super.sortBy(f));
+    public ListMap<K, V> sortedBy(Function<? super Tuple2<K, V>, ?> f) {
+        return ListMap.listMap(super.sortedBy(f));
     }
 
     @Override
-    public ListMap<K, V> sortByDesc(Function<? super Tuple2<K, V>, ?> f) {
-        return ListMap.listMap(super.sortByDesc(f));
+    public ListMap<K, V> sortedByDesc(Function<? super Tuple2<K, V>, ?> f) {
+        return ListMap.listMap(super.sortedByDesc(f));
     }
 
     public <U> ListMap<U, V> mapKeys(final Function<K, U> mapper) {
@@ -201,19 +201,19 @@ public class ListMap<K, V> extends Tuple2List<K, V> {
     }
 
     /**
-     * @see CollectionF#sort()
+     * @see CollectionF#sorted()
      */
     public ListMap<K, V> sortByKey() {
         return sortByKey(Comparator.naturalComparator().<K, K>uncheckedCast());
     }
 
     /**
-     * @see CollectionF#sort(Function2I)
+     * @see CollectionF#sorted(Function2I)
      */
     @SuppressWarnings("unchecked")
     public ListMap<K, V> sortByKey(Function2I<? super K, ? super K> comparator) {
         if (size() <= 1) return this;
-        return new ListMap<K, V>(sort(keyM().andThen((Function2I<K, K>) comparator)));
+        return new ListMap<K, V>(sorted(keyM().andThen((Function2I<K, K>) comparator)));
     }
 
     // XXX: sortByKeyBy, sortByKeyByDesc

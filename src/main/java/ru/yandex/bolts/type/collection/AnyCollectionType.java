@@ -124,13 +124,13 @@ public abstract class AnyCollectionType {
         };
     }
 
-    /** {@link CollectionF#sort()} as function */
-    public <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortF() {
+    /** {@link CollectionF#sorted()} as function */
+    public <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortedF() {
         return new Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>>() {
             public ListF<E> apply(Collection<E> input,
                     Function2I<? super E, ? super E> comparator)
             {
-                return Cf.x(input).sort(comparator);
+                return Cf.x(input).sorted(comparator);
             }
         };
     }
@@ -151,20 +151,20 @@ public abstract class AnyCollectionType {
         };
     }
 
-    /** {@link CollectionF#sort()} as function, convenience form */
-    public <E> Function<Collection<E>, ListF<E>> sortF(
+    /** {@link CollectionF#sorted()} as function, convenience form */
+    public <E> Function<Collection<E>, ListF<E>> sortedF(
             Function2I<? super E, ? super E> comparator)
     {
-        return this.<E>sortF().bind2(comparator);
+        return this.<E>sortedF().bind2(comparator);
 
     }
 
     public <E extends Comparable<?>> Function<Collection<E>, ListF<E>> sortComparablesF() {
-        return this.<E>sortF().bind2(Comparator.<E>naturalComparator());
+        return this.<E>sortedF().bind2(Comparator.<E>naturalComparator());
     }
 
-    public <E> Function<Collection<E>, ListF<E>> sortByF(Function<? super E, ?> by) {
-        return this.<E>sortF(by.andThenNaturalComparator());
+    public <E> Function<Collection<E>, ListF<E>> sortedByF(Function<? super E, ?> by) {
+        return this.<E>sortedF(by.andThenNaturalComparator());
     }
 
     public <E> Function2B<Collection<E>, E> containsF() {

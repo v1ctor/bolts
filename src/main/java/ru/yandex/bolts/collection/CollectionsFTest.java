@@ -73,7 +73,7 @@ public class CollectionsFTest extends TestCase {
         MapF<String, ListF<Integer>> groupped
                 = data.groupBy(Tuple2.<String, Integer>get1F())
                 .mapValues(Cf.<Tuple2<String, Integer>, Integer>mapF(Tuple2.<String, Integer>get2F()).andThen(
-                        Cf.<Integer>sortF(IntegerF.naturalComparator())));
+                        Cf.<Integer>sortedF(IntegerF.naturalComparator())));
 
         assertEquals(Cf.list(102, 111, 111), groupped.get("foo"));
         assertEquals(Cf.list(97, 98, 114), groupped.get("bar"));
@@ -100,7 +100,7 @@ public class CollectionsFTest extends TestCase {
                     public boolean apply(Integer integer) {
                         return integer >= 0;
                     }})
-                .andThen(Cf.<Integer>sortF(IntegerF.naturalComparator()))
+                .andThen(Cf.<Integer>sortedF(IntegerF.naturalComparator()))
                 .andThen(Cf.<Integer>toListF()));
 
         assertEquals(Cf.list(
