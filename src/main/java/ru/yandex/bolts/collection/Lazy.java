@@ -5,7 +5,7 @@ import ru.yandex.bolts.function.Function0;
 /**
  * @author Stepan Koltsov
  */
-public abstract class Lazy<T> extends Function0<T> {
+public abstract class Lazy<T> implements Function0<T> {
     private T value;
     private boolean defined = false;
 

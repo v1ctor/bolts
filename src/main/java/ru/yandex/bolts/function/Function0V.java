@@ -5,15 +5,16 @@ package ru.yandex.bolts.function;
 /**
  * @author Stepan Koltsov
  */
-public abstract class Function0V implements Runnable {
-    public abstract void apply();
+@FunctionalInterface
+public interface Function0V extends Runnable {
+    void apply();
 
     @Override
-    public final void run() {
+    default void run() {
         apply();
     }
 
-    public static Function1V<Function0V> applyF() {
+    static Function1V<Function0V> applyF() {
         return new Function1V<Function0V>() {
             public void apply(Function0V a) {
                 a.apply();
@@ -21,7 +22,7 @@ public abstract class Function0V implements Runnable {
         };
     }
 
-    public static Function0V nop() {
+    static Function0V nop() {
         return new Function0V() {
             public void apply() {
             }
@@ -33,7 +34,7 @@ public abstract class Function0V implements Runnable {
         };
     }
 
-    public <R> Function0<R> asFunction0ReturnNull() {
+    default <R> Function0<R> asFunction0ReturnNull() {
         return new Function0<R>() {
             public R apply() {
                 Function0V.this.apply();
@@ -42,7 +43,7 @@ public abstract class Function0V implements Runnable {
         };
     }
 
-    public <R> Function<R, R> asFunctionReturnParam() {
+    default <R> Function<R, R> asFunctionReturnParam() {
         return new Function<R, R>() {
             public R apply(R r) {
                 Function0V.this.apply();
@@ -52,15 +53,15 @@ public abstract class Function0V implements Runnable {
     }
 
     @SuppressWarnings({"unchecked"})
-    private static <E extends Throwable> void throw0(Throwable e) throws E {
+    static <E extends Throwable> void throw0(Throwable e) throws E {
         throw (E) e;
     }
 
-    private static void throwException(Throwable e) {
+    static void throwException(Throwable e) {
         Function0V.<RuntimeException>throw0(e);
     }
 
-    public static Function0V throwC(final Function0<Throwable> th) {
+    static Function0V throwC(final Function0<Throwable> th) {
         return new Function0V() {
             public void apply() {
                 throwException(th.apply());
@@ -68,11 +69,11 @@ public abstract class Function0V implements Runnable {
         };
     }
 
-    public static Function0V throwC(Throwable th) {
+    static Function0V throwC(Throwable th) {
         return throwC(Function0.constF(th));
     }
 
-    public static Function0V wrap(final Runnable runnable) {
+    static Function0V wrap(final Runnable runnable) {
         if (runnable instanceof Function0V) return (Function0V) runnable;
         else return new Function0V() {
             public void apply() {

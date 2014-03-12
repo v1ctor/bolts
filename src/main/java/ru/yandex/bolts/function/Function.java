@@ -24,16 +24,17 @@ import fj.F;
  *
  * @author Stepan Koltsov
  */
-public abstract class Function<A, R> {
+@FunctionalInterface
+public interface Function<A, R> {
 
-    public abstract R apply(A a);
+    R apply(A a);
 
     /**
      * (f andThen g)(x) = g(f(x))
      *
      * @see fj.Function#andThen(F, F)
      */
-    public <C> Function<A, C> andThen(final Function<? super R, ? extends C> g) {
+    default <C> Function<A, C> andThen(final Function<? super R, ? extends C> g) {
         return new Function<A, C>() {
             public C apply(A a) {
                 return g.apply(Function.this.apply(a));
@@ -45,7 +46,7 @@ public abstract class Function<A, R> {
         };
     }
 
-    public Function1V<A> andThen(final Function1V<? super R> g) {
+    default Function1V<A> andThen(final Function1V<? super R> g) {
         return new Function1V<A>() {
             public void apply(A a) {
                 g.apply(Function.this.apply(a));
@@ -57,7 +58,7 @@ public abstract class Function<A, R> {
         };
     }
 
-    public Function1B<A> andThen(final Function1B<? super R> g) {
+    default Function1B<A> andThen(final Function1B<? super R> g) {
         return new Function1B<A>() {
             public boolean apply(A a) {
                 return g.apply(Function.this.apply(a));
@@ -70,7 +71,7 @@ public abstract class Function<A, R> {
     }
 
     /** Not true function composition */
-    public Comparator<A> andThen(final Comparator<R> comparator) {
+    default Comparator<A> andThen(final Comparator<R> comparator) {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
                 return comparator.compare(Function.this.apply(o1), Function.this.apply(o2));
@@ -84,7 +85,7 @@ public abstract class Function<A, R> {
     }
 
     /** (f andThen g)(x) = g(f(x)) */
-    public Comparator<A> andThen(final Function2I<R, R> comparator) {
+    default Comparator<A> andThen(final Function2I<R, R> comparator) {
         return new Comparator<A>() {
             public int compare(A a, A b) {
                 return comparator.apply(Function.this.apply(a), Function.this.apply(b));
@@ -96,13 +97,13 @@ public abstract class Function<A, R> {
         };
     }
 
-    public Function1B<A> andThenEquals(R value) {
+    default Function1B<A> andThenEquals(R value) {
         return andThen(Function1B.equalsF(value));
     }
 
     /** And then null low natural comparator */
     @SuppressWarnings({"unchecked"})
-    public Comparator<A> andThenNaturalComparator() {
+    default Comparator<A> andThenNaturalComparator() {
         return andThen((Comparator<R>) Comparator.naturalComparator());
     }
 
@@ -111,11 +112,11 @@ public abstract class Function<A, R> {
      *
      * @see fj.Function#compose(F, F)
      */
-    public <C> Function<C, R> compose(Function<C, A> g) {
+    default <C> Function<C, R> compose(Function<C, A> g) {
         return g.andThen(this);
     }
 
-    public Function0<R> bind(final A param) {
+    default Function0<R> bind(final A param) {
         return new Function0<R>() {
             public R apply() {
                 return Function.this.apply(param);
@@ -128,7 +129,7 @@ public abstract class Function<A, R> {
         };
     }
 
-    public static <A, R> Function2<Function<A, R>, A, Function0<R>> bindF2() {
+    static <A, R> Function2<Function<A, R>, A, Function0<R>> bindF2() {
         return new Function2<Function<A,R>, A, Function0<R>>() {
             public Function0<R> apply(Function<A, R> f, A a) {
                 return f.bind(a);
@@ -140,12 +141,12 @@ public abstract class Function<A, R> {
         };
     }
 
-    public Function<A, Function0<R>> bindF() {
+    default Function<A, Function0<R>> bindF() {
         return Function.<A, R>bindF2().bind1(this);
     }
 
 
-    public static <A, R> Function2<Function<A, R>, A, R> applyF() {
+    static <A, R> Function2<Function<A, R>, A, R> applyF() {
         return new Function2<Function<A, R>, A, R>() {
             public R apply(Function<A, R> f, A a) {
                 return f.apply(a);
@@ -158,12 +159,12 @@ public abstract class Function<A, R> {
     }
 
     @SuppressWarnings("unchecked")
-    public <B, S> Function<B, S> uncheckedCast() {
+    default <B, S> Function<B, S> uncheckedCast() {
         return (Function<B, S>) this;
     }
 
     /** Ignore result of mapping */
-    public Function1V<A> ignoreResult() {
+    default Function1V<A> ignoreResult() {
         return new Function1V<A>() {
             public void apply(A a) {
                 Function.this.apply(a);
@@ -176,7 +177,7 @@ public abstract class Function<A, R> {
     }
 
     /** Map null to null */
-    public Function<A, R> ignoreNullF() {
+    default Function<A, R> ignoreNullF() {
         return new Function<A, R>() {
             public R apply(A a) {
                 if (a == null) return null;
@@ -189,7 +190,7 @@ public abstract class Function<A, R> {
         };
     }
 
-    public static <A> Function<A, A> identityF() {
+    static <A> Function<A, A> identityF() {
         return new Function<A, A>() {
             public A apply(A a) {
                 return a;
@@ -218,7 +219,7 @@ public abstract class Function<A, R> {
         };
     }
 
-    public static <T> Function<T, String> toStringF() {
+    static <T> Function<T, String> toStringF() {
         return new Function<T, String>() {
             public String apply(T t) {
                 return t != null ? t.toString() : "null";
@@ -231,7 +232,7 @@ public abstract class Function<A, R> {
     }
 
     /** Function that always returns the same value */
-    public static <A, B> Function<A, B> constF(final B b) {
+    static <A, B> Function<A, B> constF(final B b) {
         return new Function<A, B>() {
             public B apply(A a) {
                 return b;
@@ -244,7 +245,7 @@ public abstract class Function<A, R> {
     }
 
     @SuppressWarnings("unchecked")
-    public static <A, B> Function<A, B> wrap(final Method method) {
+    static <A, B> Function<A, B> wrap(final Method method) {
         if ((method.getModifiers() & Modifier.STATIC) != 0) {
             Validate.isTrue(method.getParameterTypes().length == 1, "static method must have single argument, " + method);
             return new Function<A, B>() {
@@ -262,7 +263,7 @@ public abstract class Function<A, R> {
         }
     }
 
-    public Function<A, R> memoize() {
+    default Function<A, R> memoize() {
         return new Function<A, R>() {
             private final MapF<A, R> cache = Cf.hashMap();
             public synchronized R apply(A a) {

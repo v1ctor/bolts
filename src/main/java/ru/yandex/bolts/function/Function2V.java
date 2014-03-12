@@ -7,11 +7,12 @@ import ru.yandex.bolts.collection.Tuple2;
 /**
  * @see fj.F2
  */
-public abstract class Function2V<A, B> {
+@FunctionalInterface
+public interface Function2V<A, B> {
 
-    public abstract void apply(A a, B b);
+    void apply(A a, B b);
 
-    public Function1V<B> bind1(final A a) {
+    default Function1V<B> bind1(final A a) {
         return new Function1V<B>() {
             public void apply(B b) {
                 Function2V.this.apply(a, b);
@@ -23,7 +24,7 @@ public abstract class Function2V<A, B> {
         };
     }
 
-    public Function1V<A> bind2(final B b) {
+    default Function1V<A> bind2(final B b) {
         return new Function1V<A>() {
             public void apply(A a) {
                 Function2V.this.apply(a, b);
@@ -36,7 +37,7 @@ public abstract class Function2V<A, B> {
     }
 
 
-    public static <A, B> Function2<Function2V<A, B>, A, Function1V<B>> bind1F2() {
+    static <A, B> Function2<Function2V<A, B>, A, Function1V<B>> bind1F2() {
         return new Function2<Function2V<A, B>, A, Function1V<B>>() {
             public Function1V<B> apply(Function2V<A, B> f, A a) {
                 return f.bind1(a);
@@ -48,11 +49,11 @@ public abstract class Function2V<A, B> {
         };
     }
 
-    public Function<A, Function1V<B>> bind1F() {
+    default Function<A, Function1V<B>> bind1F() {
         return Function2V.<A, B>bind1F2().bind1(this);
     }
 
-    public static <A, B> Function2<Function2V<A, B>, B, Function1V<A>> bind2F2() {
+    static <A, B> Function2<Function2V<A, B>, B, Function1V<A>> bind2F2() {
         return new Function2<Function2V<A, B>, B, Function1V<A>>() {
             public Function1V<A> apply(Function2V<A, B> f, B b) {
                 return f.bind2(b);
@@ -64,27 +65,11 @@ public abstract class Function2V<A, B> {
         };
     }
 
-    public Function<B, Function1V<A>> bind2F() {
+    default Function<B, Function1V<A>> bind2F() {
         return Function2V.<A, B>bind2F2().bind1(this);
     }
 
-    public <C> Function2V<C, B> compose1(final Function<? super C, ? extends A> f) {
-        return new Function2V<C, B>() {
-            public void apply(C c, B b) {
-                Function2V.this.apply(f.apply(c), b);
-            }
-        };
-    }
-
-    public <C> Function2V<A, C> compose2(final Function<? super C, ? extends B> f) {
-        return new Function2V<A, C>() {
-            public void apply(A a, C c) {
-                Function2V.this.apply(a, f.apply(c));
-            }
-        };
-    }
-
-    public Function<Tuple2<A, B>, Object> asFunction() {
+    default Function<Tuple2<A, B>, Object> asFunction() {
         return new Function<Tuple2<A, B>, Object>() {
             public Object apply(Tuple2<A, B> t) {
                 Function2V.this.apply(t._1, t._2);
@@ -97,7 +82,7 @@ public abstract class Function2V<A, B> {
         };
     }
 
-    public Function1V<Tuple2<A, B>> asFunction1V() {
+    default Function1V<Tuple2<A, B>> asFunction1V() {
         return new Function1V<Tuple2<A, B>>() {
             public void apply(Tuple2<A, B> t) {
                 Function2V.this.apply(t._1, t._2);
@@ -109,7 +94,7 @@ public abstract class Function2V<A, B> {
         };
     }
 
-    public Function2<A, B, Object> asFunction2() {
+    default Function2<A, B, Object> asFunction2() {
         return new Function2<A, B, Object>() {
             public Object apply(A a, B b) {
                 Function2V.this.apply(a, b);
@@ -123,7 +108,7 @@ public abstract class Function2V<A, B> {
     }
 
     @SuppressWarnings("unchecked")
-    public <A1, B1> Function2V<A1, B1> uncheckedCast() {
+    default <A1, B1> Function2V<A1, B1> uncheckedCast() {
         return (Function2V<A1, B1>) this;
     }
 
