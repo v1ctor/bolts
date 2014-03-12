@@ -35,7 +35,7 @@ public class OptionTest extends TestCase {
 
     public void testOrElseNotCalled() {
         Option<String> o = Option.some("ss");
-        String got = o.orElse(throwFactory()).orElse(throwFactory()).get();
+        String got = o.orElse(this.<Option<String>>throwFactory()).orElse(this.<Option<String>>throwFactory()).get();
         assertEquals("ss", got);
     }
 
@@ -43,7 +43,7 @@ public class OptionTest extends TestCase {
         Option<String> s = Option.some("a");
         Option<String> n = Option.none();
         assertEquals("a", s.getOrElse("b"));
-        assertEquals("a", s.getOrElse(throwFactory()));
+        assertEquals("a", s.getOrElse(this.<String>throwFactory()));
         assertEquals("b", n.getOrElse("b"));
         assertEquals("b", n.getOrElse(Function0.constF("b")));
         assertEquals("a", s.getOrNull());
@@ -69,9 +69,9 @@ public class OptionTest extends TestCase {
         assertEquals(s3, Option.some(3));
     }
 
-    protected Function0 throwFactory() {
-        return new Function0<Object>() {
-            public Object apply() {
+    protected <T> Function0<T> throwFactory() {
+        return new Function0<T>() {
+            public T apply() {
                 throw new AssertionError();
             }
         };
