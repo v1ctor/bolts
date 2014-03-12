@@ -27,11 +27,7 @@ public class Function0Test extends TestCase {
     }
 
     public void testWrap() {
-        Function0<Integer> f = Function0.wrap(new Function0<Integer>() {
-            public Integer apply() {
-                return 16;
-            }
-        });
+        Function0<Integer> f = Function0.wrap(() -> 16);
         assertEquals(16, (int) f.apply());
         f.toString();
     }

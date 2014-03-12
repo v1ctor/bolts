@@ -11,27 +11,15 @@ public class Function2Test extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Function2Test.class);
 
     private static Function2<Integer, Integer, Integer> minusF() {
-        return new Function2<Integer, Integer, Integer>() {
-            public Integer apply(Integer a, Integer b) {
-                return a - b;
-            }
-        };
+        return (a, b) -> a - b;
     }
 
     public static Function2<Integer, Integer, Integer> plusF() {
-        return new Function2<Integer, Integer, Integer>() {
-            public Integer apply(Integer a, Integer b) {
-                return a + b;
-            }
-        };
+        return (a, b) -> a + b;
     }
 
     public static Function2<String, String, String> stringPlusF() {
-        return new Function2<String, String, String>() {
-            public String apply(String a, String b) {
-                return a + b;
-            }
-        };
+        return (a, b) -> a + b;
     }
 
     public void testKickEmma() {
