@@ -1,9 +1,5 @@
 package ru.yandex.bolts.collection.example;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -11,6 +7,11 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function1B;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Examples of {@link ListF}.
@@ -71,7 +72,7 @@ public class ListFExample {
         ListF<Integer> extraList = Cf.list(3, 4);
 
         ListF<Integer> list = Cf.list(1, 2).plus(extraList).plus1(5).plus(some).plus(none);
-        assertEquals(Cf.list(1, 2, 3, 4, 5, 6, 7), list);
+        assertEquals(Cf.list(1, 2, 3, 4, 5, 6), list);
     }
 
     @SuppressWarnings("unused")
