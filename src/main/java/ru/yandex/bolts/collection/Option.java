@@ -3,6 +3,10 @@ package ru.yandex.bolts.collection;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 import ru.yandex.bolts.collection.impl.AbstractListF;
 import ru.yandex.bolts.function.Function;
@@ -14,6 +18,7 @@ import ru.yandex.bolts.internal.ObjectUtils;
 /**
  * Port of scala <a href="http://www.scala-lang.org/docu/files/api/scala/Option.html">Option</a>.
  *
+ * @see java.util.Optional
  * @see fj.data.Option
  *
  * @author Stepan Koltsov
@@ -210,6 +215,26 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      */
     public static <T> Option<T> when(boolean pred, Function0<T> x) {
         if (pred) return some(x.apply());
+        else return none();
+    }
+
+    public static <T> Option<T> x(Optional<T> optional) {
+        if (optional.isPresent()) return some(optional.get());
+        else return none();
+    }
+
+    public static Option<Integer> x(OptionalInt optional) {
+        if (optional.isPresent()) return some(optional.getAsInt());
+        else return none();
+    }
+
+    public static Option<Long> x(OptionalLong optional) {
+        if (optional.isPresent()) return some(optional.getAsLong());
+        else return none();
+    }
+
+    public static Option<Double> x(OptionalDouble optional) {
+        if (optional.isPresent()) return some(optional.getAsDouble());
         else return none();
     }
 

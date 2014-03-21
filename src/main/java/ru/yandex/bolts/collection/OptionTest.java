@@ -1,5 +1,10 @@
 package ru.yandex.bolts.collection;
 
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
+
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.impl.test.SerializationUtils;
@@ -67,6 +72,17 @@ public class OptionTest extends TestCase {
         assertEquals(s1, Option.some(1));
         assertEquals(s2, Option.none());
         assertEquals(s3, Option.some(3));
+    }
+
+    public void testX() {
+        assertEquals(Option.x(Optional.of(42)), Option.some(42));
+        assertEquals(Option.x(Optional.empty()), Option.none());
+        assertEquals(Option.x(OptionalInt.of(42)), Option.some(42));
+        assertEquals(Option.x(OptionalInt.empty()), Option.none());
+        assertEquals(Option.x(OptionalLong.of(42L)), Option.some(42L));
+        assertEquals(Option.x(OptionalLong.empty()), Option.none());
+        assertEquals(Option.x(OptionalDouble.of(42.0d)), Option.some(42.0d));
+        assertEquals(Option.x(OptionalDouble.empty()), Option.none());
     }
 
     protected <T> Function0<T> throwFactory() {
