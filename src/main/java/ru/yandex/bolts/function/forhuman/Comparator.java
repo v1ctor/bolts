@@ -10,7 +10,7 @@ import ru.yandex.bolts.function.Function2I;
  *
  * @author Stepan Koltsov
  */
-public abstract class Comparator<A> extends Function2I<A, A> implements java.util.Comparator<A> {
+public abstract class Comparator<A> implements Function2I<A, A>, java.util.Comparator<A> {
 
     /** Call {@link #compare(Object, Object)} */
     @Override
@@ -130,7 +130,7 @@ public abstract class Comparator<A> extends Function2I<A, A> implements java.uti
     /** Inverted comparator */
     @Override
     public Comparator<A> invert() {
-        return wrap(super.invert());
+        return wrap(Function2I.super.invert());
     }
 
     /** Wrap {@link java.util.Comparator} */

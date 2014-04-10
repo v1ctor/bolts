@@ -3,10 +3,11 @@ package ru.yandex.bolts.function;
 /**
  * @author Stepan Koltsov
  */
-public abstract class Function1I<A> implements java.lang.Comparable<A>  {
-    public abstract int apply(A a);
+@FunctionalInterface
+public interface Function1I<A> extends java.lang.Comparable<A>  {
+    int apply(A a);
 
-    public Function<A, Integer> asFunction() {
+    default Function<A, Integer> asFunction() {
         return new Function<A, Integer>() {
             public Integer apply(A a) {
                 return Function1I.this.apply(a);
@@ -19,7 +20,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
         };
     }
 
-    public static <A> Function1I<A> asFunction1I(final Function<A, Integer> f) {
+    static <A> Function1I<A> asFunction1I(final Function<A, Integer> f) {
         return new Function1I<A>() {
             public int apply(A a) {
                 return f.apply(a);
@@ -33,55 +34,61 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     @Override
-    public int compareTo(A o) {
+    default int compareTo(A o) {
         return apply(o);
     }
 
     /** Greater than */
-    public boolean gt(A o) {
+    default boolean gt(A o) {
         return compareTo(o) > 0;
     }
 
     /** Greater of equal */
-    public boolean ge(A o) {
+    default boolean ge(A o) {
         return compareTo(o) >= 0;
     }
 
     /** Equal to */
-    public boolean eq(A o) {
+    default boolean eq(A o) {
         return compareTo(o) == 0;
     }
 
     /** Not equal to */
-    public boolean ne(A o) {
+    default boolean ne(A o) {
         return compareTo(o) != 0;
     }
 
     /** Less than */
-    public boolean lt(A o) {
+    default boolean lt(A o) {
         return compareTo(o) < 0;
     }
 
     /** Less or equal */
-    public boolean le(A o) {
+    default boolean le(A o) {
         return compareTo(o) <= 0;
     }
 
-    public boolean useOperator(ru.yandex.bolts.function.forhuman.Comparator.Operator operator, A o) {
+    default boolean useOperator(ru.yandex.bolts.function.forhuman.Comparator.Operator operator, A o) {
         return opF(operator).apply(o);
     }
 
-    private abstract class OperatorFunction1B extends Function1B<A> {
+    abstract class OperatorFunction1B<A> implements Function1B<A> {
+        private final Function1I<A> f;
+
+        protected OperatorFunction1B(Function1I<A> f) {
+            this.f = f;
+        }
+
         public String toString() {
-            return op() + "(" + Function1I.this + ")";
+            return op() + "(" + f + ")";
         }
 
         protected abstract String op();
     }
 
     /** Greater Function1B */
-    public Function1B<A> gtF() {
-        return new OperatorFunction1B() {
+    default Function1B<A> gtF() {
+        return new OperatorFunction1B<A>(Function1I.this) {
             public boolean apply(A a) {
                 return Function1I.this.gt(a);
             }
@@ -93,8 +100,8 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Greater or equal Function1B */
-    public Function1B<A> geF() {
-        return new OperatorFunction1B() {
+    default Function1B<A> geF() {
+        return new OperatorFunction1B<A>(Function1I.this) {
             public boolean apply(A a) {
                 return Function1I.this.ge(a);
             }
@@ -106,8 +113,8 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Equal Function1B */
-    public Function1B<A> eqF() {
-        return new OperatorFunction1B() {
+    default Function1B<A> eqF() {
+        return new OperatorFunction1B<A>(Function1I.this) {
             public boolean apply(A a) {
                 return Function1I.this.eq(a);
             }
@@ -119,8 +126,8 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Not equal Function1B */
-    public Function1B<A> neF() {
-        return new OperatorFunction1B() {
+    default Function1B<A> neF() {
+        return new OperatorFunction1B<A>(Function1I.this) {
             public boolean apply(A a) {
                 return Function1I.this.ne(a);
             }
@@ -132,8 +139,8 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Less than Function1B */
-    public Function1B<A> ltF() {
-        return new OperatorFunction1B() {
+    default Function1B<A> ltF() {
+        return new OperatorFunction1B<A>(Function1I.this) {
             public boolean apply(A a) {
                 return Function1I.this.lt(a);
             }
@@ -145,8 +152,8 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
     }
 
     /** Less or equal Function1B */
-    public Function1B<A> leF() {
-        return new OperatorFunction1B() {
+    default Function1B<A> leF() {
+        return new OperatorFunction1B<A>(Function1I.this) {
             public boolean apply(A a) {
                 return Function1I.this.le(a);
             }
@@ -157,7 +164,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
         };
     }
 
-    public Function1B<A> opF(Function2I.Operator op) {
+    default Function1B<A> opF(Function2I.Operator op) {
         switch (op) {
             case EQ: return eqF();
             case GE: return geF();
@@ -169,7 +176,7 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
         throw new IllegalArgumentException("unknown operator: " + op);
     }
 
-    public static <A> Function1I<A> wrap(final java.lang.Comparable<A> comparable) {
+    static <A> Function1I<A> wrap(final java.lang.Comparable<A> comparable) {
         if (comparable instanceof Function1I) return (Function1I<A>) comparable;
         else return new Function1I<A>() {
             public int apply(A o) {
@@ -182,12 +189,12 @@ public abstract class Function1I<A> implements java.lang.Comparable<A>  {
         };
     }
 
-    public Function1I<A> memoize() {
+    default Function1I<A> memoize() {
         return asFunction1I(asFunction().memoize());
     }
 
     @SuppressWarnings("unchecked")
-    public <B> Function1I<B> uncheckedCast() {
+    default <B> Function1I<B> uncheckedCast() {
         return (Function1I<B>) this;
     }
 

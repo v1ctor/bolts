@@ -7,11 +7,12 @@ import ru.yandex.bolts.collection.Tuple3;
 /**
  * @see fj.F3
  */
-public abstract class Function3B<A, B, C> {
+@FunctionalInterface
+public interface Function3B<A, B, C> {
 
-    public abstract boolean apply(A a, B b, C c);
+    boolean apply(A a, B b, C c);
 
-    public Function2B<B, C> bind1(final A a) {
+    default Function2B<B, C> bind1(final A a) {
         return new Function2B<B, C>() {
             public boolean apply(B b, C c) {
                 return Function3B.this.apply(a, b, c);
@@ -23,7 +24,7 @@ public abstract class Function3B<A, B, C> {
         };
     }
 
-    public Function2B<A, C> bind2(final B b) {
+    default Function2B<A, C> bind2(final B b) {
         return new Function2B<A, C>() {
             public boolean apply(A a, C c) {
                 return Function3B.this.apply(a, b, c);
@@ -35,7 +36,7 @@ public abstract class Function3B<A, B, C> {
         };
     }
 
-    public Function2B<A, B> bind3(final C c) {
+    default Function2B<A, B> bind3(final C c) {
         return new Function2B<A, B>() {
             public boolean apply(A a, B b) {
                 return Function3B.this.apply(a, b, c);
@@ -48,7 +49,7 @@ public abstract class Function3B<A, B, C> {
     }
 
 
-    public static <A, B, C> Function2<Function3B<A, B, C>, A, Function2B<B, C>> bind1F2() {
+    static <A, B, C> Function2<Function3B<A, B, C>, A, Function2B<B, C>> bind1F2() {
         return new Function2<Function3B<A, B, C>, A, Function2B<B, C>>() {
             public Function2B<B, C> apply(Function3B<A, B, C> f, A a) {
                 return f.bind1(a);
@@ -60,11 +61,11 @@ public abstract class Function3B<A, B, C> {
         };
     }
 
-    public Function<A, Function2B<B, C>> bind1F() {
+    default Function<A, Function2B<B, C>> bind1F() {
         return Function3B.<A, B, C>bind1F2().bind1(this);
     }
 
-    public static <A, B, C> Function2<Function3B<A, B, C>, B, Function2B<A, C>> bind2F2() {
+    static <A, B, C> Function2<Function3B<A, B, C>, B, Function2B<A, C>> bind2F2() {
         return new Function2<Function3B<A, B, C>, B, Function2B<A, C>>() {
             public Function2B<A, C> apply(Function3B<A, B, C> f, B b) {
                 return f.bind2(b);
@@ -76,11 +77,11 @@ public abstract class Function3B<A, B, C> {
         };
     }
 
-    public Function<B, Function2B<A, C>> bind2F() {
+    default Function<B, Function2B<A, C>> bind2F() {
         return Function3B.<A, B, C>bind2F2().bind1(this);
     }
 
-    public static <A, B, C> Function2<Function3B<A, B, C>, C, Function2B<A, B>> bind3F2() {
+    static <A, B, C> Function2<Function3B<A, B, C>, C, Function2B<A, B>> bind3F2() {
         return new Function2<Function3B<A, B, C>, C, Function2B<A, B>>() {
             public Function2B<A, B> apply(Function3B<A, B, C> f, C c) {
                 return f.bind3(c);
@@ -92,11 +93,11 @@ public abstract class Function3B<A, B, C> {
         };
     }
 
-    public Function<C, Function2B<A, B>> bind3F() {
+    default Function<C, Function2B<A, B>> bind3F() {
         return Function3B.<A, B, C>bind3F2().bind1(this);
     }
 
-    public Function<Tuple3<A, B, C>, Boolean> asFunction() {
+    default Function<Tuple3<A, B, C>, Boolean> asFunction() {
         return new Function<Tuple3<A, B, C>, Boolean>() {
             public Boolean apply(Tuple3<A, B, C> t) {
                 return Function3B.this.apply(t._1, t._2, t._3);
@@ -108,7 +109,7 @@ public abstract class Function3B<A, B, C> {
         };
     }
 
-    public Function1B<Tuple3<A, B, C>> asFunction1B() {
+    default Function1B<Tuple3<A, B, C>> asFunction1B() {
         return new Function1B<Tuple3<A, B, C>>() {
             public boolean apply(Tuple3<A, B, C> t) {
                 return Function3B.this.apply(t._1, t._2, t._3);
@@ -120,7 +121,7 @@ public abstract class Function3B<A, B, C> {
         };
     }
 
-    public Function3<A, B, C, Boolean> asFunction3() {
+    default Function3<A, B, C, Boolean> asFunction3() {
         return new Function3<A, B, C, Boolean>() {
             public Boolean apply(A a, B b, C c) {
                 return Function3B.this.apply(a, b, c);
@@ -133,7 +134,7 @@ public abstract class Function3B<A, B, C> {
     }
 
     @SuppressWarnings("unchecked")
-    public <A1, B1, C1> Function3B<A1, B1, C1> uncheckedCast() {
+    default <A1, B1, C1> Function3B<A1, B1, C1> uncheckedCast() {
         return (Function3B<A1, B1, C1>) this;
     }
 

@@ -26,13 +26,13 @@ public class SingletonMap<K, V> extends AbstractMapF<K, V> implements Serializab
 
     @Override
     public V get(Object key) {
-        if (eq(key, this.key)) return value;
+        if (this.eq(key, this.key)) return value;
         else return null;
     }
 
     @Override
     public boolean containsValue(Object value) {
-        return eq(this.value, value);
+        return this.eq(this.value, value);
     }
 
     @Override

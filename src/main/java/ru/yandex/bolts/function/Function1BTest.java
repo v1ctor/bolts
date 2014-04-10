@@ -13,19 +13,11 @@ public class Function1BTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Function1BTest.class);
 
     private static Function1B<Object> anotherTrueF() {
-        return new Function1B<Object>() {
-            public boolean apply(Object o) {
-                return true;
-            }
-        };
+        return o -> true;
     }
 
     private static Function1B<Object> anotherFalseF() {
-        return new Function1B<Object>() {
-            public boolean apply(Object o) {
-                return false;
-            }
-        };
+        return o -> false;
     }
 
     public void testAnd() {
@@ -139,10 +131,6 @@ public class Function1BTest extends TestCase {
 
     /** Integer is even */
     public static Function1B<Integer> evenF() {
-        return new Function1B<Integer>() {
-            public boolean apply(Integer integer) {
-                return integer % 2 == 0;
-            }
-        };
+        return i -> i % 2 == 0;
     }
 } //~

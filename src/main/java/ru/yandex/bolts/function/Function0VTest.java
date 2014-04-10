@@ -18,22 +18,16 @@ public class Function0VTest extends TestCase {
     }
 
     public void testWrapRunnable() {
-        Function0V c = Function0V.wrap(new Runnable() {
-            public void run() {
-                x = 77;
-            }
-        });
+        Runnable r = () -> { x = 77; };
+        Function0V c = Function0V.wrap(r);
         c.run();
         c.toString();
         assertEquals(77, x);
     }
 
     public void testWrapFunction() {
-        Function0V c = Function0V.wrap(new Function0V() {
-            public void apply() {
-                x = 77;
-            }
-        });
+        Function0V r = () -> { x = 77; };
+        Function0V c = Function0V.wrap(r);
         c.apply();
         c.toString();
         assertEquals(77, x);

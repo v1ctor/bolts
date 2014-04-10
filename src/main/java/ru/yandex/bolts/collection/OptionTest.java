@@ -1,5 +1,10 @@
 package ru.yandex.bolts.collection;
 
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
+
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.impl.test.SerializationUtils;
@@ -35,7 +40,7 @@ public class OptionTest extends TestCase {
 
     public void testOrElseNotCalled() {
         Option<String> o = Option.some("ss");
-        String got = o.orElse(throwFactory()).orElse(throwFactory()).get();
+        String got = o.orElse(this.<Option<String>>throwFactory()).orElse(this.<Option<String>>throwFactory()).get();
         assertEquals("ss", got);
     }
 
@@ -43,7 +48,7 @@ public class OptionTest extends TestCase {
         Option<String> s = Option.some("a");
         Option<String> n = Option.none();
         assertEquals("a", s.getOrElse("b"));
-        assertEquals("a", s.getOrElse(throwFactory()));
+        assertEquals("a", s.getOrElse(this.<String>throwFactory()));
         assertEquals("b", n.getOrElse("b"));
         assertEquals("b", n.getOrElse(Function0.constF("b")));
         assertEquals("a", s.getOrNull());
@@ -69,9 +74,20 @@ public class OptionTest extends TestCase {
         assertEquals(s3, Option.some(3));
     }
 
-    protected Function0 throwFactory() {
-        return new Function0<Object>() {
-            public Object apply() {
+    public void testX() {
+        assertEquals(Option.x(Optional.of(42)), Option.some(42));
+        assertEquals(Option.x(Optional.empty()), Option.none());
+        assertEquals(Option.x(OptionalInt.of(42)), Option.some(42));
+        assertEquals(Option.x(OptionalInt.empty()), Option.none());
+        assertEquals(Option.x(OptionalLong.of(42L)), Option.some(42L));
+        assertEquals(Option.x(OptionalLong.empty()), Option.none());
+        assertEquals(Option.x(OptionalDouble.of(42.0d)), Option.some(42.0d));
+        assertEquals(Option.x(OptionalDouble.empty()), Option.none());
+    }
+
+    protected <T> Function0<T> throwFactory() {
+        return new Function0<T>() {
+            public T apply() {
                 throw new AssertionError();
             }
         };

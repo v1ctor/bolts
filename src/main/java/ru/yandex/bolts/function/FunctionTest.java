@@ -44,13 +44,11 @@ public class FunctionTest extends TestCase {
     private int x = 0;
 
     public void testIngoreResult() {
-        Function1V o = new Function() {
-            public Object apply(Object o) {
-                assertEquals(o, "a");
-                x = 17;
-                return o;
-            }
-        }.ignoreResult();
+        Function1V o = ((Function) obj -> {
+            assertEquals(obj, "a");
+            x = 17;
+            return obj;
+        }).ignoreResult();
         o.apply("a");
         assertEquals(17, x);
         o.toString();

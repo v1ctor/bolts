@@ -17,13 +17,14 @@ import ru.yandex.bolts.internal.Validate;
  *
  * @author Stepan Koltsov
  */
-public abstract class Function2<A, B, R> {
-    public abstract R apply(A a, B b);
+@FunctionalInterface
+public interface Function2<A, B, R> {
+    R apply(A a, B b);
 
 
 
     /** Bind first param to the given value */
-    public Function<B, R> bind1(final A a) {
+    default Function<B, R> bind1(final A a) {
         return new Function<B, R>() {
             public R apply(B b) {
                 return Function2.this.apply(a, b);
@@ -36,7 +37,7 @@ public abstract class Function2<A, B, R> {
     }
 
     /** Bind second param to the given value */
-    public Function<A, R> bind2(final B b) {
+    default Function<A, R> bind2(final B b) {
         return new Function<A, R>() {
             public R apply(A a) {
                 return Function2.this.apply(a, b);
@@ -49,7 +50,7 @@ public abstract class Function2<A, B, R> {
     }
 
 
-    public static <A, B, R> Function2<Function2<A, B, R>, A, Function<B, R>> bind1F2() {
+    static <A, B, R> Function2<Function2<A, B, R>, A, Function<B, R>> bind1F2() {
         return new Function2<Function2<A, B, R>, A, Function<B, R>>() {
             public Function<B, R> apply(Function2<A, B, R> f, A a) {
                 return f.bind1(a);
@@ -61,11 +62,11 @@ public abstract class Function2<A, B, R> {
         };
     }
 
-    public Function<A, Function<B, R>> bind1F() {
+    default Function<A, Function<B, R>> bind1F() {
         return Function2.<A, B, R>bind1F2().bind1(this);
     }
 
-    public static <A, B, R> Function2<Function2<A, B, R>, B, Function<A, R>> bind2F2() {
+    static <A, B, R> Function2<Function2<A, B, R>, B, Function<A, R>> bind2F2() {
         return new Function2<Function2<A, B, R>, B, Function<A, R>>() {
             public Function<A, R> apply(Function2<A, B, R> f, B b) {
                 return f.bind2(b);
@@ -77,12 +78,12 @@ public abstract class Function2<A, B, R> {
         };
     }
 
-    public Function<B, Function<A, R>> bind2F() {
+    default Function<B, Function<A, R>> bind2F() {
         return Function2.<A, B, R>bind2F2().bind1(this);
     }
 
 
-    public Function<Tuple2<A, B>, R> asFunction() {
+    default Function<Tuple2<A, B>, R> asFunction() {
         return new Function<Tuple2<A,B>, R>() {
             public R apply(Tuple2<A, B> t) {
                 return Function2.this.apply(t.get1(), t.get2());
@@ -90,7 +91,7 @@ public abstract class Function2<A, B, R> {
         };
     }
 
-    public Function2<B, A, R> swap() {
+    default Function2<B, A, R> swap() {
         return new Function2<B, A, R>() {
             public R apply(B b, A a) {
                 return Function2.this.apply(a, b);
@@ -98,7 +99,7 @@ public abstract class Function2<A, B, R> {
         };
     }
 
-    public <S> Function2<A, B, S> andThen(final Function<? super R, ? extends S> f) {
+    default <S> Function2<A, B, S> andThen(final Function<? super R, ? extends S> f) {
         return new Function2<A, B, S>() {
             public S apply(A a, B b) {
                 return f.apply(Function2.this.apply(a, b));
@@ -106,7 +107,7 @@ public abstract class Function2<A, B, R> {
         };
     }
 
-    public <C> Function2<C, B, R> compose1(final Function<? super C, ? extends A> f) {
+    default <C> Function2<C, B, R> compose1(final Function<? super C, ? extends A> f) {
         return new Function2<C, B, R>() {
             public R apply(C c, B b) {
                 return Function2.this.apply(f.apply(c), b);
@@ -114,7 +115,7 @@ public abstract class Function2<A, B, R> {
         };
     }
 
-    public <C> Function2<A, C, R> compose2(final Function<? super C, ? extends B> f) {
+    default <C> Function2<A, C, R> compose2(final Function<? super C, ? extends B> f) {
         return new Function2<A, C, R>() {
             public R apply(A a, C c) {
                 return Function2.this.apply(a, f.apply(c));
@@ -123,11 +124,11 @@ public abstract class Function2<A, B, R> {
     }
 
     @SuppressWarnings("unchecked")
-    public <A1, B1, R1> Function2<A1, B1, R1> uncheckedCast() {
+    default <A1, B1, R1> Function2<A1, B1, R1> uncheckedCast() {
         return (Function2<A1, B1, R1>) this;
     }
 
-    public Function2<A, B, R> memoize() {
+    default Function2<A, B, R> memoize() {
         return new Function2<A, B, R>() {
             private final Function<Tuple2<A, B>, R> f = Function2.this.asFunction().memoize();
             public R apply(A a, B b) {
@@ -137,7 +138,7 @@ public abstract class Function2<A, B, R> {
     }
 
     @SuppressWarnings("unchecked")
-    public static <A, B, R> Function2<A, B, R> wrap(final Method method) {
+    static <A, B, R> Function2<A, B, R> wrap(final Method method) {
         if ((method.getModifiers() & Modifier.STATIC) != 0) {
             Validate.isTrue(method.getParameterTypes().length == 2, "static method must have 2 arguments, " + method);
             return new Function2<A, B, R>() {

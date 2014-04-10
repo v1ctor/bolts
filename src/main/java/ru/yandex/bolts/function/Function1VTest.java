@@ -16,11 +16,7 @@ public class Function1VTest extends TestCase {
     }
 
     public void testBind() {
-        Function0V cl = new Function1V() {
-            public void apply(Object o) {
-                assertEquals("a", o);
-            }
-        }.bind("a");
+        Function0V cl = ((Function1V) (o -> assertEquals("a", o))).bind("a");
         cl.apply();
         cl.toString();
     }

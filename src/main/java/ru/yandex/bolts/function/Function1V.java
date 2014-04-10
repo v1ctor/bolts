@@ -5,16 +5,17 @@ package ru.yandex.bolts.function;
 /**
  * @author Stepan Koltsov
  */
-public abstract class Function1V<A> {
+@FunctionalInterface
+public interface Function1V<A> {
 
-    public abstract void apply(A a);
+    void apply(A a);
 
     /** (f compose g)(x) = f(g(x)) */
-    public <B> Function1V<B> compose(final Function<B, A> g) {
+    default <B> Function1V<B> compose(final Function<B, A> g) {
         return g.andThen(this);
     }
 
-    public Function0V bind(final A param) {
+    default Function0V bind(final A param) {
         return new Function0V() {
             public void apply() {
                 Function1V.this.apply(param);
@@ -22,7 +23,7 @@ public abstract class Function1V<A> {
         };
     }
 
-    public static <A> Function2<Function1V<A>, A, Function0V> bindF2() {
+    static <A> Function2<Function1V<A>, A, Function0V> bindF2() {
         return new Function2<Function1V<A>, A, Function0V>() {
             public Function0V apply(Function1V<A> f, A a) {
                 return f.bind(a);
@@ -30,11 +31,11 @@ public abstract class Function1V<A> {
         };
     }
 
-    public Function<A, Function0V> bindF() {
+    default Function<A, Function0V> bindF() {
         return Function1V.<A>bindF2().bind1(this);
     }
 
-    public Function<A, A> asFunctionReturnParam() {
+    default Function<A, A> asFunctionReturnParam() {
         return new Function<A, A>() {
             public A apply(A a) {
                 Function1V.this.apply(a);
@@ -43,7 +44,7 @@ public abstract class Function1V<A> {
         };
     }
 
-    public <R> Function<A, R> asFunctionReturn(final Function0<R> rv) {
+    default <R> Function<A, R> asFunctionReturn(final Function0<R> rv) {
         if (rv == null) throw new IllegalArgumentException("rv constructor must not be null");
         return new Function<A, R>() {
             public R apply(A a) {
@@ -53,20 +54,20 @@ public abstract class Function1V<A> {
         };
     }
 
-    public <R> Function<A, R> asFunctionReturnValue(R rv) {
+    default <R> Function<A, R> asFunctionReturnValue(R rv) {
         return asFunctionReturn(Function0.constF(rv));
     }
 
-    public <B> Function<A, B> asFunctionReturnNull() {
+    default <B> Function<A, B> asFunctionReturnNull() {
         return asFunctionReturnValue(null);
     }
 
     @SuppressWarnings("unchecked")
-    public <B> Function1V<B> uncheckedCast() {
+    default <B> Function1V<B> uncheckedCast() {
         return (Function1V<B>) this;
     }
 
-    public static <A> Function1V<A> nop() {
+    static <A> Function1V<A> nop() {
         return new Function1V<A>() {
             public void apply(A a) {
             }

@@ -274,7 +274,8 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @Override
     public <B> Tuple2List<E, B> zipWith(final Function<? super E, ? extends B> f) {
-        return zip(map(f));
+        ListF<? extends B> that = map(f);
+        return zip(that);
     }
 
     private class ReadOnlyItr extends SimpleListIterator {
