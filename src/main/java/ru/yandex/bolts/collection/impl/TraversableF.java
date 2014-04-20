@@ -4,7 +4,6 @@ import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
@@ -14,9 +13,6 @@ import ru.yandex.bolts.function.forhuman.Comparator;
  * @author Stepan Koltsov
  */
 public interface TraversableF<E> {
-
-    /** Call function for each element */
-    void forEach(Function1V<? super E> f);
 
     /** True iff all elements match predicate */
     boolean forAll(Function1B<? super E> p);

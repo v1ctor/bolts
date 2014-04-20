@@ -1,14 +1,21 @@
 package ru.yandex.bolts.function;
 
+import java.util.function.Consumer;
+
 
 
 /**
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function1V<A> {
+public interface Function1V<A> extends Consumer<A> {
 
     void apply(A a);
+
+    @Override
+    default void accept(A a) {
+        apply(a);
+    }
 
     /** (f compose g)(x) = f(g(x)) */
     default <B> Function1V<B> compose(final Function<B, A> g) {
