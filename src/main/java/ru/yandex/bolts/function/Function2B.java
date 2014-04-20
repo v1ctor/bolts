@@ -11,10 +11,11 @@ import ru.yandex.bolts.internal.Validate;
 /**
  * @author Stepan Koltsov
  */
-public abstract class Function2B<A, B> {
-    public abstract boolean apply(A a, B b);
+@FunctionalInterface
+public interface Function2B<A, B> {
+    boolean apply(A a, B b);
 
-    public Function1B<B> bind1(final A a) {
+    default Function1B<B> bind1(final A a) {
         return new Function1B<B>() {
             public boolean apply(B b) {
                 return Function2B.this.apply(a, b);
@@ -22,7 +23,7 @@ public abstract class Function2B<A, B> {
         };
     }
 
-    public Function1B<A> bind2(final B b) {
+    default Function1B<A> bind2(final B b) {
         return new Function1B<A>() {
             public boolean apply(A a) {
                 return Function2B.this.apply(a, b);
@@ -42,7 +43,7 @@ public abstract class Function2B<A, B> {
         };
     }
 
-    public Function<A, Function1B<B>> bind1F() {
+    default Function<A, Function1B<B>> bind1F() {
         return Function2B.<A, B>bind1F2().bind1(this);
     }
 
@@ -58,11 +59,11 @@ public abstract class Function2B<A, B> {
         };
     }
 
-    public Function<B, Function1B<A>> bind2F() {
+    default Function<B, Function1B<A>> bind2F() {
         return Function2B.<A, B>bind2F2().bind1(this);
     }
 
-    public Function1B<Tuple2<A, B>> asFunction1B() {
+    default Function1B<Tuple2<A, B>> asFunction1B() {
         return new Function1B<Tuple2<A, B>>() {
             public boolean apply(Tuple2<A, B> a) {
                 return Function2B.this.apply(a.get1(), a.get2());
@@ -70,7 +71,7 @@ public abstract class Function2B<A, B> {
         };
     }
 
-    public Function<Tuple2<A, B>, Boolean> asFunction() {
+    default Function<Tuple2<A, B>, Boolean> asFunction() {
         return new Function<Tuple2<A, B>, Boolean>() {
             public Boolean apply(Tuple2<A, B> a) {
                 return Function2B.this.apply(a.get1(), a.get2());
@@ -105,7 +106,7 @@ public abstract class Function2B<A, B> {
         };
     }
 
-    public Function2B<A, B> notF() {
+    default Function2B<A, B> notF() {
         return new Function2B<A, B>() {
             public boolean apply(A a, B b) {
                 return !Function2B.this.apply(a, b);
@@ -125,7 +126,7 @@ public abstract class Function2B<A, B> {
     }
 
     @SuppressWarnings("unchecked")
-    public <C, D> Function2B<C, D> uncheckedCast() {
+    default <C, D> Function2B<C, D> uncheckedCast() {
         return (Function2B<C, D>) this;
     }
 
@@ -141,7 +142,7 @@ public abstract class Function2B<A, B> {
         };
     }
 
-    public <C> Function2B<C, B> compose1(final Function<? super C, ? extends A> f) {
+    default <C> Function2B<C, B> compose1(final Function<? super C, ? extends A> f) {
         return new Function2B<C, B>() {
             public boolean apply(C c, B b) {
                 return Function2B.this.apply(f.apply(c), b);
@@ -149,7 +150,7 @@ public abstract class Function2B<A, B> {
         };
     }
 
-    public <C> Function2B<A, C> compose2(final Function<? super C, ? extends B> f) {
+    default <C> Function2B<A, C> compose2(final Function<? super C, ? extends B> f) {
         return new Function2B<A, C>() {
             public boolean apply(A a, C c) {
                 return Function2B.this.apply(a, f.apply(c));
@@ -163,7 +164,7 @@ public abstract class Function2B<A, B> {
     public static <A> Function2B<A, A> equalsF() {
         return new Function2B<A, A>() {
             public boolean apply(A a, A b) {
-                return equals(a, b);
+                return Function2B.equals(a, b);
             }
 
             @Override
@@ -181,7 +182,7 @@ public abstract class Function2B<A, B> {
         return Cf.Object.equals(a, b);
     }
 
-    public Function2B<A, B> memoize() {
+    default Function2B<A, B> memoize() {
         return asFunction2B(asFunction().memoize());
     }
 
