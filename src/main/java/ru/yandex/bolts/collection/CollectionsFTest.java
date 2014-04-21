@@ -85,29 +85,29 @@ public class CollectionsFTest extends TestCase {
         assertEquals(Cf.set(97, 98, 122), unique.getTs("baz"));
     }
 
-//    @SuppressWarnings("unchecked")
-//    public void testFilterFandSortFandListF() {
-//        ListF<SetF<Integer>> data = Cf.list(
-//                Cf.set(5, -3, 2, 1),
-//                Cf.set(8, 10, -9, 4),
-//                Cf.set(0, 7, -1, -1),
-//                Cf.set(-4),
-//                Cf.<Integer>set());
-//
-//        ListF<ListF<Integer>> positiveIntegers = data.map(
-//                Cf.<Integer>filterF(new Function1B<Integer>() {
-//                    public boolean apply(Integer integer) {
-//                        return integer >= 0;
-//                    }})
-//                .andThen(Cf.<Integer>sortedF(Cf.Integer.comparator()))
-//                .andThen(Cf.<Integer>toListF()));
-//
-//        assertEquals(Cf.list(
-//                Cf.list(1, 2, 5),
-//                Cf.list(4, 8, 10),
-//                Cf.list(0, 7),
-//                Cf.list(), Cf.list()), positiveIntegers);
-//    }
+    @SuppressWarnings("unchecked")
+    public void testFilterFandSortFandListF() {
+        ListF<SetF<Integer>> data = Cf.list(
+                Cf.set(5, -3, 2, 1),
+                Cf.set(8, 10, -9, 4),
+                Cf.set(0, 7, -1, -1),
+                Cf.set(-4),
+                Cf.<Integer>set());
+
+        ListF<ListF<Integer>> positiveIntegers = data.map(
+                Cf.Set.<Integer>filterF(new Function1B<Integer>() {
+                    public boolean apply(Integer integer) {
+                        return integer >= 0;
+                    }})
+                .andThen(Cf.<Integer>sortedF(Cf.Integer.comparator()))
+                .andThen(Cf.<Integer>toListF()));
+
+        assertEquals(Cf.list(
+                Cf.list(1, 2, 5),
+                Cf.list(4, 8, 10),
+                Cf.list(0, 7),
+                Cf.list(), Cf.list()), positiveIntegers);
+    }
 
     public void testFlatten() {
         assertEquals(Cf.list(1, 2, 3, 4), Cf.flatten(Cf.list(Cf.list(1, 2), Cf.list(3, 4))));
