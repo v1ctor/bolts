@@ -21,11 +21,7 @@ public class ReflectionUtils {
     }
 
     public static Function1B<Method> isFinalF() {
-        return new Function1B<Method>() {
-            public boolean apply(Method method) {
-                return (method.getModifiers() & Modifier.FINAL) != 0;
-            }
-        };
+        return method -> (method.getModifiers() & Modifier.FINAL) != 0;
     }
 
     @SuppressWarnings("unchecked")
@@ -60,19 +56,11 @@ public class ReflectionUtils {
     }
 
     public static Function<Constructor<?>, Integer> getConstructorParameterCountF() {
-        return new Function<Constructor<?>, Integer>() {
-            public Integer apply(Constructor<?> constructor) {
-                return constructor.getParameterTypes().length;
-            }
-        };
+        return constructor -> constructor.getParameterTypes().length;
     }
 
     public static Function1B<Constructor<?>> isPublicOrProtectedF() {
-        return new Function1B<Constructor<?>>() {
-            public boolean apply(Constructor<?> c) {
-                return (c.getModifiers() & (Modifier.PUBLIC | Modifier.PROTECTED)) != 0;
-            }
-        };
+        return c -> (c.getModifiers() & (Modifier.PUBLIC | Modifier.PROTECTED)) != 0;
     }
 
     public static String getSimpleName(String className) {

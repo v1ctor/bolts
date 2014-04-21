@@ -5,7 +5,6 @@ import java.io.FileWriter;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
-import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.meta.FunctionType;
 import ru.yandex.bolts.function.meta.FunctionType.ReturnType;
 
@@ -18,11 +17,7 @@ public class GenerateFunctions {
     }
 
     private static ListF<String> paramTypeLetters(int paramCount) {
-        return Cf.range(0, paramCount).map(new Function<Integer, String>() {
-            public String apply(Integer a) {
-                return "" + (char) ('A' + a);
-            }
-        });
+        return Cf.range(0, paramCount).map(a -> "" + (char) ('A' + a));
     }
 
     private static String returnTypeName(ReturnType returnType) {
