@@ -17,7 +17,7 @@ public class GenerateFunctions {
     }
 
     private static ListF<String> paramTypeLetters(int paramCount) {
-        return Cf.range(0, paramCount).map(a -> "" + (char) ('A' + a));
+        return Cf.range(0, paramCount).map((Integer a) -> "" + (char) ('A' + a));
     }
 
     private static String returnTypeName(ReturnType returnType) {
