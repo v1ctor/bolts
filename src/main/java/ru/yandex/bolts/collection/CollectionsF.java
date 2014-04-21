@@ -642,19 +642,9 @@ public class CollectionsF {
         };
     }
 
-    /** @deprecated */
-    public static <E> Function<List<E>, ListF<E>> wrapListM() {
-        return wrapListF();
-    }
-
     /** {@link #x(List)} as function */
     public static <E> Function<List<E>, ListF<E>> wrapListF() {
         return List.wrapF();
-    }
-
-    /** @deprecated */
-    public static <E> Function<Set<E>, SetF<E>> wrapSetM() {
-        return wrapSetF();
     }
 
     /** {@link #x(Set)} as function */
@@ -666,11 +656,6 @@ public class CollectionsF {
         };
     }
 
-    /** @deprecated */
-    public static <K, V> Function<Map<K, V>, MapF<K, V>> wrapMapM() {
-        return wrapMapF();
-    }
-
     /** {@link #x(Map)} as function */
     public static <K, V> Function<Map<K, V>, MapF<K, V>> wrapMapF() {
         return new Function<Map<K, V>, MapF<K, V>>() {
@@ -678,11 +663,6 @@ public class CollectionsF {
                 return x(map);
             }
         };
-    }
-
-    /** @deprecated */
-    public static <E> Function<Iterator<E>, IteratorF<E>> wrapIteratorM() {
-        return wrapIteratorF();
     }
 
     /** {@link #x(Iterator)} as function */
@@ -701,11 +681,6 @@ public class CollectionsF {
                 return x(enumeration);
             }
         };
-    }
-
-    /** @deprecated */
-    public static <T> Function<Collection<T>, Integer> sizeM() {
-        return sizeF();
     }
 
     /** {@link Collection#size()} as function */

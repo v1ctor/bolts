@@ -7,7 +7,6 @@ import java.util.Iterator;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
-import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
@@ -87,11 +86,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     <A, B, C> Tuple3List<A, B, C> toTuple3List(Function<? super E, ? extends A> fa, Function<? super E, ? extends B> fb, Function<? super E, ? extends C> fc);
 
-    /**
-     * @deprecated
-     */
-    Function1B<E> containsP();
-
     /** Delegate to {@link #contains(Object)} */
     Function1B<E> containsF();
 
@@ -119,9 +113,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      * Group elements by applying given function to each element.
      */
     <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m);
-
-    /** @deprecated */
-    Function1V<E> addOp();
 
     /** Delegate to {@link #add(Object)} */
     Function1V<E> addF();

@@ -9,7 +9,6 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.Tuple3;
 import ru.yandex.bolts.collection.Tuple4;
-import ru.yandex.bolts.function.misc.StringF;
 
 /**
  * Examples of tuples.
@@ -40,7 +39,7 @@ public class TupleExample {
 
         ListF<String> cities =
                 data
-                .map(StringF.split3F(";")) // split columns
+                .map(Cf.String.split3F(";")) // split columns
                 .map(Tuple3.<String, String, String>get1F()); // get the first column
 
         assertEquals(Cf.list("Moscow", "New York", "Rio de Janeiro"), cities);
@@ -58,7 +57,7 @@ public class TupleExample {
 
         ListF<Tuple3<String, String, Double>> dataParsed =
                 data
-                .map(StringF.split3F(";")) // split columns
+                .map(Cf.String.split3F(";")) // split columns
                 .map(Tuple3.<String, String, String, Double>map3F(Cf.Double.parseF())); // parse the third column
 
         ListF<Tuple3<String, String, Double>> expected = Cf.list(

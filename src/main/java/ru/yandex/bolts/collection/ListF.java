@@ -116,13 +116,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     Option<E> reduceRightO(Function2<E, E, E> f);
 
     /**
-     * Unmodifiable view or copy of this collection
-     * @deprecated
-     * @see #makeReadOnly()
-     */
-    ListF<E> unmodifiable();
-
-    /**
      * Return unmodifiable list with content of this list.
      * This list becomes invalid after method invocation.
      *
