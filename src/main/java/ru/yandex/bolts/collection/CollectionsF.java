@@ -41,8 +41,6 @@ import ru.yandex.bolts.type.CharSequenceType;
 import ru.yandex.bolts.type.CharacterType;
 import ru.yandex.bolts.type.ObjectType;
 import ru.yandex.bolts.type.StringType;
-import ru.yandex.bolts.type.collection.AnyListType;
-import ru.yandex.bolts.type.collection.AnySetType;
 import ru.yandex.bolts.type.collection.ArrayListType;
 import ru.yandex.bolts.type.collection.CollectionType;
 import ru.yandex.bolts.type.collection.ListType;
@@ -704,31 +702,6 @@ public class CollectionsF {
                 return x(a.iterator());
             }
         };
-    }
-
-    /**
-     * {@link Collection#filter()} as function
-     * @deprecated
-     * @see AnySetType#filterF()
-     * @see AnyListType#filterF()
-     */
-    public static <E> Function2<Collection<E>, Function1B<? super E>, CollectionF<E>> filterF() {
-        return new Function2<Collection<E>, Function1B<? super E>, CollectionF<E>>() {
-            public CollectionF<E> apply(Collection<E> source,
-                    Function1B<? super E> predicate)
-            {
-                return Cf.x(source).filter(predicate);
-            }
-        };
-    }
-
-    /**
-     * {@link Collection#filter()} as function, convenience form
-     */
-    public static <E> Function<Collection<E>, CollectionF<E>> filterF(
-            Function1B<? super E> predicate)
-    {
-        return CollectionsF.<E>filterF().bind2(predicate);
     }
 
     /** {@link Collection#map()} as function */
