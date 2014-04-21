@@ -71,7 +71,7 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
         };
     }
 
-    public static <A> Comparator<A> valueLowC(final A low) {
+    static <A> Comparator<A> valueLowC(final A low) {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
                 if (low == null) {
@@ -127,7 +127,7 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
     }
 
     /** Wrap {@link java.util.Comparator} */
-    public static <A> Comparator<A> wrap(final java.util.Comparator<A> comparator) {
+    static <A> Comparator<A> wrap(final java.util.Comparator<A> comparator) {
         if (comparator instanceof Comparator<?>) return (Comparator<A>) comparator;
         else return new Comparator<A>() {
             public int compare(A o1, A o2) {
@@ -141,7 +141,7 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
     }
 
     /** Wrap {@link Function2I} */
-    public static <A> Comparator<A> wrap(final Function2I<A, A> comparator) {
+    static <A> Comparator<A> wrap(final Function2I<A, A> comparator) {
         if (comparator instanceof Comparator<?>) return (Comparator<A>) comparator;
         else return new Comparator<A>() {
             public int compare(A o1, A o2) {
@@ -163,7 +163,7 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
     /**
      * Compare {@link java.lang.Comparable}s. Null values are less than non-null.
      */
-    public static <A extends java.lang.Comparable<?>> Comparator<A> naturalComparator()  {
+    static <A extends java.lang.Comparable<?>> Comparator<A> naturalComparator()  {
         return new Comparator<A>() {
             @SuppressWarnings("unchecked")
             public int compare(A o1, A o2) {
@@ -192,7 +192,7 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
     /**
      * Always returns <code>0</code>.
      */
-    public static <A> Comparator<A> constEqualComparator() {
+    static <A> Comparator<A> constEqualComparator() {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
                 return 0;

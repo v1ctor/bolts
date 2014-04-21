@@ -5,7 +5,6 @@ package ru.yandex.bolts.function;
 import ru.yandex.bolts.collection.Tuple2;
 
 /**
- * @see fj.F2
  */
 @FunctionalInterface
 public interface Function2V<A, B> {
@@ -13,40 +12,16 @@ public interface Function2V<A, B> {
     void apply(A a, B b);
 
     default Function1V<B> bind1(final A a) {
-        return new Function1V<B>() {
-            public void apply(B b) {
-                Function2V.this.apply(a, b);
-            }
-
-            public String toString() {
-                return Function2V.this + "(" + a + ", _)";
-            }
-        };
+        return b -> apply(a, b);
     }
 
     default Function1V<A> bind2(final B b) {
-        return new Function1V<A>() {
-            public void apply(A a) {
-                Function2V.this.apply(a, b);
-            }
-
-            public String toString() {
-                return Function2V.this + "(_, " + b + ")";
-            }
-        };
+        return a -> apply(a, b);
     }
 
 
     static <A, B> Function2<Function2V<A, B>, A, Function1V<B>> bind1F2() {
-        return new Function2<Function2V<A, B>, A, Function1V<B>>() {
-            public Function1V<B> apply(Function2V<A, B> f, A a) {
-                return f.bind1(a);
-            }
-
-            public String toString() {
-                return "bind1";
-            }
-        };
+        return (f, a) -> f.bind1(a);
     }
 
     default Function<A, Function1V<B>> bind1F() {
@@ -54,15 +29,7 @@ public interface Function2V<A, B> {
     }
 
     static <A, B> Function2<Function2V<A, B>, B, Function1V<A>> bind2F2() {
-        return new Function2<Function2V<A, B>, B, Function1V<A>>() {
-            public Function1V<A> apply(Function2V<A, B> f, B b) {
-                return f.bind2(b);
-            }
-
-            public String toString() {
-                return "bind2";
-            }
-        };
+        return (f, b) -> f.bind2(b);
     }
 
     default Function<B, Function1V<A>> bind2F() {
@@ -70,40 +37,20 @@ public interface Function2V<A, B> {
     }
 
     default Function<Tuple2<A, B>, Object> asFunction() {
-        return new Function<Tuple2<A, B>, Object>() {
-            public Object apply(Tuple2<A, B> t) {
-                Function2V.this.apply(t._1, t._2);
-                return null;
-            }
-
-            public String toString() {
-                return Function2V.this.toString();
-            }
+        return t -> {
+            apply(t._1, t._2);
+            return null;
         };
     }
 
     default Function1V<Tuple2<A, B>> asFunction1V() {
-        return new Function1V<Tuple2<A, B>>() {
-            public void apply(Tuple2<A, B> t) {
-                Function2V.this.apply(t._1, t._2);
-            }
-
-            public String toString() {
-                return Function2V.this.toString();
-            }
-        };
+        return t -> apply(t._1, t._2);
     }
 
     default Function2<A, B, Object> asFunction2() {
-        return new Function2<A, B, Object>() {
-            public Object apply(A a, B b) {
-                Function2V.this.apply(a, b);
-                return null;
-            }
-
-            public String toString() {
-                return Function2V.this.toString();
-            }
+        return (a, b) -> {
+            apply(a, b);
+            return null;
         };
     }
 

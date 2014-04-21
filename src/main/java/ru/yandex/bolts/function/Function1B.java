@@ -4,8 +4,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 
-import org.apache.commons.collections.Predicate;
-
 import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
@@ -13,38 +11,25 @@ import ru.yandex.bolts.internal.Validate;
 /**
  * Predicate.
  *
- * @see Predicate
+ * @see java.util.function.Predicate
  *
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function1B<A> {
+public interface Function1B<A> extends java.util.function.Predicate<A> {
     boolean apply(A a);
 
-    default Function<A, Boolean> asFunction() {
-        return new Function<A, Boolean>() {
-            public Boolean apply(A a) {
-                return Function1B.this.apply(a);
-            }
+    @Override
+    default boolean test(A a) {
+        return apply(a);
+    };
 
-            @Override
-            public String toString() {
-                return Function1B.this.toString();
-            }
-        };
+    default Function<A, Boolean> asFunction() {
+        return this::apply;
     }
 
     static <A> Function1B<A> asFunction1B(final Function<A, Boolean> f) {
-        return new Function1B<A>() {
-            public boolean apply(A a) {
-                return f.apply(a);
-            }
-
-            @Override
-            public String toString() {
-                return f.toString();
-            }
-        };
+        return a -> f.apply(a);
     }
 
     @SuppressWarnings("unchecked")
@@ -64,57 +49,17 @@ public interface Function1B<A> {
 
     /** Not(this) */
     default Function1B<A> notF() {
-        return new Function1B<A>() {
-            public boolean apply(A a) {
-                return !Function1B.this.apply(a);
-            }
-
-            public Function1B<A> notF() {
-                return Function1B.this;
-            }
-
-            public String toString() {
-                return "not(" + Function1B.this + ")";
-            }
-        };
+        return a -> !apply(a);
     }
 
     /** Or */
     default Function1B<A> orF(final Function1B<A> p) {
-        return new Function1B<A>() {
-            public boolean apply(A a) {
-                return Function1B.this.apply(a) || p.apply(a);
-            }
-
-            /*
-            public Function1B<A> orF(Function1B<A> last) {
-                return Function1B.anyOfF(Function1B.this, p, last);
-            }
-            */
-
-            public String toString() {
-                return "or(" + Function1B.this + ", " + p + ")";
-            }
-        };
+        return a -> apply(a) || p.apply(a);
     }
 
     /** And */
     default Function1B<A> andF(final Function1B<A> p) {
-        return new Function1B<A>() {
-            public boolean apply(A a) {
-                return Function1B.this.apply(a) && p.apply(a);
-            }
-
-            /*
-            public Function1B<A> andF(Function1B<A> last) {
-                return Function1B.allOfF(Function1B.this, p, last);
-            }
-            */
-
-            public String toString() {
-                return "and(" + Function1B.this + ", " + p + ")";
-            }
-        };
+        return a -> apply(a) && p.apply(a);
     }
 
     /**
@@ -133,85 +78,27 @@ public interface Function1B<A> {
 
     /** Check argument is not null */
     static <T> Function1B<T> notNullF() {
-        return new Function1B<T>() {
-            public boolean apply(T o) {
-                return o != null;
-            }
-
-            public Function1B<T> nullIsFalseF() {
-                return this;
-            }
-
-            public String toString() {
-                return "notNull";
-            }
-        };
+        return o -> o != null;
     }
 
     /** Function that always returns <code>true</code> */
     static <B> Function1B<B> trueF() {
-        return new Function1B<B>() {
-            public boolean apply(B b) {
-                return true;
-            }
-
-            public Function1B<B> orF(Function1B<B> p) {
-                return this;
-            }
-
-            public Function1B<B> andF(Function1B<B> p) {
-                return p;
-            }
-
-            public Function1B<B> notF() {
-                return falseF();
-            }
-
-            public String toString() {
-                return "true";
-            }
-        };
+        return b -> true;
     }
 
     /** Function that always returns <code>false</code> */
     static <B> Function1B<B> falseF() {
-        return new Function1B<B>() {
-            public boolean apply(B b) {
-                return false;
-            }
-
-            public Function1B<B> orF(Function1B<B> p) {
-                return p;
-            }
-
-            public Function1B<B> andF(Function1B<B> p) {
-                return this;
-            }
-
-            public Function1B<B> notF() {
-                return trueF();
-            }
-
-            public String toString() {
-                return "false";
-            }
-        };
+        return b -> false;
     }
 
     static <B> Function1B<B> allOfF(final Collection<? extends Function1B<B>> functions) {
         if (functions.size() == 0) return trueF();
         else if (functions.size() == 1) return functions.iterator().next();
-        else return new Function1B<B>() {
-            public boolean apply(B b) {
-                for (Function1B<? super B> Function1B : functions) {
-                    if (!Function1B.apply(b)) return false;
-                }
-                return true;
+        else return b -> {
+            for (Function1B<? super B> Function1B : functions) {
+                if (!Function1B.apply(b)) return false;
             }
-
-            public String toString() {
-                return CollectionsF.x(functions).mkString("allOf(", ", ", ")");
-            }
+            return true;
         };
     }
 
@@ -222,17 +109,11 @@ public interface Function1B<A> {
     static <B> Function1B<B> anyOfF(final Collection<? extends Function1B<B>> functions) {
         if (functions.size() == 0) return falseF();
         else if (functions.size() == 1) return functions.iterator().next();
-        else return new Function1B<B>() {
-            public boolean apply(B b) {
-                for (Function1B<? super B> f : functions) {
-                    if (f.apply(b)) return true;
-                }
-                return false;
+        else return b -> {
+            for (Function1B<? super B> f : functions) {
+                if (f.apply(b)) return true;
             }
-
-            public String toString() {
-                return CollectionsF.x(functions).mkString("anyOf(", ", ", ")");
-            }
+            return false;
         };
     }
 
@@ -241,28 +122,12 @@ public interface Function1B<A> {
     }
 
     static <B> Function1B<B> instanceOfF(final Class<?> cl) {
-        return new Function1B<B>() {
-            public boolean apply(B b) {
-                return cl.isInstance(b);
-            }
-
-            public String toString() {
-                return "instanceof " + cl.getName();
-            }
-        };
+        return b -> cl.isInstance(b);
     }
 
     /** Wrap */
     static <B> Function1B<B> wrap(final Function<B, Boolean> mapper) {
-        return new Function1B<B>() {
-            public boolean apply(B b) {
-                return mapper.apply(b);
-            }
-
-            public String toString() {
-                return mapper.toString();
-            }
-        };
+        return b -> mapper.apply(b);
     }
 
     default Function1B<A> memoize() {
@@ -277,18 +142,10 @@ public interface Function1B<A> {
         Validate.isTrue(method.getReturnType().equals(boolean.class) || method.getReturnType().equals(Boolean.class), "method return type must be boolean or Boolean");
         if ((method.getModifiers() & Modifier.STATIC) != 0) {
             Validate.isTrue(method.getParameterTypes().length == 1, "static method must have single argument, " + method);
-            return new Function1B<A>() {
-                public boolean apply(A a) {
-                    return (Boolean) ReflectionUtils.invoke(method, null, a);
-                }
-            };
+            return a -> (Boolean) ReflectionUtils.invoke(method, null, a);
         } else {
             Validate.isTrue(method.getParameterTypes().length == 0, "instance method must have no arguments, " + method);
-            return new Function1B<A>() {
-                public boolean apply(A a) {
-                    return (Boolean) ReflectionUtils.invoke(method, a);
-                }
-            };
+            return a -> (Boolean) ReflectionUtils.invoke(method, a);
         }
     }
 

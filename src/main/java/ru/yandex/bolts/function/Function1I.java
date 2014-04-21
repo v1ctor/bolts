@@ -4,33 +4,15 @@ package ru.yandex.bolts.function;
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function1I<A> extends java.lang.Comparable<A>  {
+public interface Function1I<A> extends java.lang.Comparable<A> {
     int apply(A a);
 
     default Function<A, Integer> asFunction() {
-        return new Function<A, Integer>() {
-            public Integer apply(A a) {
-                return Function1I.this.apply(a);
-            }
-
-            @Override
-            public String toString() {
-                return Function1I.this.toString();
-            }
-        };
+        return this::apply;
     }
 
     static <A> Function1I<A> asFunction1I(final Function<A, Integer> f) {
-        return new Function1I<A>() {
-            public int apply(A a) {
-                return f.apply(a);
-            }
-
-            @Override
-            public String toString() {
-                return f.toString();
-            }
-        };
+        return a -> f.apply(a);
     }
 
     @Override
@@ -88,80 +70,32 @@ public interface Function1I<A> extends java.lang.Comparable<A>  {
 
     /** Greater Function1B */
     default Function1B<A> gtF() {
-        return new OperatorFunction1B<A>(Function1I.this) {
-            public boolean apply(A a) {
-                return Function1I.this.gt(a);
-            }
-
-            protected String op() {
-                return "gt";
-            }
-        };
+        return this::gt;
     }
 
     /** Greater or equal Function1B */
     default Function1B<A> geF() {
-        return new OperatorFunction1B<A>(Function1I.this) {
-            public boolean apply(A a) {
-                return Function1I.this.ge(a);
-            }
-
-            public String op() {
-                return "ge";
-            }
-        };
+        return this::ge;
     }
 
     /** Equal Function1B */
     default Function1B<A> eqF() {
-        return new OperatorFunction1B<A>(Function1I.this) {
-            public boolean apply(A a) {
-                return Function1I.this.eq(a);
-            }
-
-            public String op() {
-                return "eq";
-            }
-        };
+        return this::eq;
     }
 
     /** Not equal Function1B */
     default Function1B<A> neF() {
-        return new OperatorFunction1B<A>(Function1I.this) {
-            public boolean apply(A a) {
-                return Function1I.this.ne(a);
-            }
-
-            public String op() {
-                return "ne";
-            }
-        };
+        return this::ne;
     }
 
     /** Less than Function1B */
     default Function1B<A> ltF() {
-        return new OperatorFunction1B<A>(Function1I.this) {
-            public boolean apply(A a) {
-                return Function1I.this.lt(a);
-            }
-
-            public String op() {
-                return "lt";
-            }
-        };
+        return this::lt;
     }
 
     /** Less or equal Function1B */
     default Function1B<A> leF() {
-        return new OperatorFunction1B<A>(Function1I.this) {
-            public boolean apply(A a) {
-                return Function1I.this.le(a);
-            }
-
-            public String op() {
-                return "le";
-            }
-        };
+        return this::le;
     }
 
     default Function1B<A> opF(Function2I.Operator op) {
@@ -178,15 +112,7 @@ public interface Function1I<A> extends java.lang.Comparable<A>  {
 
     static <A> Function1I<A> wrap(final java.lang.Comparable<A> comparable) {
         if (comparable instanceof Function1I) return (Function1I<A>) comparable;
-        else return new Function1I<A>() {
-            public int apply(A o) {
-                return comparable.compareTo(o);
-            }
-
-            public String toString() {
-                return comparable.toString();
-            }
-        };
+        else return comparable::compareTo;
     }
 
     default Function1I<A> memoize() {

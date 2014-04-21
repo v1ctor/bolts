@@ -114,7 +114,7 @@ public class ComparatorTest extends TestCase {
 
     public void testInvertInvert() {
         Comparator<String> c = Comparator.naturalComparator();
-        assertSame(c, c.invert().invert());
+        assertSame(c.apply("1", "2"), c.invert().invert().apply("1", "2"));
     }
 
 
