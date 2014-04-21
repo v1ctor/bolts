@@ -11,91 +11,47 @@ import ru.yandex.bolts.function.Function1B;
 public class CharacterType extends AnyObjectType<Character> {
 
     public Function1B<Character> isLetterF() {
-        return new Function1B<Character>() {
-            public boolean apply(Character c) {
-                return Character.isLetter(c);
-            }
-        };
+        return Character::isLetter;
     }
 
     public Function1B<Character> isDigitF() {
-        return new Function1B<Character>() {
-            public boolean apply(Character c) {
-                return Character.isDigit(c);
-            }
-        };
+        return Character::isDigit;
     }
 
     public Function1B<Character> isWhitespaceF() {
-        return new Function1B<Character>() {
-            public boolean apply(Character c) {
-                return Character.isWhitespace(c);
-            }
-        };
+        return Character::isWhitespace;
     }
 
     public Function1B<Character> isLetterOrDigitF() {
-        return new Function1B<Character>() {
-            public boolean apply(Character c) {
-                return Character.isLetterOrDigit(c);
-            }
-        };
+        return Character::isLetterOrDigit;
     }
 
     public Function1B<Character> isLowerCaseF() {
-        return new Function1B<Character>() {
-            public boolean apply(Character c) {
-                return Character.isLowerCase(c);
-            }
-        };
+        return Character::isLowerCase;
     }
 
     public Function1B<Character> isUpperCaseF() {
-        return new Function1B<Character>() {
-            public boolean apply(Character c) {
-                return Character.isUpperCase(c);
-            }
-        };
+        return Character::isUpperCase;
     }
 
     public Function<Character, Character> toUpperCaseF() {
-        return new Function<Character, Character>() {
-            public Character apply(Character c) {
-                return Character.toUpperCase(c);
-            }
-        };
+        return Character::toUpperCase;
     }
 
     public Function<Character, Character> toLowerCaseF() {
-        return new Function<Character, Character>() {
-            public Character apply(Character c) {
-                return Character.toLowerCase(c);
-            }
-        };
+        return Character::toLowerCase;
     }
 
     public Function<Character, Character> toUpperCaseF(final Locale locale) {
-        return new Function<Character, Character>() {
-            public Character apply(Character c) {
-                return String.valueOf(c).toUpperCase(locale).charAt(0);
-            }
-        };
+        return c -> String.valueOf(c).toUpperCase(locale).charAt(0);
     }
 
     public Function<Character, Character> toLowerCaseF(final Locale locale) {
-        return new Function<Character, Character>() {
-            public Character apply(Character c) {
-                return String.valueOf(c).toLowerCase(locale).charAt(0);
-            }
-        };
+        return c -> String.valueOf(c).toLowerCase(locale).charAt(0);
     }
 
     public Function<Character, Integer> typeF() {
-        return new Function<Character, Integer>() {
-            public Integer apply(Character c) {
-                return Character.getType(c);
-            }
-        };
+        return Character::getType;
     }
 
     public Function1B<Character> isTypeF(int type) {

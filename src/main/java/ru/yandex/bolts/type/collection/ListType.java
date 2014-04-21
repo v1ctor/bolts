@@ -47,11 +47,7 @@ public class ListType extends AnyListType {
     }
 
     public <A> Function<List<A>, ListF<A>> wrapF() {
-        return new Function<List<A>, ListF<A>>() {
-            public ListF<A> apply(List<A> list) {
-                return ListType.this.wrap(list);
-            }
-        };
+        return this::wrap;
     }
 
 } //~

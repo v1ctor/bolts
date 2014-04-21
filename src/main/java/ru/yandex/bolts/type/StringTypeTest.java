@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import ru.yandex.bolts.collection.Cf;
-import ru.yandex.bolts.collection.ListF;
 
 /**
  * @author ilyak
