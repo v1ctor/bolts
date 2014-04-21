@@ -10,35 +10,36 @@ import ru.yandex.bolts.function.Function2I;
  *
  * @author Stepan Koltsov
  */
-public abstract class Comparator<A> implements Function2I<A, A>, java.util.Comparator<A> {
+@FunctionalInterface
+public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A> {
 
     /** Call {@link #compare(Object, Object)} */
     @Override
-    public final int apply(A a, A b) {
+    default int apply(A a, A b) {
         return compare(a, b);
     }
 
     /** Find max among a and b */
-    public A max(A a, A b) {
+    default A max(A a, A b) {
         if (gt(a, b)) return a;
         else return b;
     }
 
     /** Find min among a and b */
-    public A min(A a, A b) {
+    default A min(A a, A b) {
         if (lt(a, b)) return a;
         else return b;
     }
 
     /** (f compose g)(x) = f(g(x)) */
-    public <B> Comparator<B> compose(Function<B, A> mapper) {
+    default <B> Comparator<B> compose(Function<B, A> mapper) {
         return mapper.andThen(this);
     }
 
     /**
      * Call specified comparator if object are equal by this comparator.
      */
-    public Comparator<A> chainTo(final Comparator<A> comparator) {
+    default Comparator<A> chainTo(final Comparator<A> comparator) {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
                 int r = Comparator.this.compare(o1, o2);
@@ -48,29 +49,12 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
         };
     }
 
-    private static int nullLowCompare(Object o1, Object o2) {
-        return o1 == o2 ? 0 : o1 != null ? 1 : -1;
-    }
-
-    private static <A> int valueLowCompare(A low, A o1, A o2) {
-        if (low == null) {
-            return nullLowCompare(o1, o2);
-        }
-        if (Cf.Object.equals(o1, o2))
-            return 0;
-        if (o1 != null && low.equals(o1))
-            return -1;
-        if (o2 != null && low.equals(o2))
-            return 1;
-        return 0;
-    }
-
     /** Null low comparator */
-    public Comparator<A> nullLowC() {
+    default Comparator<A> nullLowC() {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
                 if (o1 == null || o2 == null) {
-                    return nullLowCompare(o1, o2);
+                    return o1 == o2 ? 0 : o1 != null ? 1 : -1;
                 } else {
                     return Comparator.this.compare(o1, o2);
                 }
@@ -90,19 +74,28 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
     public static <A> Comparator<A> valueLowC(final A low) {
         return new Comparator<A>() {
             public int compare(A o1, A o2) {
-                return valueLowCompare(low, o1, o2);
+                if (low == null) {
+                    return o1 == o2 ? 0 : o1 != null ? 1 : -1;
+                }
+                if (Cf.Object.equals(o1, o2))
+                    return 0;
+                if (o1 != null && low.equals(o1))
+                    return -1;
+                if (o2 != null && low.equals(o2))
+                    return 1;
+                return 0;
             }
         };
     }
 
-    public Comparator<A> chainToValueLowC(A low) {
+    default Comparator<A> chainToValueLowC(A low) {
         return chainTo(valueLowC(low));
     }
 
     /**
      * {@link #max(Object, Object)} as function.
      */
-    public Function2<A, A, A> maxF() {
+    default Function2<A, A, A> maxF() {
         return new Function2<A, A, A>() {
             public A apply(A a, A b) {
                 return max(a, b);
@@ -113,7 +106,7 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
     /**
      * {@link #min(Object, Object)} as function.
      */
-    public Function2<A, A, A> minF() {
+    default Function2<A, A, A> minF() {
         return new Function2<A, A, A>() {
             public A apply(A a, A b) {
                 return min(a, b);
@@ -123,13 +116,13 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
 
     /** This but with different type parameter and no type check */
     @SuppressWarnings("unchecked")
-    public <B> Comparator<B> uncheckedCastC() {
+    default <B> Comparator<B> uncheckedCastC() {
         return (Comparator<B>) this;
     }
 
     /** Inverted comparator */
     @Override
-    public Comparator<A> invert() {
+    default Comparator<A> invert() {
         return wrap(Function2I.super.invert());
     }
 
@@ -174,13 +167,14 @@ public abstract class Comparator<A> implements Function2I<A, A>, java.util.Compa
         return new Comparator<A>() {
             @SuppressWarnings("unchecked")
             public int compare(A o1, A o2) {
-                if (o1 == o2)
+                if (o1 == o2) {
                     return 0;
-                else if (o1 == null || o2 == null)
-                    return nullLowCompare(o1, o2);
-                else
+                } else if (o1 == null || o2 == null) {
+                    return o1 == o2 ? 0 : o1 != null ? 1 : -1;
+                } else {
                     //noinspection unchecked
                     return ((Comparable<Object>) o1).compareTo(o2);
+                }
             }
 
             @Override
