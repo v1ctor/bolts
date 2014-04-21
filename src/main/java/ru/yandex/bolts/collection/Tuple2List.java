@@ -119,16 +119,6 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     @Override
-    public Tuple2List<A, B> sorted(Comparator<? super Tuple2<A, B>> comparator) {
-        return Tuple2List.tuple2List(super.sorted(comparator));
-    }
-
-    @Override
-    public Tuple2List<A, B> sorted(Function2I<? super Tuple2<A, B>, ? super Tuple2<A, B>> comparator) {
-        return Tuple2List.tuple2List(super.sorted(comparator));
-    }
-
-    @Override
     public Tuple2List<A, B> sortedBy(Function<? super Tuple2<A, B>, ?> f) {
         return Tuple2List.tuple2List(super.sortedBy(f));
     }

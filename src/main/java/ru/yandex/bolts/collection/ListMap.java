@@ -105,11 +105,6 @@ public class ListMap<K, V> extends Tuple2List<K, V> {
     }
 
     @Override
-    public ListMap<K, V> sorted(Function2I<? super Tuple2<K, V>, ? super Tuple2<K, V>> comparator) {
-        return ListMap.listMap(super.sorted(comparator));
-    }
-
-    @Override
     public ListMap<K, V> sortedBy(Function<? super Tuple2<K, V>, ?> f) {
         return ListMap.listMap(super.sortedBy(f));
     }

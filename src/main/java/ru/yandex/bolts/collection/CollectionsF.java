@@ -35,7 +35,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
-import ru.yandex.bolts.function.Function2I;
+import ru.yandex.bolts.function.forhuman.Comparator;
 import ru.yandex.bolts.type.BooleanType;
 import ru.yandex.bolts.type.CharSequenceType;
 import ru.yandex.bolts.type.CharacterType;
@@ -767,13 +767,13 @@ public class CollectionsF {
     }
 
     /** {@link Collection#sort()} as function */
-    public static <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortedF() {
+    public static <E> Function2<Collection<E>, Comparator<? super E>, ListF<E>> sortedF() {
         return Collection.sortedF();
     }
 
     /** {@link Collection#sort()} as function, convenience form */
     public static <E> Function<Collection<E>, ListF<E>> sortedF(
-            Function2I<? super E, ? super E> comparator)
+            Comparator<? super E> comparator)
     {
         return Collection.<E>sortedF(comparator);
     }

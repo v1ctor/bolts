@@ -29,8 +29,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     CollectionF<E> filter(Function1B<? super E> p);
 
-    CollectionF<E> filter(Function<? super E, Boolean> p);
-
     CollectionF<E> filterNotNull();
 
     /**
@@ -40,8 +38,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     /** Pair of collection, first contains elements matching p, second contains element matching !p */
     Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function1B<? super E> p);
-
-    Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function<? super E, Boolean> p);
 
     /** Map */
     <B> ListF<B> map(Function<? super E, B> mapper);
@@ -111,10 +107,6 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     ListF<E> sorted();
 
     /** Elements sorted by given comparator */
-    ListF<E> sorted(Function2I<? super E, ? super E> comparator);
-
-    ListF<E> sorted(Comparator<? super E> comparator);
-
     ListF<E> sorted(java.util.Comparator<? super E> comparator);
 
     ListF<E> sortedBy(Function<? super E, ?> f);

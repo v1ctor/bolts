@@ -125,10 +125,10 @@ public abstract class AnyCollectionType {
     }
 
     /** {@link CollectionF#sorted()} as function */
-    public <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortedF() {
-        return new Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>>() {
+    public <E> Function2<Collection<E>, Comparator<? super E>, ListF<E>> sortedF() {
+        return new Function2<Collection<E>, Comparator<? super E>, ListF<E>>() {
             public ListF<E> apply(Collection<E> input,
-                    Function2I<? super E, ? super E> comparator)
+                    Comparator<? super E> comparator)
             {
                 return Cf.x(input).sorted(comparator);
             }
@@ -153,7 +153,7 @@ public abstract class AnyCollectionType {
 
     /** {@link CollectionF#sorted()} as function, convenience form */
     public <E> Function<Collection<E>, ListF<E>> sortedF(
-            Function2I<? super E, ? super E> comparator)
+            Comparator<? super E> comparator)
     {
         return this.<E>sortedF().bind2(comparator);
 

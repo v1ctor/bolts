@@ -313,12 +313,6 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
-    public CollectionF<E> filter(Function<? super E, Boolean> p) {
-        return filter(Function1B.wrap(p));
-    }
-
-
-    @Override
     public CollectionF<E> filterNotNull() {
         return filter(Function1B.<E>notNullF());
     }
@@ -338,11 +332,6 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
             (p.apply(e) ? matched : unmatched).add(e);
         }
         return Tuple2.tuple(matched, unmatched);
-    }
-
-    @Override
-    public Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function<? super E, Boolean> p) {
-        return partition(Function1B.wrap(p));
     }
 
     public <B> ListF<B> map(Function<? super E, B> f) {
@@ -440,17 +429,6 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         ArrayListF<E> r = new ArrayListF<E>(this);
         Collections.sort(r, comparator);
         return r.convertToReadOnly();
-    }
-
-    @Override
-    public ListF<E> sorted(Comparator<? super E> comparator) {
-        return sorted((java.util.Comparator<? super E>) comparator);
-    }
-
-    @Override
-    @SuppressWarnings({"unchecked"})
-    public ListF<E> sorted(Function2I<? super E, ? super E> comparator) {
-        return sorted(Comparator.wrap((Function2I<E, E>) comparator));
     }
 
     public ListF<E> sortedBy(Function<? super E, ?> f) {
