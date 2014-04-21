@@ -5,6 +5,7 @@ import java.util.Iterator;
 import ru.yandex.bolts.collection.impl.TraversableF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function1V;
 
 /**
  * Extended iterator.
@@ -13,6 +14,11 @@ import ru.yandex.bolts.function.Function1B;
  * @author Stepan Koltsov
  */
 public interface IteratorF<E> extends TraversableF<E>, Iterator<E> {
+
+    default void forEach(Function1V<? super E> closure) {
+        forEachRemaining(closure);
+    }
+
     /** Collect elements */
     ListF<E> toList();
 

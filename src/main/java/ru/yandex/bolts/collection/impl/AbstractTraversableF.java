@@ -21,14 +21,6 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     protected abstract IteratorF<E> iterator();
 
     @Override
-    public void forEach(Function1V<? super E> closure) {
-        IteratorF<E> i = iterator();
-        while (i.hasNext()) {
-            closure.apply(i.next());
-        }
-    }
-
-    @Override
     public boolean forAll(Function1B<? super E> p) {
         IteratorF<E> i = iterator();
         while (i.hasNext()) {
