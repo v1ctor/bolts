@@ -119,16 +119,6 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     @Override
-    public Tuple2List<A, B> sorted(Comparator<? super Tuple2<A, B>> comparator) {
-        return Tuple2List.tuple2List(super.sorted(comparator));
-    }
-
-    @Override
-    public Tuple2List<A, B> sorted(Function2I<? super Tuple2<A, B>, ? super Tuple2<A, B>> comparator) {
-        return Tuple2List.tuple2List(super.sorted(comparator));
-    }
-
-    @Override
     public Tuple2List<A, B> sortedBy(Function<? super Tuple2<A, B>, ?> f) {
         return Tuple2List.tuple2List(super.sortedBy(f));
     }
@@ -152,20 +142,6 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
 
     public Tuple2List<A, B> filterBy2(Function1B<? super B> p) {
         return new Tuple2List<A, B>(filter(get2F().andThen(p)));
-    }
-
-    /**
-     * @deprecated
-     */
-    public Tuple2List<A, B> filter2(Function1B<? super B> p) {
-        return filterBy2(p);
-    }
-
-    /**
-     * @deprecated
-     */
-    public Tuple2List<A, B> filter1(Function1B<? super A> p) {
-        return filterBy1(p);
     }
 
     public Option<Tuple2<A, B>> findBy1(Function1B<? super A> p) {
@@ -281,15 +257,6 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     @Override
     public Tuple2<A, B>[] toArray() {
         return toArray(new Tuple2[0]);
-    }
-
-    /**
-     * @deprecated
-     * @see #makeReadOnly()
-     */
-    @Override
-    public Tuple2List<A, B> unmodifiable() {
-        return new Tuple2List<A, B>(Cf.x(target).unmodifiable());
     }
 
     @Override

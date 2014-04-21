@@ -321,13 +321,6 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     /**
-     * @deprecated
-     */
-    public static <U> Function1B<Option<U>> isDefinedP() {
-        return isDefinedF();
-    }
-
-    /**
      * Delegate to {@link #isDefined()}.
      */
     public static <U> Function1B<Option<U>> isDefinedF() {
@@ -343,24 +336,10 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     /**
-     * @deprecated
-     */
-    public static <U> Function1B<Option<U>> isEmptyP() {
-        return isEmptyF();
-    }
-
-    /**
      * Delegate to {@link #isEmpty()}.
      */
     public static <U> Function1B<Option<U>> isEmptyF() {
         return Option.<U>isDefinedF().notF();
-    }
-
-    /**
-     * @deprecated
-     */
-    public static <T> Function<T, Option<T>> notNullM() {
-        return notNullF();
     }
 
     /**
@@ -372,13 +351,6 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
                 return Option.notNull(t);
             }
         };
-    }
-
-    /**
-     * @deprecated
-     */
-    public static <U> Function<Option<U>, U> getM() {
-        return getF();
     }
 
     /**

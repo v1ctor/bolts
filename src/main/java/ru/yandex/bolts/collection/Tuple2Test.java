@@ -18,7 +18,7 @@ public class Tuple2Test extends TestCase {
     }
 
     public void testCons() {
-        assertEquals(Tuple2.tuple(1, "a"), Tuple2.consM().apply(1, "a"));
+        assertEquals(Tuple2.tuple(1, "a"), Tuple2.consF().apply(1, "a"));
     }
 
     public void testReduce() {

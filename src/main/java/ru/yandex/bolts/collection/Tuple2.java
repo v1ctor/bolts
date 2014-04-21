@@ -75,11 +75,6 @@ public class Tuple2<T1, T2> implements Serializable {
         return "(" + _1 + ", " + _2 + ")";
     }
 
-    /** @deprecated */
-    public static <A, B> Function2<A, B, Tuple2<A, B>> consM() {
-        return consF();
-    }
-
     /** Constructor function */
     public static <A, B> Function2<A, B, Tuple2<A, B>> consF() {
         return new Function2<A, B, Tuple2<A, B>>() {
@@ -87,11 +82,6 @@ public class Tuple2<T1, T2> implements Serializable {
                 return tuple(a, b);
             }
         };
-    }
-
-    /** @deprecated */
-    public static <A, B> Function<Tuple2<A, B>, A> get1M() {
-        return get1F();
     }
 
     /** _1 as function */
@@ -103,11 +93,6 @@ public class Tuple2<T1, T2> implements Serializable {
         };
     }
 
-    /** @deprecated */
-    public static <A, B> Function<Tuple2<A, B>, B> get2M() {
-        return get2F();
-    }
-
     /** _2 as function */
     public static <A, B> Function<Tuple2<A, B>, B> get2F() {
         return new Function<Tuple2<A, B>, B>() {
@@ -115,11 +100,6 @@ public class Tuple2<T1, T2> implements Serializable {
                 return tuple._2;
             }
         };
-    }
-
-    /** @deprecated */
-    public static <A, B> Function<Tuple2<A, B>, Tuple2<B, A>> swapM() {
-        return swapF();
     }
 
     /** {@link #swap()} as function */
@@ -131,22 +111,12 @@ public class Tuple2<T1, T2> implements Serializable {
         };
     }
 
-    /** @deprecated */
-    public static <A, B, C> Function<Tuple2<A, B>, Tuple2<C, B>> map1M(final Function<A, C> m) {
-        return map1F(m);
-    }
-
     public static <A, B, C> Function<Tuple2<A, B>, Tuple2<C, B>> map1F(final Function<A, C> m) {
         return new Function<Tuple2<A, B>, Tuple2<C, B>>() {
             public Tuple2<C, B> apply(Tuple2<A, B> tuple) {
                 return tuple(m.apply(tuple._1), tuple._2);
             }
         };
-    }
-
-    /** @deprecated */
-    public static <A, B, C> Function<Tuple2<A, B>, Tuple2<A, C>> map2M(final Function<B, C> m) {
-        return map2F(m);
     }
 
     public static <A, B, C> Function<Tuple2<A, B>, Tuple2<A, C>> map2F(final Function<B, C> m) {

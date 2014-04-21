@@ -35,14 +35,12 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
-import ru.yandex.bolts.function.Function2I;
+import ru.yandex.bolts.function.forhuman.Comparator;
 import ru.yandex.bolts.type.BooleanType;
 import ru.yandex.bolts.type.CharSequenceType;
 import ru.yandex.bolts.type.CharacterType;
 import ru.yandex.bolts.type.ObjectType;
 import ru.yandex.bolts.type.StringType;
-import ru.yandex.bolts.type.collection.AnyListType;
-import ru.yandex.bolts.type.collection.AnySetType;
 import ru.yandex.bolts.type.collection.ArrayListType;
 import ru.yandex.bolts.type.collection.CollectionType;
 import ru.yandex.bolts.type.collection.ListType;
@@ -642,19 +640,9 @@ public class CollectionsF {
         };
     }
 
-    /** @deprecated */
-    public static <E> Function<List<E>, ListF<E>> wrapListM() {
-        return wrapListF();
-    }
-
     /** {@link #x(List)} as function */
     public static <E> Function<List<E>, ListF<E>> wrapListF() {
         return List.wrapF();
-    }
-
-    /** @deprecated */
-    public static <E> Function<Set<E>, SetF<E>> wrapSetM() {
-        return wrapSetF();
     }
 
     /** {@link #x(Set)} as function */
@@ -666,11 +654,6 @@ public class CollectionsF {
         };
     }
 
-    /** @deprecated */
-    public static <K, V> Function<Map<K, V>, MapF<K, V>> wrapMapM() {
-        return wrapMapF();
-    }
-
     /** {@link #x(Map)} as function */
     public static <K, V> Function<Map<K, V>, MapF<K, V>> wrapMapF() {
         return new Function<Map<K, V>, MapF<K, V>>() {
@@ -678,11 +661,6 @@ public class CollectionsF {
                 return x(map);
             }
         };
-    }
-
-    /** @deprecated */
-    public static <E> Function<Iterator<E>, IteratorF<E>> wrapIteratorM() {
-        return wrapIteratorF();
     }
 
     /** {@link #x(Iterator)} as function */
@@ -701,11 +679,6 @@ public class CollectionsF {
                 return x(enumeration);
             }
         };
-    }
-
-    /** @deprecated */
-    public static <T> Function<Collection<T>, Integer> sizeM() {
-        return sizeF();
     }
 
     /** {@link Collection#size()} as function */
@@ -731,31 +704,6 @@ public class CollectionsF {
         };
     }
 
-    /**
-     * {@link Collection#filter()} as function
-     * @deprecated
-     * @see AnySetType#filterF()
-     * @see AnyListType#filterF()
-     */
-    public static <E> Function2<Collection<E>, Function1B<? super E>, CollectionF<E>> filterF() {
-        return new Function2<Collection<E>, Function1B<? super E>, CollectionF<E>>() {
-            public CollectionF<E> apply(Collection<E> source,
-                    Function1B<? super E> predicate)
-            {
-                return Cf.x(source).filter(predicate);
-            }
-        };
-    }
-
-    /**
-     * {@link Collection#filter()} as function, convenience form
-     */
-    public static <E> Function<Collection<E>, CollectionF<E>> filterF(
-            Function1B<? super E> predicate)
-    {
-        return CollectionsF.<E>filterF().bind2(predicate);
-    }
-
     /** {@link Collection#map()} as function */
     public static <F, T> Function2<Collection<F>, Function<? super F, T>, ListF<T>> mapF() {
         return Collection.mapF();
@@ -767,13 +715,13 @@ public class CollectionsF {
     }
 
     /** {@link Collection#sort()} as function */
-    public static <E> Function2<Collection<E>, Function2I<? super E, ? super E>, ListF<E>> sortedF() {
+    public static <E> Function2<Collection<E>, Comparator<? super E>, ListF<E>> sortedF() {
         return Collection.sortedF();
     }
 
     /** {@link Collection#sort()} as function, convenience form */
     public static <E> Function<Collection<E>, ListF<E>> sortedF(
-            Function2I<? super E, ? super E> comparator)
+            Comparator<? super E> comparator)
     {
         return Collection.<E>sortedF(comparator);
     }

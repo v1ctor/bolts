@@ -8,8 +8,6 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.meta.FunctionType;
 import ru.yandex.bolts.function.meta.FunctionType.ReturnType;
-import ru.yandex.bolts.function.misc.ObjectF;
-import ru.yandex.bolts.function.misc.StringF;
 
 /**
  * @author Stepan Koltsov
@@ -127,7 +125,7 @@ public class GenerateFunctions {
 
                 w.write("        return new " + classNameFullAfterBind(i) + "() {\n");
                 w.write("            public " + returnTypeName(returnType) + " apply(" + lettersToArgs(lettersAfterBind(i)) + ") {\n");
-                w.write("                " + (returnType != ReturnType.VOID ? "return " : "") + className + ".this.apply(" + paramTypeLetters.map(StringF.toLowerCaseF()).mkString(", ") + ");\n");
+                w.write("                " + (returnType != ReturnType.VOID ? "return " : "") + className + ".this.apply(" + paramTypeLetters.map(Cf.String.toLowerCaseF()).mkString(", ") + ");\n");
                 w.write("            }\n");
                 w.write("\n");
                 w.write("            public String toString() {\n");
@@ -177,7 +175,7 @@ public class GenerateFunctions {
                 w.write("    default " + rt + " asFunction() {\n");
                 w.write("        return new " + rt + "() {\n");
                 w.write("            public " + returnTypeNameObject(returnType) + " apply(Tuple" + paramCount + "<" + paramTypeLetters.mkString(", ") + "> t) {\n");
-                w.write("                " + (returnType != ReturnType.VOID ? "return " : "") + className + ".this.apply(" + Cf.range(1, paramCount + 1).map(ObjectF.toStringF()).map(StringF.plusF().bind1("t._")).mkString(", ") + ");\n");
+                w.write("                " + (returnType != ReturnType.VOID ? "return " : "") + className + ".this.apply(" + Cf.range(1, paramCount + 1).map(Cf.Object.toStringF()).map(Cf.String.plusF().bind1("t._")).mkString(", ") + ");\n");
                 if (returnType == ReturnType.VOID)
                     w.write("                return null;\n");
                 w.write("            }\n");
@@ -195,7 +193,7 @@ public class GenerateFunctions {
                 w.write("    default " + rt + " as" + classNameSimple(1, returnType) + "() {\n");
                 w.write("        return new " + rt + "() {\n");
                 w.write("            public " + returnTypeName(returnType) + " apply(Tuple" + paramCount + "<" + paramTypeLetters.mkString(", ") + "> t) {\n");
-                w.write("                " + (returnType != ReturnType.VOID ? "return " : "") + className + ".this.apply(" + Cf.range(1, paramCount + 1).map(ObjectF.toStringF()).map(StringF.plusF().bind1("t._")).mkString(", ") + ");\n");
+                w.write("                " + (returnType != ReturnType.VOID ? "return " : "") + className + ".this.apply(" + Cf.range(1, paramCount + 1).map(Cf.Object.toStringF()).map(Cf.String.plusF().bind1("t._")).mkString(", ") + ");\n");
                 w.write("            }\n");
                 w.write("\n");
                 w.write("            public String toString() {\n");
@@ -211,7 +209,7 @@ public class GenerateFunctions {
                 w.write("    default " + rt + " as" + classNameSimple(paramCount, ReturnType.OBJECT) + "() {\n");
                 w.write("        return new " + rt + "() {\n");
                 w.write("            public " + returnTypeNameObject(returnType) + " apply(" + lettersToArgs(paramTypeLetters) + ") {\n");
-                w.write("                " + (returnType != ReturnType.VOID ? "return " : "") + className + ".this.apply(" + paramTypeLetters.map(StringF.toLowerCaseF()).mkString(", ") + ");\n");
+                w.write("                " + (returnType != ReturnType.VOID ? "return " : "") + className + ".this.apply(" + paramTypeLetters.map(Cf.String.toLowerCaseF()).mkString(", ") + ");\n");
                 if (returnType == ReturnType.VOID)
                     w.write("                return null;\n");
                 w.write("            }\n");
@@ -225,7 +223,7 @@ public class GenerateFunctions {
             }
 
             {
-                String letters1 = "<" + allParamTypeLetters().map(StringF.plusF().bind2("1")).mkString(", ") + ">";
+                String letters1 = "<" + allParamTypeLetters().map(Cf.String.plusF().bind2("1")).mkString(", ") + ">";
                 w.write("    @SuppressWarnings(\"unchecked\")\n");
                 w.write("    default " + letters1 + " " + className + letters1 + " uncheckedCast() {\n");
                 w.write("        return (" + className + letters1 + ") this;\n");
@@ -245,7 +243,7 @@ public class GenerateFunctions {
     }
 
     private static String lettersToArgs(ListF<String> paramTypeLetters) {
-        return paramTypeLetters.zipWith(StringF.toLowerCaseF()).mkString(", ", " ");
+        return paramTypeLetters.zipWith(Cf.String.toLowerCaseF()).mkString(", ", " ");
     }
 
     private void generate(int paramCount) throws Exception {

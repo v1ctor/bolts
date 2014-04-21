@@ -74,7 +74,7 @@ public class ComparatorTest extends TestCase {
 
     @SuppressWarnings("unchecked")
     public void testNullLowC() {
-        class NC extends Comparator<String> {
+        class NC implements Comparator<String> {
             public int compare(String o1, String o2) {
                 return o1.compareTo(o2);
             }

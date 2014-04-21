@@ -79,13 +79,6 @@ public interface Function1B<A> {
         };
     }
 
-    /**
-     * @deprecated
-     */
-    default Function1B<A> notP() {
-        return notF();
-    }
-
     /** Or */
     default Function1B<A> orF(final Function1B<A> p) {
         return new Function1B<A>() {
@@ -129,13 +122,6 @@ public interface Function1B<A> {
      */
     static <B> Function1B<B> equalsF(final B b) {
         return Function2B.<B>equalsF().bind2(b);
-    }
-
-    /**
-     * @deprecated
-     */
-    static <B> Function1B<B> equalsP(final B b) {
-        return equalsF(b);
     }
 
     /**

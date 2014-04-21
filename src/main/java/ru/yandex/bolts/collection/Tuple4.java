@@ -145,11 +145,6 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
         return "(" + _1 + ", " + _2 + ", " + _3 + ", " + _4 + ")";
     }
 
-    /** @deprecated */
-    public static <A, B, C, D> Function<Tuple4<A, B, C, D>, A> get1M() {
-        return get1F();
-    }
-
     public static <A, B, C, D> Function<Tuple4<A, B, C, D>, A> get1F() {
         return new Function<Tuple4<A, B, C, D>, A>() {
             public A apply(Tuple4<A, B, C, D> tuple) {
@@ -183,22 +178,12 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
     }
 
 
-    /** @deprecated */
-    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>> map1M(final Function<A, X> m) {
-        return map1F(m);
-    }
-
     public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>> map1F(final Function<A, X> m) {
         return new Function<Tuple4<A, B, C, D>, Tuple4<X, B, C, D>>() {
             public Tuple4<X, B, C, D> apply(Tuple4<A, B, C, D> t) {
                 return tuple(m.apply(t._1), t._2, t._3, t._4);
             }
         };
-    }
-
-    /** @deprecated */
-    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, X, C, D>> map2M(final Function<B, X> m) {
-        return map2F(m);
     }
 
     public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, X, C, D>> map2F(final Function<B, X> m) {
@@ -209,22 +194,12 @@ public class Tuple4<T1, T2, T3, T4> implements Serializable {
         };
     }
 
-    /** @deprecated */
-    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>> map3M(final Function<C, X> m) {
-        return map3F(m);
-    }
-
     public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>> map3F(final Function<C, X> m) {
         return new Function<Tuple4<A, B, C, D>, Tuple4<A, B, X, D>>() {
             public Tuple4<A, B, X, D> apply(Tuple4<A, B, C, D> t) {
                 return tuple(t._1, t._2, m.apply(t._3), t._4);
             }
         };
-    }
-
-    /** @deprecated */
-    public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, C, X>> map4M(final Function<D, X> m) {
-        return map4F(m);
     }
 
     public static <A, B, C, D, X> Function<Tuple4<A, B, C, D>, Tuple4<A, B, C, X>> map4F(final Function<D, X> m) {

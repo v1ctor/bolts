@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.misc.IntegerF;
 
 import static ru.yandex.bolts.collection.CollectionsF.list;
 
@@ -32,8 +31,8 @@ public class CollectionsFTest extends TestCase {
     public void testIdentityHashSet() {
         SetF<Integer> set = Cf.identityHashSet(1, 2, 3, new Integer(1));
         assertEquals(4, set.size());
-        assertTrue(set.contains(2));
-        assertFalse(set.contains(new Integer(2)));
+        assertTrue(set.containsTs(2));
+        assertFalse(set.containsTs(new Integer(2)));
 
         SetF<Integer> uset = set.unmodifiable();
         assertEquals(4, set.size());
@@ -55,7 +54,7 @@ public class CollectionsFTest extends TestCase {
 
     public void testRepeatEmpty() {
         ListF<String> set = Cf.repeat("a", 0);
-        assertFalse(set.contains("a"));
+        assertFalse(set.containsTs("a"));
     }
 
     public void testMapFandSortFandUniqueF() {
@@ -73,17 +72,17 @@ public class CollectionsFTest extends TestCase {
         MapF<String, ListF<Integer>> groupped
                 = data.groupBy(Tuple2.<String, Integer>get1F())
                 .mapValues(Cf.<Tuple2<String, Integer>, Integer>mapF(Tuple2.<String, Integer>get2F()).andThen(
-                        Cf.<Integer>sortedF(IntegerF.naturalComparator())));
+                        Cf.<Integer>sortedF(Cf.Integer.comparator())));
 
-        assertEquals(Cf.list(102, 111, 111), groupped.get("foo"));
-        assertEquals(Cf.list(97, 98, 114), groupped.get("bar"));
-        assertEquals(Cf.list(97, 98, 122), groupped.get("baz"));
+        assertEquals(Cf.list(102, 111, 111), groupped.getTs("foo"));
+        assertEquals(Cf.list(97, 98, 114), groupped.getTs("bar"));
+        assertEquals(Cf.list(97, 98, 122), groupped.getTs("baz"));
 
         MapF<String, SetF<Integer>> unique = groupped.mapValues(Cf.<Integer>uniqueF());
 
-        assertEquals(Cf.set(102, 111), unique.get("foo"));
-        assertEquals(Cf.set(97, 98, 114), unique.get("bar"));
-        assertEquals(Cf.set(97, 98, 122), unique.get("baz"));
+        assertEquals(Cf.set(102, 111), unique.getTs("foo"));
+        assertEquals(Cf.set(97, 98, 114), unique.getTs("bar"));
+        assertEquals(Cf.set(97, 98, 122), unique.getTs("baz"));
     }
 
     @SuppressWarnings("unchecked")
@@ -96,11 +95,11 @@ public class CollectionsFTest extends TestCase {
                 Cf.<Integer>set());
 
         ListF<ListF<Integer>> positiveIntegers = data.map(
-                Cf.<Integer>filterF(new Function1B<Integer>() {
+                Cf.Set.<Integer>filterF(new Function1B<Integer>() {
                     public boolean apply(Integer integer) {
                         return integer >= 0;
                     }})
-                .andThen(Cf.<Integer>sortedF(IntegerF.naturalComparator()))
+                .andThen(Cf.<Integer>sortedF(Cf.Integer.comparator()))
                 .andThen(Cf.<Integer>toListF()));
 
         assertEquals(Cf.list(

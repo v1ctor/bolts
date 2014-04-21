@@ -27,9 +27,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     ListF<E> filter(Function1B<? super E> p);
 
     @Override
-    ListF<E> filter(Function<? super E, Boolean> p);
-
-    @Override
     ListF<E> filterNotNull();
 
     /**
@@ -44,9 +41,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
      */
     @Override
     Tuple2<ListF<E>, ListF<E>> partition(Function1B<? super E> p);
-
-    @Override
-    Tuple2<ListF<E>, ListF<E>> partition(Function<? super E, Boolean> p);
 
     /**
      * @see #unique()
@@ -106,12 +100,8 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     /** Longest prefix of elements that satisfy p */
     ListF<E> takeWhile(Function1B<? super E> f);
 
-    ListF<E> takeWhile(Function<? super E, Boolean> f);
-
     /** Elements after {@link #takeWhile(Function1B)} */
     ListF<E> dropWhile(Function1B<? super E> f);
-
-    ListF<E> dropWhile(Function<? super E, Boolean> f);
 
     /** Pair of sublists returned by {@link #takeWhile(Function1B)} and {@link #dropWhile(Function1B)} */
     //ListF<E> span(Function1B<? super E> p);
@@ -124,13 +114,6 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     E reduceRight(Function2<E, E, E> f);
 
     Option<E> reduceRightO(Function2<E, E, E> f);
-
-    /**
-     * Unmodifiable view or copy of this collection
-     * @deprecated
-     * @see #makeReadOnly()
-     */
-    ListF<E> unmodifiable();
 
     /**
      * Return unmodifiable list with content of this list.
