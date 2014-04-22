@@ -22,10 +22,6 @@ public class Tuple2Test extends TestCase {
     }
 
     public void testReduce() {
-        assertEquals("1a", Tuple2.tuple(1, "a").reduce(new Function2<Integer, String, String>() {
-            public String apply(Integer i, String s) {
-                return i + s;
-            }
-        }));
+        assertEquals("1a", Tuple2.tuple(1, "a").reduce((i, s) -> i + s));
     }
 } //~

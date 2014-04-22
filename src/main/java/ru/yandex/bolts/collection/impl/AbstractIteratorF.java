@@ -46,9 +46,9 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
 
         ArrayListF<E> result;
         if (initialCapacity < 0) {
-            result = new ArrayListF<E>();
+            result = new ArrayListF<>();
         } else {
-            result = new ArrayListF<E>(initialCapacity);
+            result = new ArrayListF<>(initialCapacity);
         }
         forEach(result.addF());
         return result.convertToReadOnly();
@@ -108,11 +108,7 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
     @Override
     public <B> IteratorF<B> flatMapL(Function<? super E, ? extends Iterable<B>> f0) {
         Function<E, Iterable<B>> f = (Function<E, Iterable<B>>) f0;
-        Function<E, Iterator<B>> g = f.andThen(new Function<Iterable<B>, Iterator<B>>() {
-            public Iterator<B> apply(Iterable<B> a) {
-                return a.iterator();
-            }
-        });
+        Function<E, Iterator<B>> g = f.andThen((Function<Iterable<B>, Iterator<B>>) Iterable::iterator);
         return flatMap(g);
     }
 

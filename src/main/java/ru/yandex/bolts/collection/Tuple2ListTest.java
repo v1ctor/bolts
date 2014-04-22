@@ -2,8 +2,6 @@ package ru.yandex.bolts.collection;
 
 import junit.framework.TestCase;
 
-import ru.yandex.bolts.function.Function1B;
-
 /**
  * @author Stepan Koltsov
  * @author Iliya Roubin
@@ -36,23 +34,13 @@ public class Tuple2ListTest extends TestCase {
 
     public void testFilter() {
         Tuple2List<String, Integer> lm = Tuple2List.fromPairs("a", 1, "b", 2);
-        Tuple2List<String, Integer> lmf = lm.filter(new Function1B<Tuple2<String, Integer>>() {
-            @Override
-            public boolean apply(Tuple2<String, Integer> t) {
-                return "a".equals(t.get1());
-            }
-        });
+        Tuple2List<String, Integer> lmf = lm.filter(t -> "a".equals(t.get1()));
         assertEquals(Tuple2List.<String, Integer>fromPairs("a", 1), lmf);
     }
 
     public void testPartitionLm() {
         Tuple2List<String, Integer> lm = Tuple2List.fromPairs("a", 1, "b", 2);
-        Tuple2<Tuple2List<String, Integer>, Tuple2List<String, Integer>> t = lm.partitionT2l(new Function1B<Tuple2<String, Integer>>() {
-            @Override
-            public boolean apply(Tuple2<String, Integer> t) {
-                return "a".equals(t.get1());
-            }
-        });
+        Tuple2<Tuple2List<String, Integer>, Tuple2List<String, Integer>> t = lm.partitionT2l(tu -> "a".equals(tu.get1()));
         assertEquals(Tuple2List.<String, Integer>fromPairs("a", 1), t.get1());
         assertEquals(Tuple2List.<String, Integer>fromPairs("b", 2), t.get2());
     }

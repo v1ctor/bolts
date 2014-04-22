@@ -256,11 +256,7 @@ public class CollectionsF {
     }
 
     public static <E> Function0<SetF<E>> newHashSetF() {
-        return new Function0<SetF<E>>() {
-            public SetF<E> apply() {
-                return hashSet();
-            }
-        };
+        return CollectionsF::hashSet;
     }
 
     /**
@@ -424,11 +420,7 @@ public class CollectionsF {
     }
 
     public static <K, V> Function0<MapF<K, V>> newHashMapF() {
-        return new Function0<MapF<K,V>>() {
-            public MapF<K, V> apply() {
-                return hashMap();
-            }
-        };
+        return CollectionsF::hashMap;
     }
 
     /**
@@ -619,11 +611,7 @@ public class CollectionsF {
      * {@link MapF#plus(MapF)} as function.
      */
     public static <A, B> Function2<MapF<A, B>, MapF<A, B>, MapF<A, B>> mapPlusF() {
-        return new Function2<MapF<A, B>, MapF<A, B>, MapF<A, B>>() {
-            public MapF<A, B> apply(MapF<A, B> m1, MapF<A, B> m2) {
-                return m1.plus(m2);
-            }
-        };
+        return MapF::plus;
     }
 
     /** Concatenate two lists function */
@@ -633,11 +621,7 @@ public class CollectionsF {
 
     /** Union of two sets function */
     public static <A> Function2<SetF<A>, SetF<A>, SetF<A>> setPlusF() {
-        return new Function2<SetF<A>, SetF<A>, SetF<A>>() {
-            public SetF<A> apply(SetF<A> l1, SetF<A> l2) {
-                return l1.plus(l2);
-            }
-        };
+        return SetF::plus;
     }
 
     /** {@link #x(List)} as function */
@@ -647,38 +631,22 @@ public class CollectionsF {
 
     /** {@link #x(Set)} as function */
     public static <E> Function<Set<E>, SetF<E>> wrapSetF() {
-        return new Function<Set<E>, SetF<E>>() {
-            public SetF<E> apply(Set<E> set) {
-                return x(set);
-            }
-        };
+        return CollectionsF::x;
     }
 
     /** {@link #x(Map)} as function */
     public static <K, V> Function<Map<K, V>, MapF<K, V>> wrapMapF() {
-        return new Function<Map<K, V>, MapF<K, V>>() {
-            public MapF<K, V> apply(Map<K, V> map) {
-                return x(map);
-            }
-        };
+        return CollectionsF::x;
     }
 
     /** {@link #x(Iterator)} as function */
     public static <E> Function<Iterator<E>, IteratorF<E>> wrapIteratorF() {
-        return new Function<Iterator<E>, IteratorF<E>>() {
-            public IteratorF<E> apply(Iterator<E> iterator) {
-                return x(iterator);
-            }
-        };
+        return CollectionsF::x;
     }
 
     /** {@link #x(Enumeration)} as function */
     public static <E> Function<Enumeration<E>, IteratorF<E>> wrapEnumerationF() {
-        return new Function<Enumeration<E>, IteratorF<E>>() {
-            public IteratorF<E> apply(Enumeration<E> enumeration) {
-                return x(enumeration);
-            }
-        };
+        return CollectionsF::x;
     }
 
     /** {@link Collection#size()} as function */
@@ -688,20 +656,12 @@ public class CollectionsF {
 
     /** {@link Iterator#hasNext()} as function */
     public static <T> Function1B<Iterator<T>> hasNextF() {
-        return new Function1B<Iterator<T>>() {
-            public boolean apply(Iterator<T> a) {
-                return a.hasNext();
-            }
-        };
+        return Iterator::hasNext;
     }
 
     /** {@link Iterable#iterator()} as function */
     public static <T> Function<Iterable<T>, IteratorF<T>> iteratorF() {
-        return new Function<Iterable<T>, IteratorF<T>>() {
-            public IteratorF<T> apply(Iterable<T> a) {
-                return x(a.iterator());
-            }
-        };
+        return a -> x(a.iterator());
     }
 
     /** {@link Collection#map()} as function */
@@ -728,29 +688,17 @@ public class CollectionsF {
 
     /** {@link Collection#unique()} as function */
     public static <E> Function<Collection<E>, SetF<E>> uniqueF() {
-        return new Function<Collection<E>, SetF<E>>() {
-            public SetF<E> apply(Collection<E> input) {
-                return Cf.x(input).unique();
-            }
-        };
+        return input -> Cf.x(input).unique();
     }
 
     /** {@link Collection#toList()} as function */
     public static <E> Function<Collection<E>, ListF<E>> toListF() {
-        return new Function<Collection<E>, ListF<E>>() {
-            public ListF<E> apply(Collection<E> input) {
-                return Cf.x(input).toList();
-            }
-        };
+        return input -> Cf.x(input).toList();
     }
 
     /** {@link CollectionF#mkString(String)} */
     public static Function2<Collection<?>, String, String> mkStringF() {
-        return new Function2<Collection<?>, String, String>() {
-            public String apply(Collection<?> a, String sep) {
-                return Cf.x(a).mkString(sep);
-            }
-        };
+        return (a, sep) -> Cf.x(a).mkString(sep);
     }
 
     public static Function<Collection<?>, String> mkStringF(String sep) {

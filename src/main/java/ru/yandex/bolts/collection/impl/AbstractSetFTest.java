@@ -1,7 +1,5 @@
 package ru.yandex.bolts.collection.impl;
 
-import static ru.yandex.bolts.collection.CollectionsF.set;
-
 import java.util.Collections;
 import java.util.Set;
 
@@ -12,7 +10,8 @@ import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.impl.test.Generator;
 import ru.yandex.bolts.function.Function1BTest;
-import ru.yandex.bolts.function.Function1V;
+
+import static ru.yandex.bolts.collection.CollectionsF.set;
 
 /**
  * @author Stepan Koltsov
@@ -62,13 +61,10 @@ public class AbstractSetFTest extends TestCase {
 
 
     public void testBinaryOps() {
-        smallSets().tuples().checkForAll(new Function1V<Tuple2<SetF<Integer>, SetF<Integer>>>() {
-            @Override
-            public void apply(Tuple2<SetF<Integer>, SetF<Integer>> pair) {
-                testIntersectFor(pair.get1(), pair.get2());
-                testUnionFor(pair.get1(), pair.get2());
-                testMinusFor(pair.get1(), pair.get2());
-            }
+        smallSets().tuples().checkForAll(pair -> {
+            testIntersectFor(pair.get1(), pair.get2());
+            testUnionFor(pair.get1(), pair.get2());
+            testMinusFor(pair.get1(), pair.get2());
         });
     }
 

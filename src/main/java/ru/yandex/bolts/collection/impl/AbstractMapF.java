@@ -123,11 +123,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     private Function<Entry<K, V>, K> entryKeyM() {
-        return new Function<Entry<K, V>, K>() {
-            public K apply(Entry<K, V> entry) {
-                return entry.getKey();
-            }
-        };
+        return Entry::getKey;
     }
 
     @SuppressWarnings("unchecked")
@@ -150,11 +146,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
 
     @Override
     public MapF<K, V> filter(final Function1B<? super Tuple2<K, V>> p) {
-        return filterEntries(new Function1B<Entry<K, V>>() {
-            public boolean apply(Entry<K, V> entry) {
-                return p.apply(Tuple2.tuple(entry.getKey(), entry.getValue()));
-            }
-        });
+        return filterEntries(entry -> p.apply(Tuple2.tuple(entry.getKey(), entry.getValue())));
     }
 
     @Override
@@ -178,11 +170,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     private static <K, V> Function<Entry<K, V>, V> entryValueM() {
-        return new Function<Entry<K,V>, V>() {
-            public V apply(java.util.Map.Entry<K, V> a) {
-                return a.getValue();
-            }
-        };
+        return Entry::getValue;
     }
 
     public MapF<K, V> unmodifiable() {
@@ -192,20 +180,13 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     public <W> MapF<K, W> mapValues(final Function<? super V, ? extends W> f) {
         if (isEmpty()) return emptyMap();
 
-        ListF<Tuple2<K, W>> xx = entrySet().map(new Function<Entry<K, V>, Tuple2<K, W>>() {
-            public Tuple2<K, W> apply(Entry<K, V> entry) {
-                return new Tuple2<K, W>(entry.getKey(), f.apply(entry.getValue()));
-            }
-        });
+        ListF<Tuple2<K, W>> xx = entrySet().map((Function<Entry<K, V>, Tuple2<K, W>>) entry ->
+            new Tuple2<>(entry.getKey(), f.apply(entry.getValue())));
         return newMapFromTuples(xx);
     }
 
     public <W> ListF<W> mapEntries(final Function2<? super K, ? super V, ? extends W> f) {
-        return entrySet().map(new Function<Entry<K, V>, W>() {
-            public W apply(Entry<K, V> entry) {
-                return f.apply(entry.getKey(), entry.getValue());
-            }
-        });
+        return entrySet().map((Function<Entry<K, V>, W>) entry -> f.apply(entry.getKey(), entry.getValue()));
     }
 
     protected <X, Y> MapF<X, Y> emptyMap() {
@@ -213,19 +194,11 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     public Function<K, V> asFunction() {
-        return new Function<K, V>() {
-            public V apply(K a) {
-                return AbstractMapF.this.apply(a);
-            }
-        };
+        return this::apply;
     }
 
     public Function<K, Option<V>> asFunctionO() {
-        return new Function<K, Option<V>>() {
-            public Option<V> apply(K key) {
-                return getO(key);
-            }
-        };
+        return this::getO;
     }
 
     public Function<K, V> asFunctionOrElse(V fallback) {
@@ -233,11 +206,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     public Function<K, V> asFunctionOrElse(final Function<K, V> fallbackF) {
-        return new Function<K, V>() {
-            public V apply(K key) {
-                return getO(key).getOrElse(fallbackF.apply(key));
-            }
-        };
+        return key -> getO(key).getOrElse(fallbackF.apply(key));
     }
 
     /** Must check for non-null arguments */
@@ -290,11 +259,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     public static <K, V> Function<Map.Entry<K, V>, Tuple2<K, V>> tupleM() {
-        return new Function<Map.Entry<K, V>, Tuple2<K, V>>() {
-            public Tuple2<K, V> apply(Map.Entry<K, V> e) {
-                return new Tuple2<K, V>(e.getKey(), e.getValue());
-            }
-        };
+        return e -> new Tuple2<>(e.getKey(), e.getValue());
     }
 
     protected abstract static class AbstractEntry<K, V> implements Entry<K, V> {

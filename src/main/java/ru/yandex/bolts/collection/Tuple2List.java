@@ -26,7 +26,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public Tuple2List(Collection<Tuple2<A, B>> elements) {
-        super(new ArrayList<Tuple2<A, B>>(elements));
+        super(new ArrayList<>(elements));
     }
 
     @SuppressWarnings({"unchecked"})
@@ -137,11 +137,11 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public Tuple2List<A, B> filterBy1(Function1B<? super A> p) {
-        return new Tuple2List<A, B>(filter(get1F().andThen(p)));
+        return new Tuple2List<>(filter(get1F().andThen(p)));
     }
 
     public Tuple2List<A, B> filterBy2(Function1B<? super B> p) {
-        return new Tuple2List<A, B>(filter(get2F().andThen(p)));
+        return new Tuple2List<>(filter(get2F().andThen(p)));
     }
 
     public Option<Tuple2<A, B>> findBy1(Function1B<? super A> p) {
@@ -157,11 +157,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public Function2V<A, B> add2F() {
-        return new Function2V<A, B>() {
-            public void apply(A a, B b) {
-                add(a, b);
-            }
-        };
+        return this::add;
     }
 
     public void add(Tuple2<? extends A, ? extends B> tuple) {
@@ -170,7 +166,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
 
     @Override
     public Tuple2List<A, B> plus1(Tuple2<A, B> e) {
-        return new Tuple2List<A, B>(Cf.x(target).plus1(e));
+        return new Tuple2List<>(Cf.x(target).plus1(e));
     }
 
     public Tuple2List<A, B> plus1(A key, B value) {
@@ -210,7 +206,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     @SuppressWarnings("unchecked")
     public Tuple2List<A, B> sortedBy1(Function2I<? super A, ? super A> comparator) {
         if (size() <= 1) return this;
-        return new Tuple2List<A, B>(sorted(get1F().andThen((Function2I<A, A>) comparator)));
+        return new Tuple2List<>(sorted(get1F().andThen((Function2I<A, A>) comparator)));
     }
 
     /**
@@ -226,7 +222,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     @SuppressWarnings("unchecked")
     public Tuple2List<A, B> sortedBy2(Function2I<? super B, ? super B> comparator) {
         if (size() <= 1) return this;
-        return new Tuple2List<A, B>(sorted(get2F().andThen((Function2I<B, B>) comparator)));
+        return new Tuple2List<>(sorted(get2F().andThen((Function2I<B, B>) comparator)));
     }
 
 
@@ -241,11 +237,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         if (isEmpty()) {
             return Cf.map();
         } else {
-            return groupBy(get1F()).mapValues(new Function<ListF<Tuple2<A, B>>, ListF<B>>() {
-                public ListF<B> apply(ListF<Tuple2<A, B>> list) {
-                    return list.map(get2F());
-                }
-            });
+            return groupBy(get1F()).mapValues((Function<ListF<Tuple2<A, B>>, ListF<B>>) list -> list.map(get2F()));
         }
     }
 
@@ -264,7 +256,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         if (target instanceof ReadOnlyArrayList<?>) {
             return this;
         } else {
-            return new Tuple2List<A, B>(super.makeReadOnly());
+            return new Tuple2List<>(super.makeReadOnly());
         }
     }
 
@@ -277,11 +269,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public <W> Tuple3List<A, B, W> zip3(ListF<W> list) {
-        return Tuple3List.tuple3List(zip(list).map(new Function2<Tuple2<A, B>, W, Tuple3<A, B, W>>() {
-            public Tuple3<A, B, W> apply(Tuple2<A, B> a, W b) {
-                return Tuple3.tuple(a._1, a._2, b);
-            }
-        }));
+        return Tuple3List.tuple3List(zip(list).map((Function2<Tuple2<A, B>, W, Tuple3<A, B, W>>) (a, b) -> Tuple3.tuple(a._1, a._2, b)));
     }
 
     public <W> Tuple3List<A, B, W> zip3With(Function2<A, B, W> f) {
@@ -309,17 +297,13 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public String mkString(String elemSep, final String tupleSep) {
-        return map(new Function2<A, B, String>() {
-            public String apply(A a, B b) {
-                return a + tupleSep + b;
-            }
-        }).mkString(elemSep);
+        return map((Function2<A, B, String>) (a, b) -> a + tupleSep + b).mkString(elemSep);
     }
 
     public Tuple2List<A, B> plus(Tuple2List<A, B> that) {
         if (that.isEmpty()) return this;
         else if (this.isEmpty()) return that.uncheckedCastT2l();
-        else return new Tuple2List<A, B>(super.plus(that.<A, B>uncheckedCastT2l().target));
+        else return new Tuple2List<>(super.plus(that.<A, B>uncheckedCastT2l().target));
     }
 
     /**
@@ -368,7 +352,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public static <A, B> Tuple2List<A, B> wrap(ListF<Tuple2<A, B>> pairs) {
-        return new Tuple2List<A, B>(pairs);
+        return new Tuple2List<>(pairs);
     }
 
     public static <A, B> Tuple2List<A, B> tuple2List(ListF<Tuple2<A, B>> pairs) {
@@ -376,7 +360,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public static <A, B> Tuple2List<A, B> tuple2List(Collection<Tuple2<A, B>> pairs) {
-        return new Tuple2List<A, B>(pairs);
+        return new Tuple2List<>(pairs);
     }
 
 } //~

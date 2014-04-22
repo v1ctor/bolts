@@ -27,7 +27,7 @@ public class ListGenerator<A> extends Generator<ListF<A>> {
     }
 
     public ListGenerator<A> maxLength(int length) {
-        return new ListGenerator<A>(elements, Generator.ints(0, length + 1));
+        return new ListGenerator<>(elements, Generator.ints(0, length + 1));
     }
 
 } //~

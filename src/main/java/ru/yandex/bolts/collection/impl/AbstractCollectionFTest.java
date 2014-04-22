@@ -65,11 +65,7 @@ public class AbstractCollectionFTest extends TestCase {
 
     public void testToMap() {
         MapF<String, Integer> m = list(1, 2, 3).toMapMappingToKey(Function.toStringF());
-        MapF<String, Integer> expected = list("1", "2", "3").toMapMappingToValue(new Function<String, Integer>() {
-            public Integer apply(String s) {
-                return Integer.parseInt(s);
-            }
-        });
+        MapF<String, Integer> expected = list("1", "2", "3").toMapMappingToValue(Cf.Integer.parseF());
         assertEquals(expected, m);
     }
 
@@ -87,28 +83,24 @@ public class AbstractCollectionFTest extends TestCase {
 
     public void testToPrimitiveArray() {
         assertTrue(Arrays.equals(new int[] { 1, 2, 3 }, Cf.list(1, 2, 3).toIntArray()));
-        assertTrue(Arrays.equals(new long[] { 1, 2, 3 }, Cf.<Integer>list(1, 2, 3).toLongArray()));
+        assertTrue(Arrays.equals(new long[] { 1, 2, 3 }, Cf.list(1, 2, 3).toLongArray()));
         assertTrue(Arrays.equals(new char[] { 'a', 'b', 'c' }, Cf.list('a', 'b', 'c').toCharArray()));
     }
 
     private static Function<String, Object> stringLengthM() {
-        return new Function<String, Object>() {
-            public Object apply(String s) {
-                return s.length();
-            }
-        };
+        return String::length;
     }
 
     public void testMin() {
         CollectionF<String> coll = Cf.list("b", "a", "d", "c");
         assertEquals("a", coll.min());
-        assertEquals("d", coll.min(Comparator.naturalComparator().<String, String>uncheckedCast().invert()));
+        assertEquals("d", coll.min(Comparator.naturalComparator().uncheckedCast().invert()));
     }
 
     public void testMax() {
         CollectionF<String> coll = Cf.list("b", "a", "d", "c");
         assertEquals("d", coll.max());
-        assertEquals("a", coll.max(Comparator.naturalComparator().<String, String>uncheckedCast().invert()));
+        assertEquals("a", coll.max(Comparator.naturalComparator().uncheckedCast().invert()));
     }
 
     public void testPaginate() {
@@ -116,7 +108,7 @@ public class AbstractCollectionFTest extends TestCase {
                 Cf.list(1, 2, 3, 4, 5).paginate(3));
         assertEquals(Cf.list(Cf.list(1, 2), Cf.list(3, 4)),
                 Cf.list(1, 2, 3, 4).paginate(2));
-        assertEquals(Cf.<ListF<Integer>>list(), Cf.<Integer>list().paginate(3));
+        assertEquals(Cf.list(), Cf.list().paginate(3));
     }
 
     public void testFlatten() {
