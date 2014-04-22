@@ -5,7 +5,6 @@ package ru.yandex.bolts.function;
 import ru.yandex.bolts.collection.Tuple3;
 
 /**
- * @see fj.F3
  */
 @FunctionalInterface
 public interface Function3I<A, B, C> {
@@ -13,52 +12,20 @@ public interface Function3I<A, B, C> {
     int apply(A a, B b, C c);
 
     default Function2I<B, C> bind1(final A a) {
-        return new Function2I<B, C>() {
-            public int apply(B b, C c) {
-                return Function3I.this.apply(a, b, c);
-            }
-
-            public String toString() {
-                return Function3I.this + "(" + a + ", _, _)";
-            }
-        };
+        return (b, c) -> apply(a, b, c);
     }
 
     default Function2I<A, C> bind2(final B b) {
-        return new Function2I<A, C>() {
-            public int apply(A a, C c) {
-                return Function3I.this.apply(a, b, c);
-            }
-
-            public String toString() {
-                return Function3I.this + "(_, " + b + ", _)";
-            }
-        };
+        return (a, c) -> apply(a, b, c);
     }
 
     default Function2I<A, B> bind3(final C c) {
-        return new Function2I<A, B>() {
-            public int apply(A a, B b) {
-                return Function3I.this.apply(a, b, c);
-            }
-
-            public String toString() {
-                return Function3I.this + "(_, _, " + c + ")";
-            }
-        };
+        return (a, b) -> apply(a, b, c);
     }
 
 
     static <A, B, C> Function2<Function3I<A, B, C>, A, Function2I<B, C>> bind1F2() {
-        return new Function2<Function3I<A, B, C>, A, Function2I<B, C>>() {
-            public Function2I<B, C> apply(Function3I<A, B, C> f, A a) {
-                return f.bind1(a);
-            }
-
-            public String toString() {
-                return "bind1";
-            }
-        };
+        return (f, a) -> f.bind1(a);
     }
 
     default Function<A, Function2I<B, C>> bind1F() {
@@ -66,15 +33,7 @@ public interface Function3I<A, B, C> {
     }
 
     static <A, B, C> Function2<Function3I<A, B, C>, B, Function2I<A, C>> bind2F2() {
-        return new Function2<Function3I<A, B, C>, B, Function2I<A, C>>() {
-            public Function2I<A, C> apply(Function3I<A, B, C> f, B b) {
-                return f.bind2(b);
-            }
-
-            public String toString() {
-                return "bind2";
-            }
-        };
+        return (f, b) -> f.bind2(b);
     }
 
     default Function<B, Function2I<A, C>> bind2F() {
@@ -82,15 +41,7 @@ public interface Function3I<A, B, C> {
     }
 
     static <A, B, C> Function2<Function3I<A, B, C>, C, Function2I<A, B>> bind3F2() {
-        return new Function2<Function3I<A, B, C>, C, Function2I<A, B>>() {
-            public Function2I<A, B> apply(Function3I<A, B, C> f, C c) {
-                return f.bind3(c);
-            }
-
-            public String toString() {
-                return "bind3";
-            }
-        };
+        return (f, c) -> f.bind3(c);
     }
 
     default Function<C, Function2I<A, B>> bind3F() {
@@ -98,39 +49,15 @@ public interface Function3I<A, B, C> {
     }
 
     default Function<Tuple3<A, B, C>, Integer> asFunction() {
-        return new Function<Tuple3<A, B, C>, Integer>() {
-            public Integer apply(Tuple3<A, B, C> t) {
-                return Function3I.this.apply(t._1, t._2, t._3);
-            }
-
-            public String toString() {
-                return Function3I.this.toString();
-            }
-        };
+        return t -> apply(t._1, t._2, t._3);
     }
 
     default Function1I<Tuple3<A, B, C>> asFunction1I() {
-        return new Function1I<Tuple3<A, B, C>>() {
-            public int apply(Tuple3<A, B, C> t) {
-                return Function3I.this.apply(t._1, t._2, t._3);
-            }
-
-            public String toString() {
-                return Function3I.this.toString();
-            }
-        };
+        return t -> apply(t._1, t._2, t._3);
     }
 
     default Function3<A, B, C, Integer> asFunction3() {
-        return new Function3<A, B, C, Integer>() {
-            public Integer apply(A a, B b, C c) {
-                return Function3I.this.apply(a, b, c);
-            }
-
-            public String toString() {
-                return Function3I.this.toString();
-            }
-        };
+        return (a, b, c) -> apply(a, b, c);
     }
 
     @SuppressWarnings("unchecked")

@@ -26,27 +26,15 @@ public abstract class AnyListType extends AnyCollectionType {
     public abstract <A> ListF<A> cons(A... elements);
 
     public <A> Function0<ListF<A>> consF() {
-        return new Function0<ListF<A>>() {
-            public ListF<A> apply() {
-                return cons();
-            }
-        };
+        return this::cons;
     }
 
     public <A> Function<A[], ListF<A>> consFromArrayF() {
-        return new Function<A[], ListF<A>>() {
-            public ListF<A> apply(A[] a) {
-                return cons(a);
-            }
-        };
+        return a -> cons(a);
     }
 
     public <A> Function<A, ListF<A>> consFrom1F() {
-        return new Function<A, ListF<A>>() {
-            public ListF<A> apply(A a) {
-                return cons(a);
-            }
-        };
+        return this::cons;
     }
 
     public <A> ListF<A> plus(ListF<A> l1, ListF<A> l2) {
@@ -54,11 +42,7 @@ public abstract class AnyListType extends AnyCollectionType {
     }
 
     public <A> Function2<ListF<A>, ListF<A>, ListF<A>> plusF() {
-        return new Function2<ListF<A>, ListF<A>, ListF<A>>() {
-            public ListF<A> apply(ListF<A> l1, ListF<A> l2) {
-                return plus(l1, l2);
-            }
-        };
+        return this::plus;
     }
 
     public <A> ListF<A> concat(ListF<ListF<A>> lists) {
@@ -72,11 +56,7 @@ public abstract class AnyListType extends AnyCollectionType {
     }
 
     public <A> Function2<List<A>, Function1B<? super A>, ListF<A>> filterF() {
-        return new Function2<List<A>, Function1B<? super A>, ListF<A>>() {
-            public ListF<A> apply(List<A> set, Function1B<? super A> f) {
-                return Cf.x(set).filter(f);
-            }
-        };
+        return (set, f) -> Cf.x(set).filter(f);
     }
 
     public <A> Function<List<A>, ListF<A>> filterF(Function1B<? super A> f) {
@@ -84,11 +64,7 @@ public abstract class AnyListType extends AnyCollectionType {
     }
 
     public <A> Function2<List<A>, Integer, A> getF() {
-        return new Function2<List<A>, Integer, A>() {
-            public A apply(List<A> list, Integer index) {
-                return list.get(index);
-            }
-        };
+        return List::get;
     }
 
     public <A> Function<List<A>, A> getF(final int index) {
@@ -100,12 +76,7 @@ public abstract class AnyListType extends AnyCollectionType {
     }
 
     public <A> Function<List<A>, Option<A>> firstOF() {
-        return new Function<List<A>, Option<A>>() {
-            public Option<A> apply(List<A> a) {
-                return Cf.x(a).firstO();
-            }
-        };
+        return a -> Cf.x(a).firstO();
     }
-
 
 } //~

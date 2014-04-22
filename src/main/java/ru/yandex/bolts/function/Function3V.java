@@ -5,7 +5,6 @@ package ru.yandex.bolts.function;
 import ru.yandex.bolts.collection.Tuple3;
 
 /**
- * @see fj.F3
  */
 @FunctionalInterface
 public interface Function3V<A, B, C> {
@@ -13,52 +12,20 @@ public interface Function3V<A, B, C> {
     void apply(A a, B b, C c);
 
     default Function2V<B, C> bind1(final A a) {
-        return new Function2V<B, C>() {
-            public void apply(B b, C c) {
-                Function3V.this.apply(a, b, c);
-            }
-
-            public String toString() {
-                return Function3V.this + "(" + a + ", _, _)";
-            }
-        };
+        return (b, c) -> apply(a, b, c);
     }
 
     default Function2V<A, C> bind2(final B b) {
-        return new Function2V<A, C>() {
-            public void apply(A a, C c) {
-                Function3V.this.apply(a, b, c);
-            }
-
-            public String toString() {
-                return Function3V.this + "(_, " + b + ", _)";
-            }
-        };
+        return (a, c) -> apply(a, b, c);
     }
 
     default Function2V<A, B> bind3(final C c) {
-        return new Function2V<A, B>() {
-            public void apply(A a, B b) {
-                Function3V.this.apply(a, b, c);
-            }
-
-            public String toString() {
-                return Function3V.this + "(_, _, " + c + ")";
-            }
-        };
+        return (a, b) -> apply(a, b, c);
     }
 
 
     static <A, B, C> Function2<Function3V<A, B, C>, A, Function2V<B, C>> bind1F2() {
-        return new Function2<Function3V<A, B, C>, A, Function2V<B, C>>() {
-            public Function2V<B, C> apply(Function3V<A, B, C> f, A a) {
-                return f.bind1(a);
-            }
-
-            public String toString() {
-                return "bind1";
-            }
-        };
+        return (f, a) -> f.bind1(a);
     }
 
     default Function<A, Function2V<B, C>> bind1F() {
@@ -66,15 +33,7 @@ public interface Function3V<A, B, C> {
     }
 
     static <A, B, C> Function2<Function3V<A, B, C>, B, Function2V<A, C>> bind2F2() {
-        return new Function2<Function3V<A, B, C>, B, Function2V<A, C>>() {
-            public Function2V<A, C> apply(Function3V<A, B, C> f, B b) {
-                return f.bind2(b);
-            }
-
-            public String toString() {
-                return "bind2";
-            }
-        };
+        return (f, b) -> f.bind2(b);
     }
 
     default Function<B, Function2V<A, C>> bind2F() {
@@ -82,15 +41,7 @@ public interface Function3V<A, B, C> {
     }
 
     static <A, B, C> Function2<Function3V<A, B, C>, C, Function2V<A, B>> bind3F2() {
-        return new Function2<Function3V<A, B, C>, C, Function2V<A, B>>() {
-            public Function2V<A, B> apply(Function3V<A, B, C> f, C c) {
-                return f.bind3(c);
-            }
-
-            public String toString() {
-                return "bind3";
-            }
-        };
+        return (f, c) -> f.bind3(c);
     }
 
     default Function<C, Function2V<A, B>> bind3F() {
@@ -98,40 +49,20 @@ public interface Function3V<A, B, C> {
     }
 
     default Function<Tuple3<A, B, C>, Object> asFunction() {
-        return new Function<Tuple3<A, B, C>, Object>() {
-            public Object apply(Tuple3<A, B, C> t) {
-                Function3V.this.apply(t._1, t._2, t._3);
-                return null;
-            }
-
-            public String toString() {
-                return Function3V.this.toString();
-            }
+        return t -> {
+            apply(t._1, t._2, t._3);
+            return null;
         };
     }
 
     default Function1V<Tuple3<A, B, C>> asFunction1V() {
-        return new Function1V<Tuple3<A, B, C>>() {
-            public void apply(Tuple3<A, B, C> t) {
-                Function3V.this.apply(t._1, t._2, t._3);
-            }
-
-            public String toString() {
-                return Function3V.this.toString();
-            }
-        };
+        return t -> apply(t._1, t._2, t._3);
     }
 
     default Function3<A, B, C, Object> asFunction3() {
-        return new Function3<A, B, C, Object>() {
-            public Object apply(A a, B b, C c) {
-                Function3V.this.apply(a, b, c);
-                return null;
-            }
-
-            public String toString() {
-                return Function3V.this.toString();
-            }
+        return (a, b, c) -> {
+            apply(a, b, c);
+            return null;
         };
     }
 

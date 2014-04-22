@@ -2,14 +2,13 @@ package ru.yandex.bolts.function;
 
 import ru.yandex.bolts.collection.Tuple2;
 
-
 /**
  * @author Stepan Koltsov
  */
 @FunctionalInterface
 public interface Function2I<A, B> {
 
-    public static enum Operator {
+    static enum Operator {
         GT(">"),
         GE(">="),
         NE("!="),
@@ -96,84 +95,32 @@ public interface Function2I<A, B> {
 
     /** Bind first argument */
     default Function1I<B> bind1(final A a) {
-        return new Function1I<B>() {
-            public int apply(B b) {
-                return Function2I.this.apply(a, b);
-            }
-
-            public String toString() {
-                return Function2I.this + "(" + a + ", _)";
-            }
-        };
+        return b -> apply(a, b);
     }
 
     default Function1I<A> bind2(final B b) {
-        return new Function1I<A>() {
-            public int apply(A a) {
-                return Function2I.this.apply(a, b);
-            }
-
-            public String toString() {
-                return Function2I.this + "(_, " + b + ")";
-            }
-        };
+        return a -> apply(a, b);
     }
 
     default <C> Function2I<C, B> compose1(final Function<? super C, ? extends A> f) {
-        return new Function2I<C, B>() {
-            public int apply(C c, B b) {
-                return Function2I.this.apply(f.apply(c), b);
-            }
-        };
+        return (c, b) -> apply(f.apply(c), b);
     }
 
     default <C> Function2I<A, C> compose2(final Function<? super C, ? extends B> f) {
-        return new Function2I<A, C>() {
-            public int apply(A a, C c) {
-                return Function2I.this.apply(a, f.apply(c));
-            }
-        };
+        return (a, c) -> apply(a, f.apply(c));
     }
 
     default Function<Tuple2<A, B>, Integer> asFunction() {
-        return new Function<Tuple2<A, B>, Integer>() {
-            public Integer apply(Tuple2<A, B> a) {
-                return Function2I.this.apply(a.get1(), a.get2());
-            }
-        };
+        return a -> apply(a.get1(), a.get2());
     }
 
     static <A, B> Function2I<A, B> asFunction2I(final Function<Tuple2<A, B>, Integer> f) {
-        return new Function2I<A, B>() {
-            public int apply(A a, B b) {
-                return f.apply(Tuple2.tuple(a, b));
-            }
-
-            @Override
-            public String toString() {
-                return f.toString();
-            }
-        };
+        return (a, b) -> f.apply(Tuple2.tuple(a, b));
     }
 
     /** Invert current comparator */
     default Function2I<B, A> invert() {
-        return new Function2I<B, A>() {
-            public int apply(B b, A a) {
-                return Function2I.this.apply(a, b);
-            }
-
-            public String toString() {
-                return "invert(" + Function2I.this + ")";
-            }
-
-            @Override
-            public Function2I<A, B> invert() {
-                return Function2I.this;
-            }
-
-        };
-
+        return (b, a) -> apply(a, b);
     }
 
     @SuppressWarnings("unchecked")

@@ -3,29 +3,21 @@ package ru.yandex.bolts.function;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import org.apache.commons.collections.Transformer;
-
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.forhuman.Comparator;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
-import fj.F;
-
-
-
-
 
 /**
  * Function
  *
- * @see F
- * @see Transformer
+ * @see Function
  *
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function<A, R> {
+public interface Function<A, R> extends java.util.function.Function<A, R> {
 
     R apply(A a);
 
@@ -35,66 +27,25 @@ public interface Function<A, R> {
      * @see fj.Function#andThen(F, F)
      */
     default <C> Function<A, C> andThen(final Function<? super R, ? extends C> g) {
-        return new Function<A, C>() {
-            public C apply(A a) {
-                return g.apply(Function.this.apply(a));
-            }
-
-            public String toString() {
-                return g + "(" + Function.this + ")";
-            }
-        };
+        return a -> g.apply(apply(a));
     }
 
     default Function1V<A> andThen(final Function1V<? super R> g) {
-        return new Function1V<A>() {
-            public void apply(A a) {
-                g.apply(Function.this.apply(a));
-            }
-
-            public String toString() {
-                return g + "(" + Function.this + ")";
-            }
-        };
+        return a -> g.apply(apply(a));
     }
 
     default Function1B<A> andThen(final Function1B<? super R> g) {
-        return new Function1B<A>() {
-            public boolean apply(A a) {
-                return g.apply(Function.this.apply(a));
-            }
-
-            public String toString() {
-                return g + "(" + Function.this + ")";
-            }
-        };
+        return a -> g.apply(apply(a));
     }
 
     /** Not true function composition */
     default Comparator<A> andThen(final Comparator<R> comparator) {
-        return new Comparator<A>() {
-            public int compare(A o1, A o2) {
-                return comparator.compare(Function.this.apply(o1), Function.this.apply(o2));
-            }
-
-            @Override
-            public String toString() {
-                return comparator + "(" + Function.this + "(_), " + Function.this + "(_))";
-            }
-        };
+        return (o1, o2) -> comparator.compare(apply(o1), apply(o2));
     }
 
     /** (f andThen g)(x) = g(f(x)) */
     default Comparator<A> andThen(final Function2I<R, R> comparator) {
-        return new Comparator<A>() {
-            public int compare(A a, A b) {
-                return comparator.apply(Function.this.apply(a), Function.this.apply(b));
-            }
-
-            public String toString() {
-                return comparator + "(" + Function.this + ")";
-            }
-        };
+        return (a, b) -> comparator.apply(apply(a), apply(b));
     }
 
     default Function1B<A> andThenEquals(R value) {
@@ -117,28 +68,11 @@ public interface Function<A, R> {
     }
 
     default Function0<R> bind(final A param) {
-        return new Function0<R>() {
-            public R apply() {
-                return Function.this.apply(param);
-            }
-
-            public String toString() {
-                return Function.this.toString() + "(" + param + ")";
-            }
-
-        };
+        return () -> apply(param);
     }
 
     static <A, R> Function2<Function<A, R>, A, Function0<R>> bindF2() {
-        return new Function2<Function<A,R>, A, Function0<R>>() {
-            public Function0<R> apply(Function<A, R> f, A a) {
-                return f.bind(a);
-            }
-
-            public String toString() {
-                return "bind";
-            }
-        };
+        return (f, a) -> f.bind(a);
     }
 
     default Function<A, Function0<R>> bindF() {
@@ -147,15 +81,7 @@ public interface Function<A, R> {
 
 
     static <A, R> Function2<Function<A, R>, A, R> applyF() {
-        return new Function2<Function<A, R>, A, R>() {
-            public R apply(Function<A, R> f, A a) {
-                return f.apply(a);
-            }
-
-            public String toString() {
-                return "apply";
-            }
-        };
+        return (f, a) -> f.apply(a);
     }
 
     @SuppressWarnings("unchecked")
@@ -165,101 +91,38 @@ public interface Function<A, R> {
 
     /** Ignore result of mapping */
     default Function1V<A> ignoreResult() {
-        return new Function1V<A>() {
-            public void apply(A a) {
-                Function.this.apply(a);
-            }
-
-            public String toString() {
-                return "unit(" + Function.this + ")";
-            }
-        };
+        return a -> apply(a);
     }
 
     /** Map null to null */
     default Function<A, R> ignoreNullF() {
-        return new Function<A, R>() {
-            public R apply(A a) {
-                if (a == null) return null;
-                else return Function.this.apply(a);
-            }
-
-            public String toString() {
-                return "ignoreNull(" + Function.this + ")";
-            }
+        return a -> {
+            if (a == null) return null;
+            else return Function.this.apply(a);
         };
     }
 
     static <A> Function<A, A> identityF() {
-        return new Function<A, A>() {
-            public A apply(A a) {
-                return a;
-            }
-
-            @SuppressWarnings("unchecked")
-            @Override
-            public <C> Function<A, C> andThen(Function<? super A, ? extends C> g) {
-                return (Function<A, C>) g;
-            }
-
-            @SuppressWarnings("unchecked")
-            @Override
-            public Function1B<A> andThen(Function1B<? super A> predicate) {
-                return (Function1B<A>) predicate;
-            }
-
-            @Override
-            public <C> Function<C, A> compose(Function<C, A> g) {
-                return g;
-            }
-
-            public String toString() {
-                return "identity";
-            }
-        };
+        return a -> a;
     }
 
     static <T> Function<T, String> toStringF() {
-        return new Function<T, String>() {
-            public String apply(T t) {
-                return t != null ? t.toString() : "null";
-            }
-
-            public String toString() {
-                return "toString";
-            }
-        };
+        return t -> t != null ? t.toString() : "null";
     }
 
     /** Function that always returns the same value */
     static <A, B> Function<A, B> constF(final B b) {
-        return new Function<A, B>() {
-            public B apply(A a) {
-                return b;
-            }
-
-            public String toString() {
-                return "const " + b;
-            }
-        };
+        return a -> b;
     }
 
     @SuppressWarnings("unchecked")
     static <A, B> Function<A, B> wrap(final Method method) {
         if ((method.getModifiers() & Modifier.STATIC) != 0) {
             Validate.isTrue(method.getParameterTypes().length == 1, "static method must have single argument, " + method);
-            return new Function<A, B>() {
-                public B apply(A a) {
-                    return (B) ReflectionUtils.invoke(method, null, a);
-                }
-            };
+            return a -> (B) ReflectionUtils.invoke(method, null, a);
         } else {
             Validate.isTrue(method.getParameterTypes().length == 0, "instance method must have no arguments, " + method);
-            return new Function<A, B>() {
-                public B apply(A a) {
-                    return (B) ReflectionUtils.invoke(method, a);
-                }
-            };
+            return a -> (B) ReflectionUtils.invoke(method, a);
         }
     }
 

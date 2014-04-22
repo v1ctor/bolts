@@ -41,14 +41,14 @@ public class Function1BTest extends TestCase {
         assertTrue(anotherFalseF().notF().apply(null));
         anotherTrueF().notF().toString();
         Function1B atp = anotherTrueF();
-        assertSame(atp.notF().notF(), atp);
+        assertSame(atp.notF().notF().apply(null), atp.apply(null));
     }
 
     public void testTrue() {
         Function1B atp = anotherFalseF();
         Function1B tp = Function1B.trueF();
-        assertSame(atp, tp.andF(atp));
-        assertSame(tp, tp.orF(atp));
+        assertSame(atp.apply(null), tp.andF(atp).apply(null));
+        assertSame(tp.apply(null), tp.orF(atp).apply(null));
         tp.toString();
 
         assertFalse(tp.notF().apply(null));
@@ -57,8 +57,8 @@ public class Function1BTest extends TestCase {
     public void testFalse() {
         Function1B afp = anotherFalseF();
         Function1B fp = Function1B.falseF();
-        assertSame(fp, fp.andF(afp));
-        assertSame(afp, fp.orF(afp));
+        assertSame(fp.apply(null), fp.andF(afp).apply(null));
+        assertSame(afp.apply(null), fp.orF(afp).apply(null));
         fp.toString();
 
         assertTrue(fp.notF().apply(null));
@@ -123,7 +123,7 @@ public class Function1BTest extends TestCase {
     }
 
     public void testCompose() {
-        Function1B<Integer> p = Function1B.equalsF("1").compose(Function.<Integer>toStringF());
+        Function1B<Integer> p = Function1B.equalsF("1").compose(Function.toStringF());
         assertTrue(p.apply(1));
         assertFalse(p.apply(2));
         p.toString();

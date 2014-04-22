@@ -95,10 +95,7 @@ public class CollectionsFTest extends TestCase {
                 Cf.<Integer>set());
 
         ListF<ListF<Integer>> positiveIntegers = data.map(
-                Cf.Set.<Integer>filterF(new Function1B<Integer>() {
-                    public boolean apply(Integer integer) {
-                        return integer >= 0;
-                    }})
+                Cf.Set.<Integer>filterF(integer -> integer >= 0)
                 .andThen(Cf.<Integer>sortedF(Cf.Integer.comparator()))
                 .andThen(Cf.<Integer>toListF()));
 

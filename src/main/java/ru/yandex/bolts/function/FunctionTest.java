@@ -60,8 +60,10 @@ public class FunctionTest extends TestCase {
         Function.identityF().toString();
 
         Function tsm = Function.toStringF();
-        assertSame(tsm, Function.identityF().andThen(tsm));
-        assertSame(tsm, Function.identityF().compose(tsm));
+        assertEquals(tsm.apply("a"), Function.identityF().andThen(tsm).apply("a"));
+        assertEquals(tsm.apply(1), Function.identityF().andThen(tsm).apply(1));
+        assertEquals(tsm.apply("a"), Function.identityF().compose(tsm).apply("a"));
+        assertEquals(tsm.apply(1), Function.identityF().compose(tsm).apply(1));
     }
 
     public void testAndThenComparator() {

@@ -11,7 +11,6 @@ import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2B;
 
-
 /**
  * @author Stepan Koltsov
  */
@@ -28,27 +27,15 @@ public class StringType extends AnyCharSequenceType<String> {
     }
 
     public Function2<String, Integer, Character> charAtF() {
-        return new Function2<String, Integer, Character>() {
-            public Character apply(String s, Integer index) {
-                return s.charAt(index);
-            }
-        };
+        return String::charAt;
     }
 
     public Function2<String, Integer, Integer> codePointAtF() {
-        return new Function2<String, Integer, Integer>() {
-            public Integer apply(String s, Integer index) {
-                return s.codePointAt(index);
-            }
-        };
+        return String::codePointAt;
     }
 
     public Function2B<String, CharSequence> containsF() {
-        return new Function2B<String, CharSequence>() {
-            public boolean apply(String string, CharSequence substring) {
-                return string.contains(substring);
-            }
-        };
+        return String::contains;
     }
 
     public Function1B<String> containsF(CharSequence substring) {
@@ -56,35 +43,19 @@ public class StringType extends AnyCharSequenceType<String> {
     }
 
     public Function<String, String> internF() {
-        return new Function<String, String>() {
-            public String apply(String s) {
-                return s.intern();
-            }
-        };
+        return String::intern;
     }
 
     public Function<String, Integer> lengthF() {
-        return new Function<String, Integer>() {
-            public Integer apply(String s) {
-                return s.length();
-            }
-        };
+        return String::length;
     }
 
     public Function1B<String> isEmptyF() {
-        return new Function1B<String>() {
-            public boolean apply(String s) {
-                return s == null || s.isEmpty();
-            }
-        };
+        return s -> s == null || s.isEmpty();
     }
 
     public Function1B<String> isNotEmptyF() {
-        return new Function1B<String>() {
-            public boolean apply(String s) {
-                return s != null && !s.isEmpty();
-            }
-        };
+        return s -> s != null && !s.isEmpty();
     }
 
     public boolean isBlank(String s) {
@@ -107,19 +78,11 @@ public class StringType extends AnyCharSequenceType<String> {
     }
 
     public Function1B<String> isBlankF() {
-        return new Function1B<String>() {
-            public boolean apply(String s) {
-                return isBlank(s);
-            }
-        };
+        return this::isBlank;
     }
 
     public Function1B<String> isNotBlankF() {
-        return new Function1B<String>() {
-            public boolean apply(String s) {
-                return isNotBlank(s);
-            }
-        };
+        return this::isNotBlank;
     }
 
     public Function2<String, String, String> joinF(String sep) {
@@ -135,11 +98,7 @@ public class StringType extends AnyCharSequenceType<String> {
     }
 
     public Function2B<String, String> startsWithF() {
-        return new Function2B<String, String>() {
-            public boolean apply(String a, String b) {
-                return a.startsWith(b);
-            }
-        };
+        return String::startsWith;
     }
 
     public Function1B<String> startsWithF(String prefix) {
@@ -147,11 +106,7 @@ public class StringType extends AnyCharSequenceType<String> {
     }
 
     public Function2B<String, String> endsWithF() {
-        return new Function2B<String, String>() {
-            public boolean apply(String a, String b) {
-                return a.endsWith(b);
-            }
-        };
+        return String::endsWith;
     }
 
     public Function1B<String> endsWithF(String suffix) {
@@ -159,27 +114,15 @@ public class StringType extends AnyCharSequenceType<String> {
     }
 
     public Function<String, String> toLowerCaseF() {
-        return new Function<String, String>() {
-            public String apply(String a) {
-                return a.toLowerCase();
-            }
-        };
+        return String::toLowerCase;
     }
 
     public Function<String, String> toUpperCaseF() {
-        return new Function<String, String>() {
-            public String apply(String a) {
-                return a.toUpperCase();
-            }
-        };
+        return String::toUpperCase;
     }
 
     public Function<String, String> trimF() {
-        return new Function<String, String>() {
-            public String apply(String a) {
-                return a.trim();
-            }
-        };
+        return String::trim;
     }
 
     /**
@@ -189,11 +132,7 @@ public class StringType extends AnyCharSequenceType<String> {
      */
     public Function<String, ListF<String>> splitF(String regex) {
         final Pattern pattern = Pattern.compile(regex);
-        return new Function<String, ListF<String>>() {
-            public ListF<String> apply(String a) {
-                return Cf.list(pattern.split(a));
-            }
-        };
+        return a -> Cf.list(pattern.split(a));
     }
 
     /**
@@ -203,11 +142,9 @@ public class StringType extends AnyCharSequenceType<String> {
      */
     public Function<String, Tuple2<String, String>> split2F(String regex) {
         final Pattern pattern = Pattern.compile(regex);
-        return new Function<String, Tuple2<String, String>>() {
-            public Tuple2<String, String> apply(String a) {
-                String[] array = pattern.split(a, 2);
-                return Tuple2.tuple(array[0], array[1]);
-            }
+        return a -> {
+            String[] array = pattern.split(a, 2);
+            return Tuple2.tuple(array[0], array[1]);
         };
     }
 
@@ -218,21 +155,15 @@ public class StringType extends AnyCharSequenceType<String> {
      */
     public Function<String, Tuple3<String, String, String>> split3F(String regex) {
         final Pattern pattern = Pattern.compile(regex);
-        return new Function<String, Tuple3<String, String, String>>() {
-            public Tuple3<String, String, String> apply(String a) {
-                String[] array = pattern.split(a, 3);
-                return Tuple3.tuple(array[0], array[1], array[2]);
-            }
+        return a -> {
+            String[] array = pattern.split(a, 3);
+            return Tuple3.tuple(array[0], array[1], array[2]);
         };
     }
 
     public Function1B<String> matchesF(String regex) {
         final Pattern pattern = Pattern.compile(regex);
-        return new Function1B<String>() {
-            public boolean apply(String string) {
-                return pattern.matcher(string).matches();
-            }
-        };
+        return string -> pattern.matcher(string).matches();
     }
 
     public boolean equalsIgnoreCase(String a, String b) {
@@ -244,11 +175,7 @@ public class StringType extends AnyCharSequenceType<String> {
     }
 
     public Function2B<String, String> equalsIgnoreCaseF() {
-        return new Function2B<String, String>() {
-            public boolean apply(String a, String b) {
-                return equalsIgnoreCase(a, b);
-            }
-        };
+        return this::equalsIgnoreCase;
     }
 
     public Function1B<String> equalsIgnoreCaseF(String b) {

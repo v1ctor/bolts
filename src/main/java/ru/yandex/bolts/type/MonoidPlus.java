@@ -18,11 +18,7 @@ public abstract class MonoidPlus<T> extends AnyObjectType<T> {
     }
 
     public Function2<T, T, T> plusF() {
-        return new Function2<T, T, T>() {
-            public T apply(T a, T b) {
-                return plus(a, b);
-            }
-        };
+        return this::plus;
     }
 
     public Function<T, T> plusF(T param) {
@@ -30,11 +26,7 @@ public abstract class MonoidPlus<T> extends AnyObjectType<T> {
     }
 
     public Function3<T, T, T, T> plus3F() {
-        return new Function3<T, T, T, T>() {
-            public T apply(T a, T b, T c) {
-                return plus(a, b, c);
-            }
-        };
+        return this::plus;
     }
 
     public boolean isZero(T a) {
@@ -42,11 +34,7 @@ public abstract class MonoidPlus<T> extends AnyObjectType<T> {
     }
 
     public Function1B<T> zeroF() {
-        return new Function1B<T>() {
-            public boolean apply(T a) {
-                return isZero(a);
-            }
-        };
+        return this::isZero;
     }
 
 } //~

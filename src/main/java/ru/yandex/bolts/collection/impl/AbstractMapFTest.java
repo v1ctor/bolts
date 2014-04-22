@@ -1,8 +1,5 @@
 package ru.yandex.bolts.collection.impl;
 
-import static ru.yandex.bolts.collection.CollectionsF.list;
-import static ru.yandex.bolts.collection.CollectionsF.set;
-
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
@@ -13,7 +10,9 @@ import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1BTest;
-import ru.yandex.bolts.function.Function2B;
+
+import static ru.yandex.bolts.collection.CollectionsF.list;
+import static ru.yandex.bolts.collection.CollectionsF.set;
 
 /**
  * @author Stepan Koltsov
@@ -32,11 +31,7 @@ public class AbstractMapFTest extends TestCase {
 
     public void testFilter() {
         MapF<Integer, String> m = map123().plus1(11, "11");
-        MapF<Integer, String> n = m.filter(new Function2B<Integer, String>() {
-            public boolean apply(Integer a, String b) {
-                return (a % 2) == 0 || b.length() > 1;
-            }
-        });
+        MapF<Integer, String> n = m.filter((a, b) -> (a % 2) == 0 || b.length() > 1);
         assertEquals(CollectionsF.map(2, "2", 11, "11"), n);
     }
 
@@ -56,16 +51,8 @@ public class AbstractMapFTest extends TestCase {
     }
 
     public void testMapValues() {
-        MapF<Integer, String> n = map123().mapValues(new Function<String, String>() {
-            public String apply(String s) {
-                return "a" + s;
-            }
-        });
-        assertEquals(list(1, 2, 3).toMapMappingToValue(new Function<Integer, String>() {
-            public String apply(Integer integer) {
-                return "a" + integer;
-            }
-        }), n);
+        MapF<Integer, String> n = map123().mapValues((Function<String, String>) s -> "a" + s);
+        assertEquals(list(1, 2, 3).toMapMappingToValue((Function<Integer, String>) i -> "a" + i), n);
     }
 
     public void testAsFunction() {

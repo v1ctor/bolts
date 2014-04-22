@@ -10,30 +10,11 @@ import ru.yandex.bolts.function.Function2B;
 public abstract class AnyObjectType<T> {
 
     public Function<T, Integer> hashCodeF() {
-        return new Function<T, Integer>() {
-            public Integer apply(T a) {
-                return a != null ? a.hashCode() : 0;
-            }
-
-            @Override
-            public String toString() {
-                return "hashCode";
-            }
-
-        };
+        return a -> a != null ? a.hashCode() : 0;
     }
 
     public Function<T, String> toStringF() {
-        return new Function<T, String>() {
-            public String apply(T a) {
-                return a != null ? a.toString() : "null";
-            }
-
-            @Override
-            public String toString() {
-                return "toString";
-            }
-        };
+        return a -> a != null ? a.toString() : "null";
     }
 
     public boolean equals(T a, T b) {
@@ -45,11 +26,7 @@ public abstract class AnyObjectType<T> {
     }
 
     public Function2B<T, T> equalsF() {
-        return new Function2B<T, T>() {
-            public boolean apply(T a, T b) {
-                return AnyObjectType.this.equals(a, b);
-            }
-        };
+        return this::equals;
     }
 
     public Function1B<T> equalsF(T that) {

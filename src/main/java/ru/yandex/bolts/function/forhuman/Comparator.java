@@ -40,51 +40,36 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
      * Call specified comparator if object are equal by this comparator.
      */
     default Comparator<A> chainTo(final Comparator<A> comparator) {
-        return new Comparator<A>() {
-            public int compare(A o1, A o2) {
-                int r = Comparator.this.compare(o1, o2);
-                if (r != 0) return r;
-                return comparator.compare(o1, o2);
-            }
+        return (o1, o2) -> {
+            int r = compare(o1, o2);
+            if (r != 0) return r;
+            return comparator.compare(o1, o2);
         };
     }
 
     /** Null low comparator */
     default Comparator<A> nullLowC() {
-        return new Comparator<A>() {
-            public int compare(A o1, A o2) {
-                if (o1 == null || o2 == null) {
-                    return o1 == o2 ? 0 : o1 != null ? 1 : -1;
-                } else {
-                    return Comparator.this.compare(o1, o2);
-                }
-            }
-
-            @Override
-            public Comparator<A> nullLowC() {
-                return this;
-            }
-
-            public String toString() {
-                return "nullLow(" + Comparator.this + ")";
+        return (o1, o2) -> {
+            if (o1 == null || o2 == null) {
+                return o1 == o2 ? 0 : o1 != null ? 1 : -1;
+            } else {
+                return compare(o1, o2);
             }
         };
     }
 
-    public static <A> Comparator<A> valueLowC(final A low) {
-        return new Comparator<A>() {
-            public int compare(A o1, A o2) {
-                if (low == null) {
-                    return o1 == o2 ? 0 : o1 != null ? 1 : -1;
-                }
-                if (Cf.Object.equals(o1, o2))
-                    return 0;
-                if (o1 != null && low.equals(o1))
-                    return -1;
-                if (o2 != null && low.equals(o2))
-                    return 1;
-                return 0;
+    static <A> Comparator<A> valueLowC(final A low) {
+        return (o1, o2) -> {
+            if (low == null) {
+                return o1 == o2 ? 0 : o1 != null ? 1 : -1;
             }
+            if (Cf.Object.equals(o1, o2))
+                return 0;
+            if (o1 != null && low.equals(o1))
+                return -1;
+            if (o2 != null && low.equals(o2))
+                return 1;
+            return 0;
         };
     }
 
@@ -96,22 +81,14 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
      * {@link #max(Object, Object)} as function.
      */
     default Function2<A, A, A> maxF() {
-        return new Function2<A, A, A>() {
-            public A apply(A a, A b) {
-                return max(a, b);
-            }
-        };
+        return this::max;
     }
 
     /**
      * {@link #min(Object, Object)} as function.
      */
     default Function2<A, A, A> minF() {
-        return new Function2<A, A, A>() {
-            public A apply(A a, A b) {
-                return min(a, b);
-            }
-        };
+        return this::min;
     }
 
     /** This but with different type parameter and no type check */
@@ -127,64 +104,29 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
     }
 
     /** Wrap {@link java.util.Comparator} */
-    public static <A> Comparator<A> wrap(final java.util.Comparator<A> comparator) {
+    static <A> Comparator<A> wrap(final java.util.Comparator<A> comparator) {
         if (comparator instanceof Comparator<?>) return (Comparator<A>) comparator;
-        else return new Comparator<A>() {
-            public int compare(A o1, A o2) {
-                return comparator.compare(o1, o2);
-            }
-
-            public String toString() {
-                return comparator.toString();
-            }
-        };
+        else return comparator::compare;
     }
 
     /** Wrap {@link Function2I} */
-    public static <A> Comparator<A> wrap(final Function2I<A, A> comparator) {
+    static <A> Comparator<A> wrap(final Function2I<A, A> comparator) {
         if (comparator instanceof Comparator<?>) return (Comparator<A>) comparator;
-        else return new Comparator<A>() {
-            public int compare(A o1, A o2) {
-                return comparator.apply(o1, o2);
-            }
-
-            public String toString() {
-                return comparator.toString();
-            }
-
-            @Override
-            public Comparator<A> invert() {
-                return wrap(comparator.invert());
-            }
-
-        };
+        else return comparator::apply;
     }
 
     /**
      * Compare {@link java.lang.Comparable}s. Null values are less than non-null.
      */
-    public static <A extends java.lang.Comparable<?>> Comparator<A> naturalComparator()  {
-        return new Comparator<A>() {
-            @SuppressWarnings("unchecked")
-            public int compare(A o1, A o2) {
-                if (o1 == o2) {
-                    return 0;
-                } else if (o1 == null || o2 == null) {
-                    return o1 == o2 ? 0 : o1 != null ? 1 : -1;
-                } else {
-                    //noinspection unchecked
-                    return ((Comparable<Object>) o1).compareTo(o2);
-                }
-            }
-
-            @Override
-            public Comparator<A> nullLowC() {
-                // naturalComparator is already null-low comparator
-                return this;
-            }
-
-            public String toString() {
-                return "compareTo";
+    static <A extends java.lang.Comparable<?>> Comparator<A> naturalComparator()  {
+        return (o1, o2) -> {
+            if (o1 == o2) {
+                return 0;
+            } else if (o1 == null || o2 == null) {
+                return o1 == o2 ? 0 : o1 != null ? 1 : -1;
+            } else {
+                //noinspection unchecked
+                return ((Comparable<Object>) o1).compareTo(o2);
             }
         };
     }
@@ -192,11 +134,7 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
     /**
      * Always returns <code>0</code>.
      */
-    public static <A> Comparator<A> constEqualComparator() {
-        return new Comparator<A>() {
-            public int compare(A o1, A o2) {
-                return 0;
-            }
-        };
+    static <A> Comparator<A> constEqualComparator() {
+        return (o1, o2) -> 0;
     }
 } //~

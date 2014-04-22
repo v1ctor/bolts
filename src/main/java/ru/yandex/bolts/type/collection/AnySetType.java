@@ -14,11 +14,7 @@ import ru.yandex.bolts.function.Function2;
 public class AnySetType extends AnyCollectionType {
 
     public <A> Function2<Set<A>, Function1B<? super A>, SetF<A>> filterF() {
-        return new Function2<Set<A>, Function1B<? super A>, SetF<A>>() {
-            public SetF<A> apply(Set<A> set, Function1B<? super A> f) {
-                return Cf.x(set).filter(f);
-            }
-        };
+        return (set, f) -> Cf.x(set).filter(f);
     }
 
     public <A> Function<Set<A>, SetF<A>> filterF(Function1B<? super A> f) {
@@ -26,19 +22,11 @@ public class AnySetType extends AnyCollectionType {
     }
 
     public <A> Function2<SetF<A>, SetF<A>, SetF<A>> intersectF() {
-        return new Function2<SetF<A>, SetF<A>, SetF<A>>() {
-            public SetF<A> apply(SetF<A> a, SetF<A> b) {
-                return a.intersect(b);
-            }
-        };
+        return SetF::intersect;
     }
 
     public <A> Function2<SetF<A>, SetF<A>, SetF<A>> plusF() {
-        return new Function2<SetF<A>, SetF<A>, SetF<A>>() {
-            public SetF<A> apply(SetF<A> a, SetF<A> b) {
-                return a.plus(b);
-            }
-        };
+        return SetF::plus;
     }
 
 } //~

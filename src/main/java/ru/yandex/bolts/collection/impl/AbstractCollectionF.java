@@ -231,11 +231,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     @Override
     public Function1B<E> containsF() {
-        return new Function1B<E>() {
-            public boolean apply(E e) {
-                return contains(e);
-            }
-        };
+        return this::contains;
     }
 
     @Override
@@ -342,7 +338,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     public <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f) {
         if (isEmpty()) return CollectionsF.list();
 
-        ArrayListF<B> result = new ArrayListF<B>();
+        ArrayListF<B> result = new ArrayListF<>();
         for (E e : this) {
             result.addAll(f.apply(e));
         }
@@ -352,19 +348,15 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     public <B> ListF<B> flatMapO(final Function<? super E, Option<B>> f) {
         if (isEmpty()) return CollectionsF.list();
 
-        return flatMap(new Function<E, Collection<B>>() {
-            public Collection<B> apply(E e) {
-                return f.apply(e).toList();
-            }
-        });
+        return flatMap((Function<E, Collection<B>>) e -> f.apply(e).toList());
     }
 
     @Override
     public <B> Tuple2List<E, B> zipWithFlatMapO(Function<? super E, Option<B>> f) {
         return toList()
             .zipWith(f)
-            .filterBy2(Option.<B>isDefinedF())
-            .map2(Option.<B>getF())
+            .filterBy2(Option.isDefinedF())
+            .map2(Option.getF())
         ;
     }
 
@@ -373,15 +365,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     public Function1V<E> addF() {
-        return new Function1V<E>() {
-            public void apply(E e) {
-                add(e);
-            }
-
-            public String toString() {
-                return AbstractCollectionF.this + ".add";
-            }
-        };
+        return this::add;
     }
 
     public CollectionF<E> plus1(E e) {
@@ -417,7 +401,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     public ListF<E> sorted() {
         if (size() <= 1) return toList();
 
-        ArrayListF<E> r = new ArrayListF<E>(this);
+        ArrayListF<E> r = new ArrayListF<>(this);
         Collections.sort((List<Comparable>) r);
         return r.convertToReadOnly();
     }
@@ -426,7 +410,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     public ListF<E> sorted(java.util.Comparator<? super E> comparator) {
         if (size() <= 1) return toList();
 
-        ArrayListF<E> r = new ArrayListF<E>(this);
+        ArrayListF<E> r = new ArrayListF<>(this);
         Collections.sort(r, comparator);
         return r.convertToReadOnly();
     }
@@ -464,20 +448,12 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     @Override
     public <K> MapF<K, E> toMapMappingToKey(final Function<? super E, K> mapper) {
-        return toMap(new Function<E, Tuple2<K, E>>() {
-            public Tuple2<K, E> apply(E e) {
-                return Tuple2.tuple(mapper.apply(e), e);
-            }
-        });
+        return toMap((E e) -> Tuple2.tuple(mapper.apply(e), e));
     }
 
     @Override
     public <V> MapF<E, V> toMapMappingToValue(final Function<? super E, V> mapper) {
-        return toMap(new Function<E, Tuple2<E, V>>() {
-            public Tuple2<E, V> apply(E e) {
-                return Tuple2.tuple(e, mapper.apply(e));
-            }
-        });
+        return toMap((E e) -> Tuple2.tuple(e, mapper.apply(e)));
     }
 
     @Override

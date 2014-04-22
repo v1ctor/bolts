@@ -24,11 +24,7 @@ public abstract class IntegralType<T extends Number> extends NumberType<T> {
     }
 
     public Function<String, T> parseF(final int radix) {
-        return new Function<String, T>() {
-            public T apply(String a) {
-                return parse(a, radix);
-            }
-        };
+        return a -> parse(a, radix);
     }
 
     public Function<String, T> parseDecimalF() {
@@ -36,10 +32,6 @@ public abstract class IntegralType<T extends Number> extends NumberType<T> {
     }
 
     public Function<String, Option<T>> parseSafeF(final int radix) {
-        return new Function<String, Option<T>>() {
-            public Option<T> apply(String a) {
-                return parseSafe(a, radix);
-            }
-        };
+        return a -> parseSafe(a, radix);
     }
 }

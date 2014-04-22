@@ -18,42 +18,15 @@ public abstract class AnyCharSequenceType<T extends CharSequence> extends Monoid
     }
 
     public Function1B<T> emptyF() {
-        return new Function1B<T>() {
-            public boolean apply(T a) {
-                return empty(a);
-            }
-
-            @Override
-            public String toString() {
-                return "empty";
-            }
-        };
+        return this::empty;
     }
 
     public Function1B<T> notEmptyF() {
-        return new Function1B<T>() {
-            public boolean apply(T a) {
-                return notEmpty(a);
-            }
-
-            @Override
-            public String toString() {
-                return "notEmpty";
-            }
-        };
+        return this::notEmpty;
     }
 
     public Function<T, Integer> lengthF() {
-        return new Function<T, Integer>() {
-            public Integer apply(T a) {
-                return a.length();
-            }
-
-            @Override
-            public String toString() {
-                return "length";
-            }
-        };
+        return T::length;
     }
 
 } //~

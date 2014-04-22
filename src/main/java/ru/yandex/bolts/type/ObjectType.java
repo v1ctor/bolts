@@ -1,6 +1,5 @@
 package ru.yandex.bolts.type;
 
-
 /**
  * @author Stepan Koltsov
  */

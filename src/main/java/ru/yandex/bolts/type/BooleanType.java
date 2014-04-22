@@ -12,11 +12,7 @@ public class BooleanType {
     }
 
     public Function<String, Boolean> parseF() {
-        return new Function<String, Boolean>() {
-            public Boolean apply(String string) {
-                return parse(string);
-            }
-        };
+        return this::parse;
     }
 
 } //~

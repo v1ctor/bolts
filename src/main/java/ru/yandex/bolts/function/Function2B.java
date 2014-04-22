@@ -2,6 +2,7 @@ package ru.yandex.bolts.function;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.function.BiPredicate;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.Tuple2;
@@ -12,51 +13,32 @@ import ru.yandex.bolts.internal.Validate;
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function2B<A, B> {
+public interface Function2B<A, B> extends BiPredicate<A, B> {
     boolean apply(A a, B b);
 
+    @Override
+    default boolean test(A a, B b) {
+        return apply(a, b);
+    };
+
     default Function1B<B> bind1(final A a) {
-        return new Function1B<B>() {
-            public boolean apply(B b) {
-                return Function2B.this.apply(a, b);
-            }
-        };
+        return b -> apply(a, b);
     }
 
     default Function1B<A> bind2(final B b) {
-        return new Function1B<A>() {
-            public boolean apply(A a) {
-                return Function2B.this.apply(a, b);
-            }
-        };
+        return a -> apply(a, b);
     }
 
-    public static <A, B> Function2<Function2B<A, B>, A, Function1B<B>> bind1F2() {
-        return new Function2<Function2B<A, B>, A, Function1B<B>>() {
-            public Function1B<B> apply(Function2B<A, B> f, A a) {
-                return f.bind1(a);
-            }
-
-            public String toString() {
-                return "bind1";
-            }
-        };
+    static <A, B> Function2<Function2B<A, B>, A, Function1B<B>> bind1F2() {
+        return (f, a) -> f.bind1(a);
     }
 
     default Function<A, Function1B<B>> bind1F() {
         return Function2B.<A, B>bind1F2().bind1(this);
     }
 
-    public static <A, B> Function2<Function2B<A, B>, B, Function1B<A>> bind2F2() {
-        return new Function2<Function2B<A, B>, B, Function1B<A>>() {
-            public Function1B<A> apply(Function2B<A, B> f, B b) {
-                return f.bind2(b);
-            }
-
-            public String toString() {
-                return "bind2";
-            }
-        };
+    static <A, B> Function2<Function2B<A, B>, B, Function1B<A>> bind2F2() {
+        return (f, b) -> f.bind2(b);
     }
 
     default Function<B, Function1B<A>> bind2F() {
@@ -64,65 +46,29 @@ public interface Function2B<A, B> {
     }
 
     default Function1B<Tuple2<A, B>> asFunction1B() {
-        return new Function1B<Tuple2<A, B>>() {
-            public boolean apply(Tuple2<A, B> a) {
-                return Function2B.this.apply(a.get1(), a.get2());
-            }
-        };
+        return a -> apply(a.get1(), a.get2());
     }
 
     default Function<Tuple2<A, B>, Boolean> asFunction() {
-        return new Function<Tuple2<A, B>, Boolean>() {
-            public Boolean apply(Tuple2<A, B> a) {
-                return Function2B.this.apply(a.get1(), a.get2());
-            }
-        };
+        return a -> apply(a.get1(), a.get2());
     }
 
-    public static <A, B> Function2B<A, B> asFunction2B(final Function<Tuple2<A, B>, Boolean> f) {
-        return new Function2B<A, B>() {
-            public boolean apply(A a, B b) {
-                return f.apply(Tuple2.tuple(a, b));
-            }
-
-            @Override
-            public String toString() {
-                return f.toString();
-            }
-        };
+    static <A, B> Function2B<A, B> asFunction2B(final Function<Tuple2<A, B>, Boolean> f) {
+        return (a, b) -> f.apply(Tuple2.tuple(a, b));
     }
 
-    public static <A, B> Function2B<A, B> asFunction2B(Function1B<Tuple2<A, B>> f) {
+    static <A, B> Function2B<A, B> asFunction2B(Function1B<Tuple2<A, B>> f) {
         return asFunction2B(f.asFunction());
     }
 
-    public static <A, B> Function2B<A, B> combine(final Function1B<A> fA,
+    static <A, B> Function2B<A, B> combine(final Function1B<A> fA,
             final Function1B<B> fB)
     {
-        return new Function2B<A, B>() {
-            public boolean apply(A a, B b) {
-                return fA.apply(a) && fB.apply(b);
-            }
-        };
+        return (a, b) -> fA.apply(a) && fB.apply(b);
     }
 
     default Function2B<A, B> notF() {
-        return new Function2B<A, B>() {
-            public boolean apply(A a, B b) {
-                return !Function2B.this.apply(a, b);
-            }
-
-            @Override
-            public Function2B<A, B> notF() {
-                return Function2B.this;
-            }
-
-            @Override
-            public String toString() {
-                return "not(" + Function2B.this + ")";
-            }
-
-        };
+        return (a, b) -> !Function2B.this.apply(a, b);
     }
 
     @SuppressWarnings("unchecked")
@@ -130,55 +76,29 @@ public interface Function2B<A, B> {
         return (Function2B<C, D>) this;
     }
 
-    public static <A> Function2B<A, A> sameF() {
-        return new Function2B<A, A>() {
-            public boolean apply(A a, A b) {
-                return a == b;
-            }
-
-            public String toString() {
-                return "eq";
-            }
-        };
+    static <A> Function2B<A, A> sameF() {
+        return (a, b) -> a == b;
     }
 
     default <C> Function2B<C, B> compose1(final Function<? super C, ? extends A> f) {
-        return new Function2B<C, B>() {
-            public boolean apply(C c, B b) {
-                return Function2B.this.apply(f.apply(c), b);
-            }
-        };
+        return (c, b) -> apply(f.apply(c), b);
     }
 
     default <C> Function2B<A, C> compose2(final Function<? super C, ? extends B> f) {
-        return new Function2B<A, C>() {
-            public boolean apply(A a, C c) {
-                return Function2B.this.apply(a, f.apply(c));
-            }
-        };
+        return (a, c) -> apply(a, f.apply(c));
     }
 
     /**
      * Delegate to {@link #equals(Object, Object)}.
      */
-    public static <A> Function2B<A, A> equalsF() {
-        return new Function2B<A, A>() {
-            public boolean apply(A a, A b) {
-                return Function2B.equals(a, b);
-            }
-
-            @Override
-            public String toString() {
-                return "equals";
-            }
-
-        };
+    static <A> Function2B<A, A> equalsF() {
+        return Function2B::equals;
     }
 
     /**
      * Check whether two values are equal.
      */
-    public static <A> boolean equals(A a, A b) {
+    static <A> boolean equals(A a, A b) {
         return Cf.Object.equals(a, b);
     }
 
@@ -186,23 +106,14 @@ public interface Function2B<A, B> {
         return asFunction2B(asFunction().memoize());
     }
 
-    public static <A, B> Function2B<A, B> wrap(final Method method) {
+    static <A, B> Function2B<A, B> wrap(final Method method) {
         Validate.isTrue(method.getReturnType().equals(boolean.class) || method.getReturnType().equals(Boolean.class), "method return type must be boolean or Boolean");
         if ((method.getModifiers() & Modifier.STATIC) != 0) {
             Validate.isTrue(method.getParameterTypes().length == 2, "static method must have 2 arguments, " + method);
-            return new Function2B<A, B>() {
-                public boolean apply(A a, B b) {
-                    return (Boolean) ReflectionUtils.invoke(method, null, a, b);
-                }
-            };
+            return (a, b) -> (Boolean) ReflectionUtils.invoke(method, null, a, b);
         } else {
             Validate.isTrue(method.getParameterTypes().length == 1, "instance method must have 1 argument, " + method);
-            return new Function2B<A, B>() {
-                public boolean apply(A a, B b) {
-                    return (Boolean) ReflectionUtils.invoke(method, a, b);
-
-                }
-            };
+            return (a, b) -> (Boolean) ReflectionUtils.invoke(method, a, b);
         }
     }
 

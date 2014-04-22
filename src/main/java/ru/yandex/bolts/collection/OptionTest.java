@@ -22,11 +22,7 @@ public class OptionTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(OptionTest.class);
 
     protected static <T> Function1V<T> expect(final T t) {
-        return new Function1V<T>() {
-            public void apply(T got) {
-                assertEquals(got, t);
-            }
-        };
+        return got -> assertEquals(got, t);
     }
 
     protected void assertThrows(Function0V closure) {
@@ -40,7 +36,7 @@ public class OptionTest extends TestCase {
 
     public void testOrElseNotCalled() {
         Option<String> o = Option.some("ss");
-        String got = o.orElse(this.<Option<String>>throwFactory()).orElse(this.<Option<String>>throwFactory()).get();
+        String got = o.orElse(this.throwFactory()).orElse(this.throwFactory()).get();
         assertEquals("ss", got);
     }
 
@@ -48,7 +44,7 @@ public class OptionTest extends TestCase {
         Option<String> s = Option.some("a");
         Option<String> n = Option.none();
         assertEquals("a", s.getOrElse("b"));
-        assertEquals("a", s.getOrElse(this.<String>throwFactory()));
+        assertEquals("a", s.getOrElse(this.throwFactory()));
         assertEquals("b", n.getOrElse("b"));
         assertEquals("b", n.getOrElse(Function0.constF("b")));
         assertEquals("a", s.getOrNull());
@@ -86,10 +82,8 @@ public class OptionTest extends TestCase {
     }
 
     protected <T> Function0<T> throwFactory() {
-        return new Function0<T>() {
-            public T apply() {
-                throw new AssertionError();
-            }
+        return () -> {
+            throw new AssertionError();
         };
     }
 
@@ -104,31 +98,11 @@ public class OptionTest extends TestCase {
 
     public void testGet() {
         assertSame("a", Option.some("a").get(0));
-        assertThrows(new Function0V() {
-            public void apply() {
-                Option.none().get(0);
-            }
-        });
-        assertThrows(new Function0V() {
-            public void apply() {
-                Option.none().get(1);
-            }
-        });
-        assertThrows(new Function0V() {
-            public void apply() {
-                Option.none().get(2);
-            }
-        });
-        assertThrows(new Function0V() {
-            public void apply() {
-                Option.some(1).get(1);
-            }
-        });
-        assertThrows(new Function0V() {
-            public void apply() {
-                Option.some(1).get(2);
-            }
-        });
+        assertThrows(() -> Option.none().get(0));
+        assertThrows(() -> Option.none().get(1));
+        assertThrows(() -> Option.none().get(2));
+        assertThrows(() -> Option.some(1).get(1));
+        assertThrows(() -> Option.some(1).get(2));
     }
 
     public void testMap() {
@@ -146,17 +120,9 @@ public class OptionTest extends TestCase {
     }
 
     public void testGetOrThrowMessage() {
-        assertEquals("hello", tryCatch(new Function0V() {
-            public void apply() {
-                Option.none().getOrThrow("hello");
-            }
-        }).get().getMessage());
+        assertEquals("hello", tryCatch(() -> Option.none().getOrThrow("hello")).get().getMessage());
 
-        assertEquals("hello: 17", tryCatch(new Function0V() {
-            public void apply() {
-                Option.none().getOrThrow("hello: ", 17);
-            }
-        }).get().getMessage());
+        assertEquals("hello: 17", tryCatch(() -> Option.none().getOrThrow("hello: ", 17)).get().getMessage());
 
         assertEquals("a", Option.some("a").getOrThrow("hello"));
         assertEquals("a", Option.some("a").getOrThrow("hello: ", 17));
@@ -165,11 +131,7 @@ public class OptionTest extends TestCase {
     public void testGetOrThrow() throws Exception {
         assertEquals("hello", Option.some("hello").getOrThrow(new Exception()));
         final RuntimeException e = new RuntimeException();
-        assertSame(e, tryCatch(new Function0V() {
-            public void apply() {
-                Option.none().getOrThrow(e);
-            }
-        }).get());
+        assertSame(e, tryCatch(() -> Option.none().getOrThrow(e)).get());
     }
 
     public void testToString() {
@@ -178,10 +140,10 @@ public class OptionTest extends TestCase {
     }
 
     public void testPredicates() {
-        assertTrue(Option.<Integer>isDefinedF().apply(Option.some(1)));
+        assertTrue(Option.isDefinedF().apply(Option.some(1)));
         assertFalse(Option.isDefinedF().apply(Option.none()));
         assertTrue(Option.isEmptyF().apply(Option.none()));
-        assertFalse(Option.<Integer>isEmptyF().apply(Option.some(1)));
+        assertFalse(Option.isEmptyF().apply(Option.some(1)));
         Option.isDefinedF().toString();
         Option.isEmptyF().toString();
     }
@@ -209,10 +171,8 @@ public class OptionTest extends TestCase {
     }
 
     private Function1B<Option<String>> throwPredicate() {
-        return new Function1B<Option<String>>() {
-            public boolean apply(Option<String> option) {
-                throw new AssertionError();
-            }
+        return option -> {
+            throw new AssertionError();
         };
     }
 

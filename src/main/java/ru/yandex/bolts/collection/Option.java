@@ -19,7 +19,6 @@ import ru.yandex.bolts.internal.ObjectUtils;
  * Port of scala <a href="http://www.scala-lang.org/docu/files/api/scala/Option.html">Option</a>.
  *
  * @see java.util.Optional
- * @see fj.data.Option
  *
  * @author Stepan Koltsov
  */
@@ -101,22 +100,14 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /** Throw exception with specified message if this is empty */
     public final T getOrThrow(final String message) throws RuntimeException {
-        return getOrThrow(new Function0<NoSuchElementException>() {
-            public NoSuchElementException apply() {
-                return new NoSuchElementException(message);
-            }
-        });
+        return getOrThrow((Function0<NoSuchElementException>) () -> new NoSuchElementException(message));
     }
 
     /**
      * Get or throw exception if this is empty. Message is constructed by concatenating given params.
      */
     public final T getOrThrow(final String message, final Object param) throws RuntimeException {
-        return getOrThrow(new Function0<NoSuchElementException>() {
-            public NoSuchElementException apply() {
-                return new NoSuchElementException(message + param);
-            }
-        });
+        return getOrThrow((Function0<NoSuchElementException>) () -> new NoSuchElementException(message + param));
     }
 
     @Override
@@ -192,7 +183,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     /**
      * Construct some containing given value.
      */
-    public static <T> Option<T> some(T x) { return new Some(x); }
+    public static <T> Option<T> some(T x) { return new Some<>(x); }
 
     /**
      * Some if not null, None otherwise.
@@ -268,7 +259,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         public boolean equals(Object obj) {
             if (obj instanceof Some) {
                 Object a = this.get();
-                Object b = ((Some) obj).get();
+                Object b = ((Some<?>) obj).get();
                 if (a == null || b == null) return a == b;
                 else return a.equals(b);
             } else {
@@ -285,11 +276,12 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      * None. Instance could be obtained by {@link Option#none()}.
      *
      * @see #none() to optain None singleton
-     * @see fj.data.None
+     * @see java.util.Optional.EMPTY
      */
     public static final class None<T> extends Option<T> {
         private static final long serialVersionUID = 3461376542565825187L;
 
+        @SuppressWarnings("rawtypes")
         private static final None NONE = new None();
 
         private None() {
@@ -324,15 +316,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      * Delegate to {@link #isDefined()}.
      */
     public static <U> Function1B<Option<U>> isDefinedF() {
-        return new Function1B<Option<U>>() {
-            public boolean apply(Option<U> option) {
-                return option.isDefined();
-            }
-
-            public String toString() {
-                return "isDefined";
-            }
-        };
+        return Option::isDefined;
     }
 
     /**
@@ -346,55 +330,35 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      * Delegate to {@link #notNull(Object)}.
      */
     public static <T> Function<T, Option<T>> notNullF() {
-        return new Function<T, Option<T>>() {
-            public Option<T> apply(T t) {
-                return Option.notNull(t);
-            }
-        };
+        return Option::notNull;
     }
 
     /**
      * Delegate to {@link #get()}.
      */
     public static <U> Function<Option<U>, U> getF() {
-        return new Function<Option<U>, U>() {
-            public U apply(Option<U> o) {
-                return o.get();
-            }
-        };
+        return Option::get;
     }
 
     /**
      * Delegate to {@link #getOrElse(Object)}.
      */
     public static <U> Function<Option<U>, U> getOrElseF(final U fallback) {
-        return new Function<Option<U>, U>() {
-            public U apply(Option<U> us) {
-                return us.getOrElse(fallback);
-            }
-        };
+        return us -> us.getOrElse(fallback);
     }
 
     /**
      * Delegate to {@link #some(Object)}.
      */
     public static <U> Function<U, Option<U>> someF() {
-        return new Function<U, Option<U>>() {
-            public Option<U> apply(U a) {
-                return some(a);
-            }
-        };
+        return Option::some;
     }
 
     /**
      * @see #map(Function)
      */
     public static <A, B> Function2<Option<A>, Function<A, B>, Option<B>> mapF() {
-        return new Function2<Option<A>, Function<A, B>, Option<B>>() {
-            public Option<B> apply(Option<A> o, Function<A, B> f) {
-                return o.map(f);
-            }
-        };
+        return Option::map;
     }
 
     /**

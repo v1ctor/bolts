@@ -27,9 +27,9 @@ public abstract class Either<A, B> {
     }
 
     /** Left projection */
-    public LeftProjection<A, B> left() { return new LeftProjection<A, B>(this); }
+    public LeftProjection<A, B> left() { return new LeftProjection<>(this); }
     /** Right projection */
-    public RightProjection<A, B> right() { return new RightProjection<A, B>(this); }
+    public RightProjection<A, B> right() { return new RightProjection<>(this); }
 
     /** Is this object left? */
     public boolean isLeft() { return this instanceof Left<?, ?>; }
@@ -38,18 +38,18 @@ public abstract class Either<A, B> {
 
     /** Some if this is left and none otherwise */
     public Option<A> leftO() {
-        return isLeft() ? Option.<A>some(getLeft()) : Option.<A>none();
+        return isLeft() ? Option.some(getLeft()) : Option.none();
     }
 
     /** Some if this is right and none otherwise */
     public Option<B> rightO() {
-        return isRight() ? Option.<B>some(getRight()) : Option.<B>none();
+        return isRight() ? Option.some(getRight()) : Option.none();
     }
 
     /** Convert left to right and vice versa */
     public Either<B, A> swap() {
-        if (isLeft()) return Either.<B, A>right(getLeft());
-        else return Either.<B, A>left(getRight());
+        if (isLeft()) return Either.right(getLeft());
+        else return Either.left(getRight());
     }
 
     public <C> C fold(Function<? super A, C> leftF, Function<? super B, C> rightF) {
@@ -194,31 +194,23 @@ public abstract class Either<A, B> {
 
     }
 
-    public static <A, B> Either<A, B> left(A a) { return new Left<A, B>(a); }
-    public static <A, B> Either<A, B> right(B b) { return new Right<A, B>(b); }
+    public static <A, B> Either<A, B> left(A a) { return new Left<>(a); }
+    public static <A, B> Either<A, B> right(B b) { return new Right<>(b); }
 
     public static <A, B> Function<A, Either<A, B>> leftF() {
-        return new Function<A, Either<A, B>>() {
-            public Either<A, B> apply(A a) {
-                return left(a);
-            }
-        };
+        return Either::left;
     }
 
     public static <A, B> Function<B, Either<A, B>> rightF() {
-        return new Function<B, Either<A, B>>() {
-            public Either<A, B> apply(B b) {
-                return right(b);
-            }
-        };
+        return Either::right;
     }
 
     /** Execution function and return left with value or right with {@link Throwable} */
     public static <A> Either<A, Throwable> tryCatch(Function0<A> f) {
         try {
-            return Either.<A, Throwable>left(f.apply());
+            return Either.left(f.apply());
         } catch (Throwable t) {
-            return Either.<A, Throwable>right(t);
+            return Either.right(t);
         }
     }
 
@@ -235,35 +227,19 @@ public abstract class Either<A, B> {
     }
 
     public static <A, B> Function<Either<A, B>, Option<A>> leftOF() {
-        return new Function<Either<A, B>, Option<A>>() {
-            public Option<A> apply(Either<A, B> either) {
-                return either.leftO();
-            }
-        };
+        return Either::leftO;
     }
 
     public static <A, B> Function<Either<A, B>, Option<B>> rightOF() {
-        return new Function<Either<A,B>, Option<B>>() {
-            public Option<B> apply(Either<A, B> either) {
-                return either.rightO();
-            }
-        };
+        return Either::rightO;
     }
 
     public static Function1B<Either<?, ?>> isLeftF() {
-        return new Function1B<Either<?,?>>() {
-            public boolean apply(Either<?, ?> either) {
-                return either.isLeft();
-            }
-        };
+        return Either::isLeft;
     }
 
     public static Function1B<Either<?, ?>> isRightF() {
-        return new Function1B<Either<?,?>>() {
-            public boolean apply(Either<?, ?> either) {
-                return either.isRight();
-            }
-        };
+        return Either::isRight;
     }
 
 } //~

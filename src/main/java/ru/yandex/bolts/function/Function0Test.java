@@ -21,7 +21,7 @@ public class Function0Test extends TestCase {
     }
 
     public void testAndThen() {
-        Function0<String> f = Function0.constF(1).andThen(Function.<Integer>toStringF());
+        Function0<String> f = Function0.constF(1).andThen(Function.toStringF());
         assertEquals("1", f.apply());
         f.toString();
     }

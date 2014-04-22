@@ -48,17 +48,9 @@ public class AbstractListFTest extends TestCase {
         assertEquals((Object) 1, list.first());
         assertEquals((Object) 5, list.last());
 
-        assertException(new Function0V() {
-            public void apply() {
-                list().first();
-            }
-        });
+        assertException(() -> list().first());
 
-        assertException(new Function0V() {
-            public void apply() {
-                list().last();
-            }
-        });
+        assertException(() -> list().last());
     }
 
     public void testTake() {
@@ -94,24 +86,22 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testTakeDropWhile() {
-        Generator.ints().lists().checkForAll(new Function1V<ListF<Integer>>() {
-            public void apply(ListF<Integer> a0) {
-                for (boolean wrapper : CollectionsF.list(true, false)) {
-                    ListF<Integer> a;
-                    if (wrapper) {
-                        a = Cf.x(new ArrayList<Integer>());
-                        a.addAll(0);
-                    } else {
-                        a = a0;
-                    }
-
-                    Function1B<Integer> f = Cf.Integer.comparator().gtF(0);
-                    ListF<Integer> b = a.takeWhile(f);
-                    ListF<Integer> c = a.dropWhile(f);
-                    assertEquals(a, b.plus(c));
-                    assertTrue(b.forAll(f));
-                    assertTrue(b.length() == a.length() || !f.apply(a.get(b.length())));
+        Generator.ints().lists().checkForAll(a0 -> {
+            for (boolean wrapper : CollectionsF.list(true, false)) {
+                ListF<Integer> a;
+                if (wrapper) {
+                    a = Cf.x(new ArrayList<Integer>());
+                    a.addAll(0);
+                } else {
+                    a = a0;
                 }
+
+                Function1B<Integer> f = Cf.Integer.comparator().gtF(0);
+                ListF<Integer> b = a.takeWhile(f);
+                ListF<Integer> c = a.dropWhile(f);
+                assertEquals(a, b.plus(c));
+                assertTrue(b.forAll(f));
+                assertTrue(b.length() == a.length() || !f.apply(a.get(b.length())));
             }
         });
     }
@@ -164,32 +154,24 @@ public class AbstractListFTest extends TestCase {
 
     public void testFlatMap() {
         ListF<Integer> l = list(0, 1, 2);
-        ListF<Integer> m = l.flatMap(new Function<Integer, Collection<Integer>>() {
-            public Collection<Integer> apply(Integer integer) {
-                return CollectionsF.repeat(integer, integer);
-            }
-        });
+        ListF<Integer> m = l.flatMap((Function<Integer, Collection<Integer>>) integer -> CollectionsF.repeat(integer, integer));
         assertEquals(list(1, 2, 2), m);
     }
 
     public void testFlatMapO() {
         ListF<Integer> l = list(1, 2, 3, 4);
-        ListF<String> m = l.flatMapO(new Function<Integer, Option<String>>() {
-            public Option<String> apply(Integer integer) {
-                if (integer % 2 == 1) return Option.some(integer.toString());
-                else return Option.none();
-            }
+        ListF<String> m = l.flatMapO((Function<Integer, Option<String>>) integer -> {
+            if (integer % 2 == 1) return Option.some(integer.toString());
+            else return Option.none();
         });
         assertEquals(list("1", "3"), m);
     }
 
     public void testUnique() {
-        Generator.ints(1, 10).lists().checkForAll(new Function1V<ListF<Integer>>() {
-            public void apply(ListF<Integer> l) {
-                SetF<Integer> u = l.unique();
-                assertTrue(u.forAll(l.containsF()));
-                assertTrue(l.forAll(u.containsF()));
-            }
+        Generator.ints(1, 10).lists().checkForAll(l -> {
+            SetF<Integer> u = l.unique();
+            assertTrue(u.forAll(l.containsF()));
+            assertTrue(l.forAll(u.containsF()));
         });
 
         // simple
@@ -219,23 +201,17 @@ public class AbstractListFTest extends TestCase {
     }
 
     private static <T> Function1B<Collection<T>> notEmptyF() {
-        return new Function1B<Collection<T>>() {
-            public boolean apply(Collection<T> a) {
-                return a.size() > 0;
-            }
-        };
+        return a -> a.size() > 0;
     }
 
     public void testReduce() {
 
-        Generator.strings().lists().filter(AbstractListFTest.<String>notEmptyF()).checkForAll(new Function1V<ListF<String>>() {
-            public void apply(ListF<String> a) {
-                String expected = "";
-                for (String s : a) expected += s;
+        Generator.strings().lists().filter(AbstractListFTest.<String>notEmptyF()).checkForAll(a -> {
+            String expected = "";
+            for (String s : a) expected += s;
 
-                assertEquals(expected, a.reduceLeft(Function2Test.stringPlusF()));
-                assertEquals(expected, a.reduceRight(Function2Test.stringPlusF()));
-            }
+            assertEquals(expected, a.reduceLeft(Function2Test.stringPlusF()));
+            assertEquals(expected, a.reduceRight(Function2Test.stringPlusF()));
         });
 
         // simple
@@ -246,18 +222,16 @@ public class AbstractListFTest extends TestCase {
 
     public void testFold() {
 
-        Generator.strings().lists().checkForAll(new Function1V<ListF<String>>() {
-            public void apply(ListF<String> a) {
-                String expectedLeft = "x";
-                for (String s : a) expectedLeft += s;
+        Generator.strings().lists().checkForAll(a -> {
+            String expectedLeft = "x";
+            for (String s : a) expectedLeft += s;
 
-                String expectedRight = "";
-                for (String s : a) expectedRight += s;
-                expectedRight += "y";
+            String expectedRight = "";
+            for (String s : a) expectedRight += s;
+            expectedRight += "y";
 
-                assertEquals(expectedLeft, a.foldLeft("x", Function2Test.stringPlusF()));
-                assertEquals(expectedRight, a.foldRight("y", Function2Test.stringPlusF()));
-            }
+            assertEquals(expectedLeft, a.foldLeft("x", Function2Test.stringPlusF()));
+            assertEquals(expectedRight, a.foldRight("y", Function2Test.stringPlusF()));
         });
 
         // simple
@@ -275,12 +249,10 @@ public class AbstractListFTest extends TestCase {
         // simple
         assertEquals(list(4, 3, 2, 1), list(1, 2, 3, 4).reverse());
 
-        Generator.ints().lists().checkForAll(new Function1V<ListF<Integer>>() {
-            public void apply(ListF<Integer> a) {
-                ListF<Integer> r = a.reverse();
-                for (int i = 0; i < a.length(); ++i)
-                    assertSame(a.get(i), r.get(r.length() - i - 1));
-            }
+        Generator.ints().lists().checkForAll(a -> {
+            ListF<Integer> r = a.reverse();
+            for (int i = 0; i < a.length(); ++i)
+                assertSame(a.get(i), r.get(r.length() - i - 1));
         });
     }
 
@@ -305,16 +277,14 @@ public class AbstractListFTest extends TestCase {
 
         // better
 
-        Generator.strings().lists().checkForAll(new Function1V<ListF<String>>() {
-            public void apply(ListF<String> a) {
-                ListF<Tuple2<String, Integer>> z = a.zipWithIndex();
+        Generator.strings().lists().checkForAll(a -> {
+            ListF<Tuple2<String, Integer>> z = a.zipWithIndex();
 
-                assertEquals(a.length(), z.length());
+            assertEquals(a.length(), z.length());
 
-                for (int i = 0; i < z.length(); ++i) {
-                    assertSame(a.get(i), z.get(i).get1());
-                    assertEquals(i, z.get(i).get2().intValue());
-                }
+            for (int i = 0; i < z.length(); ++i) {
+                assertSame(a.get(i), z.get(i).get1());
+                assertEquals(i, z.get(i).get2().intValue());
             }
         });
     }
@@ -339,11 +309,9 @@ public class AbstractListFTest extends TestCase {
     public void testStableUnique() {
         Assert.assertEquals(Cf.list(1, 2, 3, 4), Cf.list(1, 2, 1, 1, 3, 3, 4, 2, 3).stableUnique());
 
-        Generator.ints().lists().checkForAll(new Function1V<ListF<Integer>>() {
-            public void apply(ListF<Integer> list) {
-                Assert.assertEquals(list.unique().size(), list.stableUnique().size());
-                Assert.assertEquals(list.unique(), list.stableUnique().unique());
-            }
+        Generator.ints().lists().checkForAll(list -> {
+            Assert.assertEquals(list.unique().size(), list.stableUnique().size());
+            Assert.assertEquals(list.unique(), list.stableUnique().unique());
         });
     }
 

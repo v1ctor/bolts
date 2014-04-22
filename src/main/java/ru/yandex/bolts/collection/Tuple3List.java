@@ -25,7 +25,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     public Tuple3List(Collection<Tuple3<A, B, C>> elements) {
-        super(new ArrayList<Tuple3<A, B, C>>(elements));
+        super(new ArrayList<>(elements));
     }
 
     @SuppressWarnings("unchecked")
@@ -148,15 +148,15 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     public Tuple3List<A, B, C> filterBy1(Function1B<? super A> p) {
-        return new Tuple3List<A, B, C>(filter(get1F().andThen(p)));
+        return new Tuple3List<>(filter(get1F().andThen(p)));
     }
 
     public Tuple3List<A, B, C> filterBy2(Function1B<? super B> p) {
-        return new Tuple3List<A, B, C>(filter(get2F().andThen(p)));
+        return new Tuple3List<>(filter(get2F().andThen(p)));
     }
 
     public Tuple3List<A, B, C> filterBy3(Function1B<? super C> p) {
-        return new Tuple3List<A, B, C>(filter(get3F().andThen(p)));
+        return new Tuple3List<>(filter(get3F().andThen(p)));
     }
 
     public Option<Tuple3<A, B, C>> findBy1(Function1B<? super A> p) {
@@ -176,11 +176,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     public Function3V<A, B, C> add2F() {
-        return new Function3V<A, B, C>() {
-            public void apply(A a, B b, C c) {
-                add(a, b, c);
-            }
-        };
+        return this::add;
     }
 
     public void add(Tuple3<? extends A, ? extends B, ? extends C> tuple) {
@@ -189,7 +185,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
 
     @Override
     public Tuple3List<A, B, C> plus1(Tuple3<A, B, C> e) {
-        return new Tuple3List<A, B, C>(Cf.x(target).plus1(e));
+        return new Tuple3List<>(Cf.x(target).plus1(e));
     }
 
     public Tuple3List<A, B, C> plus1(A a, B b, C c) {
@@ -259,7 +255,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     @SuppressWarnings("unchecked")
     public Tuple3List<A, B, C> sortedBy1(Function2I<? super A, ? super A> comparator) {
         if (size() <= 1) return this;
-        return new Tuple3List<A, B, C>(sorted(get1F().andThen((Function2I<A, A>) comparator)));
+        return new Tuple3List<>(sorted(get1F().andThen((Function2I<A, A>) comparator)));
     }
 
     /**
@@ -275,7 +271,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     @SuppressWarnings("unchecked")
     public Tuple3List<A, B, C> sortedBy2(Function2I<? super B, ? super B> comparator) {
         if (size() <= 1) return this;
-        return new Tuple3List<A, B, C>(sorted(get2F().andThen((Function2I<B, B>) comparator)));
+        return new Tuple3List<>(sorted(get2F().andThen((Function2I<B, B>) comparator)));
     }
 
     /**
@@ -291,7 +287,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     @SuppressWarnings("unchecked")
     public Tuple3List<A, B, C> sortedBy3(Function2I<? super C, ? super C> comparator) {
         if (size() <= 1) return this;
-        return new Tuple3List<A, B, C>(sorted(get3F().andThen((Function2I<C, C>) comparator)));
+        return new Tuple3List<>(sorted(get3F().andThen((Function2I<C, C>) comparator)));
     }
 
 
@@ -304,7 +300,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     public Tuple3List<A, B, C> unmodifiable() {
-        return new Tuple3List<A, B, C>(Cf.x(target).unmodifiable());
+        return new Tuple3List<>(Cf.x(target).unmodifiable());
     }
 
     /**
@@ -320,19 +316,11 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     public <D> Tuple2List<D, C> map12(final Function2<? super A, ? super B, ? extends D> f) {
-        return Tuple2List.tuple2List(map(new Function3<A, B, C, Tuple2<D, C>>() {
-            public Tuple2<D, C> apply(A a, B b, C c) {
-                return Tuple2.<D, C>tuple(f.apply(a, b), c);
-            }
-        }));
+        return Tuple2List.tuple2List(map((A a, B b, C c) -> Tuple2.<D, C>tuple(f.apply(a, b), c)));
     }
 
     public <D> Tuple2List<A, D> map23(final Function2<? super B, ? super C, ? extends D> f) {
-        return Tuple2List.tuple2List(map(new Function3<A, B, C, Tuple2<A, D>>() {
-            public Tuple2<A, D> apply(A a, B b, C c) {
-                return Tuple2.<A, D>tuple(a, f.apply(b, c));
-            }
-        }));
+        return Tuple2List.tuple2List(map((A a, B b, C c) -> Tuple2.<A, D>tuple(a, f.apply(b, c))));
     }
 
     public void forEach(Function3V<A, B, C> f) {
@@ -346,7 +334,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     public Tuple3List<A, B, C> plus(Tuple3List<A, B, C> that) {
         if (that.isEmpty()) return this;
         else if (this.isEmpty()) return that;
-        else return new Tuple3List<A, B, C>(super.plus(that.target));
+        else return new Tuple3List<>(super.plus(that.target));
     }
 
     /**
@@ -365,15 +353,15 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     public static <A, B, C> Tuple3List<A, B, C> tuple3List(ListF<Tuple3<A, B, C>> pairs) {
-        return new Tuple3List<A, B, C>(pairs);
+        return new Tuple3List<>(pairs);
     }
 
     public static <A, B, C> Tuple3List<A, B, C> tuple3List(Collection<Tuple3<A, B, C>> pairs) {
-        return new Tuple3List<A, B, C>(pairs);
+        return new Tuple3List<>(pairs);
     }
 
     public static <A, B, C> Tuple3List<A, B, C> wrap(ListF<Tuple3<A, B, C>> pairs) {
-        return new Tuple3List<A, B, C>(pairs);
+        return new Tuple3List<>(pairs);
     }
 
 } //~

@@ -30,59 +30,31 @@ public abstract class NumberType<T extends Number> extends MonoidPlus<T> {
     }
 
     public Function<String, T> parseF() {
-        return new Function<String, T>() {
-            public T apply(String string) {
-                return parse(string);
-            }
-        };
+        return this::parse;
     }
 
     public Function<String, Option<T>> parseSafeF() {
-        return new Function<String, Option<T>>() {
-            public Option<T> apply(String string) {
-                return parseSafe(string);
-            }
-        };
+        return this::parseSafe;
     }
 
     public Function2<T, T, T> minusF() {
-        return new Function2<T, T, T>() {
-            public T apply(T a, T b) {
-                return minus(a, b);
-            }
-        };
+        return this::minus;
     }
 
     public Function<T, T> negateF() {
-        return new Function<T, T>() {
-            public T apply(T a) {
-                return negate(a);
-            }
-        };
+        return this::negate;
     }
 
     public Function2<T, T, T> multiplyF() {
-        return new Function2<T, T, T>() {
-            public T apply(T a, T b) {
-                return multiply(a, b);
-            }
-        };
+        return this::multiply;
     }
 
     public Function2<T, T, T> divideF() {
-        return new Function2<T, T, T>() {
-            public T apply(T a, T b) {
-                return divide(a, b);
-            }
-        };
+        return this::divide;
     }
 
     public Comparator<T> comparator() {
-        return new Comparator<T>() {
-            public int compare(T a, T b) {
-                return cmp(a, b);
-            }
-        };
+        return this::cmp;
     }
 
     // shortcuts
@@ -131,19 +103,11 @@ public abstract class NumberType<T extends Number> extends MonoidPlus<T> {
 
 
     public Function<T, Long> toLongF() {
-        return new Function<T, Long>() {
-            public Long apply(T a) {
-                return toLong(a);
-            }
-        };
+        return this::toLong;
     }
 
     public Function<T, Integer> toIntegerF() {
-        return new Function<T, Integer>() {
-            public Integer apply(T a) {
-                return toInteger(a);
-            }
-        };
+        return this::toInteger;
     }
 
 }

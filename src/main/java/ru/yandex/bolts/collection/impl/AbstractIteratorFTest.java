@@ -29,11 +29,8 @@ public class AbstractIteratorFTest extends TestCase {
     }
 
     public void testFlatMapSimple() {
-        IteratorF<Integer> i = Cf.list(1, 2, 3).iterator().flatMap(new Function<Integer, IteratorF<Integer>>() {
-            public IteratorF<Integer> apply(Integer a) {
-                return Cf.repeat(a, a).iterator();
-            }
-        });
+        IteratorF<Integer> i = Cf.list(1, 2, 3).iterator()
+                .flatMap((Function<Integer, IteratorF<Integer>>) a -> Cf.repeat(a, a).iterator());
 
         // too simple
 
@@ -61,35 +58,23 @@ public class AbstractIteratorFTest extends TestCase {
 
 
     public void testFlatMap() {
-        Generator.ints(1, 10).lists().lists().checkForAll(new Function1V<ListF<ListF<Integer>>>() {
-            public void apply(ListF<ListF<Integer>> a) {
-                checkFlatMapOn(a);
-            }
-        });
+        Generator.ints(1, 10).lists().lists().checkForAll(this::checkFlatMapOn);
     }
 
     private void checkFlatMapOn(ListF<ListF<Integer>> l) {
-        IteratorF<Integer> it = l.iterator().flatMap(new Function<ListF<Integer>, Iterator<Integer>>() {
-            public Iterator<Integer> apply(ListF<Integer> a) {
-                return a.iterator();
-            }
-        });
-        ListF<Integer> expected = l.flatMap(Function.<ListF<Integer>>identityF());
+        IteratorF<Integer> it = l.iterator().flatMap(Cf.iteratorF());
+        ListF<Integer> expected = l.flatMap(Function.identityF());
         checkIteratorAgainst(it, expected);
     }
 
 
     public void testFlatMapL() {
-        Generator.ints(1, 10).lists().lists().checkForAll(new Function1V<ListF<ListF<Integer>>>() {
-            public void apply(ListF<ListF<Integer>> a) {
-                checkFlatMapLOn(a);
-            }
-        });
+        Generator.ints(1, 10).lists().lists().checkForAll(this::checkFlatMapLOn);
     }
 
     private void checkFlatMapLOn(ListF<ListF<Integer>> l) {
-        IteratorF<Integer> it = l.iterator().flatMapL(Function.<ListF<Integer>>identityF());
-        ListF<Integer> expected = l.flatMap(Function.<ListF<Integer>>identityF());
+        IteratorF<Integer> it = l.iterator().flatMapL(Function.identityF());
+        ListF<Integer> expected = l.flatMap(Function.identityF());
         checkIteratorAgainst(it, expected);
     }
 
@@ -122,12 +107,7 @@ public class AbstractIteratorFTest extends TestCase {
     }
 
     public void testFilter3() {
-        listsOfIntegers().checkForAll(new Function1V<ListF<Integer>>() {
-            @Override
-            public void apply(ListF<Integer> a) {
-                testFilterOn(a);
-            }
-        });
+        listsOfIntegers().checkForAll(this::testFilterOn);
     }
 
     private void testFilterOn(ListF<Integer> l) {

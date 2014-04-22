@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Iterator;
 import java.util.Random;
 
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
@@ -38,11 +39,11 @@ public abstract class Generator<A> extends AbstractIteratorF<A> {
     }
 
     public Generator<ListF<A>> lists() {
-        return new ListGenerator<A>(this, ints(0, 14));
+        return new ListGenerator<>(this, ints(0, 14));
     }
 
     public Generator<ListF<A>> lists(Generator<Integer> lengths) {
-        return new ListGenerator<A>(this, lengths);
+        return new ListGenerator<>(this, lengths);
     }
 
     public static Generator<Integer> ints() {
@@ -60,11 +61,7 @@ public abstract class Generator<A> extends AbstractIteratorF<A> {
     }
 
     public Generator<SetF<A>> sets() {
-        return lists().map(new Function<ListF<A>, SetF<A>>() {
-            public SetF<A> apply(ListF<A> a) {
-                return a.unique();
-            }
-        });
+        return lists().map(Cf.uniqueF());
     }
 
     public <U> Generator<Tuple2<A, U>> tuples(final Generator<U> g) {
