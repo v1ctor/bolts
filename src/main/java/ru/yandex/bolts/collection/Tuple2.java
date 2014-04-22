@@ -2,8 +2,6 @@ package ru.yandex.bolts.collection;
 
 import java.io.Serializable;
 
-import fj.P2;
-
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2;
 
@@ -14,7 +12,6 @@ import ru.yandex.bolts.function.Function2;
  *
  * @see Tuple3
  * @see Tuple4
- * @see P2
  */
 public class Tuple2<T1, T2> implements Serializable {
     private static final long serialVersionUID = 3326001902955370713L;

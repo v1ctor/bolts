@@ -32,10 +32,6 @@ Package contains utilities that are
     <dependencies defaultconfmapping="compile->master;runtime->default;sources->sources">
         <dependency org="junit" name="junit" rev="4.5" conf="compile;test->default;sources"/>
         <dependency org="log4j" name="log4j" rev="1.2.17"/>
-        <dependency org="commons-collections" name="commons-collections" rev="3.2.1"/>
-
-        <!-- only for compilation, not for runtime -->
-        <dependency org="org.functionaljava" name="fj" rev="2.19" conf="compile;sources"/>
     </dependencies>
 </ivy-module>
 
