@@ -96,7 +96,7 @@ public interface Function1B<A> extends java.util.function.Predicate<A> {
         else if (functions.size() == 1) return functions.iterator().next();
         else return b -> {
             for (Function1B<? super B> Function1B : functions) {
-                if (!apply(b)) return false;
+                if (!Function1B.apply(b)) return false;
             }
             return true;
         };
