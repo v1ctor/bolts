@@ -29,7 +29,7 @@ public interface Function0V extends Runnable {
 
     default <R> Function<R, R> asFunctionReturnParam() {
         return r -> {
-            Function0V.this.apply();
+            apply();
             return r;
         };
     }
