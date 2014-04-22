@@ -41,7 +41,7 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
      */
     default Comparator<A> chainTo(final Comparator<A> comparator) {
         return (o1, o2) -> {
-            int r = Comparator.this.compare(o1, o2);
+            int r = compare(o1, o2);
             if (r != 0) return r;
             return comparator.compare(o1, o2);
         };
@@ -53,7 +53,7 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
             if (o1 == null || o2 == null) {
                 return o1 == o2 ? 0 : o1 != null ? 1 : -1;
             } else {
-                return Comparator.this.compare(o1, o2);
+                return compare(o1, o2);
             }
         };
     }
