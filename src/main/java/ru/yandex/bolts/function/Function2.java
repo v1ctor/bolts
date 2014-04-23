@@ -2,7 +2,6 @@ package ru.yandex.bolts.function;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.function.BiFunction;
 
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.internal.ReflectionUtils;
@@ -14,7 +13,7 @@ import ru.yandex.bolts.internal.Validate;
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function2<A, B, R> extends BiFunction<A, B, R> {
+public interface Function2<A, B, R> {
     R apply(A a, B b);
 
     /** Bind first param to the given value */

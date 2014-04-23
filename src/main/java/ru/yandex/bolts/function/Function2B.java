@@ -2,7 +2,6 @@ package ru.yandex.bolts.function;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.function.BiPredicate;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.Tuple2;
@@ -13,13 +12,8 @@ import ru.yandex.bolts.internal.Validate;
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function2B<A, B> extends BiPredicate<A, B> {
+public interface Function2B<A, B> {
     boolean apply(A a, B b);
-
-    @Override
-    default boolean test(A a, B b) {
-        return apply(a, b);
-    };
 
     default Function1B<B> bind1(final A a) {
         return b -> apply(a, b);

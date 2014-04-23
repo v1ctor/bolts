@@ -65,7 +65,7 @@ public class AbstractCollectionFTest extends TestCase {
 
     public void testToMap() {
         MapF<String, Integer> m = list(1, 2, 3).toMapMappingToKey(Function.toStringF());
-        MapF<String, Integer> expected = list("1", "2", "3").toMapMappingToValue(Cf.Integer.parseF());
+        MapF<String, Integer> expected = list("1", "2", "3").toMapMappingToValue(Integer::parseInt);
         assertEquals(expected, m);
     }
 
@@ -113,7 +113,7 @@ public class AbstractCollectionFTest extends TestCase {
 
     public void testFlatten() {
         CollectionF<? extends CollectionF<String>> coll = Cf.list(Cf.list("a", "b"), Cf.list("c"));
-        assertEquals(Cf.list("a", "b", "c"), coll.<String>flatten());
+        assertEquals(Cf.list("a", "b", "c"), coll.flatten());
     }
 
 } //~

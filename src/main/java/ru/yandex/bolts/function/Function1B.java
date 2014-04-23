@@ -16,13 +16,8 @@ import ru.yandex.bolts.internal.Validate;
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function1B<A> extends java.util.function.Predicate<A> {
+public interface Function1B<A> {
     boolean apply(A a);
-
-    @Override
-    default boolean test(A a) {
-        return apply(a);
-    };
 
     default Function<A, Boolean> asFunction() {
         return this::apply;
@@ -102,6 +97,7 @@ public interface Function1B<A> extends java.util.function.Predicate<A> {
         };
     }
 
+    @SuppressWarnings("unchecked")
     static <B> Function1B<B> allOfF(Function1B<B>... functions) {
         return allOfF(CollectionsF.list(functions));
     }
@@ -117,6 +113,7 @@ public interface Function1B<A> extends java.util.function.Predicate<A> {
         };
     }
 
+    @SuppressWarnings("unchecked")
     static <B> Function1B<B> anyOfF(Function1B<B>... functions) {
         return anyOfF(CollectionsF.list(functions));
     }
@@ -135,7 +132,7 @@ public interface Function1B<A> extends java.util.function.Predicate<A> {
     }
 
     static <B> Function1B<B> constF(boolean value) {
-        return value ? Function1B.<B>trueF() : Function1B.<B>falseF();
+        return value ? Function1B.trueF() : Function1B.falseF();
     }
 
     static <A> Function1B<A> wrap(final Method method) {

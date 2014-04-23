@@ -294,7 +294,7 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
             @Override
             public ListF<E> next() {
                 if (!hasNext()) throw new NoSuchElementException();
-                ArrayListF<E> items = new ArrayListF<E>(pageSize);
+                ArrayListF<E> items = new ArrayListF<>(pageSize);
                 for (int i = 0; i < pageSize && AbstractIteratorF.this.hasNext(); ++i) {
                     items.add(AbstractIteratorF.this.next());
                 }

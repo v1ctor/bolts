@@ -26,7 +26,7 @@ public class DefaultEnumerationF<E> extends AbstractIteratorF<E> {
     }
 
     public static <A> IteratorF<A> wrap(Enumeration<A> enumeration) {
-        return new DefaultEnumerationF<A>(enumeration);
+        return new DefaultEnumerationF<>(enumeration);
     }
 
 } //~

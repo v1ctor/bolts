@@ -69,7 +69,7 @@ public class SingletonSet<E> extends AbstractSetF<E> implements Unmodifiable, Se
     @Override
     public SetF<E> plus1(E e) {
         if (contains(e)) return this;
-        else return new SetOf2<E>(this.e, e);
+        else return new SetOf2<>(this.e, e);
     }
 
     @Override

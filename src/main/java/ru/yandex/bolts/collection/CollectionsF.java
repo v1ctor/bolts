@@ -171,7 +171,7 @@ public class CollectionsF {
     }
 
     /** Wrap properties as set of String, String pairs */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static MapF<String, String> x(Properties properties) {
         return x((Map) properties);
     }
@@ -195,7 +195,7 @@ public class CollectionsF {
 
     /** Create singleton set */
     public static <T> SetF<T> set(T o) {
-        return new SingletonSet<T>(o);
+        return new SingletonSet<>(o);
     }
 
     /**
@@ -217,6 +217,7 @@ public class CollectionsF {
     }
 
     /** Create set of specified elements */
+    @SuppressWarnings("unchecked")
     public static <E> SetF<E> set(E... elements) {
         if (elements.length == 0) return set();
         else if (elements.length == 1) return set(elements[0]);
@@ -245,12 +246,13 @@ public class CollectionsF {
      * Create mutable hash set of specified elements.
      */
     public static <E> SetF<E> hashSet(Collection<E> collection) {
-        return x(new HashSet<E>(collection));
+        return x(new HashSet<>(collection));
     }
 
     /**
      * Create mutable hash set of specified elements.
      */
+    @SuppressWarnings("unchecked")
     public static <E> SetF<E> hashSet(E... elements) {
         return hashSet(list(elements));
     }
@@ -263,7 +265,7 @@ public class CollectionsF {
      * Create mutable identity hash set.
      */
     public static <E> SetF<E> identityHashSet() {
-        return new SetFromMap<E>(new IdentityHashMap<E, Boolean>());
+        return new SetFromMap<>(new IdentityHashMap<E, Boolean>());
     }
 
     /**
@@ -278,6 +280,7 @@ public class CollectionsF {
     /**
      * Create mutable identity hash set with specified elements.
      */
+    @SuppressWarnings("unchecked")
     public static <E> SetF<E> identityHashSet(E... elements) {
         return identityHashSet(list(elements));
     }
@@ -293,12 +296,13 @@ public class CollectionsF {
      * Create tree set of specified elements.
      */
     public static <E> SetF<E> treeSet(Collection<E> collection) {
-        return x(new TreeSet<E>(collection));
+        return x(new TreeSet<>(collection));
     }
 
     /**
      * Create tree set of specified elements.
      */
+    @SuppressWarnings("unchecked")
     public static <E> SetF<E> treeSet(E... elements) {
         return treeSet(list(elements));
     }
@@ -331,6 +335,7 @@ public class CollectionsF {
      *
      * @see #wrap(Object[]) for real array wrapping
      */
+    @SuppressWarnings("unchecked")
     public static <E> ListF<E> list(E... elements) {
         return List.cons(elements);
     }
@@ -359,6 +364,7 @@ public class CollectionsF {
     /**
      * Create extended array list of elements.
      */
+    @SuppressWarnings("unchecked")
     public static <A> ListF<A> arrayList(A... elements) {
         return ArrayList.cons(elements);
     }
@@ -380,7 +386,7 @@ public class CollectionsF {
      * Singleton map.
      */
     public static <K, V> MapF<K, V> map(K key, V value) {
-        return new SingletonMap<K,V>(key, value);
+        return new SingletonMap<>(key, value);
     }
 
     /**
@@ -471,7 +477,7 @@ public class CollectionsF {
         };
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private static final IteratorF EMPTY_ITERATOR = new EmptyIterator();
 
     /**
@@ -505,6 +511,7 @@ public class CollectionsF {
                 return CollectionsF.set(element);
             }
 
+            @SuppressWarnings("deprecation")
             public boolean contains(Object o) {
                 return unique().contains(o);
             }
@@ -559,6 +566,7 @@ public class CollectionsF {
             return rangeAsSet(startInclusive, endExclusive);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public boolean contains(Object o) {
             return unique().contains(o);

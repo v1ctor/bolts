@@ -63,6 +63,7 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
 
     ListF<E> plus(Iterator<? extends E> iterator);
 
+    @SuppressWarnings("unchecked")
     ListF<E> plus(E... additions);
 
     ListF<E> plus1(E e);

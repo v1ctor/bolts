@@ -154,13 +154,13 @@ public class AbstractListFTest extends TestCase {
 
     public void testFlatMap() {
         ListF<Integer> l = list(0, 1, 2);
-        ListF<Integer> m = l.flatMap((Function<Integer, Collection<Integer>>) integer -> CollectionsF.repeat(integer, integer));
+        ListF<Integer> m = l.flatMap(integer -> CollectionsF.repeat(integer, integer));
         assertEquals(list(1, 2, 2), m);
     }
 
     public void testFlatMapO() {
         ListF<Integer> l = list(1, 2, 3, 4);
-        ListF<String> m = l.flatMapO((Function<Integer, Option<String>>) integer -> {
+        ListF<String> m = l.flatMapO(integer -> {
             if (integer % 2 == 1) return Option.some(integer.toString());
             else return Option.none();
         });
@@ -206,7 +206,7 @@ public class AbstractListFTest extends TestCase {
 
     public void testReduce() {
 
-        Generator.strings().lists().filter(AbstractListFTest.<String>notEmptyF()).checkForAll(a -> {
+        Generator.strings().lists().filter(AbstractListFTest.notEmptyF()).checkForAll(a -> {
             String expected = "";
             for (String s : a) expected += s;
 

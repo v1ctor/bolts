@@ -4,13 +4,8 @@ package ru.yandex.bolts.function;
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function0<R> extends java.util.concurrent.Callable<R>, java.util.function.Supplier<R> {
+public interface Function0<R> extends java.util.concurrent.Callable<R> {
     R apply();
-
-    @Override
-    default R get() {
-        return apply();
-    }
 
     @Override
     default R call() throws Exception {

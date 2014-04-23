@@ -67,6 +67,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         return it.hasNext() ? finishToArray(r, it) : r;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(T[] a) {
         // Estimate size of array; be prepared to see more or fewer elements
@@ -86,6 +87,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         return it.hasNext() ? finishToArray(r, it) : r;
     }
 
+    @SuppressWarnings("unchecked")
     private static <T> T[] finishToArray(T[] r, Iterator<?> it) {
         int i = r.length;
         while (it.hasNext()) {
@@ -355,13 +357,9 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     public <B> Tuple2List<E, B> zipWithFlatMapO(Function<? super E, Option<B>> f) {
         return toList()
             .zipWith(f)
-            .filterBy2(Option.isDefinedF())
-            .map2(Option.getF())
+            .filterBy2(Option::isDefined)
+            .map2(Option::get)
         ;
-    }
-
-    public final Function1V<E> addOp() {
-        return addF();
     }
 
     public Function1V<E> addF() {
@@ -393,11 +391,12 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         return c;
     }
 
+    @SuppressWarnings("unchecked")
     public CollectionF<E> plus(E... additions) {
         return plus(CollectionsF.list(additions));
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public ListF<E> sorted() {
         if (size() <= 1) return toList();
 
@@ -448,12 +447,12 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     @Override
     public <K> MapF<K, E> toMapMappingToKey(final Function<? super E, K> mapper) {
-        return toMap((E e) -> Tuple2.tuple(mapper.apply(e), e));
+        return toMap(e -> Tuple2.tuple(mapper.apply(e), e));
     }
 
     @Override
     public <V> MapF<E, V> toMapMappingToValue(final Function<? super E, V> mapper) {
-        return toMap((E e) -> Tuple2.tuple(e, mapper.apply(e)));
+        return toMap(e -> Tuple2.tuple(e, mapper.apply(e)));
     }
 
     @Override
@@ -494,6 +493,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
         return AbstractCollectionF.equals(a, b);
     }
 
+    @SuppressWarnings("unchecked")
     public void addAll(E... additions) {
         addAll(CollectionsF.list(additions));
     }

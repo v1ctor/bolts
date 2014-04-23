@@ -44,7 +44,7 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
 
     @Override
     public SetF<E> filterNotNull() {
-        return filter(Function1B.<E>notNullF());
+        return filter(Function1B.notNullF());
     }
 
     @Override
@@ -97,6 +97,7 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
         return (SetF<E>) super.plus(iterator);
     }
 
+    @SuppressWarnings("unchecked")
     public SetF<E> plus(E... additions) {
         return (SetF<E>) super.plus(additions);
     }

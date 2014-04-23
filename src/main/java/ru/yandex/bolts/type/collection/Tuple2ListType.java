@@ -19,9 +19,10 @@ public class Tuple2ListType {
     }
 
     public <A, B> Tuple2List<A, B> arrayList() {
-        return wrap(Cf.<Tuple2<A, B>>arrayList());
+        return wrap(Cf.arrayList());
     }
 
+    @SuppressWarnings("unchecked")
     public <A, B> Tuple2List<A, B> cons(Tuple2<A, B>... pairs) {
         return cons(Cf.list(pairs));
     }

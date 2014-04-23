@@ -43,11 +43,11 @@ public class UnmodifiableDefaultCollectionF<E> extends DefaultCollectionF<E> imp
 
     @Override
     public IteratorF<E> iterator() {
-        return new UnmodifiableDefaultIteratorF<E>(target.iterator());
+        return new UnmodifiableDefaultIteratorF<>(target.iterator());
     }
 
     public static <E> CollectionF<E> wrap(Collection<E> collection) {
         if (collection instanceof CollectionF<?> && collection instanceof Unmodifiable) return (CollectionF<E>) collection;
-        else return new UnmodifiableDefaultCollectionF<E>(collection);
+        else return new UnmodifiableDefaultCollectionF<>(collection);
     }
 } //~

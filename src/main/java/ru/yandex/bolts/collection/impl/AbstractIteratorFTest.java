@@ -29,8 +29,7 @@ public class AbstractIteratorFTest extends TestCase {
     }
 
     public void testFlatMapSimple() {
-        IteratorF<Integer> i = Cf.list(1, 2, 3).iterator()
-                .flatMap((Function<Integer, IteratorF<Integer>>) a -> Cf.repeat(a, a).iterator());
+        IteratorF<Integer> i = Cf.list(1, 2, 3).iterator().flatMap(a -> Cf.repeat(a, a).iterator());
 
         // too simple
 

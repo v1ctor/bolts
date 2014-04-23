@@ -43,7 +43,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     public abstract SetF<Entry<K, V>> entrySet();
 
     public Tuple2List<K, V> entries() {
-        return Tuple2List.tuple2List(entrySet().map(AbstractMapF.<K, V>tupleM()));
+        return Tuple2List.tuple2List(entrySet().map(AbstractMapF.tupleM()));
     }
 
     protected boolean eq(Object a, Object b) {
@@ -180,13 +180,12 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     public <W> MapF<K, W> mapValues(final Function<? super V, ? extends W> f) {
         if (isEmpty()) return emptyMap();
 
-        ListF<Tuple2<K, W>> xx = entrySet().map((Function<Entry<K, V>, Tuple2<K, W>>) entry ->
-            new Tuple2<>(entry.getKey(), f.apply(entry.getValue())));
+        ListF<Tuple2<K, W>> xx = entrySet().map(entry -> new Tuple2<>(entry.getKey(), f.apply(entry.getValue())));
         return newMapFromTuples(xx);
     }
 
     public <W> ListF<W> mapEntries(final Function2<? super K, ? super V, ? extends W> f) {
-        return entrySet().map((Function<Entry<K, V>, W>) entry -> f.apply(entry.getKey(), entry.getValue()));
+        return entrySet().map(entry -> f.apply(entry.getKey(), entry.getValue()));
     }
 
     protected <X, Y> MapF<X, Y> emptyMap() {

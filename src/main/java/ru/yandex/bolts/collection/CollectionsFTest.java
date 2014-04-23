@@ -70,15 +70,15 @@ public class CollectionsFTest extends TestCase {
                 .plus1("baz", 122);
 
         MapF<String, ListF<Integer>> groupped
-                = data.groupBy(Tuple2.<String, Integer>get1F())
-                .mapValues(Cf.<Tuple2<String, Integer>, Integer>mapF(Tuple2.<String, Integer>get2F()).andThen(
-                        Cf.<Integer>sortedF(Cf.Integer.comparator())));
+                = data.groupBy(Tuple2.get1F())
+                .mapValues(Cf.<Tuple2<String, Integer>, Integer>mapF(Tuple2.get2F()).andThen(
+                        Cf.sortedF(Cf.Integer.comparator())));
 
         assertEquals(Cf.list(102, 111, 111), groupped.getTs("foo"));
         assertEquals(Cf.list(97, 98, 114), groupped.getTs("bar"));
         assertEquals(Cf.list(97, 98, 122), groupped.getTs("baz"));
 
-        MapF<String, SetF<Integer>> unique = groupped.mapValues(Cf.<Integer>uniqueF());
+        MapF<String, SetF<Integer>> unique = groupped.mapValues(Cf.uniqueF());
 
         assertEquals(Cf.set(102, 111), unique.getTs("foo"));
         assertEquals(Cf.set(97, 98, 114), unique.getTs("bar"));
@@ -92,12 +92,12 @@ public class CollectionsFTest extends TestCase {
                 Cf.set(8, 10, -9, 4),
                 Cf.set(0, 7, -1, -1),
                 Cf.set(-4),
-                Cf.<Integer>set());
+                Cf.set());
 
         ListF<ListF<Integer>> positiveIntegers = data.map(
                 Cf.Set.<Integer>filterF(integer -> integer >= 0)
-                .andThen(Cf.<Integer>sortedF(Cf.Integer.comparator()))
-                .andThen(Cf.<Integer>toListF()));
+                .andThen(Cf.sortedF(Cf.Integer.comparator()))
+                .andThen(Cf.toListF()));
 
         assertEquals(Cf.list(
                 Cf.list(1, 2, 5),

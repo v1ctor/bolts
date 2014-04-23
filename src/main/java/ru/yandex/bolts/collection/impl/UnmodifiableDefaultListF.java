@@ -71,16 +71,16 @@ public class UnmodifiableDefaultListF<E> extends DefaultListF<E> implements Unmo
 
     @Override
     public ListF<E> subList(int fromIndex, int toIndex) {
-        return new UnmodifiableDefaultListF<E>(target.subList(fromIndex, toIndex));
+        return new UnmodifiableDefaultListF<>(target.subList(fromIndex, toIndex));
     }
 
     @Override
     public IteratorF<E> iterator() {
-        return new UnmodifiableDefaultIteratorF<E>(target.iterator());
+        return new UnmodifiableDefaultIteratorF<>(target.iterator());
     }
 
     public static <E> ListF<E> wrap(List<E> list) {
         if (list instanceof ListF<?> && list instanceof Unmodifiable) return (ListF<E>) list;
-        else return new UnmodifiableDefaultListF<E>(list);
+        else return new UnmodifiableDefaultListF<>(list);
     }
 } //~

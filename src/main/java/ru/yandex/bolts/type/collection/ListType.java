@@ -34,9 +34,10 @@ public class ListType extends AnyListType {
 
     @Override
     public <A> ListF<A> cons(Collection<A> collection) {
-        return new ArrayListF<A>(collection).convertToReadOnly();
+        return new ArrayListF<>(collection).convertToReadOnly();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <A> ListF<A> cons(A... elements) {
         return ReadOnlyArrayList.valueOf(elements);

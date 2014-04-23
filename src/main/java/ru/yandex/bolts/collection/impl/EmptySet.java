@@ -14,7 +14,7 @@ import ru.yandex.bolts.function.Function1B;
 public class EmptySet<A> extends AbstractSetF<A> implements Unmodifiable, Serializable {
     private static final long serialVersionUID = -2106694758991579344L;
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public static final SetF INSTANCE = new EmptySet();
 
     private EmptySet() { }

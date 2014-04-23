@@ -44,7 +44,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
         return filter(p.<A, B, C>uncheckedCast().asFunction1B().uncheckedCast());
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Tuple2<Tuple3List<A, B, C>, Tuple3List<A, B, C>> partitionT3l(Function1B<? super Tuple3<A, B, C>> p) {
         return (Tuple2) super.partition(p);
     }
@@ -85,6 +85,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
         return Tuple3List.tuple3List(super.plus(iterator));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Tuple3List<A, B, C> plus(Tuple3<A, B, C>... additions) {
         return Tuple3List.tuple3List(super.plus(additions));
@@ -136,15 +137,15 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     public <D> Tuple3List<D, B, C> map1(final Function<? super A, D> f) {
-        return Tuple3List.tuple3List(map(Tuple3.<A, B, C, D>map1F(f.<A, D>uncheckedCast())));
+        return Tuple3List.tuple3List(map(Tuple3.map1F(f.uncheckedCast())));
     }
 
     public <D> Tuple3List<A, D, C> map2(final Function<? super B, D> f) {
-        return Tuple3List.tuple3List(map(Tuple3.<A, B, C, D>map2F(f.<B, D>uncheckedCast())));
+        return Tuple3List.tuple3List(map(Tuple3.map2F(f.uncheckedCast())));
     }
 
     public <D> Tuple3List<A, B, D> map3(final Function<? super C, D> f) {
-        return Tuple3List.tuple3List(map(Tuple3.<A, B, C, D>map3F(f.<C, D>uncheckedCast())));
+        return Tuple3List.tuple3List(map(Tuple3.map3F(f.uncheckedCast())));
     }
 
     public Tuple3List<A, B, C> filterBy1(Function1B<? super A> p) {
@@ -246,7 +247,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
      * @see CollectionF#sorted()
      */
     public Tuple3List<A, B, C> sortedBy1() {
-        return sortedBy1(Comparator.naturalComparator().<A, A>uncheckedCast());
+        return sortedBy1(Comparator.naturalComparator().uncheckedCast());
     }
 
     /**
@@ -262,7 +263,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
      * @see CollectionF#sorted()
      */
     public Tuple3List<A, B, C> sortedBy2() {
-        return sortedBy2(Comparator.naturalComparator().<B, B>uncheckedCast());
+        return sortedBy2(Comparator.naturalComparator().uncheckedCast());
     }
 
     /**
@@ -278,7 +279,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
      * @see CollectionF#sorted()
      */
     public Tuple3List<A, B, C> sortedBy3() {
-        return sortedBy3(Comparator.naturalComparator().<C, C>uncheckedCast());
+        return sortedBy3(Comparator.naturalComparator().uncheckedCast());
     }
 
     /**
@@ -316,11 +317,11 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     public <D> Tuple2List<D, C> map12(final Function2<? super A, ? super B, ? extends D> f) {
-        return Tuple2List.tuple2List(map((A a, B b, C c) -> Tuple2.<D, C>tuple(f.apply(a, b), c)));
+        return Tuple2List.tuple2List(map((a, b, c) -> Tuple2.tuple(f.apply(a, b), c)));
     }
 
     public <D> Tuple2List<A, D> map23(final Function2<? super B, ? super C, ? extends D> f) {
-        return Tuple2List.tuple2List(map((A a, B b, C c) -> Tuple2.<A, D>tuple(a, f.apply(b, c))));
+        return Tuple2List.tuple2List(map((a, b, c) -> Tuple2.tuple(a, f.apply(b, c))));
     }
 
     public void forEach(Function3V<A, B, C> f) {
@@ -348,6 +349,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
         return tuple3List(Cf.<Tuple3<A, B, C>>arrayList());
     }
 
+    @SuppressWarnings("unchecked")
     public static <A, B, C> Tuple3List<A, B, C> tuple3List(Tuple3<A, B, C>... pairs) {
         return tuple3List(Cf.list(pairs));
     }

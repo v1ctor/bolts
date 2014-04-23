@@ -148,7 +148,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     @Override
     public final Option<T> filterNotNull() {
-        return filter(Function1B.<T>notNullF());
+        return filter(Function1B.notNullF());
     }
 
     /**

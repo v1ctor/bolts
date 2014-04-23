@@ -68,7 +68,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
      * Return readonly array list with data of this. This is cleared.
      */
     public ReadOnlyArrayList<E> convertToReadOnly() {
-        return new ReadOnlyArrayList<E>(this);
+        return new ReadOnlyArrayList<>(this);
     }
 
     @Override
@@ -506,9 +506,9 @@ public class ArrayListF<E> extends ArrayListBase<E>
 
     public static <E> ArrayListF<E> valueOf(E[] array) {
         if (array == null) {
-            return new ArrayListF<E>();
+            return new ArrayListF<>();
         } else {
-            return new ArrayListF<E>(Arrays.copyOf(array, array.length));
+            return new ArrayListF<>(Arrays.copyOf(array, array.length));
         }
     }
 
