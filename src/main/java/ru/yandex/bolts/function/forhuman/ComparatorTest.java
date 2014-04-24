@@ -9,7 +9,7 @@ import ru.yandex.bolts.function.Function2I;
 /**
  * @author Stepan Koltsov
  */
-@SuppressWarnings({"UnusedDeclaration", "unused"})
+@SuppressWarnings("unused")
 public class ComparatorTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ComparatorTest.class);
 
@@ -72,7 +72,7 @@ public class ComparatorTest extends TestCase {
         Comparator.naturalComparator().bind2("a").toString();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testNullLowC() {
         class NC implements Comparator<String> {
             public int compare(String o1, String o2) {

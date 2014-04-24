@@ -23,6 +23,7 @@ public abstract class AnyListType extends AnyCollectionType {
     public abstract <A> ListF<A> cons(A a1);
     public abstract <A> ListF<A> cons(A a1, A a2);
     public abstract <A> ListF<A> cons(Collection<A> collection);
+    @SuppressWarnings("unchecked")
     public abstract <A> ListF<A> cons(A... elements);
 
     public <A> Function0<ListF<A>> consF() {

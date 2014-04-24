@@ -2,11 +2,10 @@ package ru.yandex.bolts.function;
 
 import junit.framework.TestCase;
 
-
 /**
  * @author Stepan Koltsov
  */
-@SuppressWarnings({"UnusedDeclaration", "unused"})
+@SuppressWarnings("unused")
 public class Function0VTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Function0VTest.class);
 

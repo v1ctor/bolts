@@ -47,6 +47,7 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
 
     SetF<E> plus(Iterator<? extends E> iterator);
 
+    @SuppressWarnings("unchecked")
     SetF<E> plus(E... additions);
 
     SetF<E> unmodifiable();

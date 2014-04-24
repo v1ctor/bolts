@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 /**
  * @author Stepan Koltsov
  */
-@SuppressWarnings({"UnusedDeclaration", "unchecked", "unused"})
+@SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public class Function1VTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Function1VTest.class);
 

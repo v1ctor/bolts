@@ -49,11 +49,11 @@ public class UnmodifiableDefaultSetF<E> extends DefaultSetF<E> implements Unmodi
 
     @Override
     public IteratorF<E> iterator() {
-        return new UnmodifiableDefaultIteratorF<E>(target.iterator());
+        return new UnmodifiableDefaultIteratorF<>(target.iterator());
     }
 
     public static <E> SetF<E> wrap(Set<E> set) {
         if (set instanceof SetF<?> && set instanceof Unmodifiable) return (SetF<E>) set;
-        else return new UnmodifiableDefaultSetF<E>(set);
+        else return new UnmodifiableDefaultSetF<>(set);
     }
 } //~

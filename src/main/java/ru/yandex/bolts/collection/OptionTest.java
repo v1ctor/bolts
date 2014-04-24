@@ -17,7 +17,7 @@ import ru.yandex.bolts.function.Function1V;
 /**
  * @author Stepan Koltsov
  */
-@SuppressWarnings({"UnusedDeclaration", "unchecked", "unused"})
+@SuppressWarnings({"unchecked", "unused"})
 public class OptionTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(OptionTest.class);
 
@@ -87,6 +87,7 @@ public class OptionTest extends TestCase {
         };
     }
 
+    @SuppressWarnings("rawtypes")
     protected Function throwMapper() {
         return throwFactory().asFunction();
     }

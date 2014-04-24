@@ -61,7 +61,7 @@ public class SetFromMap<E> extends AbstractSetF<E> implements Serializable {
 
     @Override
     public SetF<E> unmodifiable() {
-        return new UnmodifiableSetFromMap<E>(map);
+        return new UnmodifiableSetFromMap<>(map);
     }
 
 }

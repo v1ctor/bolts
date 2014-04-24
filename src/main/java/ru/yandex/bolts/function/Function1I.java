@@ -12,7 +12,7 @@ public interface Function1I<A> extends java.lang.Comparable<A> {
     }
 
     static <A> Function1I<A> asFunction1I(final Function<A, Integer> f) {
-        return a -> f.apply(a);
+        return f::apply;
     }
 
     @Override

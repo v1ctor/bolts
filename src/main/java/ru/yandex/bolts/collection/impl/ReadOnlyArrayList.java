@@ -19,7 +19,7 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
 
     private static final Object[] EMPTY_ARRAY = new Object[0];
 
-    public static final ReadOnlyArrayList<?> EMPTY = new ReadOnlyArrayList<Object>(EMPTY_ARRAY, 0, 0);
+    public static final ReadOnlyArrayList<?> EMPTY = new ReadOnlyArrayList<>(EMPTY_ARRAY, 0, 0);
 
     /**
      * Construct this by destroying ArrayListF
@@ -61,7 +61,7 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
         if (count >= length())
             return this;
 
-        return new ReadOnlyArrayList<E>(array, firstIndex, firstIndex + count);
+        return new ReadOnlyArrayList<>(array, firstIndex, firstIndex + count);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
         if (count >= length())
             return Cf.list();
 
-        return new ReadOnlyArrayList<E>(array, firstIndex + count, lastIndex);
+        return new ReadOnlyArrayList<>(array, firstIndex + count, lastIndex);
     }
 
     @Override
@@ -90,15 +90,15 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
         if (array == null || array.length == 0)
             return (ReadOnlyArrayList<E>) EMPTY;
         else
-            return new ReadOnlyArrayList<E>(Arrays.copyOf(array, array.length), 0, array.length);
+            return new ReadOnlyArrayList<>(Arrays.copyOf(array, array.length), 0, array.length);
     }
 
     public static <E> ReadOnlyArrayList<E> cons(E e) {
-        return new ReadOnlyArrayList<E>(new Object[] { e });
+        return new ReadOnlyArrayList<>(new Object[] { e });
     }
 
     public static <E> ReadOnlyArrayList<E> cons(E e1, E e2) {
-        return new ReadOnlyArrayList<E>(new Object[] { e1, e2 });
+        return new ReadOnlyArrayList<>(new Object[] { e1, e2 });
     }
 
     private Object readResolve() throws ObjectStreamException {

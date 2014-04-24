@@ -24,31 +24,31 @@ public class Tuple2ListTest extends TestCase {
     @SuppressWarnings("unchecked")
     public void testPlus() {
         Tuple2List<String, Integer> lm = Tuple2List.fromPairs("a", 1, "b", 2);
-        assertSame(lm, lm.plus(Tuple2List.<String, Integer>arrayList()));
+        assertSame(lm, lm.plus(Tuple2List.arrayList()));
         assertSame(lm, Tuple2List.<String, Integer>arrayList().plus(lm));
 
         assertEquals(Tuple2List.fromPairs("a", 1, "b", 2, "c", 3), Tuple2List.fromPairs("a", 1, "b", 2).plus(Tuple2List.fromPairs("c", 3)));
-        assertEquals(Tuple2List.<String, Integer>fromPairs("a", 1, "b", 2, "c", 3),
-                Tuple2List.<String, Integer>fromPairs("a", 1, "b", 2).plus(Tuple2.tuple("c", 3)));
+        assertEquals(Tuple2List.fromPairs("a", 1, "b", 2, "c", 3),
+                Tuple2List.fromPairs("a", 1, "b", 2).plus(Tuple2.tuple("c", 3)));
     }
 
     public void testFilter() {
         Tuple2List<String, Integer> lm = Tuple2List.fromPairs("a", 1, "b", 2);
         Tuple2List<String, Integer> lmf = lm.filter(t -> "a".equals(t.get1()));
-        assertEquals(Tuple2List.<String, Integer>fromPairs("a", 1), lmf);
+        assertEquals(Tuple2List.fromPairs("a", 1), lmf);
     }
 
     public void testPartitionLm() {
         Tuple2List<String, Integer> lm = Tuple2List.fromPairs("a", 1, "b", 2);
         Tuple2<Tuple2List<String, Integer>, Tuple2List<String, Integer>> t = lm.partitionT2l(tu -> "a".equals(tu.get1()));
-        assertEquals(Tuple2List.<String, Integer>fromPairs("a", 1), t.get1());
-        assertEquals(Tuple2List.<String, Integer>fromPairs("b", 2), t.get2());
+        assertEquals(Tuple2List.fromPairs("a", 1), t.get1());
+        assertEquals(Tuple2List.fromPairs("b", 2), t.get2());
     }
 
     public void testTakeDrop() {
         Tuple2List<String, Integer> lm = Tuple2List.fromPairs("a", 1, "b", 2);
-        assertEquals(Tuple2List.<String, Integer>fromPairs("a", 1), lm.take(1));
-        assertEquals(Tuple2List.<String, Integer>fromPairs("b", 2), lm.drop(1));
+        assertEquals(Tuple2List.fromPairs("a", 1), lm.take(1));
+        assertEquals(Tuple2List.fromPairs("b", 2), lm.drop(1));
     }
 
     public void testReverse() {

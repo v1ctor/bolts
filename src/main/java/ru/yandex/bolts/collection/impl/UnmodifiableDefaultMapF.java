@@ -61,12 +61,12 @@ public class UnmodifiableDefaultMapF<K, V> extends DefaultMapF<K, V> implements 
 
     @Override
     public SetF<K> keySet() {
-        return new UnmodifiableDefaultSetF<K>(target.keySet());
+        return new UnmodifiableDefaultSetF<>(target.keySet());
     }
 
     @Override
     public SetF<Entry<K, V>> entrySet() {
-        return new UnmodifiableDefaultSetF<Entry<K,V>>(target.entrySet());
+        return new UnmodifiableDefaultSetF<>(target.entrySet());
     }
 
     @Override
@@ -76,6 +76,6 @@ public class UnmodifiableDefaultMapF<K, V> extends DefaultMapF<K, V> implements 
 
     public static <K, V> MapF<K, V> wrap(Map<K, V> map) {
         if (map instanceof MapF<?, ?> && map instanceof Unmodifiable) return (MapF<K, V>) map;
-        else return new UnmodifiableDefaultMapF<K,V>(map);
+        else return new UnmodifiableDefaultMapF<>(map);
     }
 } //~

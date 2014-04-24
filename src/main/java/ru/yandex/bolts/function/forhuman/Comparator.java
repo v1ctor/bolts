@@ -118,6 +118,7 @@ public interface Comparator<A> extends Function2I<A, A>, java.util.Comparator<A>
     /**
      * Compare {@link java.lang.Comparable}s. Null values are less than non-null.
      */
+    @SuppressWarnings("unchecked")
     static <A extends java.lang.Comparable<?>> Comparator<A> naturalComparator()  {
         return (o1, o2) -> {
             if (o1 == o2) {

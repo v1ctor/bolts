@@ -96,6 +96,6 @@ public class DefaultSetF<E> extends AbstractSetF<E> implements Serializable {
 
     public static <A> SetF<A> wrap(Set<A> set) {
         if (set instanceof SetF<?>) return (SetF<A>) set;
-        else return new DefaultSetF<A>(set);
+        else return new DefaultSetF<>(set);
     }
 } //~

@@ -24,6 +24,6 @@ public class UnmodifiableDefaultIteratorF<E> extends DefaultIteratorF<E> impleme
 
     public static <E> IteratorF<E> wrap(Iterator<E> iterator) {
         if (iterator instanceof IteratorF<?> && iterator instanceof Unmodifiable) return (IteratorF<E>) iterator;
-        else return new UnmodifiableDefaultIteratorF<E>(iterator);
+        else return new UnmodifiableDefaultIteratorF<>(iterator);
     }
 } //~

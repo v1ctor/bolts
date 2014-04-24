@@ -21,7 +21,7 @@ public class SingletonMap<K, V> extends AbstractMapF<K, V> implements Serializab
     }
 
     public SetF<Entry<K, V>> entrySet() {
-        return CollectionsF.<Entry<K, V>>set(new SimpleEntry<K,V>(key, value));
+        return CollectionsF.set(new SimpleEntry<>(key, value));
     }
 
     @Override

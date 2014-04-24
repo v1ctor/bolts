@@ -17,7 +17,7 @@ import ru.yandex.bolts.internal.Validate;
  * @author Stepan Koltsov
  */
 @FunctionalInterface
-public interface Function<A, R> extends java.util.function.Function<A, R> {
+public interface Function<A, R> {
 
     R apply(A a);
 

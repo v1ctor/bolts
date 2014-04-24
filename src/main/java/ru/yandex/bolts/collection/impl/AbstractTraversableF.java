@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function1B;
-import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
@@ -108,7 +107,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
 
     @Override
     public E min() {
-        return min(Comparator.naturalComparator().<E, E>uncheckedCast());
+        return min(Comparator.naturalComparator().uncheckedCast());
     }
 
     @SuppressWarnings("unchecked")
@@ -118,7 +117,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
 
     @Override
     public Option<E> minO() {
-        return minO(Comparator.naturalComparator().<E, E>uncheckedCast());
+        return minO(Comparator.naturalComparator().uncheckedCast());
     }
 
     @Override
@@ -132,7 +131,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
 
     @Override
     public E max() {
-        return max(Comparator.naturalComparator().<E, E>uncheckedCast());
+        return max(Comparator.naturalComparator().uncheckedCast());
     }
 
     @SuppressWarnings("unchecked")
@@ -143,7 +142,7 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
 
     @Override
     public Option<E> maxO() {
-        return maxO(Comparator.naturalComparator().<E, E>uncheckedCast());
+        return maxO(Comparator.naturalComparator().uncheckedCast());
     }
 
     @Override

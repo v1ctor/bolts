@@ -40,7 +40,7 @@ class SetOf2<E> extends AbstractSetF<E> implements Serializable, Unmodifiable {
     @Override
     public SetF<E> plus1(E e) {
         if (contains(e)) return this;
-        else return new SetOf3<E>(e1, e2, e);
+        else return new SetOf3<>(e1, e2, e);
     }
 
     public int size() {

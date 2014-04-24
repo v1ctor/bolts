@@ -91,7 +91,7 @@ public class DefaultCollectionF<E> extends AbstractCollectionF<E> implements Ser
 
     public static <A> CollectionF<A> wrap(Collection<A> set) {
         if (set instanceof CollectionF<?>) return (CollectionF<A>) set;
-        else return new DefaultCollectionF<A>(set);
+        else return new DefaultCollectionF<>(set);
     }
 
 } //~

@@ -45,7 +45,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return filter(p.<A, B>uncheckedCast().asFunction1B().uncheckedCast());
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Tuple2<Tuple2List<A, B>, Tuple2List<A, B>> partitionT2l(Function1B<? super Tuple2<A, B>> p) {
         return (Tuple2) super.partition(p);
     }
@@ -82,6 +82,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return Tuple2List.tuple2List(super.plus(iterator));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Tuple2List<A, B> plus(Tuple2<A, B>... additions) {
         return Tuple2List.tuple2List(super.plus(additions));
@@ -109,8 +110,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
 
     @Override
     public Tuple2List<A, B> sorted() {
-        Comparator<Tuple2<A, B>> comparator = get1F().andThenNaturalComparator().chainTo(get2F().andThenNaturalComparator());
-        return sorted(comparator);
+        return sorted(get1F().andThenNaturalComparator().chainTo(get2F().andThenNaturalComparator()));
     }
 
     @Override
@@ -129,11 +129,11 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public <U> Tuple2List<U, B> map1(final Function<? super A, U> f) {
-        return Tuple2List.tuple2List(map(Tuple2.<A, B, U>map1F(f.<A, U>uncheckedCast())));
+        return Tuple2List.tuple2List(map(Tuple2.map1F(f.uncheckedCast())));
     }
 
     public <U> Tuple2List<A, U> map2(final Function<? super B, U> f) {
-        return Tuple2List.tuple2List(map(Tuple2.<A, B, U>map2F(f.<B, U>uncheckedCast())));
+        return Tuple2List.tuple2List(map(Tuple2.map2F(f.uncheckedCast())));
     }
 
     public Tuple2List<A, B> filterBy1(Function1B<? super A> p) {
@@ -161,7 +161,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public void add(Tuple2<? extends A, ? extends B> tuple) {
-        super.add(tuple.<A, B>uncheckedCast());
+        super.add(tuple.uncheckedCast());
     }
 
     @Override
@@ -190,14 +190,14 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public Tuple2List<B, A> invert() {
-        return tuple2List(map(Tuple2.<A, B>swapF()));
+        return tuple2List(map(Tuple2.swapF()));
     }
 
     /**
      * @see CollectionF#sorted()
      */
     public Tuple2List<A, B> sortedBy1() {
-        return sortedBy1(Comparator.naturalComparator().<A, A>uncheckedCast());
+        return sortedBy1(Comparator.naturalComparator().uncheckedCast());
     }
 
     /**
@@ -213,7 +213,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
      * @see CollectionF#sorted()
      */
     public Tuple2List<A, B> sortedBy2() {
-        return sortedBy2(Comparator.naturalComparator().<B, B>uncheckedCast());
+        return sortedBy2(Comparator.naturalComparator().uncheckedCast());
     }
 
     /**
@@ -237,7 +237,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         if (isEmpty()) {
             return Cf.map();
         } else {
-            return groupBy(get1F()).mapValues((Function<ListF<Tuple2<A, B>>, ListF<B>>) list -> list.map(get2F()));
+            return groupBy(get1F()).mapValues(list -> list.map(get2F()));
         }
     }
 
@@ -269,7 +269,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public <W> Tuple3List<A, B, W> zip3(ListF<W> list) {
-        return Tuple3List.tuple3List(zip(list).map((Function2<Tuple2<A, B>, W, Tuple3<A, B, W>>) (a, b) -> Tuple3.tuple(a._1, a._2, b)));
+        return Tuple3List.tuple3List(zip(list).map((a, b) -> Tuple3.tuple(a._1, a._2, b)));
     }
 
     public <W> Tuple3List<A, B, W> zip3With(Function2<A, B, W> f) {
@@ -297,7 +297,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public String mkString(String elemSep, final String tupleSep) {
-        return map((Function2<A, B, String>) (a, b) -> a + tupleSep + b).mkString(elemSep);
+        return map((a, b) -> a + tupleSep + b).mkString(elemSep);
     }
 
     public Tuple2List<A, B> plus(Tuple2List<A, B> that) {
@@ -347,6 +347,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return Cf.Tuple2List.arrayList();
     }
 
+    @SuppressWarnings("unchecked")
     public static <A, B> Tuple2List<A, B> tuple2List(Tuple2<A, B>... pairs) {
         return Cf.Tuple2List.cons(pairs);
     }

@@ -35,6 +35,6 @@ public class DefaultIteratorF<E> extends AbstractIteratorF<E> {
 
     public static <A> IteratorF<A> wrap(Iterator<A> iterator) {
         if (iterator instanceof IteratorF<?>) return (IteratorF<A>) iterator;
-        else return new DefaultIteratorF<A>(iterator);
+        else return new DefaultIteratorF<>(iterator);
     }
 } //~

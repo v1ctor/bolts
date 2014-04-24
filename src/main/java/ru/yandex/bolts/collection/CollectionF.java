@@ -135,6 +135,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     /**
      * Varargs variant of {@link #plus(Collection)}.
      */
+    @SuppressWarnings("unchecked")
     CollectionF<E> plus(E... additions);
 
     /**
@@ -142,6 +143,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      *
      * @see #addAll(Collection)
      */
+    @SuppressWarnings("unchecked")
     void addAll(E... additions);
 
     /** Copy elements to the new array */

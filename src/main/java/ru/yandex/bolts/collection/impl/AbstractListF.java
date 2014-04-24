@@ -51,7 +51,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @Override
     public ListF<E> filterNotNull() {
-        return filter(Function1B.<E>notNullF());
+        return filter(Function1B.notNullF());
     }
 
     @Override
@@ -111,6 +111,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     public ListF<E> plus(E... additions) {
         return plus(CollectionsF.list(additions));
     }
@@ -593,7 +594,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         public ListIteratorF<E> listIterator(int location) {
             if (modCount == fullList.modCount) {
                 if (0 <= location && location <= size) {
-                    return new SubAbstractListIterator<E>(fullList
+                    return new SubAbstractListIterator<>(fullList
                             .listIterator(location + offset), this, offset,
                             size);
                 }
@@ -1039,9 +1040,9 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
         if (0 <= start && end <= size()) {
             if (start <= end) {
                 if (this instanceof RandomAccess) {
-                    return new SubAbstractListRandomAccess<E>(this, start, end);
+                    return new SubAbstractListRandomAccess<>(this, start, end);
                 }
-                return new SubAbstractList<E>(this, start, end);
+                return new SubAbstractList<>(this, start, end);
             }
             throw new IllegalArgumentException();
         }

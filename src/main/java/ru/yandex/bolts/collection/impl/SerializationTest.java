@@ -3,10 +3,12 @@ package ru.yandex.bolts.collection.impl;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.impl.test.SerializationUtils;
+
 import junit.framework.TestCase;
 
 public class SerializationTest extends TestCase {
 
+    @SuppressWarnings("unchecked")
     private static <T> ListF<T> addInPlace(ListF<T> list, T... elements) {
         for (T element: elements) {
             list.add(element);

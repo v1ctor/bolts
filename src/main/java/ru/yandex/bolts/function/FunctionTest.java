@@ -8,7 +8,7 @@ import ru.yandex.bolts.function.forhuman.Comparator;
 /**
  * @author Stepan Koltsov
  */
-@SuppressWarnings({"UnusedDeclaration", "unchecked", "unused"})
+@SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public class FunctionTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(FunctionTest.class);
 
@@ -67,7 +67,7 @@ public class FunctionTest extends TestCase {
     }
 
     public void testAndThenComparator() {
-        Comparator<Integer> c = Function.<Integer>toStringF().andThen(Comparator.<String>naturalComparator());
+        Comparator<Integer> c = Function.<Integer>toStringF().andThen(Comparator.naturalComparator());
         assertTrue(c.gt(2, 11));
         c.toString();
     }

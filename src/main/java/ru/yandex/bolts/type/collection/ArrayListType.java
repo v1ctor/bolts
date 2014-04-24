@@ -12,11 +12,11 @@ public class ArrayListType extends AnyListType {
 
     @Override
     public <A> ListF<A> cons() {
-        return new ArrayListF<A>();
+        return new ArrayListF<>();
     }
 
     public <A> ListF<A> cons(int capacity) {
-        return new ArrayListF<A>(capacity);
+        return new ArrayListF<>(capacity);
     }
 
     @Override
@@ -36,9 +36,10 @@ public class ArrayListType extends AnyListType {
 
     @Override
     public <A> ListF<A> cons(Collection<A> collection) {
-        return new ArrayListF<A>(collection);
+        return new ArrayListF<>(collection);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <A> ListF<A> cons(A... elements) {
         return ArrayListF.valueOf(elements);
