@@ -186,6 +186,14 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     public static <T> Option<T> some(T x) { return new Some<>(x); }
 
     /**
+     * Construct option from {@link Optional}
+     */
+    public static <T> Option<T> wrap(Optional<T> x) {
+        if (x.isPresent()) return some(x.get());
+        else return none();
+    }
+
+    /**
      * Some if not null, None otherwise.
      */
     public static <T> Option<T> notNull(T x) {

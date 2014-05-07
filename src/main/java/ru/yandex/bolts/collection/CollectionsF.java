@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -153,6 +154,11 @@ public class CollectionsF {
             return DefaultSetF.wrap((Set<E>) collection);
         else
             return DefaultCollectionF.wrap(collection);
+    }
+
+    /** Wrap optional */
+    public static <E> Option<E> x(Optional<E> optional) {
+        return Option.wrap(optional);
     }
 
     /** Wrap list */
