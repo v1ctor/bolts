@@ -1,7 +1,7 @@
 package ru.yandex.bolts.collection.impl;
 
-import static ru.yandex.bolts.collection.CollectionsF.list;
-import static ru.yandex.bolts.collection.CollectionsF.set;
+import static ru.yandex.bolts.collection.Cf.list;
+import static ru.yandex.bolts.collection.Cf.set;
 
 import java.util.Arrays;
 
@@ -9,7 +9,6 @@ import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionF;
-import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.Function;
@@ -23,7 +22,7 @@ import ru.yandex.bolts.function.forhuman.Comparator;
 public class AbstractCollectionFTest extends TestCase {
 
     public void testForEach() {
-        ListF<Object> l = CollectionsF.arrayList();
+        ListF<Object> l = Cf.arrayList();
         list(1, 2, 3).forEach(l.addF());
         assertEquals(list(1, 2, 3), l);
     }

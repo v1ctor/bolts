@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import ru.yandex.bolts.collection.CollectionF;
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.SetF;
 
@@ -65,15 +65,15 @@ public class DefaultMapF<K, V> extends AbstractMapF<K,V> implements Serializable
     }
 
     public SetF<K> keySet() {
-        return CollectionsF.x(target.keySet());
+        return Cf.x(target.keySet());
     }
 
     public CollectionF<V> values() {
-        return CollectionsF.x(target.values());
+        return Cf.x(target.values());
     }
 
     public SetF<Entry<K, V>> entrySet() {
-        return CollectionsF.x(target.entrySet());
+        return Cf.x(target.entrySet());
     }
 
     public boolean equals(Object o) {

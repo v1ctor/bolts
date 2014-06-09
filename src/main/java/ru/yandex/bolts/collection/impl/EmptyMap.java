@@ -3,7 +3,7 @@ package ru.yandex.bolts.collection.impl;
 import java.io.Serializable;
 
 import ru.yandex.bolts.collection.CollectionF;
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
@@ -19,17 +19,17 @@ public class EmptyMap<K, V> extends AbstractMapF<K, V> implements Unmodifiable, 
     public static final MapF INSTANCE = new EmptyMap();
 
     public SetF<Entry<K, V>> entrySet() {
-        return CollectionsF.set();
+        return Cf.set();
     }
 
     @Override
     public SetF<K> keySet() {
-        return CollectionsF.set();
+        return Cf.set();
     }
 
     @Override
     public CollectionF<V> values() {
-        return CollectionsF.list();
+        return Cf.list();
     }
 
     @Override

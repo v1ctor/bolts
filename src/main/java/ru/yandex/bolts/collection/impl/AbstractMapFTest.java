@@ -5,14 +5,13 @@ import java.util.NoSuchElementException;
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.Cf;
-import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1BTest;
 
-import static ru.yandex.bolts.collection.CollectionsF.list;
-import static ru.yandex.bolts.collection.CollectionsF.set;
+import static ru.yandex.bolts.collection.Cf.list;
+import static ru.yandex.bolts.collection.Cf.set;
 
 /**
  * @author Stepan Koltsov
@@ -26,13 +25,13 @@ public class AbstractMapFTest extends TestCase {
     public void testFilterKeys() {
         MapF<Integer, String> m = map123();
         MapF<Integer, String> n = m.filterKeys(Function1BTest.evenF());
-        assertEquals(CollectionsF.map(2, "2"), n);
+        assertEquals(Cf.map(2, "2"), n);
     }
 
     public void testFilter() {
         MapF<Integer, String> m = map123().plus1(11, "11");
         MapF<Integer, String> n = m.filter((a, b) -> (a % 2) == 0 || b.length() > 1);
-        assertEquals(CollectionsF.map(2, "2", 11, "11"), n);
+        assertEquals(Cf.map(2, "2", 11, "11"), n);
     }
 
     public void testFilterStinky() {
@@ -136,11 +135,11 @@ public class AbstractMapFTest extends TestCase {
     }
 
     public void testPlus() {
-        MapF<Integer, String> m2 = CollectionsF.hashMap();
+        MapF<Integer, String> m2 = Cf.hashMap();
         m2.put(3, "a");
         m2.put(4, "b");
 
-        MapF<Integer, String> e = CollectionsF.hashMap();
+        MapF<Integer, String> e = Cf.hashMap();
         e.put(1, "1");
         e.put(2, "2");
         e.put(3, "a");

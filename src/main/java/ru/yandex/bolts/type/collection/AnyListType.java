@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import ru.yandex.bolts.collection.Cf;
-import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
@@ -15,7 +14,7 @@ import ru.yandex.bolts.function.Function2;
 /**
  * @author Stepan Koltsov
  * @see ListType
- * @see CollectionsF#List
+ * @see Cf#List
  */
 public abstract class AnyListType extends AnyCollectionType {
 

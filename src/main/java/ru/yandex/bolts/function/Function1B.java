@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
 
@@ -99,7 +99,7 @@ public interface Function1B<A> {
 
     @SuppressWarnings("unchecked")
     static <B> Function1B<B> allOfF(Function1B<B>... functions) {
-        return allOfF(CollectionsF.list(functions));
+        return allOfF(Cf.list(functions));
     }
 
     static <B> Function1B<B> anyOfF(final Collection<? extends Function1B<B>> functions) {
@@ -115,7 +115,7 @@ public interface Function1B<A> {
 
     @SuppressWarnings("unchecked")
     static <B> Function1B<B> anyOfF(Function1B<B>... functions) {
-        return anyOfF(CollectionsF.list(functions));
+        return anyOfF(Cf.list(functions));
     }
 
     static <B> Function1B<B> instanceOfF(final Class<?> cl) {

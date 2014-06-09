@@ -2,7 +2,7 @@ package ru.yandex.bolts.collection.impl;
 
 import java.io.Serializable;
 
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Unmodifiable;
@@ -20,7 +20,7 @@ public class EmptySet<A> extends AbstractSetF<A> implements Unmodifiable, Serial
     private EmptySet() { }
 
     public IteratorF<A> iterator() {
-        return CollectionsF.emptyIterator();
+        return Cf.emptyIterator();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class EmptySet<A> extends AbstractSetF<A> implements Unmodifiable, Serial
 
     @Override
     public SetF<A> plus1(A a) {
-        return CollectionsF.set(a);
+        return Cf.set(a);
     }
 
     /*

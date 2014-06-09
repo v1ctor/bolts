@@ -2,7 +2,7 @@ package ru.yandex.bolts.collection.impl;
 
 import java.io.Serializable;
 
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Unmodifiable;
 
@@ -21,7 +21,7 @@ public class SingletonMap<K, V> extends AbstractMapF<K, V> implements Serializab
     }
 
     public SetF<Entry<K, V>> entrySet() {
-        return CollectionsF.set(new SimpleEntry<>(key, value));
+        return Cf.set(new SimpleEntry<>(key, value));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class SingletonMap<K, V> extends AbstractMapF<K, V> implements Serializab
 
     @Override
     public SetF<K> keySet() {
-        return CollectionsF.set(key);
+        return Cf.set(key);
     }
 
     @Override

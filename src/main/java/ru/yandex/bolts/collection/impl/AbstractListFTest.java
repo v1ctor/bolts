@@ -1,7 +1,7 @@
 package ru.yandex.bolts.collection.impl;
 
-import static ru.yandex.bolts.collection.CollectionsF.list;
-import static ru.yandex.bolts.collection.CollectionsF.set;
+import static ru.yandex.bolts.collection.Cf.list;
+import static ru.yandex.bolts.collection.Cf.set;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +12,6 @@ import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.Cf;
-import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
@@ -87,7 +86,7 @@ public class AbstractListFTest extends TestCase {
 
     public void testTakeDropWhile() {
         Generator.ints().lists().checkForAll(a0 -> {
-            for (boolean wrapper : CollectionsF.list(true, false)) {
+            for (boolean wrapper : Cf.list(true, false)) {
                 ListF<Integer> a;
                 if (wrapper) {
                     a = Cf.x(new ArrayList<Integer>());
@@ -135,7 +134,7 @@ public class AbstractListFTest extends TestCase {
     }
 
     public void testAddAllArray() {
-        ListF<Integer> l = CollectionsF.arrayList(1, 2);
+        ListF<Integer> l = Cf.arrayList(1, 2);
         l.addAll(new Integer[] { 3, 4, 5 });
         assertEquals(list(1, 2, 3, 4, 5), l);
     }
@@ -154,7 +153,7 @@ public class AbstractListFTest extends TestCase {
 
     public void testFlatMap() {
         ListF<Integer> l = list(0, 1, 2);
-        ListF<Integer> m = l.flatMap(integer -> CollectionsF.repeat(integer, integer));
+        ListF<Integer> m = l.flatMap(integer -> Cf.repeat(integer, integer));
         assertEquals(list(1, 2, 2), m);
     }
 
@@ -182,7 +181,7 @@ public class AbstractListFTest extends TestCase {
     public void testForAll() {
         assertFalse(list(2, 3).forAll(Function1BTest.evenF()));
         assertTrue(list(2, 4).forAll(Function1BTest.evenF()));
-        assertTrue(CollectionsF.<Integer>list().forAll(Function1BTest.evenF()));
+        assertTrue(Cf.<Integer>list().forAll(Function1BTest.evenF()));
     }
 
     public void testExists() {
