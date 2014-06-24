@@ -23,6 +23,16 @@ public class AbstractSetFTest extends TestCase {
         assertEquals(Tuple2.tuple(set(2, 4), set(1, 3)), s.partition(Function1BTest.evenF()));
     }
 
+    public void testFilter() {
+        SetF<Integer> s = set(1, 2, 3, 4);
+        assertEquals(set(2, 4), s.filter(Function1BTest.evenF()));
+    }
+
+    public void testFilterNot() {
+        SetF<Integer> s = set(1, 2, 3, 4);
+        assertEquals(set(1, 3), s.filterNot(Function1BTest.evenF()));
+    }
+
     public void testMinusEmpty() {
         SetF<Integer> s = set(1, 2, 3);
         SetF<Integer> es = Cf.set();

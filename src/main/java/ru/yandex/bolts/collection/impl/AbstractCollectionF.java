@@ -23,8 +23,6 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
-import ru.yandex.bolts.function.Function2I;
-import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
  * Implementation of {@link CollectionF} algorithms.
@@ -307,6 +305,11 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
             if (p.apply(e)) result.add(e);
         }
         return result;
+    }
+
+    @Override
+    public CollectionF<E> filterNot(Function1B<? super E> p) {
+        return filter(p.notF());
     }
 
     @Override

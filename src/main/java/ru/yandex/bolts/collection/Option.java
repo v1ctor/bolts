@@ -147,6 +147,12 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     @Override
+    public ListF<T> filterNot(Function1B<? super T> p) {
+        if (isEmpty() || !p.apply(get())) return this;
+        else return none();
+    }
+
+    @Override
     public final Option<T> filterNotNull() {
         return filter(Function1B.notNullF());
     }

@@ -28,6 +28,11 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      */
     CollectionF<E> filter(Function1B<? super E> p);
 
+    /**
+     * Return collection with only elements that do not match predicate.
+     */
+    CollectionF<E> filterNot(Function1B<? super E> p);
+
     CollectionF<E> filterNotNull();
 
     /**

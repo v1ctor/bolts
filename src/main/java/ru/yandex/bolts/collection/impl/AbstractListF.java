@@ -49,6 +49,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     @Override
+    public ListF<E> filterNot(Function1B<? super E> p) {
+        return (ListF<E>) super.filterNot(p);
+    }
+
+    @Override
     public ListF<E> filterNotNull() {
         return filter(Function1B.notNullF());
     }

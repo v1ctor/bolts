@@ -145,6 +145,11 @@ public class AbstractListFTest extends TestCase {
         assertEquals(Tuple2.tuple(list(2, 4, 6), list(1, 3, 5)), l.partition(Function1BTest.evenF()));
     }
 
+    public void testFilterNot() {
+        ListF<Integer> l = list(1, 2, 3, 4, 5, 6);
+        assertEquals(list(1, 3, 5), l.filterNot(Function1BTest.evenF()));
+    }
+
     public void testMap() {
         ListF<Integer> l = list(1, 2, 3);
         ListF<Integer> m = l.map(FunctionTest.plus1());
