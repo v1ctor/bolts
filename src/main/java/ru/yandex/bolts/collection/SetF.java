@@ -20,6 +20,9 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     SetF<E> filter(Function1B<? super E> p);
 
     @Override
+    SetF<E> filterNot(Function1B<? super E> p);
+
+    @Override
     SetF<E> filterNotNull();
 
     /**

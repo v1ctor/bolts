@@ -37,8 +37,14 @@ public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements 
         return iterator.toSet();
     }
 
+    @Override
     public SetF<E> filter(Function1B<? super E> p) {
         return (SetF<E>) super.filter(p);
+    }
+
+    @Override
+    public SetF<E> filterNot(Function1B<? super E> p) {
+        return (SetF<E>) super.filterNot(p);
     }
 
     @Override
