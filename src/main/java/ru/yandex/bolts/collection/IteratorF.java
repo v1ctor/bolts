@@ -38,6 +38,8 @@ public interface IteratorF<E> extends TraversableF<E>, Iterator<E> {
 
     IteratorF<E> filter(Function1B<? super E> f);
 
+    IteratorF<E> filterNot(Function1B<? super E> f);
+
     IteratorF<E> filterNotNull();
 
     int count();

@@ -164,6 +164,11 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
     }
 
     @Override
+    public IteratorF<E> filterNot(Function1B<? super E> f) {
+        return filter(f.notF());
+    }
+
+    @Override
     public IteratorF<E> filterNotNull() {
         return filter(Function1B.<E>notNullF());
     }
