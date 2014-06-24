@@ -9,7 +9,6 @@ import java.util.List;
 
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.CollectionF;
-import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.IterableF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
@@ -208,7 +207,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
 
     protected <B> CollectionF<B> newMutableCollection() {
-        return CollectionsF.arrayList();
+        return Cf.arrayList();
     }
 
     protected <B> CollectionF<B> emptyCollection() {
@@ -220,7 +219,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     protected <B> CollectionF<B> singletonCollection(B b) {
-        return CollectionsF.list(b);
+        return Cf.list(b);
     }
 
     protected <B> CollectionF<B> collect(IteratorF<B> iterator) {
@@ -242,11 +241,11 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     public ListF<E> toList() {
-        return CollectionsF.list(this);
+        return Cf.list(this);
     }
 
     public SetF<E> unique() {
-        return CollectionsF.set(this);
+        return Cf.set(this);
     }
 
     @Override
@@ -338,7 +337,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     public <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f) {
-        if (isEmpty()) return CollectionsF.list();
+        if (isEmpty()) return Cf.list();
 
         ArrayListF<B> result = new ArrayListF<>();
         for (E e : this) {
@@ -348,7 +347,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     public <B> ListF<B> flatMapO(final Function<? super E, Option<B>> f) {
-        if (isEmpty()) return CollectionsF.list();
+        if (isEmpty()) return Cf.list();
 
         return flatMap((Function<E, Collection<B>>) e -> f.apply(e).toList());
     }
@@ -393,7 +392,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     @SuppressWarnings("unchecked")
     public CollectionF<E> plus(E... additions) {
-        return plus(CollectionsF.list(additions));
+        return plus(Cf.list(additions));
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -436,8 +435,8 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     @Override
     public <K, V> MapF<K, V> toMap(Function<? super E, Tuple2<K, V>> mapper) {
-        if (isEmpty()) return CollectionsF.map();
-        else return CollectionsF.hashMap(map(mapper));
+        if (isEmpty()) return Cf.map();
+        else return Cf.hashMap(map(mapper));
     }
 
     @Override
@@ -476,11 +475,11 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     public <V> MapF<V, ListF<E>> groupBy(Function<? super E, ? extends V> m) {
-        if (isEmpty()) return CollectionsF.map();
+        if (isEmpty()) return Cf.map();
 
-        Function0<ListF<E>> newArrayListF = CollectionsF.<E>newArrayListF();
+        Function0<ListF<E>> newArrayListF = Cf.<E>newArrayListF();
 
-        MapF<V, ListF<E>> map = CollectionsF.hashMap();
+        MapF<V, ListF<E>> map = Cf.hashMap();
         for (E e : this) {
             V key = m.apply(e);
             ListF<E> list = map.getOrElseUpdate(key, newArrayListF);
@@ -495,7 +494,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     @SuppressWarnings("unchecked")
     public void addAll(E... additions) {
-        addAll(CollectionsF.list(additions));
+        addAll(Cf.list(additions));
     }
 
     public <F> CollectionF<F> uncheckedCast() {

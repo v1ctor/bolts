@@ -58,7 +58,7 @@
                 <fileset dir="lib/jars" includes="*.jar"/>
                 <fileset dir="lib/bundles" includes="*.jar"/>
             </classpath>
-            <link href="http://download.java.net/jdk7/docs/api/"/>
+            <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://functionaljava.googlecode.com/svn/artifacts/2.20/javadoc/"/>
             <link href="http://commons.apache.org/collections/apidocs/"/>
             <link href="http://jedi.codehaus.org/javadoc/"/>

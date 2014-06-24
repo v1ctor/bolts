@@ -5,7 +5,7 @@ import java.util.AbstractMap;
 import java.util.Map;
 
 import ru.yandex.bolts.collection.CollectionF;
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.collection.Option;
@@ -32,7 +32,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     public SetF<K> keySet() {
-        return CollectionsF.x(super.keySet());
+        return Cf.x(super.keySet());
     }
 
     @Override
@@ -52,7 +52,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     public CollectionF<V> values() {
-        return CollectionsF.x(super.values());
+        return Cf.x(super.values());
     }
 
     public Option<V> getO(K key) {
@@ -119,7 +119,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     protected <A, B> MapF<A, B> newMutableMap() {
-        return CollectionsF.hashMap();
+        return Cf.hashMap();
     }
 
     private Function<Entry<K, V>, K> entryKeyM() {
@@ -189,7 +189,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     protected <X, Y> MapF<X, Y> emptyMap() {
-        return CollectionsF.map();
+        return Cf.map();
     }
 
     public Function<K, V> asFunction() {
@@ -233,7 +233,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
     }
 
     public MapF<K, V> plus1(K key, V value) {
-        return plus(CollectionsF.map(key, value));
+        return plus(Cf.map(key, value));
     }
 
     public void putAll(Iterable<Tuple2<K, V>> entries) {

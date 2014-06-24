@@ -2,7 +2,7 @@ package ru.yandex.bolts.collection.impl;
 
 import java.util.NoSuchElementException;
 
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
@@ -23,22 +23,22 @@ public class EmptyIterator<A> extends AbstractIteratorF<A> {
 
     @Override
     public <B> IteratorF<B> map(Function<? super A, B> f) {
-        return CollectionsF.emptyIterator();
+        return Cf.emptyIterator();
     }
 
     @Override
     public IteratorF<Tuple2<A, Integer>> zipWithIndex() {
-        return CollectionsF.emptyIterator();
+        return Cf.emptyIterator();
     }
 
     @Override
     public ListF<A> toList() {
-        return CollectionsF.list();
+        return Cf.list();
     }
 
     @Override
     public SetF<A> toSet() {
-        return CollectionsF.set();
+        return Cf.set();
     }
 
 } //~

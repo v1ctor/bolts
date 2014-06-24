@@ -136,8 +136,8 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     @Override
     public <B> ListF<B> flatMap(Function<? super T, ? extends Collection<B>> f) {
-        if (isDefined()) return CollectionsF.x(f.apply(get())).toList();
-        else return CollectionsF.list();
+        if (isDefined()) return Cf.x(f.apply(get())).toList();
+        else return Cf.list();
     }
 
     @Override
@@ -160,8 +160,8 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     public final SetF<T> toSet() {
-        if (isDefined()) return CollectionsF.set(get());
-        else return CollectionsF.set();
+        if (isDefined()) return Cf.set(get());
+        else return Cf.set();
     }
 
     @Override
@@ -184,6 +184,14 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      * Construct some containing given value.
      */
     public static <T> Option<T> some(T x) { return new Some<>(x); }
+
+    /**
+     * Construct option from {@link Optional}
+     */
+    public static <T> Option<T> wrap(Optional<T> x) {
+        if (x.isPresent()) return some(x.get());
+        else return none();
+    }
 
     /**
      * Some if not null, None otherwise.

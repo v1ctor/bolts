@@ -150,10 +150,10 @@ public class OptionTest extends TestCase {
     }
 
     public void testToSet() {
-        assertEquals(CollectionsF.set(1), Option.some(1).unique());
-        assertEquals(CollectionsF.set(1), Option.some(1).toSet());
-        assertEquals(CollectionsF.set(), Option.none().toSet());
-        assertEquals(CollectionsF.set(), Option.none().unique());
+        assertEquals(Cf.set(1), Option.some(1).unique());
+        assertEquals(Cf.set(1), Option.some(1).toSet());
+        assertEquals(Cf.set(), Option.none().toSet());
+        assertEquals(Cf.set(), Option.none().unique());
     }
 
     public void testEquals() {
