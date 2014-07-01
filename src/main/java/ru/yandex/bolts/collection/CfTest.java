@@ -3,7 +3,6 @@ package ru.yandex.bolts.collection;
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.function.Function;
-import ru.yandex.bolts.function.Function1B;
 
 import static ru.yandex.bolts.collection.Cf.list;
 
@@ -55,6 +54,11 @@ public class CfTest extends TestCase {
     public void testRepeatEmpty() {
         ListF<String> set = Cf.repeat("a", 0);
         assertFalse(set.containsTs("a"));
+    }
+
+    public void testRepeat() {
+        ListF<Integer> list = Cf.repeat(Cf.range(0, 3).iterator()::next, 3);
+        assertEquals(Cf.list(0, 1, 2), list);
     }
 
     public void testMapFandSortFandUniqueF() {
