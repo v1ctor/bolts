@@ -527,6 +527,15 @@ public class Cf {
         };
     }
 
+    @SuppressWarnings({"unchecked"})
+    public static <T> ListF<T> repeat(Function0<T> factory, int times) {
+        Object[] elements = new Object[times];
+        for (int i = 0; i < times; i++) {
+            elements[i] = factory.apply();
+        }
+        return Cf.x((T[]) elements);
+    }
+
     /**
      * Immutable list of integer in given range.
      *
