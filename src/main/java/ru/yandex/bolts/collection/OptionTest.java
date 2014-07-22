@@ -12,6 +12,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function0V;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.Function1BTest;
 import ru.yandex.bolts.function.Function1V;
 
 /**
@@ -111,6 +112,18 @@ public class OptionTest extends TestCase {
         assertEquals(Option.some("1"), Option.some(1).map(Function.toStringF()));
     }
 
+    public void testFilter() {
+        assertEquals(Option.none(), Option.<Integer>none().filter(Function1BTest.evenF()));
+        assertEquals(Option.none(), Option.some(1).filter(Function1BTest.evenF()));
+        assertEquals(Option.some(2), Option.some(2).filter(Function1BTest.evenF()));
+    }
+
+    public void testFilterNot() {
+        assertEquals(Option.none(), Option.<Integer>none().filterNot(Function1BTest.evenF()));
+        assertEquals(Option.some(1), Option.some(1).filterNot(Function1BTest.evenF()));
+        assertEquals(Option.none(), Option.some(2).filterNot(Function1BTest.evenF()));
+    }
+
     public Option<Throwable> tryCatch(Function0V closure) {
         try {
             closure.apply();
@@ -150,10 +163,10 @@ public class OptionTest extends TestCase {
     }
 
     public void testToSet() {
-        assertEquals(CollectionsF.set(1), Option.some(1).unique());
-        assertEquals(CollectionsF.set(1), Option.some(1).toSet());
-        assertEquals(CollectionsF.set(), Option.none().toSet());
-        assertEquals(CollectionsF.set(), Option.none().unique());
+        assertEquals(Cf.set(1), Option.some(1).unique());
+        assertEquals(Cf.set(1), Option.some(1).toSet());
+        assertEquals(Cf.set(), Option.none().toSet());
+        assertEquals(Cf.set(), Option.none().unique());
     }
 
     public void testEquals() {

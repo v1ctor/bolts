@@ -9,7 +9,6 @@ import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
 import ru.yandex.bolts.collection.Cf;
-import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.ListIteratorF;
@@ -31,12 +30,12 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @Override
     protected <B> ListF<B> newMutableCollection() {
-        return CollectionsF.arrayList();
+        return Cf.arrayList();
     }
 
     @Override
     protected <B> ListF<B> emptyCollection() {
-        return CollectionsF.list();
+        return Cf.list();
     }
 
     @Override
@@ -47,6 +46,11 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     @Override
     public ListF<E> filter(Function1B<? super E> p) {
         return (ListF<E>) super.filter(p);
+    }
+
+    @Override
+    public ListF<E> filterNot(Function1B<? super E> p) {
+        return (ListF<E>) super.filterNot(p);
     }
 
     @Override
@@ -113,7 +117,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @SuppressWarnings("unchecked")
     public ListF<E> plus(E... additions) {
-        return plus(CollectionsF.list(additions));
+        return plus(Cf.list(additions));
     }
 
     @Override
@@ -191,7 +195,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
 
     @SuppressWarnings({"unchecked"})
     protected ListF<E> emptyList() {
-        return CollectionsF.list();
+        return Cf.list();
     }
 
     public ListF<E> unmodifiable() {

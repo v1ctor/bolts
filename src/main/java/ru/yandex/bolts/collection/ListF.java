@@ -27,6 +27,9 @@ public interface ListF<E> extends CollectionF<E>, List<E> {
     ListF<E> filter(Function1B<? super E> p);
 
     @Override
+    ListF<E> filterNot(Function1B<? super E> p);
+
+    @Override
     ListF<E> filterNotNull();
 
     /**

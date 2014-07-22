@@ -2,7 +2,7 @@ package ru.yandex.bolts.collection.impl;
 
 import java.io.Serializable;
 
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
@@ -24,7 +24,7 @@ class SetOf2<E> extends AbstractSetF<E> implements Serializable, Unmodifiable {
 
     @Override
     public ListF<E> toList() {
-        return CollectionsF.list(e1, e2);
+        return Cf.list(e1, e2);
     }
 
     @Override

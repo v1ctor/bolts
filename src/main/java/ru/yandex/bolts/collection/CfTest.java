@@ -3,29 +3,28 @@ package ru.yandex.bolts.collection;
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.function.Function;
-import ru.yandex.bolts.function.Function1B;
 
-import static ru.yandex.bolts.collection.CollectionsF.list;
+import static ru.yandex.bolts.collection.Cf.list;
 
 /**
  * @author Stepan Koltsov
  */
 @SuppressWarnings("unused")
-public class CollectionsFTest extends TestCase {
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(CollectionsFTest.class);
+public class CfTest extends TestCase {
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(CfTest.class);
 
     public void testRange() {
-        assertEquals(list(0, 1, 2, 3), CollectionsF.range(0, 4));
+        assertEquals(list(0, 1, 2, 3), Cf.range(0, 4));
     }
 
     public void testRangeMapPossibleBug() {
-        assertEquals(list("0", "1", "2", "3"), CollectionsF.range(0, 4).map(Function.toStringF()));
+        assertEquals(list("0", "1", "2", "3"), Cf.range(0, 4).map(Function.toStringF()));
     }
 
     public void testRangeEmpty() {
-        assertEquals(list(), CollectionsF.range(0, 0));
-        assertEquals(list(), CollectionsF.range(1, 1));
-        assertEquals(list(), CollectionsF.range(5, 1));
+        assertEquals(list(), Cf.range(0, 0));
+        assertEquals(list(), Cf.range(1, 1));
+        assertEquals(list(), Cf.range(5, 1));
     }
 
     public void testIdentityHashSet() {
@@ -55,6 +54,11 @@ public class CollectionsFTest extends TestCase {
     public void testRepeatEmpty() {
         ListF<String> set = Cf.repeat("a", 0);
         assertFalse(set.containsTs("a"));
+    }
+
+    public void testRepeat() {
+        ListF<Integer> list = Cf.repeat(Cf.range(0, 3).iterator()::next, 3);
+        assertEquals(Cf.list(0, 1, 2), list);
     }
 
     public void testMapFandSortFandUniqueF() {

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import ru.yandex.bolts.collection.CollectionF;
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 
 /**
@@ -18,7 +18,7 @@ public class DefaultCollectionF<E> extends AbstractCollectionF<E> implements Ser
     protected Collection<E> target;
 
     /**
-     * Should not be used directly, use {@link CollectionsF#x(java.util.Collection)} instead.
+     * Should not be used directly, use {@link Cf#x(java.util.Collection)} instead.
      */
     protected DefaultCollectionF(Collection<E> target) {
         this.target = target;

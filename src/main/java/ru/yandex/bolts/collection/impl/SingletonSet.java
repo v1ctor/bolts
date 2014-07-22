@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
 
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
@@ -31,12 +31,12 @@ public class SingletonSet<E> extends AbstractSetF<E> implements Unmodifiable, Se
     }
 
     public IteratorF<E> iterator() {
-        return CollectionsF.x(Collections.singleton(e)).iterator();
+        return Cf.x(Collections.singleton(e)).iterator();
     }
 
     @Override
     public ListF<E> toList() {
-        return CollectionsF.list(e);
+        return Cf.list(e);
     }
 
     @Override
@@ -52,13 +52,13 @@ public class SingletonSet<E> extends AbstractSetF<E> implements Unmodifiable, Se
 
     @Override
     public <B> ListF<B> map(Function<? super E, B> f) {
-        return CollectionsF.list(f.apply(e));
+        return Cf.list(f.apply(e));
     }
 
     @Override
     public SetF<E> filter(Function1B<? super E> p) {
         if (p.apply(e)) return this;
-        else return CollectionsF.set();
+        else return Cf.set();
     }
 
     @Override

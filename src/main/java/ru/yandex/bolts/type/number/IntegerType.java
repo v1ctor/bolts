@@ -1,11 +1,11 @@
 package ru.yandex.bolts.type.number;
 
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 
 
 /**
  * @author Stepan Koltsov
- * @see CollectionsF#Integer
+ * @see Cf#Integer
  */
 public class IntegerType extends IntegralType<Integer> {
 

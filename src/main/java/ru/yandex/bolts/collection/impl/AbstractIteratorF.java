@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import ru.yandex.bolts.collection.Cf;
-import ru.yandex.bolts.collection.CollectionsF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Option;
@@ -42,7 +41,7 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
     }
 
     private ListF<E> toListImpl(int initialCapacity) {
-        if (!hasNext()) return CollectionsF.list();
+        if (!hasNext()) return Cf.list();
 
         ArrayListF<E> result;
         if (initialCapacity < 0) {
@@ -55,9 +54,9 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
     }
 
     public SetF<E> toSet() {
-        if (!hasNext()) return CollectionsF.set();
+        if (!hasNext()) return Cf.set();
 
-        SetF<E> result = CollectionsF.hashSet();
+        SetF<E> result = Cf.hashSet();
         forEach(result.addF());
         return result.unmodifiable();
     }
@@ -162,6 +161,11 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
         };
 
         return new FilterIterator();
+    }
+
+    @Override
+    public IteratorF<E> filterNot(Function1B<? super E> f) {
+        return filter(f.notF());
     }
 
     @Override

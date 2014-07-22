@@ -5,13 +5,13 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
-import ru.yandex.bolts.collection.CollectionsF;
+import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.impl.test.Generator;
 import ru.yandex.bolts.function.Function1BTest;
 
-import static ru.yandex.bolts.collection.CollectionsF.set;
+import static ru.yandex.bolts.collection.Cf.set;
 
 /**
  * @author Stepan Koltsov
@@ -23,16 +23,26 @@ public class AbstractSetFTest extends TestCase {
         assertEquals(Tuple2.tuple(set(2, 4), set(1, 3)), s.partition(Function1BTest.evenF()));
     }
 
+    public void testFilter() {
+        SetF<Integer> s = set(1, 2, 3, 4);
+        assertEquals(set(2, 4), s.filter(Function1BTest.evenF()));
+    }
+
+    public void testFilterNot() {
+        SetF<Integer> s = set(1, 2, 3, 4);
+        assertEquals(set(1, 3), s.filterNot(Function1BTest.evenF()));
+    }
+
     public void testMinusEmpty() {
         SetF<Integer> s = set(1, 2, 3);
-        SetF<Integer> es = CollectionsF.set();
+        SetF<Integer> es = Cf.set();
         assertSame(s, s.minus(es));
         assertSame(es, es.minus(s));
     }
 
     public void testEqualsToRegular() {
         Set<String> regular = Collections.emptySet();
-        SetF<String> our = CollectionsF.set();
+        SetF<String> our = Cf.set();
         assertEquals(regular, our);
         assertEquals(our, regular);
         assertEquals(our, our);
@@ -56,7 +66,7 @@ public class AbstractSetFTest extends TestCase {
     }
 
     public void testSimple() {
-        assertEquals(set(1, 2), CollectionsF.x(set(1, 2, 3, 4)).minus(set(3, 4, 5, 6)));
+        assertEquals(set(1, 2), Cf.x(set(1, 2, 3, 4)).minus(set(3, 4, 5, 6)));
     }
 
 

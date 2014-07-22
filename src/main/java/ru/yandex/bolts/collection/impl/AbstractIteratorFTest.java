@@ -77,13 +77,19 @@ public class AbstractIteratorFTest extends TestCase {
         checkIteratorAgainst(it, expected);
     }
 
-
-
     public void testFilterSimple() {
         ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filter(Function1BTest.evenF()).toList();
 
         // XXX to simple
         ListF<Integer> expected = Cf.list(2, 4, 6);
+        assertEquals(expected, got);
+    }
+
+    public void testFilterNotSimple() {
+        ListF<Integer> got = Cf.list(1, 2, 3, 4, 5, 6).iterator().filterNot(Function1BTest.evenF()).toList();
+
+        // XXX to simple
+        ListF<Integer> expected = Cf.list(1, 3, 5);
         assertEquals(expected, got);
     }
 
