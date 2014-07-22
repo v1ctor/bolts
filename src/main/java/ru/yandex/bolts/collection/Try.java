@@ -12,9 +12,11 @@ import ru.yandex.bolts.function.Function1V;
  *
  * @author Anton Bobukh <abobukh@yandex-team.ru>
  */
-public interface Try<T> {
+public abstract class Try<T> {
 
-    static <T> Try<T> cons(Callable<T> func) {
+    private Try() { }
+
+    public static <T> Try<T> cons(Callable<T> func) {
         try {
             return Try.success(func.call());
         } catch (Exception e) {
@@ -22,23 +24,23 @@ public interface Try<T> {
         }
     }
 
-    static <T> Try<T> success(T value) {
+    public static <T> Try<T> success(T value) {
         return new Success<>(value);
     }
 
-    static <T> Try<T> failure(Exception error) {
+    public static <T> Try<T> failure(Exception error) {
         return new Failure<>(error);
     }
 
-    static Try<Void> success() {
+    public static Try<Void> success() {
         return Try.success(null);
     }
 
-    default T getOrElse(T value) {
+    public final T getOrElse(T value) {
         return isSuccess() ? get() : value;
     }
 
-    default Try<T> orElse(Try<T> value) {
+    public final Try<T> orElse(Try<T> value) {
         try {
             return isSuccess() ? this : value;
         } catch (Exception e) {
@@ -46,44 +48,44 @@ public interface Try<T> {
         }
     }
 
-    default Option<T> toOption() {
+    public final Option<T> toOption() {
         return Option.when(isSuccess(), this::get);
     }
 
     @SuppressWarnings("unchecked")
-    default <U> Try<U> cast() {
+    public final <U> Try<U> cast() {
         return (Try<U>) this;
     }
 
-    boolean isFailure();
+    public abstract boolean isFailure();
 
-    boolean isSuccess();
+    public abstract boolean isSuccess();
 
-    T getOrFail();
+    public abstract T getOrFail();
 
-    T get();
+    public abstract T get();
 
-    void forEach(Function1V<T> func);
+    public abstract void forEach(Function1V<T> func);
 
-    <U> Try<U> flatMap(Function<T, Try<U>> func);
+    public abstract <U> Try<U> flatMap(Function<T, Try<U>> func);
 
-    <U> Try<U> map(Function<T, U> func);
+    public abstract <U> Try<U> map(Function<T, U> func);
 
-    Try<T> filter(Function1B<T> predicate);
+    public abstract Try<T> filter(Function1B<T> predicate);
 
-    Try<T> recoverWith(Function<Exception, Try<T>> func);
+    public abstract Try<T> recoverWith(Function<Exception, Try<T>> func);
 
-    Try<T> recover(Function<Exception, T> func);
+    public abstract Try<T> recover(Function<Exception, T> func);
 
-    <U> Try<U> flatten();
+    public abstract <U> Try<U> flatten();
 
-    Try<Exception> failed();
+    public abstract Try<Exception> failed();
 
-    void fail();
+    public abstract void fail();
 
-    <U> Try<U> transform(Function<T, Try<U>> mapper, Function<Exception, Try<U>> func);
+    public abstract <U> Try<U> transform(Function<T, Try<U>> mapper, Function<Exception, Try<U>> func);
 
-    public static final class Success<T> implements Try<T> {
+    public static final class Success<T> extends Try<T> {
 
         private final T value;
 
@@ -154,7 +156,11 @@ public interface Try<T> {
 
         @Override
         public <U> Try<U> flatten() {
-            return this.<Try<U>>cast().get();
+            try {
+                return this.<Try<U>>cast().get();
+            } catch (Exception e) {
+                return Try.failure(e);
+            }
         }
 
         @Override
@@ -172,7 +178,7 @@ public interface Try<T> {
 
         @Override
         public String toString() {
-            return "Success{" + value + "}";
+            return "Success(" + value + ")";
         }
 
         @Override
@@ -195,7 +201,7 @@ public interface Try<T> {
 
     }
 
-    public static final class Failure<T> implements Try<T> {
+    public static final class Failure<T> extends Try<T> {
 
         private final Exception error;
 
@@ -281,7 +287,7 @@ public interface Try<T> {
 
         @Override
         public String toString() {
-            return "Failure{" + error + "}";
+            return "Failure(" + error + ")";
         }
 
         @Override
