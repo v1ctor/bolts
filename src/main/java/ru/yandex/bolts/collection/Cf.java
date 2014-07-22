@@ -731,22 +731,6 @@ public class Cf {
         return mkStringF().bind2(sep);
     }
 
-    public static <T> T p() {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public static <T> T p1() {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public static <T> T p2() {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
-    public static <T> T p3() {
-        throw new RuntimeException("weaving must be enabled");
-    }
-
     public static <T> ListF<T> flatten(Collection<? extends Collection<T>> l) {
         return Cf.x(l).flatMap(Function.<Collection<T>>identityF());
     }
