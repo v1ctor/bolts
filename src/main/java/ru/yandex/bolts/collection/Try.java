@@ -221,6 +221,9 @@ public abstract class Try<T> {
 
         @Override
         public T getOrFail() {
+            if (error instanceof RuntimeException) {
+                throw (RuntimeException) error;
+            }
             throw new RuntimeException(error);
         }
 
@@ -273,7 +276,7 @@ public abstract class Try<T> {
 
         @Override
         public void fail() {
-            throw new RuntimeException(error);
+            getOrFail();
         }
 
         @Override
