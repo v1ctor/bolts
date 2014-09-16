@@ -1,5 +1,6 @@
 package ru.yandex.bolts.collection.impl;
 
+import java.lang.IndexOutOfBoundsException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
@@ -66,7 +67,7 @@ public class NthElement {
             throw new IllegalArgumentException("Size can't be more than number of elements");
         }
         if (nthPosition < 0 || nthPosition >= size) {
-            throw new IllegalArgumentException("Incorrect position");
+            throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", nthPosition, size));
         }
         nth(index -> elements[index], (p1, p2) -> swap(elements, p1, p2), comparator, 0, size - 1,
                 nthPosition);
@@ -75,7 +76,7 @@ public class NthElement {
     // List must be mutable
     public static <T> void inplaceNth(ListF<T> elements, Comparator<T> comparator, int nthPosition) {
         if (nthPosition < 0 || nthPosition >= elements.size()) {
-            throw new IllegalArgumentException("Incorrect position");
+            throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", nthPosition, elements.size()));
         }
         nth(elements::get, (p1, p2) -> Collections.swap(elements, p1, p2), comparator, 0, elements.size() - 1,
                 nthPosition);
