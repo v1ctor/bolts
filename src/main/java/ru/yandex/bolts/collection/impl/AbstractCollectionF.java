@@ -23,6 +23,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
+import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
  * Implementation of {@link CollectionF} algorithms.
@@ -422,6 +423,46 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     public ListF<E> sortedByDesc(Function<? super E, ?> f) {
         return sorted(f.andThenNaturalComparator().nullLowC().invert());
+    }
+
+    @Override
+    public ListF<E> takeSorted(int k) {
+        return takeSorted(Comparator.naturalComparator().uncheckedCastC(), k);
+    }
+
+    @Override
+    public ListF<E> takeSorted(java.util.Comparator<? super E> comparator, int k) {
+        if (size() <= k) {
+            return sorted(comparator);
+        }
+        FixedSizeTop<E> top = FixedSizeTop.cons(k, (java.util.Comparator<E>) comparator);
+        top.addAll(this);
+        return top.getTopElements();
+    }
+
+    @Override
+    public ListF<E> takeSortedBy(Function<? super E, ?> f, int k) {
+        return takeSorted(f.andThenNaturalComparator().nullLowC(), k);
+    }
+
+    @Override
+    public E nthElement(int n) {
+        return nthElement(Comparator.naturalComparator().uncheckedCastC(), n);
+    }
+
+    @Override
+    public E nthElement(java.util.Comparator<? super E> comparator, int n) {
+        if (n < 0 || n >= size()) {
+            throw new IllegalArgumentException("Incorrect position");
+        }
+        ListF<E> list = Cf.arrayList(this);
+        NthElement.inplaceNth(list, (java.util.Comparator<E>) comparator, n);
+        return list.get(n);
+    }
+
+    @Override
+    public E nthElement(Function<? super E, ?> f, int n) {
+        return nthElement(f.andThenNaturalComparator().nullLowC(), n);
     }
 
     @Override
