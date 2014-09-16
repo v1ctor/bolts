@@ -1,5 +1,6 @@
 package ru.yandex.bolts.collection.impl;
 
+import java.lang.IllegalArgumentException;
 import java.lang.IndexOutOfBoundsException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -433,6 +434,12 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     @Override
     public ListF<E> takeSorted(java.util.Comparator<? super E> comparator, int k) {
+        if (k == 0) {
+            return Cf.list();
+        }
+        if (k < 0) {
+            return new IllegalArgumentException("K must be greater than 0");
+        }
         if (size() <= k) {
             return sorted(comparator);
         }
