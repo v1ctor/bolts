@@ -129,17 +129,17 @@ public class AbstractCollectionFTest extends TestCase {
         assertEquals(Cf.range(0, 50), set.takeSorted(50));
     }
 
-    public void testNthElement() {
+    public void testGetSorted() {
         ListF<Integer> lst = Cf.range(0, 100).shuffle();
         CollectionF<Integer> coll = Cf.list(lst);
-        assertEquals(10, coll.nthElement(10).intValue());
+        assertEquals(10, coll.getSorted(10).intValue());
         assertEquals(lst, coll);
-        assertEquals(90, coll.nthElement(java.util.Comparator.<Integer>reverseOrder(), 9).intValue());
+        assertEquals(90, coll.getSorted(java.util.Comparator.<Integer>reverseOrder(), 9).intValue());
         assertEquals(lst, coll);
-        assertEquals(8, coll.nthElement(x -> (x % 2) * coll.size() + x, 4).intValue());
+        assertEquals(8, coll.getSorted(x -> (x % 2) * coll.size() + x, 4).intValue());
 
         SetF<Integer> set = Cf.range(0, 100).unique();
-        assertEquals(50, set.nthElement(50).intValue());
+        assertEquals(50, set.getSorted(50).intValue());
     }
 
 } //~

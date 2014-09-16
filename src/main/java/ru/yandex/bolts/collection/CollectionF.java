@@ -121,11 +121,11 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     ListF<E> takeSortedBy(Function<? super E, ?> f, int k);
 
     /** Element that would be n-th element of sorted() */
-    E nthElement(int n);
+    E getSorted(int n);
 
-    E nthElement(java.util.Comparator<? super E> comparator, int n);
+    E getSorted(java.util.Comparator<? super E> comparator, int n);
 
-    E nthElement(Function<? super E, ?> f, int n);
+    E getSorted(Function<? super E, ?> f, int n);
 
     ListF<E> shuffle();
 

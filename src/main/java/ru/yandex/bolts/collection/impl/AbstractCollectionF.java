@@ -446,12 +446,12 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
-    public E nthElement(int n) {
-        return nthElement(Comparator.naturalComparator().uncheckedCastC(), n);
+    public E getSorted(int n) {
+        return getSorted(Comparator.naturalComparator().uncheckedCastC(), n);
     }
 
     @Override
-    public E nthElement(java.util.Comparator<? super E> comparator, int n) {
+    public E getSorted(java.util.Comparator<? super E> comparator, int n) {
         if (n < 0 || n >= size()) {
             throw new IllegalArgumentException("Incorrect position");
         }
@@ -461,8 +461,8 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
-    public E nthElement(Function<? super E, ?> f, int n) {
-        return nthElement(f.andThenNaturalComparator().nullLowC(), n);
+    public E getSorted(Function<? super E, ?> f, int n) {
+        return getSorted(f.andThenNaturalComparator().nullLowC(), n);
     }
 
     @Override
