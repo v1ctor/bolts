@@ -1,5 +1,6 @@
 package ru.yandex.bolts.collection.impl;
 
+import java.lang.IndexOutOfBoundsException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
@@ -453,7 +454,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     @Override
     public E getSorted(java.util.Comparator<? super E> comparator, int n) {
         if (n < 0 || n >= size()) {
-            throw new IllegalArgumentException("Incorrect position");
+            throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", n, size()));
         }
         ListF<E> list = Cf.arrayList(this);
         NthElement.inplaceNth(list, (java.util.Comparator<E>) comparator, n);
