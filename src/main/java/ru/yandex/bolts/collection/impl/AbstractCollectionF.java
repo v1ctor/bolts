@@ -438,7 +438,7 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
             return Cf.list();
         }
         if (k < 0) {
-            return new IllegalArgumentException("K must be greater than 0");
+            throw new IllegalArgumentException("K must be greater than 0");
         }
         if (size() <= k) {
             return sorted(comparator);
