@@ -1,7 +1,7 @@
 package ru.yandex.bolts.collection.impl;
 
-import java.util.Set;
 import java.util.Collection;
+import java.util.Set;
 
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.SetF;
@@ -29,6 +29,11 @@ public class UnmodifiableDefaultSetF<E> extends DefaultSetF<E> implements Unmodi
 
     @Override
     public boolean remove(Object o) {
+        throw new UnsupportedOperationException("immutable");
+    }
+
+    @Override
+    public void clear() {
         throw new UnsupportedOperationException("immutable");
     }
 
