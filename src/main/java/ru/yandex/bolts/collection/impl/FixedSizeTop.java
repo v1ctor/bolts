@@ -9,7 +9,7 @@ import ru.yandex.bolts.collection.ListF;
 
 /**
  * equals input.sorted(comparator).take(topSize)
- * time complexity - O(N + topSize * log(topSize)), where N - number of elements in input
+ * time complexity - O(N + min(N, topSize) * log(min(N, topSize))), where N - number of elements in input
  * memory - O(topSize)
  * @author sankear
  */
