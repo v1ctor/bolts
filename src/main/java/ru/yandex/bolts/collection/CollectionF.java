@@ -115,10 +115,14 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
     /** First k elements sorted by {@link Comparator#naturalComparator()} */
     ListF<E> takeSorted(int k);
 
+    ListF<E> takeSortedDesc(int k);
+
     /** First k elements sorted by given comparator */
     ListF<E> takeSorted(java.util.Comparator<? super E> comparator, int k);
 
     ListF<E> takeSortedBy(Function<? super E, ?> f, int k);
+
+    ListF<E> takeSortedByDesc(Function<? super E, ?> f, int k);
 
     /** Element that would be n-th element of sorted() */
     E getSorted(int n);

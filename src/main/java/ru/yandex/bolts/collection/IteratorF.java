@@ -63,10 +63,14 @@ public interface IteratorF<E> extends TraversableF<E>, Iterator<E> {
      */
     ListF<E> takeSorted(int count);
 
+    ListF<E> takeSortedDesc(int count);
+
     /** First k elements sorted by given comparator */
     ListF<E> takeSorted(java.util.Comparator<? super E> comparator, int count);
 
     ListF<E> takeSortedBy(Function<? super E, ?> f, int count);
+
+    ListF<E> takeSortedByDesc(Function<? super E, ?> f, int count);
 
     /** Longest prefix of elements that satisfy p */
     IteratorF<E> takeWhile(Function1B<? super E> p);

@@ -259,6 +259,11 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
         return takeSorted(Comparator.naturalComparator().uncheckedCastC(), count);
     }
 
+    @Override
+    public ListF<E> takeSortedDesc(int count) {
+        return takeSorted(Comparator.naturalComparator().invert().uncheckedCastC(), count);
+    }
+
     /**
      * It's very powerful method, you can stream big data but method will use O(count) memory
      * and works with O(min(count, size_of_data) * log(min(count, size_of_data)) + size_of_data) time complexity
@@ -282,6 +287,11 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
     @Override
     public ListF<E> takeSortedBy(Function<? super E, ?> f, int count) {
         return takeSorted(f.andThenNaturalComparator().nullLowC(), count);
+    }
+
+    @Override
+    public ListF<E> takeSortedByDesc(Function<? super E, ?> f, int count) {
+        return takeSorted(f.andThenNaturalComparator().nullLowC().invert(), count);
     }
 
     public IteratorF<E> dropWhile(Function1B<? super E> p) {

@@ -134,6 +134,11 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     @Override
+    public Tuple2List<A, B> takeSortedDesc(int k) {
+        return takeSorted(get1F().andThenNaturalComparator().chainTo(get2F().andThenNaturalComparator()).invert(), k);
+    }
+
+    @Override
     public Tuple2List<A, B> takeSorted(java.util.Comparator<? super Tuple2<A, B>> comparator, int k) {
         return Tuple2List.tuple2List(super.takeSorted(comparator, k));
     }
@@ -141,6 +146,11 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     @Override
     public Tuple2List<A, B> takeSortedBy(Function<? super Tuple2<A, B>, ?> f, int k) {
         return Tuple2List.tuple2List(super.takeSortedBy(f, k));
+    }
+
+    @Override
+    public Tuple2List<A, B> takeSortedByDesc(Function<? super Tuple2<A, B>, ?> f, int k) {
+        return Tuple2List.tuple2List(super.takeSortedByDesc(f, k));
     }
 
     public <U> Tuple2List<U, B> map1(final Function<? super A, U> f) {
@@ -244,12 +254,20 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return takeSortedBy1(Comparator.naturalComparator().uncheckedCast(), k);
     }
 
+    public Tuple2List<A, B> takeSortedBy1Desc(int k) {
+        return takeSortedBy1(Comparator.naturalComparator().invert().uncheckedCast(), k);
+    }
+
     public Tuple2List<A, B> takeSortedBy1(Function2I<? super A, ? super A> comparator, int k) {
         return takeSorted(get1F().andThen((Function2I<A, A>) comparator), k);
     }
 
     public Tuple2List<A, B> takeSortedBy2(int k) {
         return takeSortedBy2(Comparator.naturalComparator().uncheckedCast(), k);
+    }
+
+    public Tuple2List<A, B> takeSortedBy2Desc(int k) {
+        return takeSortedBy2(Comparator.naturalComparator().invert().uncheckedCast(), k);
     }
 
     public Tuple2List<A, B> takeSortedBy2(Function2I<? super B, ? super B> comparator, int k) {

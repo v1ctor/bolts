@@ -431,6 +431,11 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     }
 
     @Override
+    public ListF<E> takeSortedDesc(int k) {
+        return takeSorted(Comparator.naturalComparator().invert().uncheckedCastC(), k);
+    }
+
+    @Override
     public ListF<E> takeSorted(java.util.Comparator<? super E> comparator, int k) {
         return iterator().takeSorted(comparator, Math.min(k, size()));
     }
@@ -438,6 +443,11 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
     @Override
     public ListF<E> takeSortedBy(Function<? super E, ?> f, int k) {
         return takeSorted(f.andThenNaturalComparator().nullLowC(), k);
+    }
+
+    @Override
+    public ListF<E> takeSortedByDesc(Function<? super E, ?> f, int k) {
+        return takeSorted(f.andThenNaturalComparator().nullLowC().invert(), k);
     }
 
     @Override
