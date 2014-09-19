@@ -33,6 +33,11 @@ public class UnmodifiableDefaultListF<E> extends DefaultListF<E> implements Unmo
     }
 
     @Override
+    public boolean add(E o) {
+        throw new UnsupportedOperationException("immutable");
+    }
+
+    @Override
     public boolean addAll(int index, Collection<? extends E> c) {
         throw new UnsupportedOperationException("immutable");
     }
