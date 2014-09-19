@@ -42,6 +42,11 @@ public class UnmodifiableDefaultCollectionF<E> extends DefaultCollectionF<E> imp
     }
 
     @Override
+    public void clear() {
+        throw new UnsupportedOperationException("immutable");
+    }
+
+    @Override
     public IteratorF<E> iterator() {
         return new UnmodifiableDefaultIteratorF<>(target.iterator());
     }

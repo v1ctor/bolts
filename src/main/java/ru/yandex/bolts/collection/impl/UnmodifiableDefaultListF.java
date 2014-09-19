@@ -1,7 +1,7 @@
 package ru.yandex.bolts.collection.impl;
 
-import java.util.List;
 import java.util.Collection;
+import java.util.List;
 import java.util.ListIterator;
 
 import ru.yandex.bolts.collection.IteratorF;
@@ -49,6 +49,11 @@ public class UnmodifiableDefaultListF<E> extends DefaultListF<E> implements Unmo
 
     @Override
     public E remove(int index) {
+        throw new UnsupportedOperationException("immutable");
+    }
+
+    @Override
+    public void clear() {
         throw new UnsupportedOperationException("immutable");
     }
 

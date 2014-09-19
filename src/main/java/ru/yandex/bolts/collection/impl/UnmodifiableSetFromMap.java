@@ -30,6 +30,11 @@ class UnmodifiableSetFromMap<E> extends SetFromMap<E> implements Unmodifiable {
     }
 
     @Override
+    public void clear() {
+        throw new UnsupportedOperationException("immutable");
+    }
+
+    @Override
     public SetF<E> unmodifiable() {
         return this;
     }
