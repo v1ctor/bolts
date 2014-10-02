@@ -75,16 +75,16 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     /**
      * <code>this</code> if this is some, or given option otherwise.
      */
-    public final Option<T> orElse(Option<T> elseOption) {
+    public final Option<T> orElse(Option<? extends T> elseOption) {
         return orElse(Function0.constF(elseOption));
     }
 
     /**
      * <code>this</code> if this is some, or evaluate function and return option otherwise.
      */
-    public final Option<T> orElse(Function0<Option<T>> elseOption) {
+    public final Option<T> orElse(Function0<Option<? extends T>> elseOption) {
         if (isDefined()) return this;
-        else return elseOption.apply();
+        else return elseOption.apply().uncheckedCast();
     }
 
     /** Throw specified exception if {@link #isEmpty()}. */
@@ -147,7 +147,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     }
 
     @Override
-    public ListF<T> filterNot(Function1B<? super T> p) {
+    public Option<T> filterNot(Function1B<? super T> p) {
         if (isEmpty() || !p.apply(get())) return this;
         else return none();
     }
@@ -161,7 +161,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      * {@inheritDoc}
      */
     @Override
-    public <F extends T> ListF<F> filterByType(Class<F> type) {
+    public <F extends T> Option<F> filterByType(Class<F> type) {
         return filter(Function1B.instanceOfF(type)).uncheckedCast();
     }
 
@@ -178,7 +178,20 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     /** This object with different type parameters */
     @Override
     public <F> Option<F> uncheckedCast() {
-        return (Option<F>) this;
+        return cast();
+    }
+
+    @Override
+    public <F> Option<F> cast() {
+        return (Option<F>) super.<F>cast();
+    }
+
+    @Override
+    public <F> Option<F> cast(Class<F> type) {
+        if (isDefined()) {
+            type.cast(get());
+        }
+        return cast();
     }
 
     /**
