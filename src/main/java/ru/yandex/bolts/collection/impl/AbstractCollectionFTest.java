@@ -97,10 +97,32 @@ public class AbstractCollectionFTest extends TestCase {
         assertEquals("d", coll.min(Comparator.naturalComparator().uncheckedCast().invert()));
     }
 
+    public void testMinBy() {
+        Pojo expected = new Pojo(-1);
+        assertEquals(expected, Cf.list(new Pojo(42), expected, new Pojo(0)).minBy(Pojo::getComparable));
+    }
+
+    public void testMinByO() {
+        Pojo expected = new Pojo(-1);
+        assertEquals(expected, Cf.list(new Pojo(42), expected, new Pojo(0)).minByO(Pojo::getComparable).get());
+        assertTrue(Cf.<Pojo>list().minByO(Pojo::getComparable).isEmpty());
+    }
+
     public void testMax() {
         CollectionF<String> coll = Cf.list("b", "a", "d", "c");
         assertEquals("d", coll.max());
         assertEquals("a", coll.max(Comparator.naturalComparator().uncheckedCast().invert()));
+    }
+
+    public void testMaxBy() {
+        Pojo expected = new Pojo(42);
+        assertEquals(expected, Cf.list(new Pojo(-1), expected, new Pojo(0)).maxBy(Pojo::getComparable));
+    }
+
+    public void testMaxByO() {
+        Pojo expected = new Pojo(42);
+        assertEquals(expected, Cf.list(new Pojo(-1), expected, new Pojo(0)).maxByO(Pojo::getComparable).get());
+        assertTrue(Cf.<Pojo>list().maxByO(Pojo::getComparable).isEmpty());
     }
 
     public void testPaginate() {
@@ -140,6 +162,37 @@ public class AbstractCollectionFTest extends TestCase {
 
         SetF<Integer> set = Cf.range(0, 100).unique();
         assertEquals(50, set.getSorted(50).intValue());
+    }
+
+    public static final class Pojo {
+
+        private final int comparable;
+
+        public Pojo(int comparable) {
+            this.comparable = comparable;
+        }
+
+        public int getComparable() {
+            return comparable;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || getClass() != other.getClass()) {
+                return false;
+            }
+
+            Pojo pojo = (Pojo) other;
+            return comparable == pojo.comparable;
+        }
+
+        @Override
+        public int hashCode() {
+            return comparable;
+        }
     }
 
 } //~

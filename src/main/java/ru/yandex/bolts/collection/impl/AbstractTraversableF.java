@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.Option;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
@@ -116,17 +117,23 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     }
 
     @Override
+    public E minBy(Function<? super E, ?> f) {
+        return min(f.andThenNaturalComparator().nullLowC());
+    }
+
+    @Override
     public Option<E> minO() {
         return minO(Comparator.naturalComparator().uncheckedCast());
     }
 
     @Override
     public Option<E> minO(Function2I<? super E, ? super E> comparator) {
-        if (!iterator().hasNext()) {
-            return Option.none();
-        } else {
-            return Option.some(min(comparator));
-        }
+        return Option.when(iterator().hasNext(), () -> min(comparator));
+    }
+
+    @Override
+    public Option<E> minByO(Function<? super E, ?> f) {
+        return Option.when(iterator().hasNext(), () -> minBy(f));
     }
 
     @Override
@@ -141,19 +148,24 @@ public abstract class AbstractTraversableF<E> implements TraversableF<E> {
     }
 
     @Override
+    public E maxBy(Function<? super E, ?> f) {
+        return max(f.andThenNaturalComparator().nullLowC());
+    }
+
+    @Override
     public Option<E> maxO() {
         return maxO(Comparator.naturalComparator().uncheckedCast());
     }
 
     @Override
     public Option<E> maxO(Function2I<? super E, ? super E> comparator) {
-        if (!iterator().hasNext()) {
-            return Option.none();
-        } else {
-            return Option.some(max(comparator));
-        }
+        return Option.when(iterator().hasNext(), () -> max(comparator));
     }
 
+    @Override
+    public Option<E> maxByO(Function<? super E, ?> f) {
+        return Option.when(iterator().hasNext(), () -> maxBy(f));
+    }
 
     @Override
     public String mkString(String sep) {
