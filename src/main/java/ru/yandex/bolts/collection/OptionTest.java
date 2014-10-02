@@ -184,6 +184,12 @@ public class OptionTest extends TestCase {
         Option.none().hashCode();
     }
 
+    public void testFlattenO() {
+        assertEquals(Option.some(42), Option.some(Option.some(42)).<Integer>flattenO());
+        assertEquals(Option.none(), Option.some(Option.none()).flattenO());
+        assertEquals(Option.none(), Option.none().flattenO());
+    }
+
     public void tetCast() {
         Option<Number> expected = Option.some(42);
 

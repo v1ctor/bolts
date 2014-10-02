@@ -157,6 +157,10 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         return filter(Function1B.notNullF());
     }
 
+    public <F> Option<F> flattenO() {
+        return isEmpty() ? cast() : this.<Option<F>>cast().get();
+    }
+
     /**
      * {@inheritDoc}
      */
