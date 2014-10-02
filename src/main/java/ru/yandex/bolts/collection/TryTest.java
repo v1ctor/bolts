@@ -46,7 +46,7 @@ public class TryTest {
         Assert.assertEquals("value", Try.success("value").getOrFail());
 
         RuntimeException exception = new RuntimeException("fail");
-        Assert.assertEquals(exception, Try.cons(() -> Try.failure(exception).getOrFail()).failed().get().getCause());
+        Assert.assertEquals(exception, Try.cons(() -> Try.failure(exception).getOrFail()).failed().get());
     }
 
     @Test
