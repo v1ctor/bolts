@@ -1,14 +1,10 @@
 package ru.yandex.bolts.collection.impl;
 
-import static ru.yandex.bolts.collection.Cf.list;
-import static ru.yandex.bolts.collection.Cf.set;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import ru.yandex.bolts.collection.Cf;
@@ -18,13 +14,14 @@ import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.impl.test.Generator;
-import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0V;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1BTest;
-import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.Function2Test;
 import ru.yandex.bolts.function.FunctionTest;
+
+import static ru.yandex.bolts.collection.Cf.list;
+import static ru.yandex.bolts.collection.Cf.set;
 
 /**
  * @author Stepan Koltsov
@@ -78,6 +75,22 @@ public class AbstractListFTest extends TestCase {
 
     public void testRdrop() {
         ListF<Integer> list = list(1, 2, 3, 4, 5);
+        assertSame(list, list.rdrop(0));
+        assertEquals(list(1, 2, 3), list.rdrop(2));
+        assertEquals(list(), list.rdrop(5));
+        assertEquals(list(), list.rdrop(6));
+    }
+
+    public void testRtakeMutable() {
+        ListF<Integer> list = Cf.arrayList(1, 2, 3, 4, 5);
+        assertEquals(list(), list.rtake(0));
+        assertEquals(list(4, 5), list.rtake(2));
+        assertSame(list, list.rtake(5));
+        assertSame(list, list.rtake(6));
+    }
+
+    public void testRdropMutable() {
+        ListF<Integer> list = Cf.arrayList(1, 2, 3, 4, 5);
         assertSame(list, list.rdrop(0));
         assertEquals(list(1, 2, 3), list.rdrop(2));
         assertEquals(list(), list.rdrop(5));
