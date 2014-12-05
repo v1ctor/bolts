@@ -24,7 +24,7 @@ public interface Function1B<A> {
     }
 
     static <A> Function1B<A> asFunction1B(final Function<A, Boolean> f) {
-        return a -> f.apply(a);
+        return f::apply;
     }
 
     @SuppressWarnings("unchecked")
@@ -103,7 +103,7 @@ public interface Function1B<A> {
     }
 
     static <B> Function1B<B> anyOfF(final Collection<? extends Function1B<B>> functions) {
-        if (functions.size() == 0) return falseF();
+        if (functions.size() == 0) return b -> false;
         else if (functions.size() == 1) return functions.iterator().next();
         else return b -> {
             for (Function1B<? super B> f : functions) {
@@ -119,12 +119,12 @@ public interface Function1B<A> {
     }
 
     static <B> Function1B<B> instanceOfF(final Class<?> cl) {
-        return b -> cl.isInstance(b);
+        return cl::isInstance;
     }
 
     /** Wrap */
     static <B> Function1B<B> wrap(final Function<B, Boolean> mapper) {
-        return b -> mapper.apply(b);
+        return mapper::apply;
     }
 
     default Function1B<A> memoize() {
@@ -132,7 +132,7 @@ public interface Function1B<A> {
     }
 
     static <B> Function1B<B> constF(boolean value) {
-        return value ? Function1B.trueF() : Function1B.falseF();
+        return b -> value;
     }
 
     static <A> Function1B<A> wrap(final Method method) {

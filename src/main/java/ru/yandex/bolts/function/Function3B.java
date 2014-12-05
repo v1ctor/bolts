@@ -25,7 +25,7 @@ public interface Function3B<A, B, C> {
 
 
     static <A, B, C> Function2<Function3B<A, B, C>, A, Function2B<B, C>> bind1F2() {
-        return (f, a) -> f.bind1(a);
+        return Function3B::bind1;
     }
 
     default Function<A, Function2B<B, C>> bind1F() {
@@ -33,7 +33,7 @@ public interface Function3B<A, B, C> {
     }
 
     static <A, B, C> Function2<Function3B<A, B, C>, B, Function2B<A, C>> bind2F2() {
-        return (f, b) -> f.bind2(b);
+        return Function3B::bind2;
     }
 
     default Function<B, Function2B<A, C>> bind2F() {
@@ -41,7 +41,7 @@ public interface Function3B<A, B, C> {
     }
 
     static <A, B, C> Function2<Function3B<A, B, C>, C, Function2B<A, B>> bind3F2() {
-        return (f, c) -> f.bind3(c);
+        return Function3B::bind3;
     }
 
     default Function<C, Function2B<A, B>> bind3F() {
@@ -57,7 +57,7 @@ public interface Function3B<A, B, C> {
     }
 
     default Function3<A, B, C, Boolean> asFunction3() {
-        return (a, b, c) -> apply(a, b, c);
+        return this::apply;
     }
 
     @SuppressWarnings("unchecked")

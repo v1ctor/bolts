@@ -190,7 +190,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     public Tuple2List<B, A> invert() {
-        return tuple2List(map(Tuple2.swapF()));
+        return tuple2List(map(Tuple2::swap));
     }
 
     /**

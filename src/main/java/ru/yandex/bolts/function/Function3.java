@@ -25,7 +25,7 @@ public interface Function3<A, B, C, R> {
 
 
     static <A, B, C, R> Function2<Function3<A, B, C, R>, A, Function2<B, C, R>> bind1F2() {
-        return (f, a) -> f.bind1(a);
+        return Function3::bind1;
     }
 
     default Function<A, Function2<B, C, R>> bind1F() {
@@ -33,7 +33,7 @@ public interface Function3<A, B, C, R> {
     }
 
     static <A, B, C, R> Function2<Function3<A, B, C, R>, B, Function2<A, C, R>> bind2F2() {
-        return (f, b) -> f.bind2(b);
+        return Function3::bind2;
     }
 
     default Function<B, Function2<A, C, R>> bind2F() {
@@ -41,7 +41,7 @@ public interface Function3<A, B, C, R> {
     }
 
     static <A, B, C, R> Function2<Function3<A, B, C, R>, C, Function2<A, B, R>> bind3F2() {
-        return (f, c) -> f.bind3(c);
+        return Function3::bind3;
     }
 
     default Function<C, Function2<A, B, R>> bind3F() {

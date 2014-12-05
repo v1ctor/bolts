@@ -21,7 +21,7 @@ public interface Function2V<A, B> {
 
 
     static <A, B> Function2<Function2V<A, B>, A, Function1V<B>> bind1F2() {
-        return (f, a) -> f.bind1(a);
+        return Function2V::bind1;
     }
 
     default Function<A, Function1V<B>> bind1F() {
@@ -29,7 +29,7 @@ public interface Function2V<A, B> {
     }
 
     static <A, B> Function2<Function2V<A, B>, B, Function1V<A>> bind2F2() {
-        return (f, b) -> f.bind2(b);
+        return Function2V::bind2;
     }
 
     default Function<B, Function1V<A>> bind2F() {

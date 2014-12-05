@@ -13,7 +13,7 @@ public interface Function0V extends Runnable {
     }
 
     static Function1V<Function0V> applyF() {
-        return a -> a.apply();
+        return Function0V::apply;
     }
 
     static Function0V nop() {
@@ -48,7 +48,7 @@ public interface Function0V extends Runnable {
     }
 
     static Function0V throwC(Throwable th) {
-        return throwC(Function0.constF(th));
+        return () -> throwException(th);
     }
 
     static Function0V wrap(final Runnable runnable) {

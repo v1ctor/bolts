@@ -26,10 +26,6 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
 
     private IteratorF<E> self() { return this; }
 
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
     @Override
     public ListF<E> toList() {
         return toListImpl(-1);
@@ -287,7 +283,7 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
     }
 
     @Override
-    public IteratorF<ListF<E>> paginate(final int pageSize) {
+    public IteratorF<ListF<E>> paginate(int pageSize) {
         if (pageSize <= 0) throw new IllegalArgumentException();
         return new AbstractIteratorF<ListF<E>>() {
             @Override

@@ -23,7 +23,7 @@ public interface Function1V<A> extends java.util.function.Consumer<A> {
     }
 
     static <A> Function2<Function1V<A>, A, Function0V> bindF2() {
-        return (f, a) -> f.bind(a);
+        return Function1V::bind;
     }
 
     default Function<A, Function0V> bindF() {

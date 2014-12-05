@@ -79,7 +79,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      * <code>this</code> if this is some, or given option otherwise.
      */
     public final Option<T> orElse(Option<T> elseOption) {
-        return orElse(Function0.constF(elseOption));
+        return orElse(() -> elseOption);
     }
 
     /**
@@ -92,7 +92,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /** Throw specified exception if {@link #isEmpty()}. */
     public final <E extends Throwable> T getOrThrow(E e) throws E {
-        return getOrThrow(Function0.constF(e));
+        return getOrThrow((Function0<E>) () -> e);
     }
 
     /** Throw specified exception if {@link #isEmpty()}. */
@@ -157,7 +157,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     @Override
     public final Option<T> filterNotNull() {
-        return filter(Function1B.notNullF());
+        return filter(o -> o != null);
     }
 
     /**
@@ -165,7 +165,7 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      */
     @Override
     public <F extends T> ListF<F> filterByType(Class<F> type) {
-        return filter(Function1B.instanceOfF(type)).uncheckedCast();
+        return filter(type::isInstance).uncheckedCast();
     }
 
     public final SetF<T> toSet() {

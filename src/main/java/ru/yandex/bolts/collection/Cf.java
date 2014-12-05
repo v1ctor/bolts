@@ -274,7 +274,7 @@ public class Cf {
      * Create mutable identity hash set.
      */
     public static <E> SetF<E> identityHashSet() {
-        return new SetFromMap<>(new IdentityHashMap<E, Boolean>());
+        return new SetFromMap<>(new IdentityHashMap<>());
     }
 
     /**
@@ -431,7 +431,7 @@ public class Cf {
      * @see HashMap
      */
     public static <K, V> MapF<K, V> hashMap() {
-        return x(new HashMap<K, V>());
+        return x(new HashMap<>());
     }
 
     public static <K, V> Function0<MapF<K, V>> newHashMapF() {
@@ -445,7 +445,7 @@ public class Cf {
      */
     @SuppressWarnings("serial")
     public static <K, V> MapF<K, V> identityHashMap() {
-        return new DefaultMapF<K, V>(new IdentityHashMap<K, V>()) {
+        return new DefaultMapF<K, V>(new IdentityHashMap<>()) {
             protected <A, B> MapF<A, B> newMutableMap() {
                 return identityHashMap();
             }
@@ -479,7 +479,7 @@ public class Cf {
      */
     @SuppressWarnings("serial")
     public static <K, V> MapF<K, V> concurrentHashMap() {
-        return new DefaultMapF<K, V>(new ConcurrentHashMap<K, V>()) {
+        return new DefaultMapF<K, V>(new ConcurrentHashMap<>()) {
             protected <A, B> MapF<A, B> newMutableMap() {
                 return concurrentHashMap();
             }
