@@ -6,6 +6,7 @@ import java.util.OptionalInt;
 import java.util.OptionalLong;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 import ru.yandex.bolts.collection.impl.test.SerializationUtils;
 import ru.yandex.bolts.function.Function;
@@ -193,5 +194,16 @@ public class OptionTest extends TestCase {
     public void testSerializable() throws Exception {
         SerializationUtils.assertSerializedDeserializedToEqual(Option.some("aa"));
         SerializationUtils.assertSerializedDeserializedToSame(Option.none());
+    }
+
+    public void testToOptional() {
+        Assert.assertEquals(Optional.empty(), Option.none().toOptional());
+        Assert.assertEquals(Optional.of("aaa"), Option.some("aaa").toOptional());
+    }
+
+    public void testMapToOptional() {
+        Assert.assertEquals(Optional.of("aaa"), Option.some("aa").mapToOptional(s -> s + "a"));
+        Assert.assertEquals(Optional.<String>empty(), Option.<String>none().mapToOptional(s -> s + "a"));
+        Assert.assertEquals(OptionalInt.of(100), Option.some(77).mapToOptionalInt(i -> i + 23));
     }
 } //~

@@ -7,6 +7,9 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import ru.yandex.bolts.collection.impl.AbstractListF;
 import ru.yandex.bolts.function.Function;
@@ -179,6 +182,26 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
     @Override
     public <F> Option<F> uncheckedCast() {
         return (Option<F>) this;
+    }
+
+    public final Optional<T> toOptional() {
+        return map(Optional::of).getOrElse(Optional::empty);
+    }
+
+    public final <U> Optional<U> mapToOptional(Function<? super T, U> f) {
+        return map(f).toOptional();
+    }
+
+    public final OptionalInt mapToOptionalInt(ToIntFunction<? super T> f) {
+        return map(x -> OptionalInt.of(f.applyAsInt(x))).getOrElse(OptionalInt.empty());
+    }
+
+    public final OptionalLong mapToOptionalLong(ToLongFunction<? super T> f) {
+        return map(x -> OptionalLong.of(f.applyAsLong(x))).getOrElse(OptionalLong.empty());
+    }
+
+    public final OptionalDouble mapToOptionalDouble(ToDoubleFunction<? super T> f) {
+        return map(x -> OptionalDouble.of(f.applyAsDouble(x))).getOrElse(OptionalDouble.empty());
     }
 
     /**
