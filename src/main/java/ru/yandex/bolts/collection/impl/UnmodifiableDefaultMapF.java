@@ -45,7 +45,17 @@ public class UnmodifiableDefaultMapF<K, V> extends DefaultMapF<K, V> implements 
     }
 
     @Override
+    public V remove(Object key) {
+        throw new UnsupportedOperationException("immutable");
+    }
+
+    @Override
     public Option<V> removeO(K key) {
+        throw new UnsupportedOperationException("immutable");
+    }
+
+    @Override
+    public void clear() {
         throw new UnsupportedOperationException("immutable");
     }
 

@@ -54,9 +54,9 @@ public class OptionTest extends TestCase {
     }
 
     public void testOrElse() {
-        Option<Integer> s1 = Option.some(1);
+        Option<Number> s1 = Option.some(1);
         Option<Integer> s2 = Option.some(2);
-        Option<Integer> n = Option.none();
+        Option<Number> n = Option.none();
         assertSame(s1, s1.orElse(s2));
         assertSame(s1, s1.orElse(n));
         assertSame(s1, n.orElse(s1));
@@ -183,6 +183,19 @@ public class OptionTest extends TestCase {
     public void testHashCode() {
         Option.some(1).hashCode();
         Option.none().hashCode();
+    }
+
+    public void testFlattenO() {
+        assertEquals(Option.some(42), Option.some(Option.some(42)).<Integer>flattenO());
+        assertEquals(Option.none(), Option.some(Option.none()).flattenO());
+        assertEquals(Option.none(), Option.none().flattenO());
+    }
+
+    public void tetCast() {
+        Option<Number> expected = Option.some(42);
+
+        assertEquals(expected, Option.some(42).cast(Number.class));
+        assertEquals(expected, Option.some(42).<Number>cast());
     }
 
     private Function1B<Option<String>> throwPredicate() {

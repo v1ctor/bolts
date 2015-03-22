@@ -3,6 +3,7 @@ package ru.yandex.bolts.collection.impl;
 import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.Option;
+import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
@@ -51,9 +52,13 @@ public interface TraversableF<E> {
      */
     E min(Function2I<? super E, ? super E> comparator);
 
+    E minBy(Function<? super E, ?> f);
+
     Option<E> minO();
 
     Option<E> minO(Function2I<? super E, ? super E> comparator);
+
+    Option<E> minByO(Function<? super E, ?> f);
 
     /**
      * Max element using {@link Comparator#naturalComparator()}.
@@ -64,9 +69,13 @@ public interface TraversableF<E> {
      */
     E max(Function2I<? super E, ? super E> comparator);
 
+    E maxBy(Function<? super E, ?> f);
+
     Option<E> maxO();
 
     Option<E> maxO(Function2I<? super E, ? super E> comparator);
+
+    Option<E> maxByO(Function<? super E, ?> f);
 
     /** Make string by joining elements with given separator */
     String mkString(String sep);

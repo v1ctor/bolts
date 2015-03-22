@@ -142,13 +142,13 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
     }
 
     public ListF<E> take(int count) {
-        if (count == 0) return emptyList();
+        if (count <= 0) return emptyList();
         else if (count < size()) return subList(0, count);
         else return this;
     }
 
     public ListF<E> drop(int count) {
-        if (count == 0) return this;
+        if (count <= 0) return this;
         else if (count < size()) return subList(count, size());
         else return emptyList();
     }

@@ -12,7 +12,6 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.impl.test.Generator;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1BTest;
-import ru.yandex.bolts.function.Function1V;
 
 /**
  * @author Stepan Koltsov
@@ -159,6 +158,26 @@ public class AbstractIteratorFTest extends TestCase {
         ListF<Integer> l = Cf.list();
         IteratorF<ListF<Integer>> i = l.iterator().paginate(3);
         assertFalse(i.hasNext());
+    }
+
+    public void testTakeSorted() {
+        IteratorF<Integer> it = Cf.x(new Iterator<Integer>() {
+
+            private final int count = 10_000_000;
+            private int ptr = count - 1;
+
+            @Override
+            public boolean hasNext() {
+                return ptr >= 0;
+            }
+
+            @Override
+            public Integer next() {
+                return ptr--;
+            }
+
+        });
+        assertEquals(Cf.range(0, 10), it.takeSorted(10));
     }
 
 } //~

@@ -11,6 +11,7 @@ import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
+import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
  * Implementation of {@link IteratorF} algorithms.
@@ -247,6 +248,46 @@ public abstract class AbstractIteratorF<E> extends AbstractTraversableF<E> imple
         };
 
         return new TakeIterator();
+    }
+
+    @Override
+    public ListF<E> takeSorted(int count) {
+        return takeSorted(Comparator.naturalComparator().uncheckedCastC(), count);
+    }
+
+    @Override
+    public ListF<E> takeSortedDesc(int count) {
+        return takeSorted(Comparator.naturalComparator().invert().uncheckedCastC(), count);
+    }
+
+    /**
+     * It's very powerful method, you can stream big data but method will use O(count) memory
+     * and works with O(min(count, size_of_data) * log(min(count, size_of_data)) + size_of_data) time complexity
+     * @see ru.yandex.bolts.collection.impl.FixedSizeTop
+     */
+    @Override
+    public ListF<E> takeSorted(java.util.Comparator<? super E> comparator, int count) {
+        if (count == 0) {
+            return Cf.list();
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("K must be greater than 0");
+        }
+        FixedSizeTop<E> top = FixedSizeTop.cons(count, (java.util.Comparator<E>) comparator);
+        while (hasNext()) {
+            top.add(next());
+        }
+        return top.getTopElements();
+    }
+
+    @Override
+    public ListF<E> takeSortedBy(Function<? super E, ?> f, int count) {
+        return takeSorted(f.andThenNaturalComparator().nullLowC(), count);
+    }
+
+    @Override
+    public ListF<E> takeSortedByDesc(Function<? super E, ?> f, int count) {
+        return takeSorted(f.andThenNaturalComparator().nullLowC().invert(), count);
     }
 
     public IteratorF<E> dropWhile(Function1B<? super E> p) {

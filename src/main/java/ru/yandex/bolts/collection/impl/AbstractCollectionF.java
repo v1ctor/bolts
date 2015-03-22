@@ -23,6 +23,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
+import ru.yandex.bolts.function.forhuman.Comparator;
 
 /**
  * Implementation of {@link CollectionF} algorithms.
@@ -422,6 +423,51 @@ public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> imp
 
     public ListF<E> sortedByDesc(Function<? super E, ?> f) {
         return sorted(f.andThenNaturalComparator().nullLowC().invert());
+    }
+
+    @Override
+    public ListF<E> takeSorted(int k) {
+        return takeSorted(Comparator.naturalComparator().uncheckedCastC(), k);
+    }
+
+    @Override
+    public ListF<E> takeSortedDesc(int k) {
+        return takeSorted(Comparator.naturalComparator().invert().uncheckedCastC(), k);
+    }
+
+    @Override
+    public ListF<E> takeSorted(java.util.Comparator<? super E> comparator, int k) {
+        return iterator().takeSorted(comparator, Math.min(k, size()));
+    }
+
+    @Override
+    public ListF<E> takeSortedBy(Function<? super E, ?> f, int k) {
+        return takeSorted(f.andThenNaturalComparator().nullLowC(), k);
+    }
+
+    @Override
+    public ListF<E> takeSortedByDesc(Function<? super E, ?> f, int k) {
+        return takeSorted(f.andThenNaturalComparator().nullLowC().invert(), k);
+    }
+
+    @Override
+    public E getSorted(int n) {
+        return getSorted(Comparator.naturalComparator().uncheckedCastC(), n);
+    }
+
+    @Override
+    public E getSorted(java.util.Comparator<? super E> comparator, int n) {
+        if (n < 0 || n >= size()) {
+            throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", n, size()));
+        }
+        ListF<E> list = Cf.arrayList(this);
+        NthElement.inplaceNth(list, (java.util.Comparator<E>) comparator, n);
+        return list.get(n);
+    }
+
+    @Override
+    public E getSorted(Function<? super E, ?> f, int n) {
+        return getSorted(f.andThenNaturalComparator().nullLowC(), n);
     }
 
     @Override
