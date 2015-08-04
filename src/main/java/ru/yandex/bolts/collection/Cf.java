@@ -997,6 +997,8 @@ public class Cf {
     }
 
     /** {@link #x(Map)} as function
+     * @param <K> key
+     * @param <V> value
      *
      * @return function wraps map
      * */
@@ -1071,6 +1073,8 @@ public class Cf {
      * @param <F> key
      * @param <T> value
      *
+     * @param f map function
+     *
      * @return function map
      * */
     public static <F, T> Function<Collection<F>, ListF<T>> mapF(Function<? super F, T> f) {
@@ -1090,6 +1094,7 @@ public class Cf {
     /** {@link CollectionF#sorted()} as function, convenience form
      *
      * @param <E> element
+     * @param comparator comparator
      *
      * @return function sort
      * */
