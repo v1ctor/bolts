@@ -14,9 +14,7 @@ import ru.yandex.bolts.function.Function2B;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
-/**
- * @author Stepan Koltsov
- */
+
 public abstract class AnyCollectionType {
 
     public <F, T> Function2<Collection<F>, Function<? super F, T>, ListF<T>> mapF() {
@@ -67,17 +65,17 @@ public abstract class AnyCollectionType {
         return c -> !c.isEmpty();
     }
 
-    /** {@link CollectionF#single()} as function */
+
     public <A> Function<Collection<A>, A> singleF() {
         return c -> Cf.x(c).single();
     }
 
-    /** {@link CollectionF#singleO()} as function */
+
     public <A> Function<Collection<A>, Option<A>> singleOF() {
         return c -> Cf.x(c).singleO();
     }
 
-    /** {@link CollectionF#sorted()} as function */
+
     public <E> Function2<Collection<E>, Comparator<? super E>, ListF<E>> sortedF() {
         return (input, comparator) -> Cf.x(input).sorted(comparator);
     }
@@ -90,7 +88,7 @@ public abstract class AnyCollectionType {
         return c -> Cf.x(c).toList();
     }
 
-    /** {@link CollectionF#sorted()} as function, convenience form */
+
     public <E> Function<Collection<E>, ListF<E>> sortedF(
             Comparator<? super E> comparator)
     {

@@ -4,9 +4,7 @@ import junit.framework.TestCase;
 
 import ru.yandex.bolts.function.Function2;
 
-/**
- * @author Stepan Koltsov
- */
+
 @SuppressWarnings("unused")
 public class Tuple2Test extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Tuple2Test.class);

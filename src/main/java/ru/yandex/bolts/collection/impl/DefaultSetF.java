@@ -10,11 +10,7 @@ import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
 
-/**
- * Implementation of SetF with delegation
- *
- * @author Stepan Koltsov
- */
+
 public class DefaultSetF<E> extends AbstractSetF<E> implements Serializable {
     private static final long serialVersionUID = 1043989682388913605L;
 

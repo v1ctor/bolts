@@ -9,9 +9,7 @@ import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Unmodifiable;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class EmptyMap<K, V> extends AbstractMapF<K, V> implements Unmodifiable, Serializable {
     private static final long serialVersionUID = -3018389216178387666L;
 

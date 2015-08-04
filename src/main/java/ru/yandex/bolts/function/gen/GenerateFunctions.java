@@ -8,9 +8,7 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.function.meta.FunctionType;
 import ru.yandex.bolts.function.meta.FunctionType.ReturnType;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class GenerateFunctions {
     private static String classNameSimple(int paramCount, ReturnType returnType) {
         return new FunctionType(paramCount, returnType).simpleClassName();
@@ -100,8 +98,7 @@ public class GenerateFunctions {
             w.write("import ru.yandex.bolts.collection.Tuple" + paramCount + ";\n");
             w.write("\n");
 
-            w.write("/**\n");
-            w.write(" */\n");
+            w.write("\n");
             w.write("@FunctionalInterface\n");
             w.write("public interface " + classNameFull() + " {\n");
             w.write("\n");

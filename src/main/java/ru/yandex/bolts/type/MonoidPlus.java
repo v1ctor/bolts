@@ -5,9 +5,7 @@ import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function3;
 
-/**
- * @author Stepan Koltsov
- */
+
 public abstract class MonoidPlus<T> extends AnyObjectType<T> {
     public abstract T zero();
 

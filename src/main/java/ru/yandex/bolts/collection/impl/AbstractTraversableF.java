@@ -10,12 +10,7 @@ import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
-/**
- * Base class for {@link AbstractIteratorF} and {@link AbstractCollectionF}
- * @author Stepan Koltsov
- *
- * @param <E> element type
- */
+
 public abstract class AbstractTraversableF<E> implements TraversableF<E> {
 
     protected abstract IteratorF<E> iterator();

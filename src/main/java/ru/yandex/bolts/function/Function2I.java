@@ -2,9 +2,7 @@ package ru.yandex.bolts.function;
 
 import ru.yandex.bolts.collection.Tuple2;
 
-/**
- * @author Stepan Koltsov
- */
+
 @FunctionalInterface
 public interface Function2I<A, B> {
 
@@ -93,7 +91,7 @@ public interface Function2I<A, B> {
         throw new IllegalArgumentException("unknown operator: " + op);
     }
 
-    /** Bind first argument */
+
     default Function1I<B> bind1(final A a) {
         return b -> apply(a, b);
     }
@@ -118,7 +116,7 @@ public interface Function2I<A, B> {
         return (a, b) -> f.apply(Tuple2.tuple(a, b));
     }
 
-    /** Invert current comparator */
+
     default Function2I<B, A> invert() {
         return (b, a) -> apply(a, b);
     }

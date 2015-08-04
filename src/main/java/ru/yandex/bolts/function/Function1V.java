@@ -1,8 +1,6 @@
 package ru.yandex.bolts.function;
 
-/**
- * @author Stepan Koltsov
- */
+
 @FunctionalInterface
 public interface Function1V<A> extends java.util.function.Consumer<A> {
 
@@ -13,7 +11,7 @@ public interface Function1V<A> extends java.util.function.Consumer<A> {
         apply(a);
     }
 
-    /** (f compose g)(x) = f(g(x)) */
+
     default <B> Function1V<B> compose(final Function<B, A> g) {
         return g.andThen(this);
     }

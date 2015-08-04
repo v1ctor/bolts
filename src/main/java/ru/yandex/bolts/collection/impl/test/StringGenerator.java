@@ -1,9 +1,7 @@
 package ru.yandex.bolts.collection.impl.test;
 
 
-/**
- * @author Stepan Koltsov
- */
+
 public class StringGenerator extends Generator<String> {
 
     private final Generator<Integer> lengths;

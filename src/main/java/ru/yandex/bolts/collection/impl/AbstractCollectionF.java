@@ -25,11 +25,7 @@ import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
-/**
- * Implementation of {@link CollectionF} algorithms.
- *
- * @author Stepan Koltsov
- */
+
 public abstract class AbstractCollectionF<E> extends AbstractTraversableF<E> implements CollectionF<E> {
 
     @Override

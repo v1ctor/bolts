@@ -11,11 +11,7 @@ import ru.yandex.bolts.function.Function0;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 
-/**
- * @author Stepan Koltsov
- * @see ListType
- * @see Cf#List
- */
+
 public abstract class AnyListType extends AnyCollectionType {
 
     public abstract <A> ListF<A> cons();

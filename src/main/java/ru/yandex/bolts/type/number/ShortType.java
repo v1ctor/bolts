@@ -2,10 +2,7 @@ package ru.yandex.bolts.type.number;
 
 import ru.yandex.bolts.collection.Cf;
 
-/**
- * @author Stepan Koltsov
- * @see Cf#Short
- */
+
 public class ShortType extends IntegralType<Short> {
 
     @Override

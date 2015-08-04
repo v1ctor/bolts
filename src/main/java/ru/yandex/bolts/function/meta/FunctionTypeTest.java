@@ -7,9 +7,7 @@ import org.junit.Test;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.meta.FunctionType.ReturnType;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class FunctionTypeTest {
     @Test
     public void testParse() {

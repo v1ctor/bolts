@@ -5,9 +5,7 @@ import junit.framework.TestCase;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
-/**
- * @author Stepan Koltsov
- */
+
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public class FunctionTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(FunctionTest.class);

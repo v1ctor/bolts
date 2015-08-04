@@ -9,9 +9,7 @@ import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.Unmodifiable;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class UnmodifiableDefaultMapF<K, V> extends DefaultMapF<K, V> implements Unmodifiable {
     private static final long serialVersionUID = -1672128761500262911L;
 

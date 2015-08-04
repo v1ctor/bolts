@@ -13,11 +13,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-/**
- * Examples of {@link ListF}.
- *
- * @author Stepan Koltsov
- */
+
 public class ListFExample {
 
     @Test

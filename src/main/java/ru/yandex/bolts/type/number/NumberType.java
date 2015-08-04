@@ -7,9 +7,7 @@ import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.forhuman.Comparator;
 import ru.yandex.bolts.type.MonoidPlus;
 
-/**
- * @author Stepan Koltsov
- */
+
 public abstract class NumberType<T extends Number> extends MonoidPlus<T> {
     public abstract T parse(String string) throws NumberFormatException;
     public abstract T minus(T a, T b);

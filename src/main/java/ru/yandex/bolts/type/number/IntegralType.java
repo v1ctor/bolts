@@ -3,9 +3,7 @@ package ru.yandex.bolts.type.number;
 import ru.yandex.bolts.collection.Option;
 import ru.yandex.bolts.function.Function;
 
-/**
- * @author Stepan Koltsov
- */
+
 public abstract class IntegralType<T extends Number> extends NumberType<T> {
     public abstract T parse(String string, int radix) throws NumberFormatException;
 

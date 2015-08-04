@@ -4,8 +4,7 @@ package ru.yandex.bolts.function;
 
 import ru.yandex.bolts.collection.Tuple3;
 
-/**
- */
+
 @FunctionalInterface
 public interface Function3<A, B, C, R> {
 

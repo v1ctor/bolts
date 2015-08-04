@@ -17,9 +17,7 @@ import ru.yandex.bolts.function.forhuman.Comparator;
 import static ru.yandex.bolts.collection.Cf.list;
 import static ru.yandex.bolts.collection.Cf.set;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class AbstractCollectionFTest extends TestCase {
 
     public void testForEach() {

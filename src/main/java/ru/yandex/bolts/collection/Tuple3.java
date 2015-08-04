@@ -5,13 +5,7 @@ import java.io.Serializable;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function3;
 
-/**
- * Triple.
- *
- * @author Stepan Koltsov
- *
- * @see Tuple2
- */
+
 public class Tuple3<T1, T2, T3> implements Serializable {
     private static final long serialVersionUID = 2341548432691171988L;
 
@@ -25,17 +19,17 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         this._3 = _3;
     }
 
-    /** First */
+
     public T1 get1() {
         return _1;
     }
 
-    /** Second */
+
     public T2 get2() {
         return _2;
     }
 
-    /** Third */
+
     public T3 get3() {
         return _3;
     }
@@ -93,17 +87,17 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         return "(" + _1 + ", " + _2 + ", " + _3 + ")";
     }
 
-    /** <code>_1</code> as function */
+
     public static <A, B, C> Function<Tuple3<A, B, C>, A> get1F() {
         return Tuple3::get1;
     }
 
-    /** <code>_2</code> as function */
+
     public static <A, B, C> Function<Tuple3<A, B, C>, B> get2F() {
         return Tuple3::get2;
     }
 
-    /** <code>_3</code> as function */
+
     public static <A, B, C> Function<Tuple3<A, B, C>, C> get3F() {
         return Tuple3::get3;
     }
@@ -138,12 +132,12 @@ public class Tuple3<T1, T2, T3> implements Serializable {
         return Tuple3::get23;
     }
 
-    /** Construct */
+
     public static <A, B, C> Tuple3<A, B, C> tuple(A a, B b, C c) {
         return new Tuple3<>(a, b, c);
     }
 
-    /** Constructor function */
+
     public static <A, B, C> Function3<A, B, C, Tuple3<A, B, C>> consF() {
         return Tuple3::tuple;
     }

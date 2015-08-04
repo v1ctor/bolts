@@ -6,9 +6,7 @@ import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.Unmodifiable;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class UnmodifiableDefaultCollectionF<E> extends DefaultCollectionF<E> implements Unmodifiable {
     private static final long serialVersionUID = -5425184381772318904L;
 

@@ -5,9 +5,7 @@ import org.junit.Test;
 
 import ru.yandex.bolts.collection.Cf;
 
-/**
- * @author ilyak
- */
+
 public class StringTypeTest {
 
     @Test

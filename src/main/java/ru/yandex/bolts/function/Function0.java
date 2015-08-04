@@ -1,8 +1,6 @@
 package ru.yandex.bolts.function;
 
-/**
- * @author Stepan Koltsov
- */
+
 @FunctionalInterface
 public interface Function0<R> extends java.util.concurrent.Callable<R> {
     R apply();
@@ -43,18 +41,12 @@ public interface Function0<R> extends java.util.concurrent.Callable<R> {
         return this::apply;
     }
 
-    /** Function0 that always return same value
-     *
-     * @param <T> element
-     * @param t element
-     *
-     * @return function
-     * */
+
     static <T> Function0<T> constF(final T t) {
         return () -> t;
     }
 
-    /** Wrap */
+
     static <T> Function0<T> wrap(final java.util.concurrent.Callable<T> callable) {
         if (callable instanceof Function0<?>) return (Function0<T>) callable;
         else return () -> {
@@ -67,13 +59,7 @@ public interface Function0<R> extends java.util.concurrent.Callable<R> {
         };
     }
 
-    /** Wrap
-     *
-     * @param <T> element
-     * @param future future
-     *
-     * @return function
-     * */
+
     @SuppressWarnings("unchecked")
     static <T> Function0<T> wrap(final java.util.concurrent.Future<T> future) {
         if (future instanceof Function0) return (ru.yandex.bolts.function.Function0<T>) future;

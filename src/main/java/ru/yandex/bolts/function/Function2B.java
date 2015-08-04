@@ -8,9 +8,7 @@ import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
 
-/**
- * @author Stepan Koltsov
- */
+
 @FunctionalInterface
 public interface Function2B<A, B> {
     boolean apply(A a, B b);
@@ -82,16 +80,12 @@ public interface Function2B<A, B> {
         return (a, c) -> apply(a, f.apply(c));
     }
 
-    /**
-     * Delegate to {@link #equals(Object, Object)}.
-     */
+
     static <A> Function2B<A, A> equalsF() {
         return Function2B::equals;
     }
 
-    /**
-     * Check whether two values are equal.
-     */
+
     static <A> boolean equals(A a, A b) {
         return Cf.Object.equals(a, b);
     }

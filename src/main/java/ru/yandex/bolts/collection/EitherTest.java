@@ -3,9 +3,7 @@ package ru.yandex.bolts.collection;
 import ru.yandex.bolts.collection.Either.Projection;
 import junit.framework.TestCase;
 
-/**
- * @author ssytnik
- */
+
 public class EitherTest extends TestCase {
 
     public void testToString() {

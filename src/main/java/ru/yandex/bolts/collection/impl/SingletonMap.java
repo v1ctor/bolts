@@ -6,9 +6,7 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Unmodifiable;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class SingletonMap<K, V> extends AbstractMapF<K, V> implements Serializable, Unmodifiable {
     private static final long serialVersionUID = 1863420184567712379L;
 

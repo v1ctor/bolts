@@ -3,9 +3,7 @@ package ru.yandex.bolts.collection;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class CollectorsF {
 
     public static <T> Collector<T, ?, ListF<T>> toList() {

@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import junit.framework.TestCase;
 
 
-/**
- * @author Stepan Koltsov
- */
+
 @SuppressWarnings({"unchecked", "rawtypes", "unused"})
 public class Function1BTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Function1BTest.class);
@@ -129,7 +127,7 @@ public class Function1BTest extends TestCase {
         p.toString();
     }
 
-    /** Integer is even */
+
     public static Function1B<Integer> evenF() {
         return i -> i % 2 == 0;
     }

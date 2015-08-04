@@ -10,15 +10,7 @@ import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.Tuple3;
 import ru.yandex.bolts.collection.Tuple4;
 
-/**
- * Examples of tuples.
- *
- * @author Stepan Koltsov
- *
- * @see Tuple2
- * @see Tuple3
- * @see Tuple4
- */
+
 public class TupleExample {
 
     @Test

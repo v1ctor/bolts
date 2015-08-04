@@ -14,9 +14,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 
-/**
- * @author Stepan Koltsov
- */
+
 public abstract class Generator<A> extends AbstractIteratorF<A> {
 
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Generator.class);

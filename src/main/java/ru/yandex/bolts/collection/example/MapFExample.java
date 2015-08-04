@@ -9,11 +9,7 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.MapF;
 import ru.yandex.bolts.function.Function1B;
 
-/**
- * Examples of {@link MapF}.
- *
- * @author Stepan Koltsov
- */
+
 public class MapFExample {
 
     @Test

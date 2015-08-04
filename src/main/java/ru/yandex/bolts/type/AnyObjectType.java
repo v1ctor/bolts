@@ -4,9 +4,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2B;
 
-/**
- * @author Stepan Koltsov
- */
+
 public abstract class AnyObjectType<T> {
 
     public Function<T, Integer> hashCodeF() {

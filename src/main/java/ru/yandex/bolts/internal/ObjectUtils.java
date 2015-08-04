@@ -1,8 +1,6 @@
 package ru.yandex.bolts.internal;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class ObjectUtils {
 
     public static boolean equals(Object a, Object b) {

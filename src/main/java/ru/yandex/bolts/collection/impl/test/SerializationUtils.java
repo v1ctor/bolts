@@ -8,9 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class SerializationUtils {
 
     public static Object serializeDeserialize(Object o) {

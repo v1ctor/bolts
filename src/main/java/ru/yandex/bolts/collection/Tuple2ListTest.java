@@ -2,10 +2,7 @@ package ru.yandex.bolts.collection;
 
 import junit.framework.TestCase;
 
-/**
- * @author Stepan Koltsov
- * @author Iliya Roubin
- */
+
 public class Tuple2ListTest extends TestCase {
 
     public void testFlatMapFromPairs() {

@@ -4,9 +4,7 @@ import java.util.Enumeration;
 
 import ru.yandex.bolts.collection.IteratorF;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class DefaultEnumerationF<E> extends AbstractIteratorF<E> {
 
     protected Enumeration<E> enumeration;

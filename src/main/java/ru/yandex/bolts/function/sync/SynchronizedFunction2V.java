@@ -2,9 +2,7 @@ package ru.yandex.bolts.function.sync;
 
 import ru.yandex.bolts.function.Function2V;
 
-/**
- * @author alexbool
- */
+
 @FunctionalInterface
 public interface SynchronizedFunction2V<A, B> extends Function2V<A, B> {
 

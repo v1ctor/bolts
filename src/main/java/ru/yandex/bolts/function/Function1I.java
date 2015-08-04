@@ -1,8 +1,6 @@
 package ru.yandex.bolts.function;
 
-/**
- * @author Stepan Koltsov
- */
+
 @FunctionalInterface
 public interface Function1I<A> extends java.lang.Comparable<A> {
     int apply(A a);
@@ -20,32 +18,32 @@ public interface Function1I<A> extends java.lang.Comparable<A> {
         return apply(o);
     }
 
-    /** Greater than */
+
     default boolean gt(A o) {
         return compareTo(o) > 0;
     }
 
-    /** Greater of equal */
+
     default boolean ge(A o) {
         return compareTo(o) >= 0;
     }
 
-    /** Equal to */
+
     default boolean eq(A o) {
         return compareTo(o) == 0;
     }
 
-    /** Not equal to */
+
     default boolean ne(A o) {
         return compareTo(o) != 0;
     }
 
-    /** Less than */
+
     default boolean lt(A o) {
         return compareTo(o) < 0;
     }
 
-    /** Less or equal */
+
     default boolean le(A o) {
         return compareTo(o) <= 0;
     }
@@ -68,32 +66,32 @@ public interface Function1I<A> extends java.lang.Comparable<A> {
         protected abstract String op();
     }
 
-    /** Greater Function1B */
+
     default Function1B<A> gtF() {
         return this::gt;
     }
 
-    /** Greater or equal Function1B */
+
     default Function1B<A> geF() {
         return this::ge;
     }
 
-    /** Equal Function1B */
+
     default Function1B<A> eqF() {
         return this::eq;
     }
 
-    /** Not equal Function1B */
+
     default Function1B<A> neF() {
         return this::ne;
     }
 
-    /** Less than Function1B */
+
     default Function1B<A> ltF() {
         return this::lt;
     }
 
-    /** Less or equal Function1B */
+
     default Function1B<A> leF() {
         return this::le;
     }

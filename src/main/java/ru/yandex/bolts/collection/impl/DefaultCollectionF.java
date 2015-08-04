@@ -7,19 +7,13 @@ import ru.yandex.bolts.collection.CollectionF;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 
-/**
- * Implementation of CollectionF with delegation
- *
- * @author Stepan Koltsov
- */
+
 public class DefaultCollectionF<E> extends AbstractCollectionF<E> implements Serializable {
     private static final long serialVersionUID = 8678268074197952366L;
 
     protected Collection<E> target;
 
-    /**
-     * Should not be used directly, use {@link Cf#x(java.util.Collection)} instead.
-     */
+
     protected DefaultCollectionF(Collection<E> target) {
         this.target = target;
     }

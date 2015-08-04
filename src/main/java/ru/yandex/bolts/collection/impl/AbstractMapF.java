@@ -19,11 +19,7 @@ import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2B;
 import ru.yandex.bolts.function.Function2V;
 
-/**
- * Implementation of {@link MapF} algorithms.
- *
- * @author Stepan Koltsov
- */
+
 public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements MapF<K, V> {
 
     @Override
@@ -208,7 +204,7 @@ public abstract class AbstractMapF<K, V> extends AbstractMap<K, V> implements Ma
         return key -> getO(key).getOrElse(fallbackF.apply(key));
     }
 
-    /** Must check for non-null arguments */
+
     public V put(K key, V value) {
         throw new UnsupportedOperationException("readonly map");
     }

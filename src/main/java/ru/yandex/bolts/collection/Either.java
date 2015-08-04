@@ -8,12 +8,7 @@ import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function1V;
 import ru.yandex.bolts.internal.ObjectUtils;
 
-/**
- * Either something or something else
- *
- * @author Stepan Koltsov
- *
- */
+
 public abstract class Either<A, B> {
     private Either() { }
 
@@ -25,50 +20,29 @@ public abstract class Either<A, B> {
         throw new NoSuchElementException("Either.Left.right");
     }
 
-    /** Left projection
-     *
-     * @return left
-     * */
+
     public LeftProjection<A, B> left() { return new LeftProjection<>(this); }
 
-    /** Right projection
-     *
-     * @return right
-     * */
+
     public RightProjection<A, B> right() { return new RightProjection<>(this); }
 
-    /** Is this object left?
-     *
-     * * @return is left
-     * */
+
     public boolean isLeft() { return this instanceof Left<?, ?>; }
 
-    /** Is this object right?
-     *
-     * @return is right
-     * */
+
     public boolean isRight() { return this instanceof Right<?, ?>; }
 
-    /** Some if this is left and none otherwise
-     *
-     * @return option left
-     * */
+
     public Option<A> leftO() {
         return isLeft() ? Option.some(getLeft()) : Option.none();
     }
 
-    /** Some if this is right and none otherwise
-     *
-     * @return option right
-     * */
+
     public Option<B> rightO() {
         return isRight() ? Option.some(getRight()) : Option.none();
     }
 
-    /** Convert left to right and vice versa
-     *
-     * @return either
-     * */
+
     public Either<B, A> swap() {
         if (isLeft()) return Either.right(getLeft());
         else return Either.left(getRight());
@@ -81,13 +55,7 @@ public abstract class Either<A, B> {
             return rightF.apply(getRight());
     }
 
-    /** This with different type parameters and no type checks
-     *
-     * @param <C> left
-     * @param <D> right
-     *
-     * @return cast either
-     * */
+
     @SuppressWarnings("unchecked")
     public <C, D> Either<C, D> uncheckedCast() {
         return (Either<C, D>) this;
@@ -157,7 +125,7 @@ public abstract class Either<A, B> {
 
     }
 
-    /** Base class for left and right projection */
+
     public abstract static class Projection<A, B, R> {
         protected final Either<A, B> either;
 
@@ -174,7 +142,7 @@ public abstract class Either<A, B> {
         public R getOrElse(R elseValue) { return getO().getOrElse(elseValue); }
         public R getOrElse(Function0<R> elseValue) { return getO().getOrElse(elseValue); }
 
-        protected abstract <C> Object /** Either<?, ?> */ map(Function<R, C> f);
+        protected abstract <C> Object  map(Function<R, C> f);
         // flatMap
         public Option<Either<A, B>> filter(Function1B<R> p) {
             if (isDefined() && p.apply(get())) return Option.some(either);
@@ -232,13 +200,7 @@ public abstract class Either<A, B> {
         return Either::right;
     }
 
-    /** Execution function and return left with value or right with {@link Throwable}
-     *
-     * @param f function
-     * @param <A> element type
-     *
-     * @return either
-     * */
+
     public static <A> Either<A, Throwable> tryCatch(Function0<A> f) {
         try {
             return Either.left(f.apply());

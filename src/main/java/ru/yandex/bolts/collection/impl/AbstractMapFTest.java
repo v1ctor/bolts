@@ -13,9 +13,7 @@ import ru.yandex.bolts.function.Function1BTest;
 import static ru.yandex.bolts.collection.Cf.list;
 import static ru.yandex.bolts.collection.Cf.set;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class AbstractMapFTest extends TestCase {
 
     private static MapF<Integer, String> map123() {

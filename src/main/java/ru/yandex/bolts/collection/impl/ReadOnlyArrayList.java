@@ -7,12 +7,7 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Unmodifiable;
 
-/**
- *
- * @author Stepan Koltsov
- *
- * @param <E>
- */
+
 public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiable {
 
     private static final long serialVersionUID = -4843929454311459758L;
@@ -21,12 +16,7 @@ public class ReadOnlyArrayList<E> extends ArrayListBase<E> implements Unmodifiab
 
     public static final ReadOnlyArrayList<?> EMPTY = new ReadOnlyArrayList<>(EMPTY_ARRAY, 0, 0);
 
-    /**
-     * Construct this by destroying ArrayListF
-     *
-     * @param arrayList
-     * @see ArrayListF#convertToReadOnly()
-     */
+
     @SuppressWarnings("unchecked")
     ReadOnlyArrayList(ArrayListF<E> arrayList) {
         array = arrayList.array;

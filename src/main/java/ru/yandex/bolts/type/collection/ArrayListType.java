@@ -5,9 +5,7 @@ import java.util.Collection;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.impl.ArrayListF;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class ArrayListType extends AnyListType {
 
     @Override

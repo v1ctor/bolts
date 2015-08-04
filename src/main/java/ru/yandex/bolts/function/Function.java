@@ -9,22 +9,13 @@ import ru.yandex.bolts.function.forhuman.Comparator;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
 
-/**
- * Function
- *
- * @see Function
- *
- * @author Stepan Koltsov
- */
+
 @FunctionalInterface
 public interface Function<A, R> {
 
     R apply(A a);
 
-    /**
-     * (f andThen g)(x) = g(f(x))
-     *
-     */
+
     default <C> Function<A, C> andThen(final Function<? super R, ? extends C> g) {
         return a -> g.apply(apply(a));
     }
@@ -37,12 +28,12 @@ public interface Function<A, R> {
         return a -> g.apply(apply(a));
     }
 
-    /** Not true function composition */
+
     default Comparator<A> andThen(final Comparator<R> comparator) {
         return (o1, o2) -> comparator.compare(apply(o1), apply(o2));
     }
 
-    /** (f andThen g)(x) = g(f(x)) */
+
     default Comparator<A> andThen(final Function2I<R, R> comparator) {
         return (a, b) -> comparator.apply(apply(a), apply(b));
     }
@@ -51,16 +42,13 @@ public interface Function<A, R> {
         return andThen(Function1B.equalsF(value));
     }
 
-    /** And then null low natural comparator */
+
     @SuppressWarnings({"unchecked"})
     default Comparator<A> andThenNaturalComparator() {
         return andThen((Comparator<R>) Comparator.naturalComparator());
     }
 
-    /**
-     * (f compose g)(x) = f(g(x))
-     *
-     */
+
     default <C> Function<C, R> compose(Function<C, A> g) {
         return g.andThen(this);
     }
@@ -87,12 +75,12 @@ public interface Function<A, R> {
         return (Function<B, S>) this;
     }
 
-    /** Ignore result of mapping */
+
     default Function1V<A> ignoreResult() {
         return this::apply;
     }
 
-    /** Map null to null */
+
     default Function<A, R> ignoreNullF() {
         return a -> {
             if (a == null) return null;
@@ -108,7 +96,7 @@ public interface Function<A, R> {
         return t -> t != null ? t.toString() : "null";
     }
 
-    /** Function that always returns the same value */
+
     static <A, B> Function<A, B> constF(final B b) {
         return a -> b;
     }

@@ -6,16 +6,12 @@ import java.util.Set;
 
 import ru.yandex.bolts.function.Function1B;
 
-/**
- * Extended set.
- *
- * @author Stepan Koltsov
- */
+
 public interface SetF<E> extends CollectionF<E>, Set<E> {
-    /** Iterate */
+
     IteratorF<E> iterator();
 
-    /** Filter */
+
     @Override
     SetF<E> filter(Function1B<? super E> p);
 
@@ -25,9 +21,7 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     @Override
     SetF<E> filterNotNull();
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     <F extends E> SetF<F> filterByType(Class<F> type);
 
@@ -36,12 +30,12 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
 
     SetF<E> minus1(E e);
 
-    /** this - set */
+
     SetF<E> minus(Set<E> set);
 
     SetF<E> minus(Collection<E> set);
 
-    /** Intersect this and set */
+
     SetF<E> intersect(Set<E> set);
 
     SetF<E> plus1(E e);
@@ -63,31 +57,31 @@ public interface SetF<E> extends CollectionF<E>, Set<E> {
     @Override
     <F> SetF<F> cast(Class<F> type);
 
-    /** @deprecated */
+
     @Override
     boolean remove(Object o);
     boolean removeTs(E e);
     boolean removeTu(Object e);
 
-    /** @deprecated */
+
     @Override
     boolean removeAll(Collection<?> c);
     boolean removeAllTs(Collection<? extends E> c);
     boolean removeAllTu(Collection<?> c);
 
-    /** @deprecated */
+
     @Override
     boolean contains(Object o);
     boolean containsTs(E e);
     boolean containsTu(Object e);
 
-    /** @deprecated */
+
     @Override
     boolean containsAll(Collection<?> coll);
     boolean containsAllTs(Collection<? extends E> coll);
     boolean containsAllTu(Collection<?> coll);
 
-    /** @deprecated */
+
     @Override
     public boolean retainAll(Collection<?> c);
     public boolean retainAllTs(Collection<? extends E> c);

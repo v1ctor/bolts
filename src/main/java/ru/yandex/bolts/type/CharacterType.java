@@ -5,9 +5,7 @@ import java.util.Locale;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class CharacterType extends AnyObjectType<Character> {
 
     public Function1B<Character> isLetterF() {

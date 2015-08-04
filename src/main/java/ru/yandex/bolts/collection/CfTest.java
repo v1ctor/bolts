@@ -6,9 +6,7 @@ import ru.yandex.bolts.function.Function;
 
 import static ru.yandex.bolts.collection.Cf.list;
 
-/**
- * @author Stepan Koltsov
- */
+
 @SuppressWarnings("unused")
 public class CfTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(CfTest.class);

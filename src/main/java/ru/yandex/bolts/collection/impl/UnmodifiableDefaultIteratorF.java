@@ -5,9 +5,7 @@ import java.util.Iterator;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.Unmodifiable;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class UnmodifiableDefaultIteratorF<E> extends DefaultIteratorF<E> implements Unmodifiable {
     protected UnmodifiableDefaultIteratorF(Iterator<E> target) {
         super(target);

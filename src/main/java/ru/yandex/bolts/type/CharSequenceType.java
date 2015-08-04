@@ -1,8 +1,6 @@
 package ru.yandex.bolts.type;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class CharSequenceType extends AnyCharSequenceType<CharSequence> {
 
     @Override

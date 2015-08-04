@@ -15,9 +15,7 @@ import ru.yandex.bolts.function.Function2I;
 import ru.yandex.bolts.function.Function2V;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
-/**
- * @author Stepan Koltsov
- */
+
 @SuppressWarnings("serial")
 public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
 
@@ -218,32 +216,24 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return tuple2List(map(Tuple2::swap));
     }
 
-    /**
-     * @see CollectionF#sorted()
-     */
+
     public Tuple2List<A, B> sortedBy1() {
         return sortedBy1(Comparator.naturalComparator().uncheckedCast());
     }
 
-    /**
-     * @see CollectionF#sorted()
-     */
+
     @SuppressWarnings("unchecked")
     public Tuple2List<A, B> sortedBy1(Function2I<? super A, ? super A> comparator) {
         if (size() <= 1) return this;
         return new Tuple2List<>(sorted(get1F().andThen((Function2I<A, A>) comparator)));
     }
 
-    /**
-     * @see CollectionF#sorted()
-     */
+
     public Tuple2List<A, B> sortedBy2() {
         return sortedBy2(Comparator.naturalComparator().uncheckedCast());
     }
 
-    /**
-     * @see CollectionF#sorted(java.util.Comparator)
-     */
+
     @SuppressWarnings("unchecked")
     public Tuple2List<A, B> sortedBy2(Function2I<? super B, ? super B> comparator) {
         if (size() <= 1) return this;
@@ -308,9 +298,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         }
     }
 
-    /**
-     * @see #uncheckedCast()
-     */
+
     @SuppressWarnings("unchecked")
     public <F, G> Tuple2List<F, G> uncheckedCastT2l() {
         return (Tuple2List<F, G>) this;
@@ -354,9 +342,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         else return new Tuple2List<>(super.plus(that.<A, B>uncheckedCastT2l().target));
     }
 
-    /**
-     * Unchecked.
-     */
+
     public static <A, B> Tuple2List<A, B> fromPairs(Object... elements) {
         return Cf.Tuple2List.fromPairs(elements);
     }
@@ -369,9 +355,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return Cf.Tuple2List.fromPairs(a1, b1, a2, b2);
     }
 
-    /**
-     * @see ListF#zip(ListF)
-     */
+
     public static <A, B> Tuple2List<A, B> zip(ListF<? extends A> list1, ListF<? extends B> list2) {
         Tuple2List<A, B> r = Tuple2List.arrayList();
 
@@ -384,9 +368,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
         return r;
     }
 
-    /**
-     * Empty immutable.
-     */
+
     public static <A, B> Tuple2List<A, B> tuple2List() {
         return Cf.Tuple2List.cons();
     }

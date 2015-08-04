@@ -12,9 +12,7 @@ import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.function.Function1B;
 
-/**
- * @author Stepan Koltsov
- */
+
 public abstract class AbstractSetF<E> extends AbstractCollectionF<E> implements SetF<E> {
 
     @Override

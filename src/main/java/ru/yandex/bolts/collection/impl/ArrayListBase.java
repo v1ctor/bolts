@@ -11,11 +11,7 @@ import java.util.RandomAccess;
 
 import ru.yandex.bolts.collection.ListF;
 
-/**
- * Base for {@link ArrayListF} and {@link ReadOnlyArrayList} implementations.
- *
- * @author Stepan Koltsov
- */
+
 public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF<E>, Serializable, RandomAccess {
 
     private static final long serialVersionUID = 3227478780818417896L;
@@ -79,14 +75,7 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * Searches this ArrayList for the specified object and returns the index of
-     * the first occurrence.
-     *
-     * @param object
-     *            the object to search for
-     * @return the index of the first occurrence of the object
-     */
+
     @Override
     public int indexOf(Object object) {
         if (object != null) {
@@ -105,26 +94,13 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
         return -1;
     }
 
-    /**
-     * Answers if this ArrayList has no elements, a size of zero.
-     *
-     * @return true if this ArrayList has no elements, false otherwise
-     *
-     * @see #size
-     */
+
     @Override
     public boolean isEmpty() {
         return lastIndex == firstIndex;
     }
 
-    /**
-     * Searches this ArrayList for the specified object and returns the index of
-     * the last occurrence.
-     *
-     * @param object
-     *            the object to search for
-     * @return the index of the last occurrence of the object
-     */
+
     @Override
     public int lastIndexOf(Object object) {
         if (object != null) {
@@ -143,21 +119,13 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
         return -1;
     }
 
-    /**
-     * Answers the number of elements in this ArrayList.
-     *
-     * @return the number of elements in this ArrayList
-     */
+
     @Override
     public int size() {
         return lastIndex - firstIndex;
     }
 
-    /**
-     * Answers a new array containing all elements contained in this ArrayList.
-     *
-     * @return an array of the elements from this ArrayList
-     */
+
     @Override
     public Object[] toArray() {
         int size = lastIndex - firstIndex;
@@ -166,21 +134,7 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
         return result;
     }
 
-    /**
-     * Answers an array containing all elements contained in this ArrayList. If
-     * the specified array is large enough to hold the elements, the specified
-     * array is used, otherwise an array of the same type is created. If the
-     * specified array is used and is larger than this ArrayList, the array
-     * element following the collection elements is set to null.
-     *
-     * @param contents
-     *            the array
-     * @return an array of the elements from this ArrayList
-     *
-     * @exception ArrayStoreException
-     *                when the type of an element in this ArrayList cannot be
-     *                stored in the type of the specified array
-     */
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] contents) {

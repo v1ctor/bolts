@@ -5,9 +5,7 @@ import org.junit.Test;
 
 import ru.yandex.bolts.collection.Cf;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class AbstractTraversableFTest {
 
     @Test

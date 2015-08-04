@@ -8,9 +8,7 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Unmodifiable;
 
-/**
- * @author Stepan Koltsov
- */
+
 class SetOf3<E> extends AbstractSetF<E> implements Serializable, Unmodifiable {
     private static final long serialVersionUID = 8121848888345607526L;
 

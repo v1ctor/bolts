@@ -1,8 +1,6 @@
 package ru.yandex.bolts.internal;
 
-/**
- * @author Stepan Koltsov
- */
+
 @SuppressWarnings("serial")
 public class NotImplementedException extends RuntimeException {
 

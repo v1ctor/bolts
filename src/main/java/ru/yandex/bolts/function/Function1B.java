@@ -8,13 +8,7 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
 
-/**
- * Predicate.
- *
- * @see java.util.function.Predicate
- *
- * @author Stepan Koltsov
- */
+
 @FunctionalInterface
 public interface Function1B<A> {
     boolean apply(A a);
@@ -32,56 +26,52 @@ public interface Function1B<A> {
         return (Function1B<B>) this;
     }
 
-    /** Check for null before calling this p */
+
     default Function1B<A> nullIsFalseF() {
         return Function1B.<A>notNullF().andF(this);
     }
 
-    /** (f compose g)(x) = g(f(x)) */
+
     default <B> Function1B<B> compose(Function<B, A> g) {
         return g.andThen(this);
     }
 
-    /** Not(this) */
+
     default Function1B<A> notF() {
         return a -> !apply(a);
     }
 
-    /** Or */
+
     default Function1B<A> orF(final Function1B<A> p) {
         return a -> apply(a) || p.apply(a);
     }
 
-    /** And */
+
     default Function1B<A> andF(final Function1B<A> p) {
         return a -> apply(a) && p.apply(a);
     }
 
-    /**
-     * @see Function2B#equalsF()
-     */
+
     static <B> Function1B<B> equalsF(final B b) {
         return Function2B.<B>equalsF().bind2(b);
     }
 
-    /**
-     * @see Function2B#sameF()
-     */
+
     static <B> Function1B<B> sameF(final B b) {
         return Function2B.<B>sameF().bind2(b);
     }
 
-    /** Check argument is not null */
+
     static <T> Function1B<T> notNullF() {
         return o -> o != null;
     }
 
-    /** Function that always returns <code>true</code> */
+
     static <B> Function1B<B> trueF() {
         return b -> true;
     }
 
-    /** Function that always returns <code>false</code> */
+
     static <B> Function1B<B> falseF() {
         return b -> false;
     }
@@ -122,7 +112,7 @@ public interface Function1B<A> {
         return cl::isInstance;
     }
 
-    /** Wrap */
+
     static <B> Function1B<B> wrap(final Function<B, Boolean> mapper) {
         return mapper::apply;
     }

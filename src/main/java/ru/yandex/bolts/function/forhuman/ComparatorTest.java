@@ -6,9 +6,7 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2I;
 
-/**
- * @author Stepan Koltsov
- */
+
 @SuppressWarnings("unused")
 public class ComparatorTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ComparatorTest.class);

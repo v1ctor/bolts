@@ -3,9 +3,7 @@ package ru.yandex.bolts.function;
 
 import junit.framework.TestCase;
 
-/**
- * @author Stepan Koltsov
- */
+
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public class Function1VTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Function1VTest.class);

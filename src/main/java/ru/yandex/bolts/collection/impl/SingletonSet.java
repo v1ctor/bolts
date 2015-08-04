@@ -12,9 +12,7 @@ import ru.yandex.bolts.collection.Unmodifiable;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class SingletonSet<E> extends AbstractSetF<E> implements Unmodifiable, Serializable {
     private static final long serialVersionUID = -7623844541769642464L;
     private final E e;
@@ -23,9 +21,7 @@ public class SingletonSet<E> extends AbstractSetF<E> implements Unmodifiable, Se
         this.e = e;
     }
 
-    /**
-     * @return 1
-     */
+
     public int size() {
         return 1;
     }

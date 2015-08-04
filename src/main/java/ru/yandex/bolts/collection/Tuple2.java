@@ -5,14 +5,7 @@ import java.io.Serializable;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function2;
 
-/**
- * Pair.
- *
- * @author Stepan Koltsov
- *
- * @see Tuple3
- * @see Tuple4
- */
+
 public class Tuple2<T1, T2> implements Serializable {
     private static final long serialVersionUID = 3326001902955370713L;
 
@@ -24,12 +17,12 @@ public class Tuple2<T1, T2> implements Serializable {
         this._2 = _2;
     }
 
-    /** First */
+
     public T1 get1() {
         return _1;
     }
 
-    /** Second */
+
     public T2 get2() {
         return _2;
     }
@@ -74,22 +67,22 @@ public class Tuple2<T1, T2> implements Serializable {
         return "(" + _1 + ", " + _2 + ")";
     }
 
-    /** Constructor function */
+
     public static <A, B> Function2<A, B, Tuple2<A, B>> consF() {
         return Tuple2::tuple;
     }
 
-    /** _1 as function */
+
     public static <A, B> Function<Tuple2<A, B>, A> get1F() {
         return Tuple2::get1;
     }
 
-    /** _2 as function */
+
     public static <A, B> Function<Tuple2<A, B>, B> get2F() {
         return Tuple2::get2;
     }
 
-    /** {@link #swap()} as function */
+
     public static <A, B> Function<Tuple2<A, B>, Tuple2<B, A>> swapF() {
         return Tuple2::swap;
     }
@@ -106,7 +99,7 @@ public class Tuple2<T1, T2> implements Serializable {
         return c -> Tuple2.tuple(fa.apply(c), fb.apply(c));
     }
 
-    /** Construct */
+
     public static <A, B> Tuple2<A, B> tuple(A a, B b) {
         return new Tuple2<>(a, b);
     }

@@ -7,21 +7,17 @@ import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.internal.ReflectionUtils;
 import ru.yandex.bolts.internal.Validate;
 
-/**
- * Function with two arguments.
- *
- * @author Stepan Koltsov
- */
+
 @FunctionalInterface
 public interface Function2<A, B, R> {
     R apply(A a, B b);
 
-    /** Bind first param to the given value */
+
     default Function<B, R> bind1(final A a) {
         return b -> apply(a, b);
     }
 
-    /** Bind second param to the given value */
+
     default Function<A, R> bind2(final B b) {
         return a -> apply(a, b);
     }

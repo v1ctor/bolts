@@ -8,9 +8,7 @@ import junit.framework.TestCase;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 
-/**
- * @author sankear
- */
+
 public class FixedSizeTopTest extends TestCase {
 
     private static final Random R = new Random();

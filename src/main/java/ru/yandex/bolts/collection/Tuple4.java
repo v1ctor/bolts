@@ -4,13 +4,7 @@ import java.io.Serializable;
 
 import ru.yandex.bolts.function.Function;
 
-/**
- * Quadruple.
- *
- * @author Stepan Koltsov
- *
- * @see Tuple2
- */
+
 public class Tuple4<T1, T2, T3, T4> implements Serializable {
     private static final long serialVersionUID = 5566029783258786962L;
 

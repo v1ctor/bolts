@@ -11,9 +11,7 @@ import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 import ru.yandex.bolts.function.Function2B;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class StringType extends AnyCharSequenceType<String> {
 
     @Override
@@ -125,21 +123,13 @@ public class StringType extends AnyCharSequenceType<String> {
         return String::trim;
     }
 
-    /**
-     * Split string using the specified regex.
-     *
-     * @see Pattern#split(CharSequence)
-     */
+
     public Function<String, ListF<String>> splitF(String regex) {
         final Pattern pattern = Pattern.compile(regex);
         return a -> Cf.list(pattern.split(a));
     }
 
-    /**
-     * Split string into two strings using the specified regex.
-     *
-     * @see Pattern#split(CharSequence, int)
-     */
+
     public Function<String, Tuple2<String, String>> split2F(String regex) {
         final Pattern pattern = Pattern.compile(regex);
         return a -> {
@@ -148,11 +138,7 @@ public class StringType extends AnyCharSequenceType<String> {
         };
     }
 
-    /**
-     * Split string into three strings using the specified regex.
-     *
-     * @see Pattern#split(CharSequence, int)
-     */
+
     public Function<String, Tuple3<String, String, String>> split3F(String regex) {
         final Pattern pattern = Pattern.compile(regex);
         return a -> {

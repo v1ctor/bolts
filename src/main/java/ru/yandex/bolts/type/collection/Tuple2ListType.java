@@ -7,9 +7,7 @@ import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.collection.Tuple2List;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class Tuple2ListType {
 
     private static final Tuple2List<Object, Object> EMPTY = Tuple2List.wrap(Cf.<Tuple2<Object, Object>>list());
@@ -35,9 +33,7 @@ public class Tuple2ListType {
         return Tuple2List.wrap(pairs);
     }
 
-    /**
-     * Unchecked.
-     */
+
     @SuppressWarnings("unchecked")
     public <A, B> Tuple2List<A, B> fromPairs(Object... elements) {
         if (elements.length % 2 != 0)

@@ -1,8 +1,6 @@
 package ru.yandex.bolts.function;
 
-/**
- * @author Stepan Koltsov
- */
+
 @FunctionalInterface
 public interface Function0V extends Runnable {
     void apply();

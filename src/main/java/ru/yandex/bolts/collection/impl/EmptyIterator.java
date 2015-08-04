@@ -9,9 +9,7 @@ import ru.yandex.bolts.collection.SetF;
 import ru.yandex.bolts.collection.Tuple2;
 import ru.yandex.bolts.function.Function;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class EmptyIterator<A> extends AbstractIteratorF<A> {
     public boolean hasNext() {
         return false;

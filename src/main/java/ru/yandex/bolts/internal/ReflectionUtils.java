@@ -7,9 +7,7 @@ import java.lang.reflect.Modifier;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class ReflectionUtils {
 
     public static RuntimeException translate(Exception e) {

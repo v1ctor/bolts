@@ -4,9 +4,7 @@ import ru.yandex.bolts.collection.impl.test.SerializationUtils;
 
 import junit.framework.TestCase;
 
-/**
- * @author Stepan Koltsov
- */
+
 public abstract class EmptyCollectionTestSupport extends TestCase {
 
     protected abstract Object emptyInstance();

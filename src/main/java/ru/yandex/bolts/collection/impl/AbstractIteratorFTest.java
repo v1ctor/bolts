@@ -13,11 +13,7 @@ import ru.yandex.bolts.collection.impl.test.Generator;
 import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1BTest;
 
-/**
- * @author Stepan Koltsov
- *
- * @see AbstractIteratorF
- */
+
 @SuppressWarnings("unused")
 public class AbstractIteratorFTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AbstractIteratorFTest.class);

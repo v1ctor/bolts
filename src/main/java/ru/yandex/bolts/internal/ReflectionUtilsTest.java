@@ -3,9 +3,7 @@ package ru.yandex.bolts.internal;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class ReflectionUtilsTest {
 
     @Test

@@ -9,9 +9,7 @@ import java.util.function.Function;
 import ru.yandex.bolts.collection.ListF;
 import ru.yandex.bolts.function.Function2V;
 
-/**
- * @author sankear
- */
+
 public class NthElement {
 
     private static final Random R = new Random();

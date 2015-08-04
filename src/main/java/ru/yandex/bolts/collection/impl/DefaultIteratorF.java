@@ -4,11 +4,7 @@ import java.util.Iterator;
 
 import ru.yandex.bolts.collection.IteratorF;
 
-/**
- * Implementation of IteratorF with delegation
- *
- * @author Stepan Koltsov
- */
+
 public class DefaultIteratorF<E> extends AbstractIteratorF<E> {
     protected Iterator<E> iterator;
 

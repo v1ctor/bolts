@@ -15,9 +15,7 @@ import ru.yandex.bolts.function.Function3B;
 import ru.yandex.bolts.function.Function3V;
 import ru.yandex.bolts.function.forhuman.Comparator;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
 
     public Tuple3List(List<Tuple3<A, B, C>> target) {
@@ -243,48 +241,36 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
 
 
 
-    /**
-     * @see CollectionF#sorted()
-     */
+
     public Tuple3List<A, B, C> sortedBy1() {
         return sortedBy1(Comparator.naturalComparator().uncheckedCast());
     }
 
-    /**
-     * @see CollectionF#sorted(java.util.Comparator)
-     */
+
     @SuppressWarnings("unchecked")
     public Tuple3List<A, B, C> sortedBy1(Function2I<? super A, ? super A> comparator) {
         if (size() <= 1) return this;
         return new Tuple3List<>(sorted(get1F().andThen((Function2I<A, A>) comparator)));
     }
 
-    /**
-     * @see CollectionF#sorted()
-     */
+
     public Tuple3List<A, B, C> sortedBy2() {
         return sortedBy2(Comparator.naturalComparator().uncheckedCast());
     }
 
-    /**
-     * @see CollectionF#sorted(java.util.Comparator)
-     */
+
     @SuppressWarnings("unchecked")
     public Tuple3List<A, B, C> sortedBy2(Function2I<? super B, ? super B> comparator) {
         if (size() <= 1) return this;
         return new Tuple3List<>(sorted(get2F().andThen((Function2I<B, B>) comparator)));
     }
 
-    /**
-     * @see CollectionF#sorted()
-     */
+
     public Tuple3List<A, B, C> sortedBy3() {
         return sortedBy3(Comparator.naturalComparator().uncheckedCast());
     }
 
-    /**
-     * @see CollectionF#sorted(java.util.Comparator)
-     */
+
     @SuppressWarnings("unchecked")
     public Tuple3List<A, B, C> sortedBy3(Function2I<? super C, ? super C> comparator) {
         if (size() <= 1) return this;
@@ -301,9 +287,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
         return new Tuple3List<>(Cf.x(target).unmodifiable());
     }
 
-    /**
-     * @see #uncheckedCast()
-     */
+
     @SuppressWarnings("unchecked")
     public <D, E, F> Tuple3List<D, E, F> uncheckedCastT3l() {
         return (Tuple3List<D, E, F>) this;
@@ -335,9 +319,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
         else return new Tuple3List<>(super.plus(that.target));
     }
 
-    /**
-     * Empty immutable.
-     */
+
     public static <A, B, C> Tuple3List<A, B, C> tuple3List() {
         return tuple3List(Cf.<Tuple3<A, B, C>>list());
     }

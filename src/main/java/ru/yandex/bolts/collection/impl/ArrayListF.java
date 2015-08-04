@@ -7,29 +7,18 @@ import java.util.RandomAccess;
 
 import ru.yandex.bolts.collection.ListF;
 
-/**
- * Copied-pasted from Harmony ArrayList r679987 and then refactored.
- *
- * @author Stepan Koltsov
- */
+
 public class ArrayListF<E> extends ArrayListBase<E>
         implements ListF<E>, Cloneable, Serializable, RandomAccess
 {
     private static final long serialVersionUID = 8683452581122892189L;
 
-    /**
-     * Constructs a new instance of ArrayList with capacity for ten elements.
-     */
+
     public ArrayListF() {
         this(10);
     }
 
-    /**
-     * Constructs a new instance of ArrayList with the specified capacity.
-     *
-     * @param capacity
-     *            the initial capacity of this ArrayList
-     */
+
     public ArrayListF(int capacity) {
         firstIndex = lastIndex = 0;
         try {
@@ -46,15 +35,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
         this.lastIndex = array.length;
     }
 
-    /**
-     * Constructs a new instance of ArrayList containing the elements in the
-     * specified collection. The ArrayList will have an initial capacity which
-     * is 110% of the size of the collection. The order of the elements in this
-     * ArrayList is the order they are returned by the collection iterator.
-     *
-     * @param collection
-     *            the collection of elements to add
-     */
+
     public ArrayListF(Collection<? extends E> collection) {
         int size = collection.size();
         firstIndex = 0;
@@ -64,9 +45,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
         modCount = 1;
     }
 
-    /**
-     * Return readonly array list with data of this. This is cleared.
-     */
+
     public ReadOnlyArrayList<E> convertToReadOnly() {
         return new ReadOnlyArrayList<>(this);
     }
@@ -124,13 +103,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
         modCount++;
     }
 
-    /**
-     * Adds the specified object at the end of this ArrayList.
-     *
-     * @param object
-     *            the object to add
-     * @return true
-     */
+
     @Override
     public boolean add(E object) {
         if (lastIndex == array.length) {
@@ -204,13 +177,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
         return false;
     }
 
-    /**
-     * Adds the objects in the specified Collection to this ArrayList.
-     *
-     * @param collection
-     *            the Collection of objects
-     * @return true if this ArrayList is modified, false otherwise
-     */
+
     @Override
     public boolean addAll(Collection<? extends E> collection) {
         Object[] dumpArray = collection.toArray();
@@ -226,12 +193,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
         return true;
     }
 
-    /**
-     * Removes all elements from this ArrayList, leaving it empty.
-     *
-     * @see #isEmpty
-     * @see #size
-     */
+
     @Override
     public void clear() {
         if (firstIndex != lastIndex) {
@@ -241,14 +203,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
         }
     }
 
-    /**
-     * Answers a new ArrayList with the same elements, size and capacity as this
-     * ArrayList.
-     *
-     * @return a shallow copy of this ArrayList
-     *
-     * @see java.lang.Cloneable
-     */
+
     @Override
     @SuppressWarnings("unchecked")
     public Object clone() {
@@ -262,14 +217,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
     }
 
 
-    /**
-     * Ensures that this ArrayList can hold the specified number of elements
-     * without growing.
-     *
-     * @param minimumCapacity
-     *            the minimum number of elements that this ArrayList will hold
-     *            before growing
-     */
+
     public void ensureCapacity(int minimumCapacity) {
         if (array.length < minimumCapacity) {
             if (firstIndex > 0) {
@@ -409,14 +357,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
         return result;
     }
 
-    /**
-     * Removes the first one of the specified object in this list, if present.
-     *
-     * @param object
-     *            the object to removes
-     * @return true if the list contains the object
-     * @see java.util.AbstractCollection#remove(java.lang.Object)
-     */
+
     @Override
     public boolean remove(Object object) {
         int location = indexOf(object);
@@ -489,11 +430,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
         throw new IndexOutOfBoundsException();
     }
 
-    /**
-     * Sets the capacity of this ArrayList to be the same as the size.
-     *
-     * @see #size
-     */
+
     public void trimToSize() {
         int size = lastIndex - firstIndex;
         E[] newArray = newElementArray(size);

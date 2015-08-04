@@ -7,12 +7,7 @@ import java.util.Comparator;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 
-/**
- * equals input.sorted(comparator).take(topSize)
- * time complexity - O(N + min(N, topSize) * log(min(N, topSize))), where N - number of elements in input
- * memory - O(topSize)
- * @author sankear
- */
+
 public class FixedSizeTop<T> {
 
     protected final int topSize;

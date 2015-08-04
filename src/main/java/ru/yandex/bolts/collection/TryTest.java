@@ -5,9 +5,7 @@ import java.util.NoSuchElementException;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @author Anton Bobukh &lt;abobukh@yandex-team.ru&gt;
- */
+
 public class TryTest {
 
     @Test

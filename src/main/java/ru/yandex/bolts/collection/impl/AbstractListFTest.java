@@ -23,9 +23,7 @@ import ru.yandex.bolts.function.FunctionTest;
 import static ru.yandex.bolts.collection.Cf.list;
 import static ru.yandex.bolts.collection.Cf.set;
 
-/**
- * @author Stepan Koltsov
- */
+
 @SuppressWarnings("unused")
 public class AbstractListFTest extends TestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AbstractListFTest.class);

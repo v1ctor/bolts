@@ -9,11 +9,7 @@ import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.IteratorF;
 import ru.yandex.bolts.collection.ListF;
 
-/**
- * Implementation of ListF with delegation
- *
- * @author Stepan Koltsov
- */
+
 public class DefaultListF<E> extends AbstractListF<E> implements Serializable {
     private static final long serialVersionUID = -9125154479157748328L;
 

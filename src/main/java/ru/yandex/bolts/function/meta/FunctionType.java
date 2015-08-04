@@ -3,9 +3,7 @@ package ru.yandex.bolts.function.meta;
 import ru.yandex.bolts.collection.Option;
 
 
-/**
- * @author Stepan Koltsov
- */
+
 public class FunctionType {
 
     public enum ReturnType {

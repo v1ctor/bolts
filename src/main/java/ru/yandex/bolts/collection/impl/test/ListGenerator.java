@@ -3,9 +3,7 @@ package ru.yandex.bolts.collection.impl.test;
 import ru.yandex.bolts.collection.Cf;
 import ru.yandex.bolts.collection.ListF;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class ListGenerator<A> extends Generator<ListF<A>> {
 
     private final Generator<A> elements;

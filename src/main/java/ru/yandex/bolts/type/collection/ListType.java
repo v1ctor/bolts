@@ -9,10 +9,7 @@ import ru.yandex.bolts.collection.impl.ArrayListF;
 import ru.yandex.bolts.collection.impl.ReadOnlyArrayList;
 import ru.yandex.bolts.function.Function;
 
-/**
- * @author Stepan Koltsov
- * @see Cf#List
- */
+
 public class ListType extends AnyListType {
 
     @SuppressWarnings("unchecked")

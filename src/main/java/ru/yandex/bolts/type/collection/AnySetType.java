@@ -8,9 +8,7 @@ import ru.yandex.bolts.function.Function;
 import ru.yandex.bolts.function.Function1B;
 import ru.yandex.bolts.function.Function2;
 
-/**
- * @author Stepan Koltsov
- */
+
 public class AnySetType extends AnyCollectionType {
 
     public <A> Function2<Set<A>, Function1B<? super A>, SetF<A>> filterF() {
