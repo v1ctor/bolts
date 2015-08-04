@@ -88,7 +88,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
      *            the object to add
      *
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      */
     @Override
     public void add(int location, E object) {
@@ -153,7 +153,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
      * @return true if this ArrayList is modified, false otherwise
      *
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || > size()</code>
+     *                when <code>location &lt; 0 || &gt; size()</code>
      */
     @Override
     public boolean addAll(int location, Collection<? extends E> collection) {
@@ -372,7 +372,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
      * @return the removed object
      *
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      */
     @Override
     public E remove(int location) {
@@ -437,8 +437,8 @@ public class ArrayListF<E> extends ArrayListBase<E>
      *            the index one past the end of the range to remove
      *
      * @exception IndexOutOfBoundsException
-     *                when <code>start < 0, start > end</code> or
-     *                <code>end > size()</code>
+     *                when <code>start &lt; 0, start &gt; end</code> or
+     *                <code>end &lt; size()</code>
      */
     @Override
     protected void removeRange(int start, int end) {
@@ -477,7 +477,7 @@ public class ArrayListF<E> extends ArrayListBase<E>
      * @return the previous element at the index
      *
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      */
     @Override
     public E set(int location, E object) {

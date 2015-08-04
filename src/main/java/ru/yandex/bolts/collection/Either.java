@@ -13,7 +13,6 @@ import ru.yandex.bolts.internal.ObjectUtils;
  *
  * @author Stepan Koltsov
  *
- * @see fj.data.Either
  */
 public abstract class Either<A, B> {
     private Either() { }
@@ -69,12 +68,11 @@ public abstract class Either<A, B> {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Either<?, ?>))
+        if (!(obj instanceof Either<?, ?>)) {
             return false;
+        }
         Either<?, ?> that = (Either<?, ?>) obj;
-        if (this.isLeft() != that.isLeft())
-            return false;
-        return ObjectUtils.equals(this.getValue(), that.getValue());
+        return this.isLeft() == that.isLeft() && ObjectUtils.equals(this.getValue(), that.getValue());
     }
 
     @Override

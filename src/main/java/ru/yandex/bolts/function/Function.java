@@ -24,7 +24,6 @@ public interface Function<A, R> {
     /**
      * (f andThen g)(x) = g(f(x))
      *
-     * @see fj.Function#andThen(F, F)
      */
     default <C> Function<A, C> andThen(final Function<? super R, ? extends C> g) {
         return a -> g.apply(apply(a));
@@ -61,7 +60,6 @@ public interface Function<A, R> {
     /**
      * (f compose g)(x) = f(g(x))
      *
-     * @see fj.Function#compose(F, F)
      */
     default <C> Function<C, R> compose(Function<C, A> g) {
         return g.andThen(this);
@@ -72,7 +70,7 @@ public interface Function<A, R> {
     }
 
     static <A, R> Function2<Function<A, R>, A, Function0<R>> bindF2() {
-        return (f, a) -> f.bind(a);
+        return Function::bind;
     }
 
     default Function<A, Function0<R>> bindF() {
@@ -81,7 +79,7 @@ public interface Function<A, R> {
 
 
     static <A, R> Function2<Function<A, R>, A, R> applyF() {
-        return (f, a) -> f.apply(a);
+        return Function::apply;
     }
 
     @SuppressWarnings("unchecked")
@@ -91,7 +89,7 @@ public interface Function<A, R> {
 
     /** Ignore result of mapping */
     default Function1V<A> ignoreResult() {
-        return a -> apply(a);
+        return this::apply;
     }
 
     /** Map null to null */

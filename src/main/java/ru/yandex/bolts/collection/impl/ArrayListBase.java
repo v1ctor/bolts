@@ -69,7 +69,7 @@ public abstract class ArrayListBase<E> extends AbstractListF<E> implements ListF
      * @return the element at the specified index
      *
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      */
     @Override
     public E get(int location) {

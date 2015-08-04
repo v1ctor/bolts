@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Anton Bobukh <abobukh@yandex-team.ru>
+ * @author Anton Bobukh &lt;abobukh@yandex-team.ru&gt;
  */
 public class TryTest {
 

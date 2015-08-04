@@ -25,11 +25,19 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     /**
      * Return collection with only elements that match predicate.
+     *
+     * @param p filter function
+     *
+     * @return modified collection
      */
     CollectionF<E> filter(Function1B<? super E> p);
 
     /**
      * Return collection with only elements that do not match predicate.
+     *
+     * @param p filter function
+     *
+     * @return modified collection
      */
     CollectionF<E> filterNot(Function1B<? super E> p);
 
@@ -37,23 +45,55 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     /**
      * @see Class#isInstance(Object)
+     *
+     * @param type to filter
+     * @param <F> element
+     *
+     * @return modified collection
      */
     <F extends E> CollectionF<F> filterByType(Class<F> type);
 
-    /** Pair of collection, first contains elements matching p, second contains element matching !p */
+    /** Pair of collection, first contains elements matching p, second contains element matching !p
+     *
+     * @param p partition function
+     *
+     * @return partitioned typle
+     * */
     Tuple2<? extends IterableF<E>, ? extends IterableF<E>> partition(Function1B<? super E> p);
 
-    /** Map */
+    /** Map
+     *
+     * @param mapper mapper function
+     * @param <B> element
+     *
+     * @return modified list
+     * */
     <B> ListF<B> map(Function<? super E, B> mapper);
 
-    /** Flat map */
+    /** Flat map
+     *
+     * @param f mapper function
+     * @param <B> element
+     *
+     * @return modified list
+     * */
     <B> ListF<B> flatMap(Function<? super E, ? extends Collection<B>> f);
 
-    /** Flat map variant that accept mapper that returns Option instead of Collection */
+    /** Flat map variant that accept mapper that returns Option instead of Collection
+     *
+     * @param f mapper function
+     * @param <B> element
+     *
+     * @return modified list
+     * */
     <B> ListF<B> flatMapO(Function<? super E, Option<B>> f);
 
     /**
      * @see #flatMapO(Function)
+     *
+     * @param f mapper function
+     *
+     * @return result tuple
      */
     <B> Tuple2List<E, B> zipWithFlatMapO(Function<? super E, Option<B>> f);
 
@@ -237,8 +277,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      * A fluent-style friendly variant of Cf.flatten().  It is an unsafe method in that
      * it requires you to specify a correct generic type.
      *
-     * CollectionF<CollectionF<A>> coll = ...;
-     * CollectionF<A> = coll.<A>flatten();
+     * CollectionF&lt;CollectionF&lt;A&gt;&gt; coll = ...;
+     * CollectionF&lt;ltA&gt; = coll.&lt;A&gt;flatten();
      */
     <F> ListF<F> flatten();
 

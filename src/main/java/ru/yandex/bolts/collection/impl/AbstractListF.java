@@ -680,7 +680,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * @exception IllegalArgumentException
      *                when the object cannot be added to this List
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      */
     public void add(int location, E object) {
         throw new UnsupportedOperationException();
@@ -727,7 +727,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * @exception IllegalArgumentException
      *                when an object cannot be added to this List
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      */
     public boolean addAll(int location, Collection<? extends E> collection) {
         Iterator<? extends E> it = collection.iterator();
@@ -797,7 +797,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * @return the element at the specified index
      *
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      */
     public abstract E get(int location);
 
@@ -924,7 +924,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * @return a ListIterator on the elements of this List
      *
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      *
      * @see ListIterator
      */
@@ -943,7 +943,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * @exception UnsupportedOperationException
      *                when removing from this List is not supported
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      */
     public E remove(int location) {
         throw new UnsupportedOperationException();
@@ -962,7 +962,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * @exception UnsupportedOperationException
      *                when removing from this List is not supported
      * @exception IndexOutOfBoundsException
-     *                when <code>start < 0
+     *                when <code>start &lt; 0</code>
      */
     protected void removeRange(int start, int end) {
         Iterator<?> it = listIterator(start);
@@ -990,7 +990,7 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * @exception IllegalArgumentException
      *                when an object cannot be added to this List
      * @exception IndexOutOfBoundsException
-     *                when <code>location < 0 || >= size()</code>
+     *                when <code>location &lt; 0 || &gt;= size()</code>
      */
     public E set(int location, E object) {
         throw new UnsupportedOperationException();
@@ -1036,9 +1036,9 @@ public abstract class AbstractListF<E> extends AbstractCollectionF<E> implements
      * @return a subList view of this list start from start (inclusive), end
      *         with end (exclusive)
      * @exception IndexOutOfBoundsException
-     *                when (start < 0 || end > size())
+     *                when (start &lt; 0 || end &gt; size())
      * @exception IllegalArgumentException
-     *                when (start > end)
+     *                when (start &gt; end)
      */
     public ListF<E> subList(int start, int end) {
         if (0 <= start && end <= size()) {

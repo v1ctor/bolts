@@ -226,7 +226,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     /**
-     * @see CollectionF#sorted(Function2I)
+     * @see CollectionF#sorted()
      */
     @SuppressWarnings("unchecked")
     public Tuple2List<A, B> sortedBy1(Function2I<? super A, ? super A> comparator) {
@@ -242,7 +242,7 @@ public class Tuple2List<A, B> extends DefaultListF<Tuple2<A, B>> {
     }
 
     /**
-     * @see CollectionF#sorted(Function2I)
+     * @see CollectionF#sorted(java.util.Comparator)
      */
     @SuppressWarnings("unchecked")
     public Tuple2List<A, B> sortedBy2(Function2I<? super B, ? super B> comparator) {

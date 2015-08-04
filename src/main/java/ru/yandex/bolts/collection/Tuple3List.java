@@ -251,7 +251,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     /**
-     * @see CollectionF#sorted(Function2I)
+     * @see CollectionF#sorted(java.util.Comparator)
      */
     @SuppressWarnings("unchecked")
     public Tuple3List<A, B, C> sortedBy1(Function2I<? super A, ? super A> comparator) {
@@ -267,7 +267,7 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     /**
-     * @see CollectionF#sorted(Function2I)
+     * @see CollectionF#sorted(java.util.Comparator)
      */
     @SuppressWarnings("unchecked")
     public Tuple3List<A, B, C> sortedBy2(Function2I<? super B, ? super B> comparator) {
@@ -283,16 +283,13 @@ public class Tuple3List<A, B, C> extends DefaultListF<Tuple3<A,B,C>> {
     }
 
     /**
-     * @see CollectionF#sorted(Function2I)
+     * @see CollectionF#sorted(java.util.Comparator)
      */
     @SuppressWarnings("unchecked")
     public Tuple3List<A, B, C> sortedBy3(Function2I<? super C, ? super C> comparator) {
         if (size() <= 1) return this;
         return new Tuple3List<>(sorted(get3F().andThen((Function2I<C, C>) comparator)));
     }
-
-
-
 
     @SuppressWarnings({"unchecked"})
     @Override

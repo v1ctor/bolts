@@ -64,12 +64,19 @@ import ru.yandex.bolts.type.number.ShortType;
  * @author Stepan Koltsov
  */
 public class Cf {
+
     protected Cf() { }
 
     /**
      * Wrap List.
      *
      * @see #x(List)
+     *
+     * @param list list to wrap
+     * @param <E> element
+     *
+     * @return wrapped list
+     *
      */
     public static <E> ListF<E> wrap(List<E> list) {
         return x(list);
@@ -79,6 +86,11 @@ public class Cf {
      * Wrap Set.
      *
      * @see #x(Set)
+     *
+     * @param set set to wrap
+     * @param <E> element
+     *
+     * @return wrapped set
      */
     public static <E> SetF<E> wrap(Set<E> set) {
         return x(set);
@@ -88,6 +100,11 @@ public class Cf {
      * Wrap Collection.
      *
      * @see #x(Collection)
+     *
+     * @param coll collection to wrap
+     * @param <E> element
+     *
+     * @return wrapped collection
      */
     public static <E> CollectionF<E> wrap(Collection<E> coll) {
         return x(coll);
@@ -97,6 +114,12 @@ public class Cf {
      * Wrap Iterator.
      *
      * @see #x(Iterator)
+     *
+     * @param iter iterator to wrap
+     * @param <E> element
+     *
+     * @return new wrapped iterator
+     *
      */
     public static <E> IteratorF<E> wrap(Iterator<E> iter) {
         return x(iter);
@@ -106,6 +129,11 @@ public class Cf {
      * Wrap Enumeration.
      *
      * @see #x(Enumeration)
+     *
+     * @param enumeration enumeration to wrap
+     * @param <E> element
+     *
+     * @return wrapped iterator
      */
     public static <E> IteratorF<E> wrap(Enumeration<E> enumeration) {
         return x(enumeration);
@@ -115,6 +143,12 @@ public class Cf {
      * Wrap Map.
      *
      * @see #x(Map)
+     *
+     * @param map map to wrap
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return wrapped map
      */
     public static <K, V> MapF<K, V> wrap(Map<K, V> map) {
         return x(map);
@@ -125,6 +159,10 @@ public class Cf {
      * Wrap Properties.
      *
      * @see #x(Properties)
+     *
+     * @param ps properties to wrap in map
+     *
+     * @return wrapped map
      */
     public static MapF<String, String> wrap(Properties ps) {
         return x(ps);
@@ -134,22 +172,55 @@ public class Cf {
      * Wrap array.
      *
      * @see #x(Object[])
+     *
+     * @param array array to wrap in list
+     * @param <E> element
+     *
+     * @return array wrapped in list
      */
     public static <E> ListF<E> wrap(E[] array) {
         return x(array);
     }
 
-    /** Wrap iterator */
+    /**
+     *  Wrap Iterator.
+     *
+     * @see #x(Iterator)
+     *
+     * @param iterator iterator to wrap
+     * @param <E> element
+     *
+     * @return wrapped iterator
+     */
     public static <E> IteratorF<E> x(Iterator<E> iterator) {
         return DefaultIteratorF.wrap(iterator);
     }
 
-    /** Wrap enumeration */
+    /** Wrap enumeration
+     *
+     * Wrap Enumeration.
+     *
+     * @see #x(Enumeration)
+     *
+     * @param enumeration enumeration to wrap
+     * @param <E> element
+     *
+     * @return wrapped iterator
+     */
     public static <E> IteratorF<E> x(Enumeration<E> enumeration) {
         return DefaultEnumerationF.wrap(enumeration);
     }
 
-    /** Wrap collection */
+    /**
+     * Wrap Collection.
+     *
+     * @see #x(Collection)
+     *
+     * @param collection collection to wrap
+     * @param <E> element
+     *
+     * @return wrapped collection
+     */
     public static <E> CollectionF<E> x(Collection<E> collection) {
         if (collection instanceof List<?>)
             return DefaultListF.wrap((List<E>) collection);
@@ -159,27 +230,70 @@ public class Cf {
             return DefaultCollectionF.wrap(collection);
     }
 
-    /** Wrap optional */
+    /**
+     * Wrap Optional.
+     *
+     * @param optional optional to wrap
+     * @param <E> element
+     *
+     * @return wrapped optional
+     */
     public static <E> Option<E> x(Optional<E> optional) {
         return Option.wrap(optional);
     }
 
-    /** Wrap list */
+    /**
+     * Wrap List.
+     *
+     * @see #x(List)
+     *
+     * @param list list to wrap
+     * @param <E> element
+     *
+     * @return wrapped list
+     *
+     */
     public static <E> ListF<E> x(List<E> list) {
         return DefaultListF.wrap(list);
     }
 
-    /** Wrap set */
+    /**
+     * Wrap Set.
+     *
+     * @see #x(Set)
+     *
+     * @param set set to wrap
+     * @param <E> element
+     *
+     * @return wrapped set
+     */
     public static <E> SetF<E> x(Set<E> set) {
         return DefaultSetF.wrap(set);
     }
 
-    /** Wrap map */
+    /**
+     * Wrap Map.
+     *
+     * @see #x(Map)
+     *
+     * @param map map to wrap
+     * @param <K> key
+     * @param <V> value
+     * @return wrapped map
+     */
     public static <K, V> MapF<K, V> x(Map<K, V> map) {
         return DefaultMapF.wrap(map);
     }
 
-    /** Wrap properties as set of String, String pairs */
+    /**
+     * Wrap Properties.
+     *
+     * @see #x(Properties)
+     *
+     * @param properties properties to wrap in map
+     *
+     * @return wrapped map
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static MapF<String, String> x(Properties properties) {
         return x((Map) properties);
@@ -188,27 +302,49 @@ public class Cf {
     /**
      * Wrap array.
      *
-     * @see Arrays#asList(Object...)
-     * @see #list(Object...)
+     * @see #x(Object[])
+     *
+     * @param array array to wrap in list
+     * @param <E> element
+     *
+     * @return array wrapped in list
      */
     public static <E> ListF<E> x(E[] array) {
         return x(Arrays.asList(array));
     }
 
 
-    /** Empty set */
+    /**
+     * Empty set
+     *
+     * @param <E> element
+     *
+     * @return empty set
+     */
     @SuppressWarnings({"unchecked"})
     public static <E> SetF<E> set() {
         return EmptySet.INSTANCE;
     }
 
-    /** Create singleton set */
+    /**
+     * Singleton set
+     *
+     * @param o object to wrap
+     *
+     * @param <T> element
+     *
+     * @return set with one element
+     */
     public static <T> SetF<T> set(T o) {
         return new SingletonSet<>(o);
     }
 
     /**
      * Create set of specified elements.
+     *
+     * @param e1 object to wrap
+     * @param e2 object to wrap
+     * @param <E> element
      *
      * @return set of either 1 or 2 elements
      */
@@ -219,13 +355,24 @@ public class Cf {
     /**
      * Create set of specified elements.
      *
+     * @param e1 object to wrap
+     * @param e2 object to wrap
+     * @param e3 object to wrap
+     * @param <E> element
+     *
      * @return set of either 1, 2 or 3 elements
      */
     public static <E> SetF<E> set(E e1, E e2, E e3) {
         return set(e1, e2).plus1(e3);
     }
 
-    /** Create set of specified elements */
+    /** Create set of specified elements
+     *
+     * @param elements objects to wrap
+     * @param <E> element
+     *
+     * @return set of elements
+     */
     @SuppressWarnings("unchecked")
     public static <E> SetF<E> set(E... elements) {
         if (elements.length == 0) return set();
@@ -235,8 +382,12 @@ public class Cf {
         else return hashSet(elements);
     }
 
-    /**
-     * Create set of elements from collection.
+    /** Create set of specified elements
+     *
+     * @param elements objects to wrap
+     * @param <E> element
+     *
+     * @return set of elements
      */
     public static <E> SetF<E> set(Collection<E> elements) {
         if (elements.isEmpty()) return set();
@@ -246,13 +397,23 @@ public class Cf {
 
     /**
      * Create mutable hash set.
+     *
+     * @param <A> element
+     *
+     * @return mutable hash set
      */
     public static <A> SetF<A> hashSet() {
-        return x(new HashSet<A>());
+        return x(new HashSet<>());
     }
 
     /**
      * Create mutable hash set of specified elements.
+     *
+     * @param collection wrap collection
+     *
+     * @param <E> element
+     *
+     * @return mutable hash set of elements
      */
     public static <E> SetF<E> hashSet(Collection<E> collection) {
         return x(new HashSet<>(collection));
@@ -260,18 +421,32 @@ public class Cf {
 
     /**
      * Create mutable hash set of specified elements.
+     *
+     * @param elements wrap collection
+     * @param <E> element
+     *
+     * @return mutable hash set of elements
      */
     @SuppressWarnings("unchecked")
     public static <E> SetF<E> hashSet(E... elements) {
         return hashSet(list(elements));
     }
 
+    /**
+     * Function creating mutable hash set.
+     * @param <E> element
+     *
+     * @return function to create mutable hash set
+     */
     public static <E> Function0<SetF<E>> newHashSetF() {
         return Cf::hashSet;
     }
 
     /**
      * Create mutable identity hash set.
+     * @param <E> element
+     *
+     * @return mutable identity hash set
      */
     public static <E> SetF<E> identityHashSet() {
         return new SetFromMap<>(new IdentityHashMap<>());
@@ -279,6 +454,11 @@ public class Cf {
 
     /**
      * Create mutable identity hash set with specified elements.
+     * @param <E> element
+     *
+     * @param elements wrap collection
+     *
+     * @return mutable identity hash set
      */
     public static <E> SetF<E> identityHashSet(Collection<E> elements) {
         SetF<E> set = identityHashSet();
@@ -288,6 +468,11 @@ public class Cf {
 
     /**
      * Create mutable identity hash set with specified elements.
+     *
+     * @param elements wrap collection
+     * @param <E> element
+     *
+     * @return mutable identity hash set
      */
     @SuppressWarnings("unchecked")
     public static <E> SetF<E> identityHashSet(E... elements) {
@@ -296,13 +481,22 @@ public class Cf {
 
     /**
      * Create extended tree set.
+     *
+     * @param <A> element
+     *
+     * @return mutable tree set
      */
     public static <A> SetF<A> treeSet() {
-        return x(new TreeSet<A>());
+        return x(new TreeSet<>());
     }
 
     /**
      * Create tree set of specified elements.
+     *
+     * @param collection wrap collection
+     * @param <E> element
+     *
+     * @return mutable tree set
      */
     public static <E> SetF<E> treeSet(Collection<E> collection) {
         return x(new TreeSet<>(collection));
@@ -310,6 +504,11 @@ public class Cf {
 
     /**
      * Create tree set of specified elements.
+     *
+     * @param elements wrap collection
+     * @param <E> element
+     *
+     * @return mutable tree set
      */
     @SuppressWarnings("unchecked")
     public static <E> SetF<E> treeSet(E... elements) {
@@ -318,6 +517,10 @@ public class Cf {
 
     /**
      * Empty immutable list.
+     *
+     * @param <E> element
+     *
+     * @return immutable list
      */
     public static <E> ListF<E> list() {
         return List.cons();
@@ -325,6 +528,11 @@ public class Cf {
 
     /**
      * Immutable singleton list.
+     *
+     * @param e element to wrap
+     * @param <E> element
+     *
+     * @return imutable singleton list
      */
     public static <E> ListF<E> list(E e) {
         return List.cons(e);
@@ -332,6 +540,12 @@ public class Cf {
 
     /**
      * Immutable list with two elements.
+     *
+     * @param e1 elemet
+     * @param e2 elemet
+     * @param <E> element
+     *
+     * @return immutable list
      */
     public static <E> ListF<E> list(E e1, E e2) {
         return List.cons(e1, e2);
@@ -343,6 +557,11 @@ public class Cf {
      * The resulting list is immutable.
      *
      * @see #wrap(Object[]) for real array wrapping
+     *
+     * @param elements elements to wrap
+     * @param <E> element
+     *
+     * @return immutable list
      */
     @SuppressWarnings("unchecked")
     public static <E> ListF<E> list(E... elements) {
@@ -351,6 +570,11 @@ public class Cf {
 
     /**
      * Create list of elements from given collection.
+     *
+     * @param elements elements to wrap
+     * @param <E> element
+     *
+     * @return immutable list
      */
     public static <E> ListF<E> list(Collection<E> elements) {
         return List.cons(elements);
@@ -358,6 +582,9 @@ public class Cf {
 
     /**
      * Create extended mutable array list.
+     * @param <E> element
+     *
+     * @return mutable array list
      */
     public static <E> ListF<E> arrayList() {
         return ArrayList.cons();
@@ -365,6 +592,11 @@ public class Cf {
 
     /**
      * Create extended mutable array list containing given elements.
+     *
+     * @param collection elements to wrap
+     * @param <A> element
+     *
+     * @return mutable array list
      */
     public static <A> ListF<A> arrayList(Collection<A> collection) {
         return ArrayList.cons(collection);
@@ -372,6 +604,11 @@ public class Cf {
 
     /**
      * Create extended array list of elements.
+     *
+     * @param elements elements to wrap
+     * @param <A> element
+     *
+     * @return mutable array list
      */
     @SuppressWarnings("unchecked")
     public static <A> ListF<A> arrayList(A... elements) {
@@ -382,6 +619,11 @@ public class Cf {
      * Create array list with given capacity.
      *
      * @see ArrayList#ArrayList(int)
+     *
+     * @param initialCapacity initial capacity
+     * @param <A> element
+     *
+     * @return mutable array list
      */
     public static <A> ListF<A> arrayList(int initialCapacity) {
         return ArrayList.cons(initialCapacity);
@@ -393,6 +635,13 @@ public class Cf {
 
     /**
      * Singleton map.
+     *
+     * @param key key
+     * @param value value
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return singleton map
      */
     public static <K, V> MapF<K, V> map(K key, V value) {
         return new SingletonMap<>(key, value);
@@ -400,18 +649,38 @@ public class Cf {
 
     /**
      * Map of either 1 or 2 entries.
+     *
+     * @param key1 key
+     * @param value1 value
+     * @param key2 key
+     * @param value2 value
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return map
      */
     public static <K, V> MapF<K, V> map(K key1, V value1, K key2, V value2) {
         return map(key1, value1).plus1(key2, value2);
     }
 
-    /** Create map from sequence of entries */
+    /** Create map from sequence of entries
+     *
+     * @param pairs collection to wrap in map
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return map
+     */
     public static <K, V> MapF<K, V> map(Collection<Tuple2<K, V>> pairs) {
         return Tuple2List.cons(Cf.x(pairs).toList()).toMap();
     }
 
     /**
      * Immutable empty map.
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return empty immutable map
      */
     @SuppressWarnings({"unchecked"})
     public static <K, V> MapF<K, V> map() {
@@ -420,15 +689,22 @@ public class Cf {
 
     /**
      * Create extended linked list.
+     * @param <E> element
+     *
+     * @return linkedList
      */
     public static <E> ListF<E> linkedList() {
-        return x(new LinkedList<E>());
+        return x(new LinkedList<>());
     }
 
     /**
      * Create hash map.
      *
      * @see HashMap
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return mutable hash map
      */
     public static <K, V> MapF<K, V> hashMap() {
         return x(new HashMap<>());
@@ -442,6 +718,10 @@ public class Cf {
      * Identity hash map.
      *
      * @see IdentityHashMap
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return mutable identity hash map
      */
     @SuppressWarnings("serial")
     public static <K, V> MapF<K, V> identityHashMap() {
@@ -456,6 +736,12 @@ public class Cf {
      * Create hash map of specified entries.
      *
      * @see HashMap
+     *
+     * @param entries entries to wrap
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return mutable hash map
      */
     public static <K, V> MapF<K, V> hashMap(Iterable<Tuple2<K, V>> entries) {
         MapF<K, V> map = hashMap();
@@ -467,6 +753,12 @@ public class Cf {
      * Create hash map of specified entries.
      *
      * @see HashMap
+     *
+     * @param entries entries to wrap
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return mutable hash map
      */
     public static <K, V> MapF<K, V> hashMap(Map<K, V> entries) {
         MapF<K, V> map = hashMap();
@@ -476,6 +768,10 @@ public class Cf {
 
     /**
      * Wrapper around {@link ConcurrentHashMap}.
+     * @param <K> key
+     * @param <V> value
+     *
+     * @return mutable concurrent hash map
      */
     @SuppressWarnings("serial")
     public static <K, V> MapF<K, V> concurrentHashMap() {
@@ -491,6 +787,9 @@ public class Cf {
 
     /**
      * Empty iterator.
+     * @param <E> element
+     *
+     * @return empty iterator
      */
     @SuppressWarnings({"unchecked"})
     public static <E> IteratorF<E> emptyIterator() {
@@ -499,6 +798,12 @@ public class Cf {
 
     /**
      * Immutable list of <code>element</code> repeated <code>times</code> times.
+     *
+     * @param element element to repeat
+     * @param times amount of repeats
+     * @param <T> element
+     *
+     * @return list with repeated elements
      */
     public static <T> ListF<T> repeat(final T element, final int times) {
         if (times == 0) return list();
@@ -539,6 +844,9 @@ public class Cf {
     /**
      * Immutable list of integer in given range.
      *
+     * @param startInclusive start of range
+     * @param endExclusive end of range
+     *
      * @return empty list if <code>end &lt; start</code>
      */
     public static ListF<Integer> range(final int startInclusive, final int endExclusive) {
@@ -548,6 +856,9 @@ public class Cf {
 
     /**
      * Immutable set of integer in given range.
+     *
+     * @param startInclusive start of range
+     * @param endExclusive end of range
      *
      * @return empty set if <code>end &lt; start</code>
      */
@@ -635,94 +946,183 @@ public class Cf {
 
     /**
      * {@link MapF#plus(MapF)} as function.
+     *
+     * @param <A> key
+     * @param <B> value
+     *
+     * @return map plus map as function
      */
     public static <A, B> Function2<MapF<A, B>, MapF<A, B>, MapF<A, B>> mapPlusF() {
         return MapF::plus;
     }
 
-    /** Concatenate two lists function */
+    /** Concatenate two lists function
+     *
+     * @param <A> element
+     *
+     * @return function concatinates to list
+     */
     public static <A> Function2<ListF<A>, ListF<A>, ListF<A>> listPlusF() {
         return List.plusF();
     }
 
-    /** Union of two sets function */
+    /** Union of two sets function
+     *
+     * @param <A> element
+     *
+     * @return function union to sets
+     */
     public static <A> Function2<SetF<A>, SetF<A>, SetF<A>> setPlusF() {
-        return SetF::plus;
+        return Set.plusF();
     }
 
-    /** {@link #x(List)} as function */
+    /** {@link #x(List)} as function
+     *
+     * @param <E> element
+     *
+     * @return function wraps list
+     */
     public static <E> Function<List<E>, ListF<E>> wrapListF() {
         return List.wrapF();
     }
 
-    /** {@link #x(Set)} as function */
+    /** {@link #x(Set)} as function
+     *
+     * @param <E> element
+     *
+     * @return function wraps set
+     * */
     public static <E> Function<Set<E>, SetF<E>> wrapSetF() {
         return Cf::x;
     }
 
-    /** {@link #x(Map)} as function */
+    /** {@link #x(Map)} as function
+     *
+     * @return function wraps map
+     * */
     public static <K, V> Function<Map<K, V>, MapF<K, V>> wrapMapF() {
         return Cf::x;
     }
 
-    /** {@link #x(Iterator)} as function */
+    /** {@link #x(Iterator)} as function
+     *
+     * @param <E> element
+     *
+     * @return function wraps iterator
+     * */
     public static <E> Function<Iterator<E>, IteratorF<E>> wrapIteratorF() {
         return Cf::x;
     }
 
-    /** {@link #x(Enumeration)} as function */
+    /** {@link #x(Enumeration)} as function
+     *
+     * @param <E> element
+     *
+     * @return function wraps enumeration
+     * */
     public static <E> Function<Enumeration<E>, IteratorF<E>> wrapEnumerationF() {
         return Cf::x;
     }
 
-    /** {@link Collection#size()} as function */
+    /** {@link Collection#size()} as function
+     *
+     * @param <T> element
+     *
+     * @return function returns collection size
+     * */
     public static <T> Function<Collection<T>, Integer> sizeF() {
         return Collection.sizeF().uncheckedCast();
     }
 
-    /** {@link Iterator#hasNext()} as function */
+    /** {@link Iterator#hasNext()} as function
+     *
+     * @param <T> element
+     *
+     * @return function retutns next element
+     * */
     public static <T> Function1B<Iterator<T>> hasNextF() {
         return Iterator::hasNext;
     }
 
-    /** {@link Iterable#iterator()} as function */
+    /** {@link Iterable#iterator()} as function
+     *
+     * @param <T> element
+     *
+     * @return function returns iterator
+     * */
     public static <T> Function<Iterable<T>, IteratorF<T>> iteratorF() {
         return a -> x(a.iterator());
     }
 
-    /** {@link Collection#map()} as function */
+    /** {@link CollectionF#map(Function)} as function
+     *
+     *
+     * @param <F> key
+     * @param <T> value
+     *
+     * @return function map
+     * */
     public static <F, T> Function2<Collection<F>, Function<? super F, T>, ListF<T>> mapF() {
         return Collection.mapF();
     }
 
-    /** {@link Collection#map()} as function, convenience form */
+    /** {@link CollectionF#map(Function)} as function, convenience form
+     *
+     * @param <F> key
+     * @param <T> value
+     *
+     * @return function map
+     * */
     public static <F, T> Function<Collection<F>, ListF<T>> mapF(Function<? super F, T> f) {
         return Collection.mapF(f);
     }
 
-    /** {@link Collection#sort()} as function */
+    /** {@link CollectionF#sorted()} as function
+     *
+     * @param <E> element
+     *
+     * @return function sort
+     * */
     public static <E> Function2<Collection<E>, Comparator<? super E>, ListF<E>> sortedF() {
         return Collection.sortedF();
     }
 
-    /** {@link Collection#sort()} as function, convenience form */
+    /** {@link CollectionF#sorted()} as function, convenience form
+     *
+     * @param <E> element
+     *
+     * @return function sort
+     * */
     public static <E> Function<Collection<E>, ListF<E>> sortedF(
             Comparator<? super E> comparator)
     {
-        return Collection.<E>sortedF(comparator);
+        return Collection.sortedF(comparator);
     }
 
-    /** {@link Collection#unique()} as function */
+    /** {@link CollectionF#unique()} as function
+     *
+     * @param <E> element
+     *
+     * @return function unique
+     * */
     public static <E> Function<Collection<E>, SetF<E>> uniqueF() {
         return input -> Cf.x(input).unique();
     }
 
-    /** {@link Collection#toList()} as function */
+    /** {@link CollectionF#toList()} as function
+     *
+     * @param <E> element
+     *
+     * @return function toList
+     * */
     public static <E> Function<Collection<E>, ListF<E>> toListF() {
         return input -> Cf.x(input).toList();
     }
 
-    /** {@link CollectionF#mkString(String)} */
+    /** {@link CollectionF#mkString(String)}
+     *
+     * @return function mkString
+     * */
     public static Function2<Collection<?>, String, String> mkStringF() {
         return (a, sep) -> Cf.x(a).mkString(sep);
     }
@@ -734,7 +1134,6 @@ public class Cf {
     public static <T> ListF<T> flatten(Collection<? extends Collection<T>> l) {
         return Cf.x(l).flatMap(Function.<Collection<T>>identityF());
     }
-
 
     public static final ObjectType Object = new ObjectType();
     public static final BooleanType Boolean = new BooleanType();

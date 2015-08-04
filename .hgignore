@@ -1,7 +1,0 @@
-syntax:glob
-*.jar
-*.class
-.*
-target
-bin
-eclipse-classes

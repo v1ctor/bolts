@@ -10,7 +10,7 @@ import ru.yandex.bolts.function.Function1V;
 /**
  * Port of scala <a href="http://www.scala-lang.org/files/archive/nightly/docs/library/index.html#scala.util.Try">Try</a>.
  *
- * @author Anton Bobukh <abobukh@yandex-team.ru>
+ * @author Anton Bobukh &lt;abobukh@yandex-team.ru&gt;
  */
 public abstract class Try<T> {
 
