@@ -43,7 +43,13 @@ public interface Function0<R> extends java.util.concurrent.Callable<R> {
         return this::apply;
     }
 
-    /** Function0 that always return same value */
+    /** Function0 that always return same value
+     *
+     * @param <T> element
+     * @param t element
+     *
+     * @return function
+     * */
     static <T> Function0<T> constF(final T t) {
         return () -> t;
     }
@@ -61,7 +67,13 @@ public interface Function0<R> extends java.util.concurrent.Callable<R> {
         };
     }
 
-    /** Wrap */
+    /** Wrap
+     *
+     * @param <T> element
+     * @param future future
+     *
+     * @return function
+     * */
     @SuppressWarnings("unchecked")
     static <T> Function0<T> wrap(final java.util.concurrent.Future<T> future) {
         if (future instanceof Function0) return (ru.yandex.bolts.function.Function0<T>) future;

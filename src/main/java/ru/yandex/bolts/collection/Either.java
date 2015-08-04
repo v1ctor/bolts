@@ -232,7 +232,13 @@ public abstract class Either<A, B> {
         return Either::right;
     }
 
-    /** Execution function and return left with value or right with {@link Throwable} */
+    /** Execution function and return left with value or right with {@link Throwable}
+     *
+     * @param f function
+     * @param <A> element type
+     *
+     * @return either
+     * */
     public static <A> Either<A, Throwable> tryCatch(Function0<A> f) {
         try {
             return Either.left(f.apply());

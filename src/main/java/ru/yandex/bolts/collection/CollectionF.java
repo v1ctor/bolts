@@ -126,6 +126,8 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      *
      * @param <K> key
      * @param m function
+     *
+     * @return map
      * */
     <K> MapF<K, E> toMapMappingToKey(Function<? super E, K> m);
 
@@ -230,7 +232,12 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
 
     ListF<E> takeSortedByDesc(Function<? super E, ?> f, int k);
 
-    /** Element that would be n-th element of sorted() */
+    /** Element that would be n-th element of sorted()
+     *
+     * @param n index of element
+     *
+     * @return E
+     * */
     E getSorted(int n);
 
     E getSorted(java.util.Comparator<? super E> comparator, int n);
@@ -297,7 +304,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      *
      * @see #addAll(Collection)
      *
-     * @param additions
+     * @param additions elements
      *
      */
     @SuppressWarnings("unchecked")
@@ -399,6 +406,7 @@ public interface CollectionF<E> extends Collection<E>, IterableF<E> {
      * @throws ClassCastException if any element of this cannot be cast to specified type
      *
      * @param <F> type to cast
+     * @param type type to cast
      *
      * @return <code>this</code>
      */

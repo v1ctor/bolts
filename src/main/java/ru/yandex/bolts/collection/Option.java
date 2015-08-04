@@ -33,11 +33,15 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * <code>true</code> iff this is none.
+     *
+     * @return boolean
      */
     public abstract boolean isEmpty();
 
     /**
      * <code>true</code> iff this is some.
+     *
+     * @return boolean
      */
     public final boolean isDefined() { return !isEmpty(); }
 
@@ -49,11 +53,17 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
      * Get the value.
      *
      * @throws NoSuchElementException if this is none.
+     *
+     * @return value
      */
     public abstract T get() throws NoSuchElementException;
 
     /**
      * If this is some return value of this, or return given value otherwise.
+     *
+     * @param u else
+     *
+     * @return value
      */
     public final T getOrElse(T u) {
         if (isDefined()) return get();
@@ -62,6 +72,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * If this is some return value of this, or evaluate function and return it value otherwise.
+     * @param u else
+     *
+     * @return value
      */
     public final T getOrElse(Function0<T> u) {
         if (isDefined()) return get();
@@ -70,6 +83,8 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * <code>getOrElse(null)</code>, but works with types better.
+     *
+     * @return value
      */
     public final T getOrNull() {
         return getOrElse((T) null);
@@ -77,6 +92,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * <code>this</code> if this is some, or given option otherwise.
+     * @param elseOption else
+     *
+     * @return value
      */
     public final Option<T> orElse(Option<? extends T> elseOption) {
         return orElse(() -> elseOption);
@@ -84,30 +102,53 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * <code>this</code> if this is some, or evaluate function and return option otherwise.
+     * @param elseOption else
+     *
+     * @return value
      */
     public final Option<T> orElse(Function0<Option<? extends T>> elseOption) {
         if (isDefined()) return this;
         else return elseOption.apply().uncheckedCast();
     }
 
-    /** Throw specified exception if {@link #isEmpty()}. */
+    /** Throw specified exception if {@link #isEmpty()}.
+     *
+     * @param e exception
+     *
+     * @return value
+     */
     public final <E extends Throwable> T getOrThrow(E e) throws E {
         return getOrThrow((Function0<E>) () -> e);
     }
 
-    /** Throw specified exception if {@link #isEmpty()}. */
+    /** Throw specified exception if {@link #isEmpty()}.
+     *
+     * @param e exception
+     * @param <E> element
+     * @return value
+     * @throws E
+     */
     public final <E extends Throwable> T getOrThrow(Function0<E> e) throws E {
         if (isDefined()) return get();
         else throw e.apply();
     }
 
-    /** Throw exception with specified message if this is empty */
+    /** Throw exception with specified message if this is empty
+     *
+     * @param message exception
+     * @return value
+     * @throws RuntimeException
+     */
     public final T getOrThrow(final String message) throws RuntimeException {
         return getOrThrow((Function0<NoSuchElementException>) () -> new NoSuchElementException(message));
     }
 
-    /**
-     * Get or throw exception if this is empty. Message is constructed by concatenating given params.
+    /** Get or throw exception if this is empty. Message is constructed by concatenating given params
+     *
+     * @param message error
+     * @param param error params
+     * @return value
+     * @throws RuntimeException
      */
     public final T getOrThrow(final String message, final Object param) throws RuntimeException {
         return getOrThrow((Function0<NoSuchElementException>) () -> new NoSuchElementException(message + param));
@@ -182,7 +223,11 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         return toSet();
     }
 
-    /** This object with different type parameters */
+    /** This object with different type parameters
+     *
+     * @param <F> element
+     * @return cast option
+     */
     @Override
     public <F> Option<F> uncheckedCast() {
         return cast();
@@ -221,42 +266,61 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         return map(x -> OptionalDouble.of(f.applyAsDouble(x))).getOrElse(OptionalDouble.empty());
     }
 
-    /**
-     * Return singleton none object.
+    /** Return singleton none object.
+     *
+     * @param <T> value
+     * @return option none
      */
     public static <T> Option<T> none() { return None.NONE; }
 
-    /**
-     * Construct some containing given value.
+    /** Construct some containing given value.
+     *
+     * @param x element
+     * @param <T>type
+     * @return value
      */
     public static <T> Option<T> some(T x) { return new Some<>(x); }
 
-    /**
-     * Construct option from {@link Optional}
+    /** Construct option from {@link Optional}
+     *
+     * @param x optional
+     * @param <T> type
+     * @return option
      */
     public static <T> Option<T> wrap(Optional<T> x) {
         if (x.isPresent()) return some(x.get());
         else return none();
     }
 
-    /**
-     * Some if not null, None otherwise.
+    /** Some if not null, None otherwise.
+     *
+     * @param x value
+     * @param <T> type
+     * @return option
      */
     public static <T> Option<T> notNull(T x) {
         if (x != null) return some(x);
         else return none();
     }
 
-    /**
-     * Some if pred, None otherwise.
+    /** Some if pred, None otherwise.
+     *
+     * @param pred predicate
+     * @param x value
+     * @param <T> type
+     * @return option
      */
     public static <T> Option<T> when(boolean pred, T x) {
         if (pred) return some(x);
         else return none();
     }
 
-    /**
-     * Some if pred, None otherwise, lazy evaluation.
+    /** Some if pred, None otherwise, lazy evaluation.
+     *
+     * @param pred predicate
+     * @param x value
+     * @param <T> type
+     * @return option
      */
     public static <T> Option<T> when(boolean pred, Function0<T> x) {
         if (pred) return some(x.apply());
@@ -365,8 +429,10 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
         }
     }
 
-    /**
-     * Delegate to {@link #isDefined()}.
+    /** Delegate to {@link #isDefined()}.
+     *
+     * @param <U> type
+     * @return function
      */
     public static <U> Function1B<Option<U>> isDefinedF() {
         return Option::isDefined;
@@ -374,13 +440,18 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * Delegate to {@link #isEmpty()}.
+     *
+     * @param <U> type
+     * @return function
      */
     public static <U> Function1B<Option<U>> isEmptyF() {
         return Option.<U>isDefinedF().notF();
     }
 
-    /**
-     * Delegate to {@link #notNull(Object)}.
+    /** Delegate to {@link #notNull(Object)}.
+     *
+     * @param <T> type
+     * @return function
      */
     public static <T> Function<T, Option<T>> notNullF() {
         return Option::notNull;
@@ -388,6 +459,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * Delegate to {@link #get()}.
+     *
+     * @param <U> type
+     * @return function
      */
     public static <U> Function<Option<U>, U> getF() {
         return Option::get;
@@ -395,6 +469,9 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * Delegate to {@link #getOrElse(Object)}.
+     *
+     * @param <U> type
+     * @return function
      */
     public static <U> Function<Option<U>, U> getOrElseF(final U fallback) {
         return us -> us.getOrElse(fallback);
@@ -402,20 +479,30 @@ public abstract class Option<T> extends AbstractListF<T> implements Serializable
 
     /**
      * Delegate to {@link #some(Object)}.
+     *
+     * @param <U> type
+     * @return function
      */
     public static <U> Function<U, Option<U>> someF() {
         return Option::some;
     }
 
-    /**
-     * @see #map(Function)
+    /** @see #map(Function)
+     *
+     * @param <A> a
+     * @param <B> b
+     * @return function
      */
     public static <A, B> Function2<Option<A>, Function<A, B>, Option<B>> mapF() {
         return Option::map;
     }
 
-    /**
-     * @see #map(Function)
+    /** @see #map(Function)
+     *
+     * @param f f
+     * @param <A> a
+     * @param <B> b
+     * @return f
      */
     public static <A, B> Function<Option<A>, Option<B>> mapF(Function<A, B> f) {
         return Option.<A, B>mapF().bind2(f);

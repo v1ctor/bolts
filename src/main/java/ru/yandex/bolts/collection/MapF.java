@@ -19,25 +19,67 @@ import ru.yandex.bolts.function.Function2V;
 public interface MapF<K, V> extends Map<K, V> {
     boolean isNotEmpty();
 
-    /** Get value by key */
+    /** Get value by key
+     *
+     * @param key key
+     *
+     * @return option element
+     * */
     Option<V> getO(K key);
 
-    /** Get value or default */
+    /** Get value or default
+     *
+     * @param key key
+     * @param elseValue eleValue
+     *
+     * @return element or else
+     * */
     V getOrElse(K key, V elseValue);
 
-    /** Get value or throw */
+    /** Get value or throw
+     *
+     * @param key key
+     * @param message error message
+     *
+     * @return element
+     * */
     V getOrThrow(K key, String message);
 
-    /** Get value or throw */
+    /** Get value or throw
+     *
+     * @param key key
+     * @param message error message
+     * @param param exception param
+     *
+     * @return element
+     * */
     V getOrThrow(K key, String message, Object param);
 
-    /** Get value or else update */
+    /** Get value or else update
+     *
+     * @param key key
+     * @param elseValue else
+     *
+     * @return element
+     * */
     V getOrElseUpdate(K key, V elseValue);
 
-    /** Get value or else update */
+    /** Get value or else update
+     *
+     * @param key key
+     * @param value else
+     *
+     * @return element
+     * */
     V getOrElseUpdate(K key, Function0<V> value);
 
-    /** Get value or else update. Function maps key to default value */
+    /** Get value or else update. Function maps key to default value
+     *
+     * @param key key
+     * @param m else
+     *
+     * @return element
+     * */
     V getOrElseUpdate(K key, Function<K, V> m);
 
     boolean containsEntry(K key, V value);
@@ -46,17 +88,24 @@ public interface MapF<K, V> extends Map<K, V> {
 
     /**
      * Use {@link #getOrThrow(Object)} instead.
-     */
+     *
+     * @param key key
+     *
+     * @return element
+     * */
     V apply(K key) throws NoSuchElementException;
 
-    /** Throws if there is no entry for key */
+    /** Throws if there is no entry for key
+     *
+     * @param key key
+     *
+     * @return element
+     * */
     V getOrThrow(K key) throws NoSuchElementException;
 
     MapF<K, V> filterKeys(Function1B<? super K> p);
 
     <W> MapF<K, W> mapValues(Function<? super V, ? extends W> f);
-
-    //<W> ListF<W> map(Function<Entry<K, V>, W> f);
 
     <W> ListF<W> mapEntries(Function2<? super K, ? super V, ? extends W> f);
 
@@ -72,28 +121,48 @@ public interface MapF<K, V> extends Map<K, V> {
 
     boolean forAllEntries(Function2B<? super K, ? super V> op);
 
-    /** Delegate to {@link #apply(Object)} */
+    /** Delegate to {@link #apply(Object)}
+     *
+     * @return function
+     * */
     Function<K, V> asFunction();
 
-    /** Delegate to {@link #getO(Object)} */
+    /** Delegate to {@link #getO(Object)}
+     *
+     * @return function
+     * */
     Function<K, Option<V>> asFunctionO();
 
     Function<K, V> asFunctionOrElse(V fallback);
 
     Function<K, V> asFunctionOrElse(Function<K, V> fallback);
 
-    /** Put */
+    /** Put
+     *
+     * @param entry entry
+     * */
     void put(Tuple2<K, V> entry);
 
-    /** Put all */
+    /** Put all
+     *
+     * @param entries entriew
+     * */
     void putAll(Iterable<Tuple2<K, V>> entries);
 
     void putAllEntries(Iterable<Entry<K, V>> entries);
 
-    /** Remove element. Return old */
+    /** Remove element. Return old
+     *
+     * @param key key
+     *
+     * @return element
+     * */
     Option<V> removeO(K key);
 
-    /** Key set */
+    /** Key set
+     *
+     * @return keys
+     * */
     SetF<K> keySet();
 
     ListF<K> keys();
@@ -102,7 +171,10 @@ public interface MapF<K, V> extends Map<K, V> {
 
     Tuple2List<K, V> entries();
 
-    /** Values */
+    /** Values
+     *
+     * @return values
+     * */
     CollectionF<V> values();
 
     void put(Entry<K, V> entry);
