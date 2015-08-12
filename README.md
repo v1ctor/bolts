@@ -15,6 +15,7 @@ Package contains utilities that are
 
 ## Usage
 ### Option
+```java
 Option<Integer> some = Option.some(1);
 assert some.isDefined() == true;
 assert some.isEmpty() == false;
@@ -23,6 +24,7 @@ assert some.get() == 1;
 Option<Integer> none = Option.none();
 assert none.isDefined() == false;
 assert some.isEmpty() == true;
+```
 ### ListF
 ### SetF
 ### MapF
