@@ -1,18 +1,18 @@
-Collections utilities used in various Yandex projects.
+# Collections utilities used in various Yandex projects.
 
-Package contains utilities that are
-
--- unrelated to Yandex
--- generic enough so that they are useful in the most project
--- functional
+* Package contains utilities that are
+  * unrelated to Yandex
+  * generic enough so that they are useful in the most project
+  * functional
 
 ## Install
+```xml
 <dependency>
   <groupId>ru.yandex</groupId>
   <artifactId>bolts</artifactId>
   <version>1.0.6</version>
 </dependency>
-
+```
 ## Usage
 ### Option
 ```java
