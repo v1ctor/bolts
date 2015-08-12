@@ -1,4 +1,4 @@
-# Collections utilities used in various Yandex projects.
+## Collections utilities used in various Yandex projects.
 
 * Package contains utilities that are
   * unrelated to Yandex
