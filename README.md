@@ -37,7 +37,7 @@ assert some.isEmpty() == true;
 ```
 ### ListF
 ```java
-Cf.list(1, 2, 3, 16).map(i -> i*i);
+Cf.list(1, 2, 3, 16).map(i -> i * i);
 [1, 4, 9, 16]
 Cf.list(1, 2, 3, 4).filter(i -> i % 2 == 0);
 [2, 4]
